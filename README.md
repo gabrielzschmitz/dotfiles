@@ -120,19 +120,20 @@ Result Hover, Module, and Dropdown Background Color:	#1b1e26
 ```
 
 ### Window Manager Configs
-- [i3-wm-config](https://github.com/gabrielzschmitz/.dotfiles/tree/master/Fainti3/.config/i3)
-- [i3status-config](https://github.com/gabrielzschmitz/.dotfiles/tree/master/Fainti3status/.config/i3status)
+- [i3wm-config](https://github.com/gabrielzschmitz/dotfiles/tree/master/.config/i3)
+- [i3status-config](https://github.com/gabrielzschmitz/dotfiles/tree/master/.config/i3status)
 
 ### Other Themes and Configs
 - [Alacritty](https://github.com/gabrielzschmitz/dotfiles/tree/main/.config/alacritty)
 - [Fonts](https://github.com/gabrielzschmitz/dotfiles/tree/main/.fonts)
-- [GTK Theme](https://github.com/gabrielzschmitz/dotfiles/tree/main/.themes/Faint GTK)
-- [Icons](https://github.com/gabrielzschmitz/dotfiles/tree/main/.icons/Faint Icons)
+- [GTK Theme](https://github.com/gabrielzschmitz/dotfiles/tree/main/.themes/Faint%20GTK)
+- [Icons](https://github.com/gabrielzschmitz/dotfiles/tree/main/.icons/Faint%20Icons)
 - [NeoVim](https://github.com/gabrielzschmitz/dotfiles/tree/main/.config/nvim)
 - [Vimb](https://github.com/gabrielzschmitz/dotfiles/tree/main/.config/vimb)
-- [Ripcord]()
+- [Ripcord](https://github.com/gabrielzschmitz/dotfiles#ripcord)
+- [VSCode](https://github.com/gabrielzschmitz/dotfiles#vscode)
 - [Zsh](https://github.com/gabrielzschmitz/dotfiles/tree/main/.zshrc)
 - [CLI-Visualizer](https://github.com/gabrielzschmitz/dotfiles/tree/main/.config/vis)
-- [Firefox]()
-- [DuckDuckGo]()
-- [Wallpapers](https://github.com/gabrielzschmitz/dotfiles/tree/main//Pictures/Wallpapers)
+- [Firefox](https://github.com/gabrielzschmitz/dotfiles#firefox)
+- [DuckDuckGo](https://github.com/gabrielzschmitz/dotfiles#duckduckgo)
+- [Wallpapers](https://github.com/gabrielzschmitz/dotfiles/tree/main/Pictures/Wallpapers)
