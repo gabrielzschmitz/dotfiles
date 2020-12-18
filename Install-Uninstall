@@ -1,0 +1,74 @@
+#   __ _  ____ ___ 
+#  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
+# | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
+#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/.dotfiles/
+#  |___/    
+#
+Uninstall:
+mousepad
+bmenu
+cmus
+conky
+conky-i3
+i3-default-artwork
+manjaro-zsh-config
+manjaro-browser-settings
+manjaro-ranger-settings
+morc-menu
+palemoon-bin
+nitrogen
+#
+#
+#
+Install: (Enable AUR and Update Mirrors)
+feh
+lightdm-settings
+node
+stow
+p7zip
+unzip
+vlc
+xarchiver
+yaourt
+pikaur
+vscodium-bin
+mellowplayer (soundcloud theme in drive)
+alacritty
+geany
+zsh
+libreoffice-still
+ripcord
+deadbeef
+discord
+neovim
+obs-studio
+qbittorrent
+vimb
+pfetch-git
+#
+#
+#
+GST Plugins:
+gst-editing-services
+gst-libav
+gst-plugin-gtk
+gst-plugin-opencv
+gst-plugin-qmlgl
+gst-plugins-bad
+gst-plugins-bad-libs
+gst-plugins-base
+gst-plugins-base-libs
+gst-plugin-espeak
+gst-plugins-good
+gst-plugins-ugly
+gst-python
+#
+#
+#
+VSCode Extensions:
+Color Highlight
+HTML CSS Support
+Live Server
+Prettier - Code formatter
+Base16-Generator
+Material Icon Theme
