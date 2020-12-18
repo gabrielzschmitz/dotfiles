@@ -1,0 +1,70 @@
+#   __ _  ____ ___ 
+#  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
+# | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
+#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/.dotfiles/
+#  |___/    
+#
+# A customized Alacritty Config with Faint colors made by
+# gabrielzschmitz (http://github.com/gabrielzschmitz)
+colors:
+  # Default colors
+  primary:
+    background: '0x232731'
+    foreground: '0x6f798c'
+
+  # Colors the cursor will use if `custom_cursor_colors` is true
+  cursor:
+    text: '0x232731'
+    cursor: '0x6f798c'
+
+  # Selection colors
+  #
+  # Colors which should be used to draw the selection area. If selection
+  # background is unset, selection color will be the inverse of the cell colors.
+  # If only text is unset the cell text color will remain the same.
+  selection:
+    text: '#9faab8'
+    background: '#383c45'
+
+  # Normal colors
+  normal:
+    black:   '0x232731'
+    red:     '0xa65f69'
+    green:   '0x3b8563'
+    yellow:  '0xC7A775'
+    blue:    '0x487799'
+    magenta: '0xb9637e'
+    cyan:    '0x348396'
+    white:   '0x6f798c'
+
+  # Bright colors
+  bright:
+    black:   '0x6f798c'
+    red:     '0xB86974'
+    green:   '0x469E76'
+    yellow:  '0xC7A775'
+    blue:    '0x5287AD'
+    magenta: '0xCC6D8B'
+    cyan:    '0x3C97AD'
+    white:   '0x9faab8'
+
+  # Change font styles
+font:
+  normal:
+    family: FiraCode Nerd Font Mono
+    style: Regular
+
+  bold:
+    family: FiraCode Nerd Font Mono
+    style: Bold
+
+  italic:
+    family: FiraCode Nerd Font Mono
+    style: Italic
+  
+    bold_italic:
+    family: FiraCode Nerd Font Mono
+    style: Bold Italic
+
+  size: 12
+
