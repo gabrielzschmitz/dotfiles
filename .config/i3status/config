@@ -1,0 +1,73 @@
+#   __ _  ____ ___ 
+#  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
+# | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
+#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/.dotfiles/
+#  |___/    
+#
+# A customized config for i3Status (https://i3wm.org/i3status/)
+# Based off of the default i3Status config
+# Modified by gabrielzschmitz (https://github.com/gabrielzschmitz)
+# Please see https://i3wm.org/i3status/manpage.html for a complete reference!
+#
+# Select colors, format and refresh interval
+general {
+  output_format = "i3bar"
+  colors = true
+  interval = 2
+  color_good = "#3b8563"
+  color_degraded = "#b39669"
+  color_bad = "#a65f69"
+}
+
+# Change and add widgets
+order += "cpu_usage"		# CPU 
+order += "disk /"			# Disk 
+order += "battery all"		# Battery     
+order += "volume master"	# Volume  婢
+order += "memory"			# Ram Memory 
+order += "tztime local"		# Clock ﲊ 
+
+# CPU
+cpu_usage {
+        format = " CPU  %cpu0 %cpu1 %cpu2 %cpu3 "
+        max_threshold = 75
+}
+
+# Disk
+disk "/" {
+        format = "  %avail "
+}
+
+# Battery
+battery all {
+        format = " %status %percentage "
+        format_down = "NO "
+        last_full_capacity = true
+        integer_battery_capacity = true
+        status_chr = "CHR "
+        status_bat = "ON "
+        status_unk = "UNK "
+        status_full = "FULL "
+        low_threshold = 15
+        threshold_type = time
+}
+
+# Volume
+volume master {
+	format = " VOLUME  %volume "
+        format_muted = " MUTED 婢 (%volume) "
+        device = "default"
+        mixer = "Master"
+}
+
+# Ram Memory
+memory {
+        format = " RAM  %used "
+        threshold_degraded = "1G"
+}
+
+# Clock
+tztime local {
+        format = " %H:%M ﲊ |  %d/%m/%Y "
+}
+
