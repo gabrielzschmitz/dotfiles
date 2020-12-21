@@ -1,7 +1,7 @@
 #   __ _  ____ ___ 
 #  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
 # | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/.dotfiles/
+#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
 #  |___/    
 #
 #For HTML5 video display install this GST Plugins: gst-editing-services; gst-libav; gst-plugin-gtk; gst-plugin-opencv; gst-plugin-qmlgl; gst-plugins-bad; gst-plugins-bad-libs; gst-plugins-base; gst-plugins-base-libs; gst-plugin-espeak; gst-plugins-good; gst-plugins-ugly; gst-python; (All GST Plugins).
