@@ -9,13 +9,12 @@
 colors:
   # Default colors
   primary:
-    background: '0x232731'
-    foreground: '0x6f798c'
+    background: '#232731'
+    foreground: '#6f798c'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:
-    text: '0x232731'
-    cursor: '0x6f798c'
+    unfocused_hollow: true
 
   # Selection colors
   #
@@ -28,25 +27,25 @@ colors:
 
   # Normal colors
   normal:
-    black:   '0x232731'
-    red:     '0xa65f69'
-    green:   '0x3b8563'
-    yellow:  '0xC7A775'
-    blue:    '0x487799'
-    magenta: '0xb9637e'
-    cyan:    '0x348396'
-    white:   '0x6f798c'
+    black:   '#232731'
+    red:     '#a65f69'
+    green:   '#3b8563'
+    yellow:  '#C7A775'
+    blue:    '#487799'
+    magenta: '#b9637e'
+    cyan:    '#348396'
+    white:   '#6f798c'
 
   # Bright colors
   bright:
-    black:   '0x6f798c'
-    red:     '0xB86974'
-    green:   '0x469E76'
-    yellow:  '0xC7A775'
-    blue:    '0x5287AD'
-    magenta: '0xCC6D8B'
-    cyan:    '0x3C97AD'
-    white:   '0x9faab8'
+    black:   '#6f798c'
+    red:     '#B86974'
+    green:   '#469E76'
+    yellow:  '#C7A775'
+    blue:    '#5287AD'
+    magenta: '#CC6D8B'
+    cyan:    '#3C97AD'
+    white:   '#9faab8'
 
   # Change font styles
 font:
