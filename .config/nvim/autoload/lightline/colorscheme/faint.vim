@@ -1,7 +1,7 @@
 "   __ _  ____ ___ 
 "  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
 " | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-"  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/.dotfiles/
+"  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
 "  |___/    
 "
 " A dark vim colorscheme based on OneHalfDark.
