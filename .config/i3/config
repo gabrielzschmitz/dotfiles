@@ -1,7 +1,7 @@
 #   __ _  ____ ___ 
 #  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
 # | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/.dotfiles/
+#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
 #  |___/    
 #
 # A customized config for i3-Gaps window manager (http://www.i3wm.org)
@@ -70,9 +70,8 @@ bindsym $mod+F6 exec MellowPlayer
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
-bindsym Print exec --no-startup-id i3-scrot
-bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
-bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
+bindsym Print exec --no-startup-id scrot -e 'mv $f ~/Pictures/'
+bindsym $mod+Shift+Print --release exec --no-startup-id scrot -s -e 'mv $f ~/Pictures/'
 bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
@@ -151,7 +150,7 @@ set $ws7 gg
 #assign [class="discord"] $ws5
 #assign [class="MellowPlayer"] $ws6             
 
-# move workspace to monitor
+# Move workspace to monitor
 bindsym Mod1+Shift+Left move workspace to output left
 bindsym Mod1+Shift+Right move workspace to output right
 
@@ -285,6 +284,7 @@ exec --no-startup-id clipit
 exec --no-startup-id xautolock -time 20 -locker blurlock
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
+exec_always --no-startup-id bash ~/.scripts/keyrate.sh
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
