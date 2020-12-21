@@ -99,11 +99,14 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='nvim'
+else
+   export EDITOR='nvim'
+fi
+
+export VISUAL=nvim;
+export EDITOR=nvim;
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -171,6 +174,11 @@ SPACESHIP_PROMPT_ORDER=(
 )
 
 SPACESHIP_USER_SHOW=always
+SPACESHIP_USER_COLOR=green
+SPACESHIP_DIR_COLOR=yellow
+SPACESHIP_CHAR_COLOR_SUCCESS=yellow
+SPACESHIP_CHAR_COLOR_FAILURE=red
+SPACESHIP_CHAR_COLOR_SECONDARY=yellow
 SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_CHAR_SYMBOL="❯"
 SPACESHIP_CHAR_SUFFIX=" "
@@ -183,3 +191,4 @@ alias lsd='lsd -hA --group-dirs first'
 alias grep='grep --color=auto'
 
 alias config='/usr/bin/git --git-dir=/home/gabrielzschmitz/dotfiles --work-tree=/home/gabrielzschmitz'
+
