@@ -21,16 +21,17 @@ general {
 
 # Change and add widgets
 order += "cpu_usage"		# CPU 
-order += "disk /"			# Disk 
+order += "disk /"		# Disk 
 order += "battery all"		# Battery     
 order += "volume master"	# Volume  婢
-order += "memory"			# Ram Memory 
-order += "tztime local"		# Clock ﲊ 
+order += "memory"		# Ram Memory 
+order += "tztime local"		# Clock ﲊ 
 
 # CPU
 cpu_usage {
-        format = " CPU  %cpu0 %cpu1 %cpu2 %cpu3 "
+        format = "   %cpu0 %cpu1 %cpu2 %cpu3 "
         max_threshold = 75
+	degraded_threshold= 25
 }
 
 # Disk
@@ -41,33 +42,33 @@ disk "/" {
 # Battery
 battery all {
         format = " %status %percentage "
-        format_down = "NO "
+        format_down = ""
         last_full_capacity = true
         integer_battery_capacity = true
-        status_chr = "CHR "
-        status_bat = "ON "
-        status_unk = "UNK "
-        status_full = "FULL "
+        status_chr = ""
+        status_bat = ""
+        status_unk = ""
+        status_full = ""
         low_threshold = 15
         threshold_type = time
 }
 
 # Volume
 volume master {
-	format = " VOLUME  %volume "
-        format_muted = " MUTED 婢 (%volume) "
+	format = "   %volume "
+        format_muted = " 婢  (%volume) "
         device = "default"
         mixer = "Master"
 }
 
 # Ram Memory
 memory {
-        format = " RAM  %used "
+        format = "   %used "
         threshold_degraded = "1G"
 }
 
 # Clock
 tztime local {
-        format = " %H:%M ﲊ |  %d/%m/%Y "
+        format = " %H:%M ﲊ |   %d/%m/%Y "
 }
 
