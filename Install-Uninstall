@@ -45,6 +45,7 @@ obs-studio
 qbittorrent
 vimb
 pfetch-git
+yay
 #
 #
 #
@@ -72,3 +73,4 @@ Live Server
 Prettier - Code formatter
 Base16-Generator
 Material Icon Theme
+
