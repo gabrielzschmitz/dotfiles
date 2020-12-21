@@ -8,7 +8,7 @@
     frame_width = 1
     frame_color = "#9faab8"
     
-    font = JetBrainsMono NF 10
+    font = FiraCode Nerd Font 12
     
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -151,7 +151,7 @@
     dmenu = /usr/bin/dmenu -p dunst:
     
     # Browser for opening urls in context menu.
-    browser = firefox
+    browser = vimb
 
     # Align icons left/right/off
     icon_position = left
@@ -306,3 +306,4 @@
 #     foreground = "#F67245"
 #
 # vim: ft=cfg
+
