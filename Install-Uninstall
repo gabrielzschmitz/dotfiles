@@ -50,19 +50,8 @@ yay
 #
 #
 GST Plugins:
-gst-editing-services
 gst-libav
-gst-plugin-gtk
-gst-plugin-opencv
-gst-plugin-qmlgl
-gst-plugins-bad
-gst-plugins-bad-libs
-gst-plugins-base
-gst-plugins-base-libs
-gst-plugin-espeak
 gst-plugins-good
-gst-plugins-ugly
-gst-python
 #
 #
 #
