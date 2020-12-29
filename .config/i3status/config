@@ -20,16 +20,16 @@ general {
 }
 
 # Change and add widgets
-order += "cpu_usage"		# CPU 
+order += "cpu_usage"		# CPU 
 order += "disk /"		# Disk 
-order += "battery all"		# Battery     
+order += "battery all"		# Battery     
 order += "volume master"	# Volume  婢
-order += "memory"		# Ram Memory 
+order += "memory"		# Ram Memory 
 order += "tztime local"		# Clock ﲊ 
 
 # CPU
 cpu_usage {
-        format = "   %cpu0 %cpu1 %cpu2 %cpu3 "
+        format = "   %cpu0 %cpu1 %cpu2 %cpu3 "
         max_threshold = 75
 	degraded_threshold= 25
 }
@@ -47,7 +47,7 @@ battery all {
         integer_battery_capacity = true
         status_chr = ""
         status_bat = ""
-        status_unk = ""
+        status_unk = ""
         status_full = ""
         low_threshold = 15
         threshold_type = time
@@ -63,7 +63,7 @@ volume master {
 
 # Ram Memory
 memory {
-        format = "   %used "
+        format = "   %used "
         threshold_degraded = "1G"
 }
 
