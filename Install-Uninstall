@@ -22,6 +22,9 @@ nitrogen
 #
 Install: (Enable AUR and Update Mirrors)
 feh
+paprefs
+pasystray
+pavucontrol
 lightdm-settings
 node
 stow
@@ -46,6 +49,12 @@ qbittorrent
 vimb
 pfetch-git
 yay
+#
+#
+#
+Add:
+export STEAM_FRAME_FORCE_CLOSE=1
+to .profile file
 #
 #
 #
