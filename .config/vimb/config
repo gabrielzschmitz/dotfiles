@@ -14,7 +14,7 @@ set download-path=~/Downloads
 # Cookies (accept all non-third-party cookies)	
 set cookie-accept=origin
 # User
-set user-agent=Mozilla Chrome Safari googlebot AppleWebKit
+set user-agent=Mozilla Chrome Safari AppleWebKit
 set user-scripts=true
 set webgl=true
 # Smooth-Scrolling

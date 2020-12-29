@@ -24,7 +24,6 @@ audio.high.cutoff.frequency=22050
 #Defaults to spectrum,ellipse,lorenz
 visualizers=spectrum,ellipse,lorenz
 
-
 #Configures what character the spectrum visualizer will use. Specifying a space (e.g " ") means the
 #background will be colored instead of the character. Defaults to " ".
 #visualizer.spectrum.character=#
@@ -37,7 +36,7 @@ visualizer.spectrum.bar.width=2
 visualizer.spectrum.bar.spacing=1
 
 #Available smoothing options are monstercat, sgs, none. Defaults to sgs.
-visualizer.spectrum.smoothing.mode=monstercat
+visualizer.spectrum.smoothing.mode=sgs
 
 #This configures the falloff effect on the spectrum visualizer. Available falloff options are fill,top,none.
 #Defaults to "fill"
@@ -50,7 +49,7 @@ visualizer.spectrum.falloff.weight=1
 #Margins in percent of total screen for spectrum visualizer. All margins default to 0
 visualizer.spectrum.top.margin=0.0
 visualizer.spectrum.bottom.margin=0.0
-visualizer.spectrum.right.margin=0.0
+visualizer.spectrum.right.margin=-0.0
 visualizer.spectrum.left.margin=0.0
 
 #Reverses the direction of the spectrum so that high freqs are first and low freqs last. Defaults to false.
@@ -63,7 +62,7 @@ audio.sources=pulse
 ##vis tries to find the correct pulseaudio sink, however this will not work on all systems.
 #If pulse audio is not working with vis try switching the audio source. A list can be found by running the
 #command pacmd list-sinks  | grep -e 'name:'  -e 'index'
-audio.pulse.source=0
+audio.pulse.source=
 
 #vis tries to find the correct portaudio device (through portaudio default method), however its not for-sure.
 #If port audio is not working with vis try switching the audio srouce. A list can be found by setting
@@ -84,7 +83,7 @@ visualizer.sgs.smoothing.passes=2
 visualizer.ellipse.radius=2
 
 ## Turns off overriding the user's terminal colors
-#colors.override.terminal=false
+# colors.override.terminal=false
 
 #Specifies the color scheme. The color scheme must be in ~/.config/vis/colors/ directory. Default is "colors"
 colors.scheme=Faint
