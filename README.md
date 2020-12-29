@@ -38,14 +38,18 @@
 
 For all the programs (unless for Ripcord, VSCode, Firefox and DuckDuckGo, for them read the related tutorials)
 
-1. Get into home directory
+```
+mv ~/.config ~/.config-backup
+mv ~/.zshrc ~/.zshrc-backup
+mkdir -p ~/.config/ ~/Documents/ ~/Pictures/Wallpapers/
+echo 'alias config="/usr/bin/git --git-dir=$HOME/Documents/dotfiles/ --work-tree=$HOME"' >> $HOME/.zshrc
+source ~/.zshrc && mv ~/.zshrc ~/.zshrc-backup
+echo "Documents/dotfiles" >> .gitignore
+git clone --bare https://www.github.com/gabrielzschmitz/dotfiles $HOME/Documents/dotfiles
+config checkout
+config config --local status.showUntrackedFiles no
+```
 
-        cd ~
-
-2. Then clone the repository
-
-        git clone https://github.com/gabrielzschmitz/.dotfiles.git
-	
 #### Ripcord
 For Ripcord open the program an then in the Status Bar follow this path:
 - View -> Preferences... <br>
