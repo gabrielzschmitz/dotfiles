@@ -38,7 +38,7 @@
 
 For all the programs (unless for Ripcord, VSCode, Firefox and DuckDuckGo, for them read the related tutorials)
 
-```
+```shell
 mv ~/.config ~/.config-backup
 mv ~/.zshrc ~/.zshrc-backup
 mkdir -p ~/.config/ ~/Documents/ ~/Pictures/Wallpapers/
