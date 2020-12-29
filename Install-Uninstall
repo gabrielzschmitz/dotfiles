@@ -72,3 +72,15 @@ Prettier - Code formatter
 Base16-Generator
 Material Icon Theme
 
+```
+mv ~/.config ~/.config-backup
+mv ~/.zshrc ~/.zshrc-backup
+mkdir -p ~/.config/ ~/Documents/ ~/Pictures/Screenshots/
+echo 'alias config="/usr/bin/git --git-dir=$HOME/Documents/dotfiles/ --work-tree=$HOME"' >> $HOME/.zshrc
+source ~/.zshrc && mv ~/.zshrc ~/.zshrc-backup
+echo "Documents/dotfiles" >> .gitignore
+git clone --bare https://www.github.com/gabrielzschmitz/dotfiles $HOME/Documents/dotfiles
+config checkout
+config config --local status.showUntrackedFiles no
+```
+
