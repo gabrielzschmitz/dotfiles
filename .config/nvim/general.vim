@@ -12,7 +12,8 @@ colorscheme faint
 syntax on
 set cursorline					" Togle's the current line indicator
 set number					" Number line indicator
-set nowrap					" Active word warp
+set wrap					" Active word warp
+highlight Normal ctermbg=none
 
 " Active 256 true color
 if exists('+termguicolors')
