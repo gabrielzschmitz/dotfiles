@@ -50,16 +50,16 @@ bindsym $mod+d exec "dmenu_run -nf '#6f798c' -nb '#232731' -sb '#3b8563' -sf '#9
 
 #exec --no-startup-id volumeicon
 #bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+#exec --no-startup-id pa-applet
 exec --no-startup-id pulseaudio
 exec --no-startup-id pasystray
-exec --no-startup-id pa-applet
 bindsym $mod+Ctrl+m exec pavucontrol
 
 ################################################################################################
 
 # Screen brightness controls
-# bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
-# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+ bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
+ bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
 # Start Applications
 bindsym $mod+Ctrl+b exec $myTerm -e 'bmenu'
@@ -71,8 +71,8 @@ bindsym $mod+F6 exec MellowPlayer
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
-bindsym Print exec --no-startup-id scrot -e 'mv $f ~/Pictures/'
-bindsym $mod+Shift+Print --release exec --no-startup-id scrot -s -e 'mv $f ~/Pictures/'
+bindsym Print exec --no-startup-id scrot -q 100 -e 'mv $f ~/Pictures/'
+bindsym $mod+Shift+Print --release exec --no-startup-id scrot -s -f -b -q 100 -e 'mv $f ~/Pictures/'
 bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
@@ -228,7 +228,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+0 mode "$mode_system"
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym l exec --no-startup-id bash ~/.scripts/faintlock.sh lock, mode "default"
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
     bindsym u exec --no-startup-id i3exit switch_user, mode "default"
     bindsym e exec --no-startup-id i3exit logout, mode "default"
@@ -266,10 +266,11 @@ mode "resize" {
 }
 
 # Lock screen
-bindsym $mod+9 exec --no-startup-id blurlock
+bindsym $mod+9 exec --no-startup-id bash ~/.scripts/faintlock.sh
+exec_always --no-startup-id bash ~/.scripts/autofaintlock.sh
 
 # Autostart applications
-exec_always --no-startup-id feh --bg-fill --no-fehbg ~/Pictures/Wallpapers/solid.png
+exec_always --no-startup-id feh --bg-fill --no-fehbg ~/Pictures/Wallpapers/wallpaper.png
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id numlockx on
@@ -278,11 +279,8 @@ exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
-# exec --no-startup-id blueman-applet
+exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
-#exec --no-startup-id start_conky_maia
-# exec --no-startup-id start_conky_green
-exec --no-startup-id xautolock -time 20 -locker blurlock
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec_always --no-startup-id bash ~/.scripts/keyrate.sh
@@ -320,23 +318,23 @@ set_from_resource $term_color15    color15
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
-	i3bar_command i3bar
+	i3bar_command i3bar --transparency	
 	status_command i3status
 	position top
 	font pango:FiraCode Nerd Font 10
 	separator_symbol |
 
 ## Please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-#	tray_output primary
-#	tray_output eDP1
+	tray_output primary
+	tray_output eDP1
 
 	bindsym button4 nop
 	bindsym button5 nop
     font xft:FiraCode Nerd Font 10
-	strip_workspace_numbers yes
+#	strip_workspace_numbers yes
 
     colors {
-        background #232731
+        background #232731A8
         statusline #9faab8
         separator  #9faab8
 
@@ -351,6 +349,8 @@ bar {
 
 # Hide/unhide i3status bar
 bindsym $mod+m bar mode toggle
+
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 # Theme colors
 #   class                   border  bground text    indicator child_border
@@ -427,3 +427,6 @@ mode "$mode_gaps_outer" {
 
 # Second display on right
 exec_always xrandr --output LVDS1 --mode 1366x768 --pos 1440x132 --rotate normal --output DP1 --off --output HDMI1 --off --output VGA1 --primary --mode 1440x900 --pos 0x0 --rotate normal --output VIRTUAL1 --off
+
+# Just the Notebook Display
+#exec_always xrandr --output LVDS1 --primary --mode 1366x768 --pos 0x0 --rotate normal --output DP1 --off --output HDMI1 --off --output VGA1 --off --output VIRTUAL1 --off
