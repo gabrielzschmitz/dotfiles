@@ -17,6 +17,7 @@ manjaro-ranger-settings
 morc-menu
 palemoon-bin
 nitrogen
+firefox
 #
 #
 #
@@ -32,7 +33,7 @@ stow
 p7zip
 appimagelauncher
 unzip
-ungoogled-chromium (binary in their site)
+librewolf-bin
 xarchiver
 yaourt
 pikaur
@@ -84,8 +85,15 @@ git clone --bare https://www.github.com/gabrielzschmitz/dotfiles $HOME/dotfiles
 config checkout
 config config --local status.showUntrackedFiles no
 ```
+
+GIT:
 # Set git to use the credential memory cache
 git config --global credential.helper cache
 # Set the cache to timeout after 1 hour (setting is in seconds)
 git config --global credential.helper 'cache --timeout=3600'
+
+LIBREWOLF EXTENSIONS:
+DarkCloud
+User Agent Plataform Spoofer
+UBlock Origin
 
