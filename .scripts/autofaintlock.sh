@@ -48,6 +48,6 @@ xautolock		\
 --ignore-empty-password                                 \
 --tiling                				\
 --nofork						\
---image=$HOME/Pictures/Wallpapers/wallpaper-blur.png"	\
+--image=$HOME/Pictures/Wallpapers/cloudywallpaper-blur.png"	\
 -detectsleep						\
 

@@ -270,7 +270,7 @@ bindsym $mod+9 exec --no-startup-id bash ~/.scripts/faintlock.sh
 exec_always --no-startup-id bash ~/.scripts/autofaintlock.sh
 
 # Autostart applications
-exec_always --no-startup-id feh --bg-fill --no-fehbg ~/Pictures/Wallpapers/wallpaper.png
+exec_always --no-startup-id feh --bg-fill --no-fehbg ~/Pictures/Wallpapers/cloudywallpaper.png
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id numlockx on
