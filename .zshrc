@@ -1,7 +1,7 @@
 #   __ _  ____ ___ 
 #  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
 # | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/.dotfiles/
+#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
 #  |___/    
 # 
 # A customized Zsh Config by gabrielzschmitz
@@ -191,4 +191,15 @@ alias lsd='lsd -hA --group-dirs first'
 alias grep='grep --color=auto'
 
 alias config='/usr/bin/git --git-dir=/home/gabrielzschmitz/dotfiles --work-tree=/home/gabrielzschmitz'
+alias celluloid='devour celluloid'
+alias mpv='devour mpv'
+alias feh='devour feh'
+
+export LESS_TERMCAP_mb=$'\e[0;32m'
+export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;41;30m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[0;36m'
 
