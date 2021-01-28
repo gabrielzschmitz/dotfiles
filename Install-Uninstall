@@ -1,7 +1,7 @@
 #   __ _  ____ ___ 
 #  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
 # | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/.dotfiles/
+#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
 #  |___/    
 #
 Uninstall:
@@ -22,6 +22,7 @@ nitrogen
 #
 Install: (Enable AUR and Update Mirrors)
 feh
+devour
 paprefs
 pasystray
 pavucontrol
@@ -29,8 +30,9 @@ lightdm-settings
 node
 stow
 p7zip
+appimagelauncher
 unzip
-vlc
+ungoogled-chromium (binary in their site)
 xarchiver
 yaourt
 pikaur
@@ -76,11 +78,14 @@ Material Icon Theme
 mv ~/.config ~/.config-backup
 mv ~/.zshrc ~/.zshrc-backup
 mkdir -p ~/.config/ ~/Documents/ ~/Pictures/Screenshots/
-echo 'alias config="/usr/bin/git --git-dir=$HOME/Documents/dotfiles/ --work-tree=$HOME"' >> $HOME/.zshrc
 source ~/.zshrc && mv ~/.zshrc ~/.zshrc-backup
 echo "Documents/dotfiles" >> .gitignore
-git clone --bare https://www.github.com/gabrielzschmitz/dotfiles $HOME/Documents/dotfiles
+git clone --bare https://www.github.com/gabrielzschmitz/dotfiles $HOME/dotfiles
 config checkout
 config config --local status.showUntrackedFiles no
 ```
+# Set git to use the credential memory cache
+git config --global credential.helper cache
+# Set the cache to timeout after 1 hour (setting is in seconds)
+git config --global credential.helper 'cache --timeout=3600'
 
