@@ -28,7 +28,7 @@ let g:mkdp_preview_options = {
 let g:mkdp_page_title = '「${name}」'
 let g:mkdp_command_for_global = 1
 let g:mkdp_markdown_css = '~/.config/nvim/colors/faintstyle.css'
-let g:vimwiki_list = [{'path': '~/Documents/Wiki'}]
+let g:vimwiki_list = [{'path': '~/Documents/Wiki', 'diary_rel_path': 'Diary/'}]
 " Calendar config
 au BufRead,BufNewFile *.wiki set filetype=vimwiki
 :autocmd FileType vimwiki map d :VimwikiMakeDiaryNote
