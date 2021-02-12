@@ -27,3 +27,4 @@ let g:startify_lists = [
         \ { 'type': 'dir',              'header': ['    Current Directory '. getcwd()] },
         \ { 'type': 'files',            'header': ['    Files'] },
         \ ]
+
