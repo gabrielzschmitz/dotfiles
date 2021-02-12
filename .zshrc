@@ -83,6 +83,8 @@ alias celluloid='devour celluloid'
 alias mpv='devour mpv'
 alias feh='devour feh'
 alias sxiv='devour sxiv'
+alias bat='bat --theme="base16" --style="numbers,changes"'
+alias cat='bat --theme="base16" --style="numbers,changes"'
 
 # Dennis Ritchie quote
 alias unix='sh ~/.scripts/faintfetch.textart'
