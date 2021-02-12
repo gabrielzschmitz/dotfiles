@@ -1,0 +1,77 @@
+/**
+ * @name Faint
+ * @author gabrielzschmitz
+ * @version 1.0
+ * @description Faint Theme for BetterDiscord based in FrostedGlass by Gibbu
+ * @source https://github.com/Gibbu/BetterDiscord-Themes/tree/master/FrostedGlass
+*/
+
+/* Theme Base */
+@import url('https://discordstyles.github.io/FrostedGlass/base.css');
+
+/* Custom Covers */
+@import url('https://discord-custom-covers.github.io/usrbg/snippets/userPopouts.css');
+@import url('https://discord-custom-covers.github.io/usrbg/snippets/modals.css');
+
+/* BlackBox tags */
+@import url('https://monstrousdev.github.io/themes/addons/user-tags.css');
+
+/* Old Windows Titlebar */
+@import url('https://gibbu.github.io/BetterDiscord-Themes/addons/windows-titlebar.css');
+
+/* Adjustable Server Width */
+@import url('https://gibbu.github.io/BetterDiscord-Themes/AdjustableServerWidth/base.css');
+
+:root {
+  /* Background image variables */
+  --background-image: url('https://raw.githubusercontent.com/gabrielzschmitz/dotfiles/main/Pictures/Wallpapers/cloudywallpaper-blur.png');
+  --background-image-blur: 0px;
+  --background-image-size: cover;
+  --background-image-position: center;
+
+  /* Popout & Modal variables */
+  --popout-modal-image: url('https://raw.githubusercontent.com/gabrielzschmitz/dotfiles/main/Pictures/Wallpapers/cloudywallpaper-blur.png');
+  --popout-modal-blur: 0px;
+  --popout-modal-size: cover;
+  --popout-modal-position: center;
+
+  /* Home image variables */
+  --home-button-image: url('https://gibbu.github.io/BetterDiscord-Themes/FrostedGlass/assets/discord.svg');
+  --home-button-size: cover;
+  --home-button-position: center;
+
+  /* Brightness variables */
+  --serverlist-brightness: 0.1;
+  --left-brightness: 0.1;
+  --middle-brightness: 0;
+  --right-brightness: 0;
+  --popout-modal-brightness: 0;
+
+  /* Gradient variables */
+  --gradient-primary: 59,133,99;
+  --gradient-secondary: 59,133,99;
+  --gradient-direction: 320deg;
+
+  /* Tint variables */
+  --tint-colour: 35,39,49;
+  --tint-brightness: 0.86;
+  
+  /* Font */
+  --font: 'Whitney';
+
+  /* Other variables */
+  --window-padding: 0px;
+  --window-roundness: 0px;
+  --scrollbar-colour: rgba(159,170,184,0.6588235294117647);
+  --link-colour: #469e76;
+  --show-gift-gif-buttons: none;
+
+  /* Adjustable Server Width */
+  --server-icon-size: 38px;
+  --server-icon-spacing: 8px;
+  --server-container-padding: 10px;
+
+  /* Do not touch */
+  --update-notice-1: none;
+}
+
