@@ -85,6 +85,6 @@ alias mpv='devour mpv'
 alias feh='devour feh'
 alias sxiv='devour sxiv'
 
-# Unix quote
+# Dennis Ritchie quote
 sh ~/.scripts/faintfetch.textart
 
