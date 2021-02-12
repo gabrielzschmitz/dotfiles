@@ -65,6 +65,6 @@ font:
     family: FiraCode Nerd Font Mono
     style: Bold Italic
 
-  size: 12
+  size: 10
 
-background_opacity: 0.86
+background_opacity: 0.8
