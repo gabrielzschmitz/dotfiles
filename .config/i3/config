@@ -20,12 +20,6 @@ default_border pixel 1
 default_floating_border normal
 
 # Hide borders
-hide_edge_borders none
-
-# Change borders
-bindsym $mod+u border none
-bindsym $mod+y border pixel 1
-bindsym $mod+n border normal
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -44,51 +38,60 @@ bindsym $mod+Shift+q kill
 # Start program launcher
 bindsym $mod+d exec "dmenu_run -nf '#6f798c' -nb '#232731' -sb '#3b8563' -sf '#9faab8' -fn 'FiraCode Nerd Font Mono-12' -p 'dmenu'"
 
-################################################################################################
-## Sound-Section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
-################################################################################################
-
-#exec --no-startup-id volumeicon
-#bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-#exec --no-startup-id pa-applet
 exec --no-startup-id pulseaudio
 exec --no-startup-id pasystray
 bindsym $mod+Ctrl+m exec pavucontrol
 
-################################################################################################
+# Media Keys
+bindsym XF86AudioLowerVolume    exec "$psst pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl set-sink-mute @DEFAULT_SINK@ 0 $update"
+bindsym XF86AudioRaiseVolume    exec "$psst pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl set-sink-mute @DEFAULT_SINK@ 0 $update"
+bindsym XF86AudioMute           exec "$psst pactl set-sink-mute @DEFAULT_SINK@ toggle $update"
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
 
 # Screen brightness controls
- bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
- bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
 # Start Applications
-bindsym $mod+Ctrl+b exec $myTerm -e 'bmenu'
-bindsym $mod+F2 exec vimb
+bindsym $mod+F2 exec librewolf
 bindsym $mod+F3 exec pcmanfm
 bindsym $mod+Shift+F3 exec pcmanfm_pkexec
 bindsym $mod+F5 exec $myTerm -e 'vis'
 bindsym $mod+F6 exec MellowPlayer
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
+exec_always --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
-bindsym Print exec --no-startup-id scrot -q 100 -e 'mv $f ~/Pictures/'
-bindsym $mod+Shift+Print --release exec --no-startup-id scrot -s -f -b -q 100 -e 'mv $f ~/Pictures/'
-bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
-# Docus_follows_mouse no
+# Printscreen
+bindsym Print exec --no-startup-id sh ~/.scripts/fullscreenshot.sh
+bindsym $mod+Shift+Print --release exec --no-startup-id sh ~/.scripts/selectivescreenshot.sh
+
+# Focus_follows_mouse no
 
 # Change focus
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # Move focused window
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # Workspace back and forth (with/without active container)
 workspace_auto_back_and_forth yes
@@ -96,8 +99,8 @@ bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
 # Split orientation
-bindsym $mod+h split h;exec notify-send 'tile horizontally'
-bindsym $mod+v split v;exec notify-send 'tile vertically'
+bindsym $mod+z split h
+bindsym $mod+v split v
 bindsym $mod+q split toggle
 
 # Toggle fullscreen mode for the focused container
@@ -130,6 +133,8 @@ bindsym $mod+minus scratchpad show
 # Navigate workspaces next / previous
 bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+Ctrl+Left workspace prev
+bindsym $mod+Ctrl+l workspace next
+bindsym $mod+Ctrl+h workspace prev
 
 # Workspace names
 # To display names or symbols instead of plain workspace numbers you can use
@@ -154,6 +159,8 @@ set $ws7 gg
 # Move workspace to monitor
 bindsym Mod1+Shift+Left move workspace to output left
 bindsym Mod1+Shift+Right move workspace to output right
+bindsym Mod1+Shift+h move workspace to output left
+bindsym Mod1+Shift+l move workspace to output right
 
 # Switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -228,7 +235,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+0 mode "$mode_system"
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id bash ~/.scripts/faintlock.sh lock, mode "default"
+    bindsym l exec --no-startup-id sh ~/.scripts/faintlock.sh lock, mode "default"
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
     bindsym u exec --no-startup-id i3exit switch_user, mode "default"
     bindsym e exec --no-startup-id i3exit logout, mode "default"
@@ -266,15 +273,13 @@ mode "resize" {
 }
 
 # Lock screen
-bindsym $mod+9 exec --no-startup-id bash ~/.scripts/faintlock.sh
-exec_always --no-startup-id bash ~/.scripts/autofaintlock.sh
+bindsym $mod+9 exec --no-startup-id sh ~/.scripts/faintlock.sh
+exec_always --no-startup-id sh ~/.scripts/autofaintlock.sh
 
 # Autostart applications
-exec_always --no-startup-id feh --bg-fill --no-fehbg ~/Pictures/Wallpapers/cloudywallpaper.png
+exec_always --no-startup-id xwallpaper --zoom ~/Pictures/Wallpapers/abstract.png
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id numlockx on
-#exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
@@ -283,7 +288,7 @@ exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
-exec_always --no-startup-id bash ~/.scripts/keyrate.sh
+exec_always --no-startup-id sh ~/.scripts/keyrate.sh
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
@@ -327,7 +332,6 @@ bar {
 ## Please set your primary output first. Example: 'xrandr --output eDP1 --primary'
 	tray_output primary
 	tray_output eDP1
-
 	bindsym button4 nop
 	bindsym button5 nop
     font xft:FiraCode Nerd Font 10
@@ -349,8 +353,6 @@ bar {
 
 # Hide/unhide i3status bar
 bindsym $mod+m bar mode toggle
-
-exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 # Theme colors
 #   class                   border  bground text    indicator child_border
