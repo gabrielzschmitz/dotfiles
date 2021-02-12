@@ -54,7 +54,6 @@ zplugin light buonomo/yarn-completion
 
 # Typewritten theme
 export TYPEWRITTEN_COLOR_MAPPINGS="primary:red;secondary:green;accent:green"
-
 fpath+=$HOME/.zsh/typewritten
 autoload -U promptinit; promptinit
 prompt typewritten
@@ -75,7 +74,7 @@ export TERM=xterm-256color
 alias lsd='lsd -hA --group-dirs first'
 alias ls='lsd --group-dirs first'
 alias grep='grep --color=auto'
-alias config='/usr/bin/git --git-dir=/home/gabrielzschmitz/dotfiles --work-tree=/home/gabrielzschmitz'
+alias dots='/usr/bin/git --git-dir=/home/gabrielzschmitz/dotfiles --work-tree=/home/gabrielzschmitz'
 alias vimwiki='nvim ~/Documents/Wiki/index.wiki'
 alias vimwikidiary='nvim ~/Documents/Wiki/Diary/diary.wiki'
 alias zshrc='nvim ~/.zshrc'
@@ -86,5 +85,6 @@ alias feh='devour feh'
 alias sxiv='devour sxiv'
 
 # Dennis Ritchie quote
+alias unix='sh ~/.scripts/faintfetch.textart'
 sh ~/.scripts/faintfetch.textart
 
