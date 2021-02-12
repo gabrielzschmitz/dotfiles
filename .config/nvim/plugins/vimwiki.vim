@@ -11,7 +11,7 @@ set nocompatible
 filetype plugin on
 let g:mkdp_auto_start = 1
 let g:mkdp_auto_close = 1
-let g:mkdp_browser = 'vimb'
+let g:mkdp_browser = 'librewolf'
 let g:mkdp_preview_options = {
     \ 'mkit': {},
     \ 'katex': {},
@@ -31,7 +31,6 @@ let g:mkdp_markdown_css = '~/.config/nvim/colors/faintstyle.css'
 let g:vimwiki_list = [{'path': '~/Documents/Wiki', 'diary_rel_path': 'Diary/'}]
 " Calendar config
 au BufRead,BufNewFile *.wiki set filetype=vimwiki
-:autocmd FileType vimwiki map d :VimwikiMakeDiaryNote
 function! ToggleCalendar()
   execute ":Calendar"
   if exists("g:calendar_open")
@@ -45,5 +44,26 @@ function! ToggleCalendar()
     let g:calendar_open = 1
   end
 endfunction
-:autocmd FileType vimwiki map c :call ToggleCalendar()
+:autocmd FileType vimwiki map <Leader>c :call ToggleCalendar()
+
+let g:vimwiki_key_mappings =
+  \ {
+  \   'all_maps': 1,
+  \   'global': 1,
+  \   'headers': 1,
+  \   'text_objs': 1,
+  \   'table_format': 1,
+  \   'table_mappings': 1,
+  \   'lists': 0,
+  \   'links': 1,
+  \   'html': 1,
+  \   'mouse': 0,
+  \ }
+
+hi VimwikiHeader1 guifg=#a65f69
+hi VimwikiHeader2 guifg=#3b8563
+hi VimwikiHeader3 guifg=#b9637e
+hi VimwikiHeader4 guifg=#b39669
+hi VimwikiHeader5 guifg=#487799
+hi VimwikiHeader6 guifg=#348396
 
