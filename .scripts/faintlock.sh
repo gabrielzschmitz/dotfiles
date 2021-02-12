@@ -52,5 +52,5 @@ i3lock			\
 --ignore-empty-password					\
 --tiling						\
 --nofork						\
---image=$HOME/Pictures/Wallpapers/cloudywallpaper-blur.png	\
+--image=$HOME/Pictures/Wallpapers/abstract-blur.png	\
 
