@@ -32,4 +32,6 @@ Plug 'othree/html5.vim'                                 " Html syntax
 Plug 'hail2u/vim-css3-syntax'                           " Css syntax
 Plug 'pangloss/vim-javascript'                          " Javascript syntax
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Python syntax
+Plug 'mboughaba/i3config.vim'				" i3config highlighting
 call plug#end()
+

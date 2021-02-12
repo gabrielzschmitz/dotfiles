@@ -13,6 +13,9 @@ syntax on
 set cursorline					" Togle's the current line indicator
 set number					" Number line indicator
 set wrap					" Active word warp
+set noswapfile
+set lazyredraw
+set shada="NONE"
 highlight Normal ctermbg=none
 
 " Active 256 true color
@@ -34,4 +37,10 @@ let g:vim_markdown_folding_disabled = 1
 " NeoVim Config
 let mapleader=","
 set hidden
+set viminfo='100,n$HOME/.vim/files/info/viminfo
 
+" i3config File Detection
+aug i3config_ft_detection
+  au!
+  au BufNewFile,BufRead ~/.config/i3/config set filetype=i3config
+aug end
