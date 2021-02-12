@@ -18,63 +18,36 @@ morc-menu
 palemoon-bin
 nitrogen
 firefox
-#
-#
-#
+
 Install: (Enable AUR and Update Mirrors)
-feh
+xwallpaper
+sxiv
 devour
 paprefs
 pasystray
 pavucontrol
 lightdm-settings
 node
-stow
 p7zip
-appimagelauncher
 unzip
 librewolf-bin
 xarchiver
 yaourt
 pikaur
-vscodium-bin
 mellowplayer (soundcloud theme in drive)
 alacritty
-geany
 zsh
 libreoffice-still
-ripcord
 deadbeef
-discord
+better-discord
 neovim
 obs-studio
 qbittorrent
-vimb
-pfetch-git
 yay
-#
-#
-#
+
 Add:
 export STEAM_FRAME_FORCE_CLOSE=1
 to .profile file
-#
-#
-#
-GST Plugins:
-gst-libav
-gst-plugins-good
-#
-#
-#
-VSCode Extensions:
-Color Highlight
-HTML CSS Support
-Live Server
-Prettier - Code formatter
-Base16-Generator
-Material Icon Theme
-
 ```
 mv ~/.config ~/.config-backup
 mv ~/.zshrc ~/.zshrc-backup
