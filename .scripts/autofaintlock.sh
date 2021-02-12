@@ -1,3 +1,9 @@
+#   __ _  ____ ___
+#  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz
+# | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
+#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
+#  |___/
+# 
 #!bin/bash/sh
 
 # Auto lock script of Faint Theme for i3lock-color(https://github.com/Raymo111/i3lock-color) by gabrielzschmitz(https://github.com/gabrielzschmitz)
@@ -11,7 +17,7 @@ K='#5fb98f' # Keystroke
 BLANK='#00000000' # Blank
 
 xautolock		\
--time 5			\
+-time 10			\
 -locker "i3lock         \
 --ringvercolor=$V       \
 --insidevercolor=$B     \
@@ -48,6 +54,6 @@ xautolock		\
 --ignore-empty-password                                 \
 --tiling                				\
 --nofork						\
---image=$HOME/Pictures/Wallpapers/cloudywallpaper-blur.png"	\
+--image=$HOME/Pictures/Wallpapers/abstract-blur.png"	\
 -detectsleep						\
 
