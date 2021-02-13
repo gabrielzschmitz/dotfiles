@@ -4,7 +4,7 @@
 #  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
 #  |___/    
 #
-#!bin/bash/sh
+#!bin/sh
 
 # Increase the default key speed rate (for nvim)
 xset r rate 300 50

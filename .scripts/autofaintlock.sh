@@ -4,7 +4,7 @@
 #  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
 #  |___/
 # 
-#!bin/bash/sh
+#!bin/sh
 
 # Auto lock script of Faint Theme for i3lock-color(https://github.com/Raymo111/i3lock-color) by gabrielzschmitz(https://github.com/gabrielzschmitz)
 

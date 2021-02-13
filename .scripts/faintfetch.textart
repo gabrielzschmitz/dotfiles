@@ -1,5 +1,4 @@
 #!/bin/sh
-
 #                     ,_ ,_==▄▂
 #                  ,  ▂▃▄▄▅▅▅▂▅¾.            /    /
 #                   ▄▆<´  "»▓▓▓%\       / /   / /
@@ -21,7 +20,7 @@
 #     ;,                l
 
 # File:                  faintfetch.textart
-# Description:           Jack Tramiel quote from Tech Heroes series
+# Description:           Dennis Ritchie quote from Tech Heroes series
 # Author:                Sander Focus
 #                        └─ https://sanderfocus.nl
 # Converted to shell:    #nixers
@@ -36,8 +35,6 @@
 #                        └─ https://github.com/NNBnh/nnbs-text-art/blob/main/other/unix.textart
 #			 This file is from gabrielzschmitz dotfiles
 #			 https://github.com/gabrielzschmitz/dotfiles/
-
-# 255-15 20-12 199-13 32-12 34-2 240-8 118-2 16-0 160-9 39-14 45-14 196-9 121-13 25-12 246-8
 
 # Start
 printf "                    \033[38;5;15m,_ ,_==▄▂\033[0m

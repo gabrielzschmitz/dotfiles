@@ -4,7 +4,7 @@
 #  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
 #  |___/
 #
-#!bin/bash/sh
+#!bin/sh
 
 scrot print-input.png		\
 --quality 100			\
