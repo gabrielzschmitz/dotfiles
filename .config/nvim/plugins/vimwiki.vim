@@ -27,8 +27,10 @@ let g:mkdp_preview_options = {
     \ }
 let g:mkdp_page_title = '「${name}」'
 let g:mkdp_command_for_global = 1
-let g:mkdp_markdown_css = '~/.config/nvim/colors/faintstyle.css'
-let g:vimwiki_list = [{'path': '~/Documents/Wiki', 'diary_rel_path': 'Diary/'}]
+let g:vimwiki_list = [{'path': '~/Documents/Wiki', 'diary_rel_path': 'Diary/', 'syntax': 'markdown', 'ext': '.md'}]
+let g:mkdp_markdown_css = '$HOME/Documents/Wiki/darkgithub.css'
+let g:vimwiki_global_ext = 0
+
 " Calendar config
 au BufRead,BufNewFile *.wiki set filetype=vimwiki
 function! ToggleCalendar()
