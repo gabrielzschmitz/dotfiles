@@ -1,0 +1,13 @@
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set page-padding 1
+
+map p print
+map i recolor
+
+set recolor
+set recolor-lightcolor \rgba(35,39,49,0)
+set recolor-darkcolor \#9FAAB8
+set recolor-keephue
+set default-bg \rgba(35,39,49,0.8)
+set statusbar-bg \#1b1e26
