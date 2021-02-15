@@ -43,6 +43,7 @@ echo "alias dots='/usr/bin/git --git-dir=$HOME/Documents/dotfiles --work-tree=$H
 source ~/.zshrc
 echo "$HOME/Documents/dotfiles" >> .gitignore
 git clone --bare https://www.github.com/gabrielzschmitz/dotfiles.git $HOME/Documents/dotfiles
+
 ('rm' and 'rm -rf' all the files/folders that are making it impossible to checkout)
 dots checkout
 dots config --local status.showUntrackedFiles no
