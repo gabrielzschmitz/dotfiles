@@ -39,7 +39,7 @@
 For all the programs (unless for Ripcord, VSCode, Firefox and DuckDuckGo, for them read the related tutorials)
 
 ```shell
-echo "alias dots='/usr/bin/git --git-dir=$HOME/Documents/dotfiles --work-tree=/home/gabrielzschmitz'" >> $HOME/.zshrc
+echo "alias dots='/usr/bin/git --git-dir=$HOME/Documents/dotfiles --work-tree=$HOME'" >> $HOME/.zshrc
 source ~/.zshrc
 echo "$HOME/Documents/dotfiles" >> .gitignore
 git clone --bare https://www.github.com/gabrielzschmitz/dotfiles.git $HOME/Documents/dotfiles
