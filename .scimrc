@@ -1,0 +1,13 @@
+#   __ _  ____ ___ 
+#  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
+# | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
+#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
+#  |___/    
+# 
+color "type=HEADINGS fg=BLACK bg=GREEN"
+color "type=CELL_SELECTION fg=BLACK bg=WHITE bold=1"
+set xlsx_readformulas
+set autocalc
+set filename_with_mode
+set PAD=1
+
