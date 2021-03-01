@@ -12,5 +12,5 @@ source $HOME/.config/nvim/general.vim
 source $HOME/.config/nvim/plugins/vimwiki.vim
 source $HOME/.config/nvim/plugins/nerdtree.vim
 source $HOME/.config/nvim/plugins/startify.vim
-source $HOME/.config/nvim/plugins/rnvimr.vim
+source $HOME/.config/nvim/plugins/lf.vim
 

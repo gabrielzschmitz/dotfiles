@@ -9,7 +9,7 @@
 
 call plug#begin('~/.config/nvim/plugged')
 " General
-Plug 'prettier/vim-prettier'                            " Code formater
+Plug 'prettier/vim-prettier'                            " Code formatter
 Plug 'neoclide/coc.nvim', {'branch': 'release'}         " Code snippet
 Plug 'ap/vim-css-color'                                 " Show colors
 Plug 'itchyny/lightline.vim'                            " Lightline
@@ -18,6 +18,8 @@ Plug 'mhinz/vim-startify'                               " Better NVim start scre
 
 " File Explorers
 Plug 'preservim/nerdtree'                               " File explorer in NVim
+Plug 'ptzz/lf.vim'					" LF file manager in NVim
+Plug 'voldikss/vim-floaterm'				" Make LF a floating window
 
 " Vim Wiki
 Plug 'vimwiki/vimwiki'                                  " Vim Wiki

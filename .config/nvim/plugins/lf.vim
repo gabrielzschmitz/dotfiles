@@ -4,8 +4,8 @@
 "  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
 "  |___/
 "
-" $HOME/.config/nvim/plugins/rnvimr.vim
+" $HOME/.config/nvim/plugins/lf.vim
 "
-
-let g:rnvimr_enable_ex = 1              " Make Ranger replace Netrw and be the file explorer
-nmap <space>r :RnvimrToggle<CR>         " Remap Ranger Toggle
+let g:NERDTreeHijackNetrw = 0 " Add this line if you use NERDTree
+let g:lf_replace_netrw = 1 " Open lf when vim opens a directory
+let g:lf_command_override = 'lf -command "set hidden"'
