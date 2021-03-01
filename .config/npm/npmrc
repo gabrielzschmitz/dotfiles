@@ -1,0 +1,10 @@
+#   __ _  ____ ___ 
+#  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
+# | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
+#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
+#  |___/    
+# 
+prefix=${XDG_DATA_HOME}/npm
+cache=${XDG_CACHE_HOME}/npm
+tmp=${XDG_RUNTIME_DIR}/npm
+init-module=${XDG_CONFIG_HOME}/npm/config/npm-init.js
