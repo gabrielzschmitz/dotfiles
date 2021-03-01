@@ -1,3 +1,9 @@
+#   __ _  ____ ___ 
+#  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
+# | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
+#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
+#  |___/    
+#
 #!/bin/sh
 #                     ,_ ,_==▄▂
 #                  ,  ▂▃▄▄▅▅▅▂▅¾.            /    /
@@ -59,3 +65,4 @@ printf "                    \033[38;5;15m,_ ,_==▄▂\033[0m
 
 
 exit 0
+
