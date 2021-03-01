@@ -69,3 +69,10 @@ hi VimwikiHeader4 guifg=#b39669
 hi VimwikiHeader5 guifg=#487799
 hi VimwikiHeader6 guifg=#348396
 
+" spell-check
+au BufRead,BufNewFile *.md set filetype=markdown
+:autocmd FileType markdown set spell spelllang=pt_br
+:autocmd FileType markdown set norelativenumber
+map <Leader>en :set spelllang=en_us<CR>
+map <Leader>br :set spelllang=pt_br<CR>
+
