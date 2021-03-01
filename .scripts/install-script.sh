@@ -8,54 +8,68 @@
 
 # Installation Script for Artix Base Install
 # by gabrielzschmitz(https://github.com/gabrielzschmitz)
-# Before running the script install yay manually
+# Before running the script install paru and enable AUR manually
 
-# Remove Programs
-# pacman -Rsnu --noconfirm cmus;
-# pacman -Rsnu --noconfirm mousepad;
-# pacman -Rsnu --noconfirm bmenu;
-# pacman -Rsnu --noconfirm conky;
-# pacman -Rsnu --noconfirm conky-i3;
-# pacman -Rsnu --noconfirm i3-default-artwork;
-# pacman -Rsnu --noconfirm manjaro-zsh-config;
-# pacman -Rsnu --noconfirm manjaro-browser-settings;
-# pacman -Rsnu --noconfirm morc-menu;
-# pacman -Rsnu --noconfirm palemoon-bin;
-# pacman -Rsnu --noconfirm pacui;
-# pacman -Rsnu --noconfirm nitrogen;
-# pacman -Rsnu --noconfirm firefox;
+# paru
+# sudo pacman -S --needed base-devel
+# git clone https://aur.archlinux.org/paru.git "$HOME/.local/share/paru"
+# cd $HOME/.local/share/paru
+# makepkg -si
 
-# Enable AUR and Update Mirrors
-sudo -u	gabrielzschmitz \
-yay -Syu --nocleanmenu --noeditmenu --nodiffmenu --cleanafter --useask	\
+# enable colors in paru (and pacman)
+# sudo nvim /etc/pacman.conf
+# uncomment "Color" line
+
+# Install all the programs with paru
+paru -Syu --cleanafter --useask	\
+polybar			\
+cmatrix			\
+scrot			\
+alacritty		\
+arandr			\
+bat			\
+dunst			\
+exiv2			\
+gcolor2			\
+git			\
+i3lock-color		\
+lf			\
+lsd			\
+lxappearance		\
+yarn			\
+pandoc			\
+texlive-core		\
+pfetch-git		\
+picom			\
+polkit-gnome		\
+sddm-sugar-candy-git	\
+tty-clock		\
+xautolock		\
+xclip			\
+xdotool			\
+zathura			\
 xwallpaper-git		\
 devour			\
 mellowplayer		\
 betterdiscord		\
 betterdiscordctl-git	\
-librewolf-bin;		\
-yay -Syu --nocleanmenu --noeditmenu --nodiffmenu --cleanafter --useask	\
+librewolf-bin		\
 sxiv			\
 nodejs			\
 paprefs			\
 pasystray		\
 pavucontrol		\
-lightdm-settings	\
-p7zip			\
-unzip			\
 xarchiver		\
 alacritty		\
 zsh			\
-libreoffice-fresh	\
-deadbeef		\
 neovim			\
 obs-studio		\
 qbittorrent		\
-yay			\
+paru			\
 discord;		\
 
 # Make Steam close to system tray
-echo "export STEAM_FRAME_FORCE_CLOSE=1" >> .profile
+# echo "export STEAM_FRAME_FORCE_CLOSE=1" >> .profile
 
 # Git
 # Set git to use the credential memory cache
