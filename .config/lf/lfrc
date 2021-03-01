@@ -1,0 +1,4 @@
+set hidden true
+set drawbox true
+set icons true
+map <enter> $$EDITOR "$f"
