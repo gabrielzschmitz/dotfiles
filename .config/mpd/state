@@ -1,0 +1,170 @@
+sw_volume: 60
+audio_device_state:1:pulse audio
+audio_device_state:1:my_fifo
+state: play
+current: 93
+time: 112.773000
+random: 1
+repeat: 0
+single: 0
+consume: 0
+crossfade: 5
+mixrampdb: 0.000000
+mixrampdelay: -1.000000
+playlist_begin
+0:@jimmy2_ - apology.mp3
+1:3 7 13 - sometimes things change.mp3
+2:arruda - agony (feat lil mini).mp3
+3:arruda - anxiety.mp3
+4:BIN - Mira Laser (Chediak Remix).mp3
+5:Brasil Grime Show - CHEDIAK DJ SET.mp3
+6:BROONO - LOST ROOM.mp3
+7:CASHMERE CAT - With Me.mp3
+8:Chediak - bye bye navigator (mashup).mp3
+9:Chediak - Crônicas do Meu Ego.mp3
+10:Chediak - IM HERE.mp3
+11:Chediak - In The Name Of Love (Chediak Remix).mp3
+12:Chediak - Light.mp3
+13:Chediak - LOST ROOM 001.mp3
+14:Chediak - Not Lost. (Exploring).mp3
+15:Chediak - ontem a noite (cover).mp3
+16:Chediak - runnin_ thru the 7th with del rey (mashup).mp3
+17:Chediak - We could beat yoshi island together (Original mix).mp3
+18:Chediak - Where_d You Go (I Miss You).mp3
+19:Chediak - With You (ft. Elisa Chediak).mp3
+20:Chediak X VHOOR - Quizás.mp3
+21:Crywolf - ULTRAVIØLENT [adrenochrome] (slashrr Remix).mp3
+22:Danni Carlos - coisas que eu sei remix (w allex).mp3
+23:DKVPZ - Bonde Do Neo Soul (Chediak Remix).mp3
+24:DKVPZ - Quando Você Chegar.mp3
+25:DKVPZ - Só de portãozinho.mp3
+26:DZZ - The Fairy_s Wish.mp3
+27:enzo dicarlo - corro na cidade (feat. 33).mp3
+28:enzo dicarlo - feelingssss.mp3
+29:enzo dicarlo - fica tranquila.mp3
+30:enzo dicarlo - LOST ROOM.mp3
+31:enzo dicarlo - mel.mp3
+32:enzo dicarlo - Não Vai.mp3
+33:enzo dicarlo - Need Chill.mp3
+34:enzo dicarlo - para de caô.mp3
+35:enzo dicarlo - paris (feat. josefe).mp3
+36:enzo dicarlo - Passinho.mp3
+37:enzo dicarlo - Por Cima.mp3
+38:enzo dicarlo - Sacanagem (ft. Chediak).mp3
+39:enzo dicarlo - sem flow ft. rodrigo zin, adieu, siara.mp3
+40:enzo dicarlo - senta.mp3
+41:enzo dicarlo - Você.mp3
+42:Flume - Rushing Back (ft. Vera Blue) [slashrr Remix].mp3
+43:førget - hell.mp3
+44:Ginseng - your heart was once like mine.mp3
+45:Injury Reserve - New Hawaii (slashrr Remix).mp3
+46:Jaca Beats - Vem Me Satisfazer.mp3
+47:JLZ - Movimento.mp3
+48:Kehlani - Gangsta (Aosmos Flip).mp3
+49:Kendrick Lamar - HUMBLE. (Skrillex Remix).mp3
+50:LEALL - Cachorrada ft. VND ( b o u t  ukg remix ).mp3
+51:lido - crazy (enzo dicarlo remix).mp3
+52:Lil Peep - absolute in doubt w wicca phase springs eternal (prod. foxwedding).mp3
+53:Lil Peep - Awful Things ft. Lil Tracy (prod. by smokeasac x IIVI).mp3
+54:Lil Peep - beamer boy.mp3
+55:Lil Peep - beamerboy (prod. nedarb nagrom).mp3
+56:Lil Peep - Beat It.mp3
+57:Lil Peep - benz truck (prod. smokeasac).mp3
+58:Lil Peep - Better Off [Dying] (prod. by smokeasac _ IIVI).mp3
+59:Lil Peep - Cry Alone.mp3
+60:Lil Peep - crybaby (prod. lederrick x lil peep).mp3
+61:Lil Peep - Cut Myself (Extended).mp3
+62:Lil Peep - driveway (prod. smokeasac).mp3
+63:Lil Peep - Five Degrees.mp3
+64:Lil Peep - Give U The Moon.mp3
+65:Lil Peep - giving girls cocaine w lil tracy (prod. horsehead).mp3
+66:Lil Peep - haunt u.mp3
+67:Lil Peep - Its Me.mp3
+68:Lil Peep - Life Is Beautiful.mp3
+69:Lil Peep - love letter (prod. charlie shuffler).mp3
+70:Lil Peep - nineteen (prod. smokeasac).mp3
+71:Lil Peep - Problems (prod. by smokeasac _ IIVI).mp3
+72:Lil Peep - right here w horse head (prod. nedarb).mp3
+73:Lil Peep - Save That Shit (prod. by smokeasac _ IIVI).mp3
+74:Lil Peep - Save that shit.mp3
+75:Lil Peep - Sex With My Ex.mp3
+76:Lil Peep - star shopping (prod. kryptik).mp3
+77:Lil Peep - Star Shopping.mp3
+78:Lil Peep - the brightside (prod. smokeasac).mp3
+79:Lil Peep - the way i see things (prod. kryptik).mp3
+80:Lil Peep - walk away as the door slams w lil tracy (prod. yung cortex).mp3
+81:Lil Peep - witchblades (ft. Lil Tracy).mp3
+82:Lil Peep x Lil Tracy - backseat (prod. smokeasac).mp3
+83:Madonna - Hung Up (Chediak _HYPERDRIVE_ Remix).mp3
+84:Maffalda - Aqui Na Base (clássicos maffalda 1997).mp3
+85:Maffalda - depois que eu conheci o mandela.mp3
+86:Maffalda - Macete.mp3
+87:Maffalda - mixtape pra você ouvir enquanto sente saudade da pessoa amada.mp3
+88:Maffalda - Rosa Norte ft. Vhoor.mp3
+89:Maffalda - Vacilão (Original Mix).mp3
+90:Maffalda - we pretend it_s 2013.mp3
+91:MC Livinho - Fazer Falta (Kel _ FURACÃO 5555 Remix).mp3
+92:meiaum _ Rafelps - RUN.mp3
+93:meiaum - LOST BOYS + FRIENDS.mp3
+94:meiaum - With You.mp3
+95:Message To Bears - Mountains (Chediak Flip).mp3
+96:Mu540 - BALINHA VIP w MC Larisson _ MC Flavinho.mp3
+97:niLL _ Yung Buda - Nego Drama parte 2 Prod. O Adotado.mp3
+98:oak - unforgettable.mp3
+99:OHGODDC - christma is over.mp3
+100:Recayd Mob - Plaqtudum (Chediak Remix).mp3
+101:Sadkey - Ought (slashrr Remix).mp3
+102:Skrillex - Coast Is Clear with Chance the Rapper and The Social Experiment.mp3
+103:slashrr - Adrift.mp3
+104:slashrr - Awaken (feat. Ardlez).mp3
+105:slashrr - Between The Sun And I (feat. Ardlez).mp3
+106:slashrr - clocks.mp3
+107:slashrr - GINCANA DOS BEAT #1.mp3
+108:slashrr - LOST BOYS + FRIENDS.mp3
+109:slashrr - LOST ROOM.mp3
+110:slashrr - slow hours.mp3
+111:slashrr - UNREAL(CHAOS ULTIMATE BEAT CONTEST).mp3
+112:SUICIDEBOYS - KILL YOURSELF (Part III).mp3
+113:SUICIDEBOYS - NEW CHAINS, SAME SHACKLES.mp3
+114:SUICIDEBOYS - PARIS.mp3
+115:SUICIDEBOYS x POUYA - RUNNIN_ THRU THE 7TH WITH MY WOADIES.mp3
+116:Sunson - Caideira.mp3
+117:thunder6 - flicker.mp3
+118:thunder6 - toto.mp3
+119:TIN - Ticking (slashrr Remix).mp3
+120:toulth - coisas que eu sei (w allex).mp3
+121:Travis Scott - SICKO MODE (Skrillex Remix).mp3
+122:Tuyo - Solamento (Chediak _ Maffalda Remix).mp3
+123:Tyler The Creator - SEE YOU AGAIN featuring Kali Uchis.mp3
+124:verzache - attached.mp3
+125:verzache - hiccup.mp3
+126:verzache - Losing My Love.mp3
+127:What So Not - Gemini Ft. George Maple (Ekali Remix).mp3
+128:XXXTENTACION - I spoke to the devil in miami he said everything would be fine.mp3
+129:XXXTENTACION - KING.mp3
+130:XXXTENTACION - Never.mp3
+131:XXXTENTACION - Riot.mp3
+132:XXXTENTACION - Teeth.mp3
+133:XXXTENTACION - whoa (mind in awe) (Instrumental).mp3
+134:XXXTENTACION - WingRiddenAngel.mp3
+135:Yung Buda - 7K.mp3
+136:Yung Buda - Akatsuki de Vila, Pt. II.mp3
+137:Yung Buda - Akatsuki de Vila.mp3
+138:Yung Buda - Anbu.mp3
+139:Yung Buda - Autobahn (Tempo).mp3
+140:Yung Buda - Autumn Ring Mini (Sozinho no Touge).mp3
+141:Yung Buda - Hacker Dresscode.mp3
+142:Yung Buda - Jesus Chorou Pt. II.mp3
+143:Yung Buda - Light On.mp3
+144:Yung Buda - Madrugada Dos Mortos.mp3
+145:Yung Buda - New Wave.mp3
+146:Yung Buda - Ninja.mp3
+147:Yung Buda - O Segredo Além Do Jardim.mp3
+148:Yung Buda - Piloto.mp3
+149:Yung Buda - Riders.mp3
+150:Yung Buda - Sem Sinal.mp3
+151:Yung Buda - The Storm.mp3
+152:Yung Buda x niLL - Go Home (Very Rare).mp3
+153:Yung Lixo - Syphon Filter (feat. Yung Buda).mp3
+154:Zebu _ Jão - Medo Bobo (FURACÃO 5555 Remix).mp3
+playlist_end
