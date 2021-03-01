@@ -47,6 +47,17 @@ colors:
     cyan:    '#3C97AD'
     white:   '#9faab8'
 
+  # Dim colors
+  dim:
+    black:   '#232731'
+    red:     '#a65f69'
+    green:   '#3b8563'
+    yellow:  '#C7A775'
+    blue:    '#487799'
+    magenta: '#b9637e'
+    cyan:    '#348396'
+    white:   '#6f798c'
+
   # Change font styles
 font:
   normal:
@@ -67,4 +78,4 @@ font:
 
   size: 10
 
-background_opacity: 0.8
+background_opacity: 1
