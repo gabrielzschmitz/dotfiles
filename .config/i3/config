@@ -13,7 +13,7 @@
 set $mod Mod4
 
 # set default desktop layout (default is tiling)
-# workspace_layout tabbed <stacking|tabbed>
+workspace_layout default
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
 default_border pixel 1
@@ -46,10 +46,11 @@ bindsym $mod+Ctrl+m exec pavucontrol
 bindsym XF86AudioLowerVolume    exec "$psst pactl set-sink-volume @DEFAULT_SINK@ -5% && pactl set-sink-mute @DEFAULT_SINK@ 0 $update"
 bindsym XF86AudioRaiseVolume    exec "$psst pactl set-sink-volume @DEFAULT_SINK@ +5% && pactl set-sink-mute @DEFAULT_SINK@ 0 $update"
 bindsym XF86AudioMute           exec "$psst pactl set-sink-mute @DEFAULT_SINK@ toggle $update"
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioPlay exec mpc toggle
+bindsym XF86AudioStop exec mpc stop
+bindsym XF86AudioNext exec mpc next
+bindsym XF86AudioPrev exec mpc prev
+exec_always mpd
 
 # Screen brightness controls
 bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
@@ -58,18 +59,18 @@ bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness 
 # Start Applications
 bindsym $mod+F2 exec librewolf
 bindsym $mod+F3 exec pcmanfm
-bindsym $mod+Shift+F3 exec $myTerm -e 'sudo pcmanfm'
+bindsym $mod+Shift+F3 exec "sudo pcmanfm"
+#bindsym $mod+Shift+F3 exec $myTerm --title 'lf' -e 'lf'
 bindsym $mod+F5 exec $myTerm -e 'vis'
 bindsym $mod+F6 exec MellowPlayer
 bindsym $mod+p exec --no-startup-id pkill picom
 bindsym $mod+Ctrl+p exec --no-startup-id picom --experimental-backends -b
-exec_always --no-startup-id picom --experimental-backends -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # Printscreen
-bindsym Print exec --no-startup-id sh ~/.scripts/fullscreenshot.sh
-bindsym $mod+Shift+Print --release exec --no-startup-id sh ~/.scripts/selectivescreenshot.sh
+bindsym Print exec --no-startup-id sh $HOME/.scripts/fullscreenshot.sh
+bindsym $mod+Shift+Print --release exec --no-startup-id sh $HOME/.scripts/selectivescreenshot.sh
 
 # Focus_follows_mouse no
 
@@ -190,6 +191,9 @@ bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
 
 # Open specific applications in floating mode
+for_window [class="Pcmanfm"] floating enable
+for_window [class="Xfce4-power-manager-settings"] floating enable
+for_window [title="lf"] floating enable
 for_window [title="alsamixer"] floating enable border pixel 1
 for_window [class="calamares"] floating enable border normal
 for_window [class="Clipgrab"] floating enable
@@ -291,43 +295,47 @@ exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
+exec_always --no-startup-id picom --experimental-backends -b
 exec_always --no-startup-id sh ~/.scripts/keyrate.sh
 
 # Displays Config
 # Second display on left
 #exec_always xrandr --output LVDS1 --mode 1366x768 --pos 0x132 --rotate normal --output VGA1 --primary --mode 1440x900 --pos 1366x0 --rotate normal
 # Second display on right
-exec_always xrandr --output LVDS1 --mode 1366x768 --pos 1440x132 --rotate normal --output DP1 --off --output HDMI1 --off --output VGA1 --primary --mode 1440x900 --pos 0x0 --rotate normal --output VIRTUAL1 --off
+exec_always xrandr --output LVDS1 --mode 1366x768 --pos 1440x132 --rotate normal --output VGA1 --primary --mode 1440x900 --pos 0x0 --rotate normal
 # Just the Notebook Display
 #exec_always xrandr --output LVDS1 --primary --mode 1366x768 --pos 0x0 --rotate normal --output VGA1 --off
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
-bar {
-	i3bar_command i3bar --transparency	
-	status_command i3status
-	position top
-	font pango:FiraCode Nerd Font 10
-	separator_symbol |
-	tray_output primary
-	tray_output eDP1
-	bindsym button4 nop
-	bindsym button5 nop
-    font xft:FiraCode Nerd Font 10
-#	strip_workspace_numbers yes
+#bar {
+#	i3bar_command i3bar --transparency	
+#	status_command i3status
+#	position top
+#	font pango:FiraCode Nerd Font 10
+#	separator_symbol |
+#	tray_output primary
+#	tray_output eDP1
+#	bindsym button4 nop
+#	bindsym button5 nop
+#    font xft:FiraCode Nerd Font 10
+##	strip_workspace_numbers yes
+#
+#    colors {
+#        background #232731A8
+#        statusline #9faab8
+#        separator  #9faab8
+#
+##                          border  backgr. text
+#        focused_workspace  #6f798c #6f798c #20242d
+#        active_workspace   #232731 #6f798c #9faab8
+#        inactive_workspace #232731 #232731 #6f798c
+#        urgent_workspace   #a65f69 #a65f69 #9faab8
+#        binding_mode       #a65f69 #a65f69 #9faab8
+#    }
+#}
 
-    colors {
-        background #232731A8
-        statusline #9faab8
-        separator  #9faab8
-
-#                          border  backgr. text
-        focused_workspace  #6f798c #6f798c #20242d
-        active_workspace   #232731 #6f798c #9faab8
-        inactive_workspace #232731 #232731 #6f798c
-        urgent_workspace   #a65f69 #a65f69 #9faab8
-        binding_mode       #a65f69 #a65f69 #9faab8
-    }
-}
+# Polybar
+exec_always --no-startup-id sh $HOME/.config/polybar/launch.sh 
 
 # Hide/unhide i3status bar
 bindsym $mod+m bar mode toggle
