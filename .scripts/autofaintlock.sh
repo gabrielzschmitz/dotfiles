@@ -17,7 +17,7 @@ K='#5fb98f' # Keystroke
 BLANK='#00000000' # Blank
 
 xautolock		\
--time 10			\
+-time 15		\
 -locker "i3lock         \
 --ringvercolor=$V       \
 --insidevercolor=$B     \
@@ -55,5 +55,4 @@ xautolock		\
 --tiling                				\
 --nofork						\
 --image=$HOME/Pictures/Wallpapers/abstract-blur.png"	\
--detectsleep						\
 
