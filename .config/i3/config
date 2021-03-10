@@ -36,8 +36,9 @@ bindsym $mod+Return exec $myTerm
 bindsym $mod+Shift+q kill
 
 # Start program launcher
-bindsym $mod+d exec "dmenu_run -nf '#6f798c' -nb '#232731' -sb '#3b8563' -sf '#9faab8' -fn 'FiraCode Nerd Font Mono-12' -p 'dmenu'"
+bindsym $mod+d exec "dmenu_run -p 'dmenu'"
 
+exec_always --no-startup-id kdeconnect-indicator
 exec --no-startup-id pulseaudio
 exec --no-startup-id pasystray
 bindsym $mod+Ctrl+m exec pavucontrol
@@ -50,6 +51,8 @@ bindsym XF86AudioPlay exec mpc toggle
 bindsym XF86AudioStop exec mpc stop
 bindsym XF86AudioNext exec mpc next
 bindsym XF86AudioPrev exec mpc prev
+bindsym $mod+F10 exec mpc volume -2
+bindsym $mod+F11 exec mpc volume +2
 exec_always mpd
 
 # Screen brightness controls

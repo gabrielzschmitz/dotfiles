@@ -9,7 +9,7 @@
 # A script to copy latin characters in a us keyboard by gabrielzschmitz.
 
 # Get user selection via dmenu from latin file.
-chosen=$(cut -d ';' -f1 ~/.scripts/latin | dmenu -nf '#6f798c' -nb '#232731' -sb '#3b8563' -sf '#9faab8' -fn 'FiraCode Nerd Font-12' -p 'latin' -i -l 15 | sed "s/ .*//")
+chosen=$(cut -d ';' -f1 ~/.scripts/latin | dmenu -p 'latin' -l 15 | sed "s/ .*//")
 
 # Exit if none chosen.
 [ -z "$chosen" ] && exit
