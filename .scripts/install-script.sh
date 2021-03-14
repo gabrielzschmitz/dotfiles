@@ -25,7 +25,7 @@ paru -Syu --cleanafter --useask	\
 polybar			\
 cmatrix			\
 scrot			\
-alacritty		\
+alacritty-ligatures	\
 arandr			\
 bat			\
 dunst			\
@@ -50,6 +50,7 @@ xdotool			\
 zathura			\
 xwallpaper-git		\
 devour			\
+kdeconnect		\
 mellowplayer		\
 betterdiscord		\
 betterdiscordctl-git	\
@@ -60,12 +61,10 @@ paprefs			\
 pasystray		\
 pavucontrol		\
 xarchiver		\
-alacritty		\
 zsh			\
 neovim			\
 obs-studio		\
 qbittorrent		\
-paru			\
 discord;		\
 
 # Make Steam close to system tray
