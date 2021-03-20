@@ -8,10 +8,10 @@
  */
 
 configuration {
-	font:							"Fantasque Sans Mono 10";
+	font:							"FiraCode Nerd Font 11";
     show-icons:                     true;
-	icon-theme: 					"Papirus";
-    display-drun: 					"";
+	icon-theme: 					"FiraCode Nerd Font";
+    display-drun: 					"";
     drun-display-format:            "{name}";
     disable-history:                false;
     fullscreen:                     false;

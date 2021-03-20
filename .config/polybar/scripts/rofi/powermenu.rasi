@@ -8,9 +8,9 @@
  */
 
 configuration {
-	font:							"Fantasque Sans Mono 10";
+	font:							"FiraCode Nerd Font 10";
     show-icons:                     true;
-	icon-theme: 					"Papirus";
+	icon-theme: 					"FiraCode Nerd Font";
     drun-display-format:            "{name}";
     disable-history:                false;
     fullscreen:                     false;
@@ -46,7 +46,7 @@ textbox-prompt-colon {
 	background-color: 				@al;
 	text-color: 					@bar;
 	expand: false;
-	str: "";
+	str: "";
 }
 
 entry {
