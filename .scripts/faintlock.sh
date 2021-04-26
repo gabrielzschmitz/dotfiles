@@ -50,7 +50,7 @@ i3lock			\
 --wrongsize=30			\
 \
 --ignore-empty-password					\
---tiling						\
 --nofork						\
---image=$HOME/Pictures/Wallpapers/abstract-blur.png	\
+--centered						\
+--image=$HOME/Pictures/Wallpapers/sandabstract-blur.png	\
 

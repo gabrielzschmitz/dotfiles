@@ -14,16 +14,16 @@
 getmount() { \
 	[ -z "$chosen" ] && exit 1
         # shellcheck disable=SC2086
-	mp="$(find $1 2>/dev/null | dmenu -nf '#6f798c' -nb '#232731' -sb '#3b8563' -sf '#9faab8' -fn 'FiraCode Nerd Font-12' -i -p "Type in mount point.")" || exit 1
+	mp="$(find $1 2>/dev/null | dmenu -p "Type in mount point.")" || exit 1
 	[ "$mp" = "" ] && exit 1
 	if [ ! -d "$mp" ]; then
-		mkdiryn=$(printf "No\\nYes" | dmenu -nf '#6f798c' -nb '#232731' -sb '#3b8563' -sf '#9faab8' -fn 'FiraCode Nerd Font-12' -i -p "$mp does not exist. Create it?") || exit 1
+		mkdiryn=$(printf "No\\nYes" | dmenu -p "$mp does not exist. Create it?") || exit 1
 		[ "$mkdiryn" = "Yes" ] && (mkdir -p "$mp" || sudo -A mkdir -p "$mp")
 	fi
 	}
 
 mountusb() { \
-	chosen="$(echo "$usbdrives" | dmenu -nf '#6f798c' -nb '#232731' -sb '#3b8563' -sf '#9faab8' -fn 'FiraCode Nerd Font-12' -i -p "Mount which drive?")" || exit 1
+	chosen="$(echo "$usbdrives" | dmenu -p "Mount which drive?")" || exit 1
 	chosen="$(echo "$chosen" | awk '{print $1}')"
 	sudo -A mount "$chosen" 2>/dev/null && notify-send "💻 USB mounting" "$chosen mounted." && exit 0
 	alreadymounted=$(lsblk -nrpo "name,type,mountpoint" | awk '$3!~/\/boot|\/home$|SWAP/&&length($3)>1{printf "-not ( -path *%s -prune ) ",$3}')
@@ -38,17 +38,17 @@ mountusb() { \
 	}
 
 mountandroid() { \
-	chosen="$(echo "$anddrives" | dmenu -nf '#6f798c' -nb '#232731' -sb '#3b8563' -sf '#9faab8' -fn 'FiraCode Nerd Font-12' -i -p "Which Android device?")" || exit 1
+	chosen="$(echo "$anddrives" | dmenu -p "Which Android device?")" || exit 1
 	chosen="$(echo "$chosen" | cut -d : -f 1)"
 	getmount "$HOME -maxdepth 3 -type d"
         simple-mtpfs --device "$chosen" "$mp"
-	echo "OK" | dmenu -nf '#6f798c' -nb '#232731' -sb '#3b8563' -sf '#9faab8' -fn 'FiraCode Nerd Font-12' -i -p "Tap Allow on your phone if it asks for permission and then press enter" || exit 1
+	echo "OK" | dmenu -p "Tap Allow on your phone if it asks for permission and then press enter" || exit 1
 	simple-mtpfs --device "$chosen" "$mp"
 	notify-send "🤖 Android Mounting" "Android device mounted to $mp."
 	}
 
 asktype() { \
-	choice="$(printf "USB\\nAndroid" | dmenu -nf '#6f798c' -nb '#232731' -sb '#3b8563' -sf '#9faab8' -fn 'FiraCode Nerd Font-12' -i -p "Mount a USB drive or Android device?")" || exit 1
+	choice="$(printf "USB\\nAndroid" | dmenu -p "Mount a USB drive or Android device?")" || exit 1
 	case $choice in
 		USB) mountusb ;;
 		Android) mountandroid ;;
