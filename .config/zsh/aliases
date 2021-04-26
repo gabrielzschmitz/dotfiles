@@ -1,0 +1,69 @@
+#   __ _  ____ ___ 
+#  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
+# | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
+#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
+#  |___/    
+# 
+# Aliases
+alias lsd='lsd -hA --group-dirs first'
+alias ls='lsd --group-dirs first'
+alias grep='grep --color=auto'
+alias bat='bat --theme="base16" --style="numbers,changes"'
+alias cat='bat --theme="base16" --style="numbers,changes"'
+alias pcm='sudo pacman --color always'
+
+alias br='setxkbmap br'
+alias colors='nvim $HOME/.scripts/faintcolorscheme.vim'
+alias sourcezshrc='source .config/zsh/.zshrc'
+
+# Open Programs in the Terminal
+alias celluloid='devour celluloid'
+alias mpv='devour mpv'
+alias feh='devour feh'
+alias sxiv='devour sxiv'
+alias zathura='devour zathura'
+alias clock='tty-clock -s -c -b'
+alias music='ncmpcpp'
+alias scvim='sc-im'
+alias scvimrc='nvim .scimrc'
+alias scim='sc-im'
+alias scimrc='nvim nvim .scimrc'
+alias money='sc-im $HOME/Documents/money.csv'
+alias ytdlmp3='youtube-dl -x --audio-quality 0 --audio-format mp3 --embed-thumbnail'
+
+# Refresh the Monitors
+alias displayfix='sh $HOME/.scripts/displayfix.sh'
+
+# Config Files
+alias zshrc='nvim $HOME/.config/zsh/.zshrc'
+alias i3conf='nvim $HOME/.config/i3/config'
+alias picomconf='nvim $HOME/.config/picom.conf'
+alias alacrittyconf='nvim $HOME/.config/alacritty/alacritty.yml'
+alias dunstrc='nvim $HOME/.config/dunst/dunstrc'
+alias polybarconf='nvim $HOME/.config/polybar/config.ini'
+alias polybarmodules='nvim $HOME/.config/polybar/modules.ini'
+alias polybarusermodules='nvim $HOME/.config/polybar/user_modules.ini'
+alias polybarcolors='nvim $HOME/.config/polybar/colors.ini'
+alias polybarlaunch='nvim $HOME/.config/polybar/launch.sh'
+alias lfrc='nvim $HOME/.config/lf/lfrc'
+alias mpdconf='nvim $HOME/.config/mpd/mpd.conf'
+alias ncmpcppconf='nvim $HOME/.config/ncmpcpp/config'
+alias musicconf='nvim $HOME/.config/ncmpcpp/config'
+alias nvimconf='nvim $HOME/.config/nvim/'
+alias zathurarc='nvim $HOME/.config/zathura/zathurarc'
+alias installsh='nvim $HOME/.scripts/install-script.sh'
+
+# Notes Aliases
+alias dots='/usr/bin/git --git-dir=$HOME/Documents/dotfiles --work-tree=$HOME'
+alias notes='/usr/bin/git --git-dir=$HOME/Documents/notes --work-tree=$HOME'
+# Edit the Main Files
+alias wiki='nvim $HOME/Documents/Wiki/index.md'
+alias database='nvim $HOME/Documents/Wiki/School-Database/Database.md'
+alias school='nvim $HOME/Documents/Wiki/School.md'
+# View the Main Folders
+alias cdwiki='cd $HOME/Documents/Wiki'
+alias cddatabase='cd $HOME/Documents/Wiki/School-Database'
+alias lsdatabase='ls $HOME/Documents/Wiki/School-Database'
+# Convert to PDF
+alias pandocpdf="pandoc --pdf-engine=xelatex -s -o"
+
