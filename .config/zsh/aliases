@@ -14,7 +14,9 @@ alias pcm='sudo pacman --color always'
 
 alias br='setxkbmap br'
 alias colors='nvim $HOME/.scripts/faintcolorscheme.vim'
-alias sourcezshrc='source .config/zsh/.zshrc'
+alias sourcezshrc='source $HOME/.config/zsh/.zshrc'
+alias aliases='nvim $HOME/.config/zsh/aliases'
+alias scripts='cd $HOME/.scripts ; ls'
 
 # Open Programs in the Terminal
 alias celluloid='devour celluloid'
@@ -25,9 +27,9 @@ alias zathura='devour zathura'
 alias clock='tty-clock -s -c -b'
 alias music='ncmpcpp'
 alias scvim='sc-im'
-alias scvimrc='nvim .scimrc'
+alias scvimrc='nvim $HOME/.scimrc'
 alias scim='sc-im'
-alias scimrc='nvim nvim .scimrc'
+alias scimrc='nvim $HOME/.scimrc'
 alias money='sc-im $HOME/Documents/money.csv'
 alias ytdlmp3='youtube-dl -x --audio-quality 0 --audio-format mp3 --embed-thumbnail'
 
