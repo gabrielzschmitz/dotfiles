@@ -1,51 +1,52 @@
-#   __ _  ____ ___ 
-#  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
-# | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
-#  |___/    
+#         .             .              .                  
+#         |             |              |           .      
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|                                                     
+#  `'                                                     
+# GITHUB:https://github.com/gabrielzschmitz               
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #
 # A customized config for i3-Gaps window manager (http://www.i3wm.org)
-# Based off of the config for Manjaro's i3 Community Distro
-# Modified by gabrielzschmitz (https://github.com/gabrielzschmitz)
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+# Made by gabrielzschmitz (https://github.com/gabrielzschmitz)
 #
-# Set mod key (Mod1=<Alt>, Mod4=<Super>)
+
+# Mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
 
-# set default desktop layout (default is tiling)
+# Desktop layout (default is tiling)
 workspace_layout default
 
-# Configure border style <normal|1pixel|pixel xx|none|pixel>
+# Border style
 default_border pixel 1
 default_floating_border normal
 
-# Hide borders
-
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
+# Title font
 font xft:FiraCode Nerd Font Mono 12
 
-# Use Mouse+$mod to drag floating windows
+# Mouse+$mod to drag floating windows
 floating_modifier $mod
 
-# Start a $myTerm
+# Terminal binds
 set $myTerm alacritty
 bindsym $mod+Return exec $myTerm
 
 # Kill focused window
 bindsym $mod+Shift+q kill
 
-# Start program launcher
+# Program launcher
 bindsym $mod+d exec "dmenu_run -p 'dmenu'
 
 # System Tray Programs
 #exec_always --no-startup-id kdeconnect-indicator
-exec --no-startup-id xfce4-power-manager
+#exec --no-startup-id xfce4-power-manager
 #exec --no-startup-id pamac-tray
-exec --no-startup-id nm-applet
 #exec --no-startup-id blueman-applet
+#exec --no-startup-id pasystray
+exec --no-startup-id nm-applet
 exec --no-startup-id pulseaudio
-exec --no-startup-id pasystray
 bindsym $mod+Ctrl+m exec pavucontrol
 
 # Media Keys
@@ -60,27 +61,24 @@ bindsym $mod+F10 exec mpc volume -2
 bindsym $mod+F11 exec mpc volume +2
 exec_always mpd
 
-# Screen brightness controls
+# Brightness controls
 bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
 bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
-# Start Applications
+# Programs start binds
 bindsym $mod+F2 exec librewolf
 bindsym $mod+F3 exec pcmanfm
 bindsym $mod+Shift+F3 exec "sudo pcmanfm"
-#bindsym $mod+Shift+F3 exec $myTerm --title 'lf' -e 'lf'
 bindsym $mod+F5 exec $myTerm -e 'vis'
-bindsym $mod+F6 exec MellowPlayer
+bindsym $mod+F6 exec deadbeef
 bindsym $mod+p exec --no-startup-id pkill picom
 bindsym $mod+Ctrl+p exec --no-startup-id picom --experimental-backends -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # Printscreen
-bindsym Print exec --no-startup-id sh $HOME/.scripts/fullscreenshot.sh
-bindsym $mod+Shift+Print --release exec --no-startup-id sh $HOME/.scripts/selectivescreenshot.sh
-
-# Focus_follows_mouse no
+bindsym Print exec --no-startup-id sh $HOME/.scripts/faintfullscreenshot.sh
+bindsym $mod+Shift+Print --release exec --no-startup-id sh $HOME/.scripts/faintselectivescreenshot.sh
 
 # Change focus
 bindsym $mod+Left focus left
@@ -102,7 +100,7 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# Workspace back and forth (with/without active container)
+# Workspace back and forth
 workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
@@ -244,21 +242,7 @@ bindsym $mod+Shift+r restart
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # Set shut down, restart and locking features
-bindsym $mod+0 mode "$mode_system"
-set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
-mode "$mode_system" {
-    bindsym l exec --no-startup-id sh ~/.scripts/faintlock.sh lock, mode "default"
-    bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
-
-    # exit system mode: "Enter" or "Escape"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
+bindsym $mod+0 exec --no-startup-id sh ~/.config/polybar/scripts/powermenu.sh
 
 # Resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
@@ -301,6 +285,7 @@ exec --no-startup-id numlockx on
 # exec_always --no-startup-id sbxkb
 exec_always --no-startup-id picom --experimental-backends -b
 exec_always --no-startup-id sh ~/.scripts/keyrate.sh
+exec_always --no-startup-id sh ~/.scripts/kblayoutloop.sh
 
 # Displays Config
 # Second display on left
@@ -309,6 +294,8 @@ exec_always xrandr --output LVDS1 --mode 1366x768 --pos 0x132 --rotate normal --
 #exec_always xrandr --output LVDS1 --mode 1366x768 --pos 1440x132 --rotate normal --output VGA1 --primary --mode 1440x900 --pos 0x0 --rotate normal
 # Just the Notebook Display
 #exec_always xrandr --output LVDS1 --primary --mode 1366x768 --pos 0x0 --rotate normal --output VGA1 --off
+# Just the Second Display
+#exec_always xrandr --output LVDS1 --off --output VGA1 --primary --mode 1440x900 --pos 0x0 --rotate normal
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 #bar {
@@ -411,4 +398,3 @@ mode "$mode_gaps_outer" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-
