@@ -17,15 +17,25 @@ alias bat='bat --theme="base16" --style="numbers,changes"'
 alias cat='bat'
 alias pcm='sudo pacman --color always'
 alias paru='paru --color always --skipreview'
-alias clear='clear ; sh $HOME/.scripts/faintfetch.textart'
+alias clear='clear ; sh $HOME/.scripts/quote.textart'
+alias quote="sh $HOME/.scripts/quote.textart"
+alias sshserver='ssh gabrielzschmitz@192.168.0.107'
 alias cl='clear'
 
 alias br='setxkbmap br'
 alias us='setxkbmap us alt-intl'
-alias colors='nvim $HOME/.scripts/faintcolorscheme.vim'
+alias wallpaper='sxiv $HOME/Pictures/Wallpapers/*'
+alias colors='nvim $HOME/.scripts/zerocolors.vim'
 alias sourcezshrc='source $HOME/.config/zsh/.zshrc'
 alias aliases='nvim $HOME/.config/zsh/aliases'
+alias xresources='xrdb $HOME/.Xresources'
+alias xresourcesconf='nvim $HOME/.Xresources'
+alias xinitrc='nvim $HOME/.config/X11/xinitrc'
 alias scripts='cd $HOME/.scripts ; ls'
+alias scr='cd $HOME/.scripts ; ls'
+alias cs50='cd $HOME/Nextcloud/Programming/cs50 ; ls'
+alias prg='cd $HOME/Nextcloud/Programming ; ls'
+alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
 
 # Open Programs in the Terminal
 alias celluloid='devour celluloid'
@@ -42,12 +52,17 @@ alias scimrc='nvim $HOME/.scimrc'
 alias money='sc-im $HOME/Documents/money.csv'
 alias ytdlmp3='youtube-dl -x --audio-quality 0 --audio-format mp3 --embed-thumbnail'
 alias mine='java -jar Downloads/TLauncher-2.75.jar'
+alias zerofetch='sh -c "$HOME/.config/zerofetch/zerofetch"'
 
 # Refresh the Monitors
 alias displayfix='sh $HOME/.scripts/displayfix.sh'
+alias monodisplay='sh $HOME/.scripts/monodisplay.sh'
 
 # Config Files
 alias zshrc='nvim $HOME/.config/zsh/.zshrc'
+alias zrc='nvim $HOME/.config/zsh/.zshrc'
+alias zprofile='nvim $HOME/.config/zsh/.zprofile'
+alias zenv='nvim $HOME/.zshenv'
 alias i3conf='nvim $HOME/.config/i3/config'
 alias picomconf='nvim $HOME/.config/picom.conf'
 alias alacrittyconf='nvim $HOME/.config/alacritty/alacritty.yml'
@@ -78,4 +93,18 @@ alias cddatabase='cd $HOME/Documents/Wiki/School-Database'
 alias lsdatabase='ls $HOME/Documents/Wiki/School-Database'
 # Convert to PDF
 alias pandocpdf="pandoc --pdf-engine=xelatex -s -o"
+
+# Translate
+alias en-pt='argos-translate --from-lang en --to-lang pt'
+alias pt-en='argos-translate --from-lang pt --to-lang en'
+alias en-es='argos-translate --from-lang en --to-lang es'
+alias es-en='argos-translate --from-lang es --to-lang en'
+alias en-ru='argos-translate --from-lang en --to-lang ru'
+alias ru-en='argos-translate --from-lang ru --to-lang en'
+alias en-ja='argos-translate --from-lang en --to-lang ja'
+alias ja-en='argos-translate --from-lang ja --to-lang en'
+alias en-de='argos-translate --from-lang en --to-lang de'
+alias de-en='argos-translate --from-lang de --to-lang en'
+alias en-fr='argos-translate --from-lang en --to-lang fr'
+alias fr-en='argos-translate --from-lang fr --to-lang en'
 

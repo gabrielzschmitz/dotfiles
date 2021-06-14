@@ -1,10 +1,14 @@
-#   __ _  ____ ___ 
-#  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
-# | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
-#  |___/    
-# 
-# A customized Zsh Config by gabrielzschmitz using Faint Colors
+#         .             .              .		 
+#         |             |              |           .	 
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_,
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   / 
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"'
+#  ,|							 
+#  `'							 
+# GITHUB:https://github.com/gabrielzschmitz		 
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/  
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/  
+# A customized Zsh Config by gabrielzschmitz
 
 # Preferred editor and visual
 export EDITOR='nvim';
@@ -25,8 +29,7 @@ fpath+=$ZDOTDIR/typewritten
 autoload -U promptinit; promptinit
 prompt typewritten
 PROMPT_EOL_MARK=''
-alias unix="sh .scripts/faintfetch.textart"
-sh .scripts/faintfetch.textart
+sh $HOME/.scripts/quote.textart
 
 # Man pages colors
 export LESS_TERMCAP_mb=$'\e[0;32m'
