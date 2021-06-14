@@ -1,9 +1,13 @@
-#   __ _  ____ ___ 
-#  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
-# | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
-#  |___/    
-# 
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!bin/sh
 # Clean Up $HOME Directory
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -11,7 +15,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CONFIG_CACHE="$HOME/.cache"
 export XDG_CACHE_HOME="$HOME/.cache"
 export ZDOTDIR="$HOME/.config/zsh"
-export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
+export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GOPATH="$XDG_DATA_HOME/go"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
