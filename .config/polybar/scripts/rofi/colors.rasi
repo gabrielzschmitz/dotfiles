@@ -1,10 +1,20 @@
+/*         .             .              .		   */
+/*         |             |              |           .	   */
+/* ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, */ 
+/* | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  */ 
+/* `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' */ 
+/*  ,|							   */
+/*  `'							   */
+/* GITHUB:https://github.com/gabrielzschmitz		   */
+/* INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   */ 
+/* DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   */ 
 /* colors */
 
 * {
   al:   #00000000;
-  bg:   #232731FF;
-  bga:  #3b856333;
-  bar:  #232731FF;
-  fg:   #9faab8FF;
-  ac:   #3b8563FF;
+  bg:   #20232fA8;
+  bga:  #436668A8;
+  bar:  #262938FF;
+  fg:   #9096aeFF;
+  ac:   #436668A8;
 }

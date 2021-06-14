@@ -1,3 +1,14 @@
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+
 #!/bash/sh
 
 # Add this script to your wm startup file.
@@ -12,7 +23,6 @@ killall -q polybar
 
 # Launch the bar
 #polybar -qr main -c "$DIR"/config.ini &
-sleep 5
 for m in $(polybar --list-monitors | cut -d":" -f1); do
     MONITOR=$m polybar -qr main -c "$DIR"/config.ini &
 done
