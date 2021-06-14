@@ -30,7 +30,7 @@ font xft:FiraCode Nerd Font Mono 12
 floating_modifier $mod
 
 # Terminal binds
-set $myTerm alacritty
+set $myTerm st
 bindsym $mod+Return exec $myTerm
 
 # Kill focused window
@@ -57,8 +57,8 @@ bindsym XF86AudioPlay exec mpc toggle
 bindsym XF86AudioStop exec mpc stop
 bindsym XF86AudioNext exec mpc next
 bindsym XF86AudioPrev exec mpc prev
-bindsym $mod+F10 exec mpc volume -2
-bindsym $mod+F11 exec mpc volume +2
+bindsym $mod+F11 exec mpc volume -2
+bindsym $mod+F12 exec mpc volume +2
 exec_always mpd
 
 # Brightness controls
@@ -66,7 +66,7 @@ bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up
 bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
 # Programs start binds
-bindsym $mod+F2 exec librewolf
+bindsym $mod+F2 exec brave
 bindsym $mod+F3 exec pcmanfm
 bindsym $mod+Shift+F3 exec "sudo pcmanfm"
 bindsym $mod+F5 exec $myTerm -e 'vis'
@@ -77,8 +77,8 @@ bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart du
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # Printscreen
-bindsym Print exec --no-startup-id sh $HOME/.scripts/faintfullscreenshot.sh
-bindsym $mod+Shift+Print --release exec --no-startup-id sh $HOME/.scripts/faintselectivescreenshot.sh
+bindsym Print exec --no-startup-id sh $HOME/.scripts/fullscreenshot.sh
+bindsym $mod+Shift+Print --release exec --no-startup-id sh $HOME/.scripts/selectivescreenshot.sh
 
 # Change focus
 bindsym $mod+Left focus left
@@ -197,7 +197,9 @@ bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
 
 # Open specific applications in floating mode
+for_window [class="Sxiv"] floating enable
 for_window [class="Pcmanfm"] floating enable
+for_window [class="Gcolor3"] floating enable
 for_window [class="Xfce4-power-manager-settings"] floating enable
 for_window [title="lf"] floating enable
 for_window [title="alsamixer"] floating enable border pixel 1
@@ -268,34 +270,26 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-# Dmenu scripts
-bindsym $mod+shift+u exec --no-startup-id sh ~/.scripts/faintumount.sh
-bindsym $mod+shift+m exec --no-startup-id sh ~/.scripts/faintmount.sh
-bindsym $mod+e exec --no-startup-id sh ~/.scripts/faintemojis.sh
-bindsym $mod+w exec --no-startup-id sh ~/.scripts/faintlatin.sh
+# Scripts
+bindsym $mod+shift+u exec --no-startup-id sh ~/.scripts/umount.sh
+bindsym $mod+shift+m exec --no-startup-id sh ~/.scripts/mount.sh
+bindsym $mod+e exec --no-startup-id sh ~/.scripts/emojis.sh
+bindsym $mod+w exec --no-startup-id sh ~/.scripts/specialchr.sh
+bindsym $mod+shift+w exec --no-startup-id sh ~/.scripts/zerowallpaper.sh
+exec_always --no-startup-id sh $HOME/.scripts/defaultwallpaper.sh
 
 # Lock screen
-bindsym $mod+9 exec --no-startup-id sh ~/.scripts/faintlock.sh
-exec_always --no-startup-id sh ~/.scripts/autofaintlock.sh
+bindsym $mod+9 exec --no-startup-id sh ~/.scripts/zerolock.sh
+exec_always --no-startup-id sh ~/.scripts/zeroautolock.sh
 
 # Autostart applications
-exec_always --no-startup-id xwallpaper --zoom ~/Pictures/Wallpapers/sandabstract.png
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id numlockx on
+exec --no-startup-id xrdb $HOME/.Xresources
 # exec_always --no-startup-id sbxkb
 exec_always --no-startup-id picom --experimental-backends -b
 exec_always --no-startup-id sh ~/.scripts/keyrate.sh
-exec_always --no-startup-id sh ~/.scripts/kblayoutloop.sh
-
-# Displays Config
-# Second display on left
-exec_always xrandr --output LVDS1 --mode 1366x768 --pos 0x132 --rotate normal --output VGA1 --primary --mode 1440x900 --pos 1366x0 --rotate normal
-# Second display on right
-#exec_always xrandr --output LVDS1 --mode 1366x768 --pos 1440x132 --rotate normal --output VGA1 --primary --mode 1440x900 --pos 0x0 --rotate normal
-# Just the Notebook Display
-#exec_always xrandr --output LVDS1 --primary --mode 1366x768 --pos 0x0 --rotate normal --output VGA1 --off
-# Just the Second Display
-#exec_always xrandr --output LVDS1 --off --output VGA1 --primary --mode 1440x900 --pos 0x0 --rotate normal
+exec_always --no-startup-id sh ~/.scripts/kblayout.sh
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 #bar {
@@ -333,13 +327,13 @@ bindsym $mod+m bar mode toggle
 
 # Theme colors
 #   class                   border  bground text    indicator child_border
-    client.focused          #6f798c #6f798c #9faab8 #6f798c   #6f798c
-    client.focused_inactive #232731 #232731 #9faab8 #232731   #232731
-    client.unfocused        #232731 #232731 #9faab8 #232731   #232731
-    client.urgent           #6f798c #a65f69 #9faab8 #a65f69   #a65f69
-    client.placeholder      #232731 #232731 #9faab8 #232731   #232731
+    client.focused          #646b8c #646b8c #20232f #646b8c   #646b8c
+    client.focused_inactive #20232f #20232f #9096ae #20232f   #20232f
+    client.unfocused        #20232f #20232f #9096ae #20232f   #20232f
+    client.urgent           #20232f #806382 #20232f #806382   #806382
+    client.placeholder      #20232f #20232f #9096ae #20232f   #20232f
 
-    client.background       #9faab8
+    client.background       #646b8c
 
 
 #############################
@@ -348,7 +342,7 @@ bindsym $mod+m bar mode toggle
 
 # Set inner/outer gaps
 gaps inner 10
-gaps outer 15
+gaps outer 0
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
 # gaps inner|outer current|all set|plus|minus <px>
@@ -398,3 +392,17 @@ mode "$mode_gaps_outer" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
+
+# Displays Config
+# Second display on left
+exec_always --no-startup-id sh ~/.scripts/seconddisplayleft.sh
+
+# Second display on right
+#exec_always --no-startup-id sh ~/.scripts/seconddisplayright.sh
+
+# Just the Notebook Display
+#exec_always --no-startup-id sh ~/.scripts/notedisplay.sh
+
+# Just the Second Display
+#exec_always --no-startup-id sh ~/.scripts/seconddisplay.sh
+
