@@ -1,9 +1,13 @@
-#   __ _  ____ ___ 
-#  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz
-# | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
-#  |___/    
-#
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!bin/sh
 
 # Installation Script for Artix Base Install
@@ -30,67 +34,42 @@ arandr			\
 bat			\
 dunst			\
 exiv2			\
-gcolor2			\
+gcolor3			\
 i3exit			\
 git			\
 i3lock-color		\
 lf			\
 lsd			\
-lxappearance		\
+lxappearance-gtk3	\
 yarn			\
-pandoc			\
-texlive-core		\
-pfetch-git		\
-picom			\
+pfetch			\
+#picom			\
 polkit-gnome		\
-sddm-sugar-candy-git	\
 tty-clock		\
 xautolock		\
 xclip			\
 xdotool			\
 zathura			\
-zathura-pdf-poppler	\
+zathura-pdf-mupdf	\
 xwallpaper-git		\
 devour			\
-mellowplayer		\
-betterdiscord		\
+betterdiscord-installer	\
 betterdiscordctl-git	\
 librewolf-bin		\
-firefox			\
 sxiv			\
 nodejs			\
-paprefs			\
-pasystray		\
 pavucontrol		\
 xarchiver		\
-pcmanfm			\
+pcmanfm-gtk3		\
 zsh			\
 neovim			\
 obs-studio		\
 qbittorrent		\
 discord;		\
 
-# Make Steam close to system tray
-# echo "export STEAM_FRAME_FORCE_CLOSE=1" >> .profile
-
 # Git
 # Set git to use the credential memory cache
 git config --global credential.helper cache;
 # Set the cache to timeout after 1 hour (setting is in seconds)
 git config --global credential.helper 'cache --timeout=3600';
-
-
-# LIBREWOLF EXTENSIONS:
-# DarkCloud
-# User Agent Plataform Spoofer
-# UBlock Origin
-
-# Dotfiles
-# echo "alias dots='/usr/bin/git --git-dir=$HOME/Documents/dotfiles --work-tree=/home/gabrielzschmitz'" >> $HOME/.zshrc
-# source ~/.zshrc
-# echo "$HOME/Documents/dotfiles" >> .gitignore
-# git clone --bare https://www.github.com/gabrielzschmitz/dotfiles.git $HOME/Documents/dotfiles
-# ('rm' and 'rm -rf' all the files/folders that are making it impossible to checkout)
-# dots checkout
-# dots config --local status.showUntrackedFiles no
 

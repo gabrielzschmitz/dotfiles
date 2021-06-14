@@ -9,7 +9,8 @@
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!/bin/sh
-# A simple fix if the displays resolution have a bug in it
 
-xrandr --output LVDS1 --off --output VGA1 --mode 1440x900 --primary --pos 0x0 --rotate normal;
-xrandr --output LVDS1 --mode 1366x768 --pos 1440x132 --rotate normal --output VGA1 --primary --mode 1440x900 --pos 0x0 --rotate normal --rate 75
+# A script to read any man page in pdf by Luke Smith
+man -k . | dmenu -nf '#6f798c' -nb '#232731' -sb '#3b8563' -sf '#9faab8' -fn 'FiraCode Nerd Font-12' -p 'man pages' -l 30 | awk '{print $1}' | xargs -r man -Tpdf | zathura -
+-l 30 | awk '{print $1}' | xargs -r man -Tpdf | zathura -
+
