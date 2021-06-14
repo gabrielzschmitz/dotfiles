@@ -1,19 +1,26 @@
-"   __ _  ____ ___
-"  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz
-" | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-"  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
-"  |___/
+"         .             .              .                  
+"         |             |              |           .      
+" ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+" | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+" `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+"  ,|                                                     
+"  `'                                                     
+" GITHUB:https://github.com/gabrielzschmitz               
+" INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+" DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 "
 " $HOME/.config/nvim/general.vim
 "
 
-" Colors
-colorscheme faint
+colorscheme zero				" Colors
 syntax on
+let g:prettier#autoformat_require_pragma = 0
 set cursorline					" Togle's the current line indicator
 set number					" Number line indicator
 set relativenumber				" Relative number indicator
 set wrap					" Active word warp
+set mouse=a					" Activate mouse
+set clipboard=unnamedplus			" Use the same clipboard as system
 set autoindent
 set noswapfile
 set lazyredraw
@@ -28,7 +35,7 @@ if exists('+termguicolors')
 endif
 
 " Lightline
-let g:lightline = { 'colorscheme': 'faint' }
+let g:lightline = { 'colorscheme': 'zero' }
 set noshowmode					" To remove the --INSERT-- in command line
 set cmdheight=1
 set cmdwinheight=3

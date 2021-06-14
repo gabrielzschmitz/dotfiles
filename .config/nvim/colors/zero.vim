@@ -1,50 +1,55 @@
-"   __ _  ____ ___ 
-"  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
-" | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-"  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
-"  |___/    
+"         .             .              .                  
+"         |             |              |           .      
+" ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+" | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+" `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+"  ,|                                                     
+"  `'                                                     
+" GITHUB:https://github.com/gabrielzschmitz               
+" INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+" DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+"
+" $HOME/.config/nvim/colors/zero.vim
 "
 " A dark vim colorscheme made in Base16 Builder
 " See github.com/gabrielzschmitz/.dotfiles for more info
-if !has("gui_running")
-  if exists("g:base16_shell_path")
-    execute "silent !/bin/sh ".g:base16_shell_path."/base16-faint.sh"
-  endif
-endif
+"
+" vi:syntax=vim
+"
 
 " GUI color definitions
 let s:gui00        = "none"
 let g:base16_gui00 = "none"
-let s:gui01        = "20242d"
-let g:base16_gui01 = "20242d"
-let s:gui02        = "383c45"
-let g:base16_gui02 = "383c45"
-let s:gui03        = "9faab8"
-let g:base16_gui03 = "9faab8"
-let s:gui04        = "6f798c"
-let g:base16_gui04 = "6f798c"
-let s:gui05        = "6f798c"
-let g:base16_gui05 = "6f798c"
-let s:gui06        = "6f798c"
-let g:base16_gui06 = "6f798c"
-let s:gui07        = "9faab8"
-let g:base16_gui07 = "9faab8"
-let s:gui08        = "a65f69"
-let g:base16_gui08 = "a65f69"
-let s:gui09        = "b39669"
-let g:base16_gui09 = "b39669"
-let s:gui0A        = "C7A775"
-let g:base16_gui0A = "C7A775"
-let s:gui0B        = "3b8563"
-let g:base16_gui0B = "3b8563"
-let s:gui0C        = "348396"
-let g:base16_gui0C = "348396"
-let s:gui0D        = "487799"
-let g:base16_gui0D = "487799"
-let s:gui0E        = "b9637e"
-let g:base16_gui0E = "b9637e"
-let s:gui0F        = "CC6D8B"
-let g:base16_gui0F = "CC6D8B"
+let s:gui01        = "20232f"
+let g:base16_gui01 = "20232f"
+let s:gui02        = "35394a"
+let g:base16_gui02 = "35394a"
+let s:gui03        = "646b8c"
+let g:base16_gui03 = "646b8c"
+let s:gui04        = "35394a"
+let g:base16_gui04 = "35394a"
+let s:gui05        = "9096ae"
+let g:base16_gui05 = "9096ae"
+let s:gui06        = "646b8c"
+let g:base16_gui06 = "646b8c"
+let s:gui07        = "9096ae"
+let g:base16_gui07 = "9096ae"
+let s:gui08        = "806382"
+let g:base16_gui08 = "806382"
+let s:gui09        = "8c8089"
+let g:base16_gui09 = "8c8089"
+let s:gui0A        = "9d8f92"
+let g:base16_gui0A = "9d8f92"
+let s:gui0B        = "436668"
+let g:base16_gui0B = "436668"
+let s:gui0C        = "446781"
+let g:base16_gui0C = "446781"
+let s:gui0D        = "4f6589"
+let g:base16_gui0D = "4f6589"
+let s:gui0E        = "6d5a80"
+let g:base16_gui0E = "6d5a80"
+let s:gui0F        = "8f6e8d"
+let g:base16_gui0F = "8f6e8d"
 
 " Terminal color definitions
 let s:cterm00        = "00"
@@ -97,22 +102,23 @@ endif
 
 " Neovim terminal colours
 if has("nvim")
-  let g:terminal_color_0 =  "#232731"
-  let g:terminal_color_1 =  "#a65f69"
-  let g:terminal_color_2 =  "#3b8563"
-  let g:terminal_color_3 =  "#C7A775"
-  let g:terminal_color_4 =  "#487799"
-  let g:terminal_color_5 =  "#b9637e"
-  let g:terminal_color_6 =  "#348396"
-  let g:terminal_color_7 =  "#6f798c"
-  let g:terminal_color_8 =  "#9faab8"
-  let g:terminal_color_9 =  "#a65f69"
-  let g:terminal_color_10 = "#3b8563"
-  let g:terminal_color_11 = "#C7A775"
-  let g:terminal_color_12 = "#487799"
-  let g:terminal_color_13 = "#b9637e"
-  let g:terminal_color_14 = "#348396"
-  let g:terminal_color_15 = "#9faab8"
+  let g:terminal_color_0 =  "#20232f"
+  let g:terminal_color_1 =  "#806382"
+  let g:terminal_color_2 =  "#436668"
+  let g:terminal_color_3 =  "#9d8f92"
+  let g:terminal_color_4 =  "#4f6589"
+  let g:terminal_color_5 =  "#6d5a80"
+  let g:terminal_color_6 =  "#446781"
+  let g:terminal_color_7 =  "#646b8c"
+  let g:terminal_color_8 =  "#35394a"
+  let g:terminal_color_9 =  "#806382"
+  let g:terminal_color_10 = "#436668"
+  let g:terminal_color_11 = "#9d8f92"
+  let g:terminal_color_12 = "#4f6589"
+  let g:terminal_color_13 = "#6d5a80"
+  let g:terminal_color_14 = "#446781"
+  let g:terminal_color_15 = "#9096ae"
+
   let g:terminal_color_background = g:terminal_color_0
   let g:terminal_color_foreground = g:terminal_color_5
   if &background == "light"
@@ -121,33 +127,33 @@ if has("nvim")
   endif
 elseif has("terminal")
   let g:terminal_ansi_colors = [
-        \ "#232731",
-        \ "#a65f69",
-        \ "#3b8563",
-        \ "#C7A775",
-        \ "#487799",
-        \ "#b9637e",
-        \ "#348396",
-        \ "#6f798c",
-        \ "#9faab8",
-        \ "#a65f69",
-        \ "#3b8563",
-        \ "#C7A775",
-        \ "#487799",
-        \ "#b9637e",
-        \ "#348396",
-        \ "#9faab8",
+        \ "#20232f",
+        \ "#806382",
+        \ "#436668",
+        \ "#9d8f92",
+        \ "#4f6589",
+        \ "#6d5a80",
+        \ "#446781",
+        \ "#646b8c",
+        \ "#35394a",
+        \ "#806382",
+        \ "#436668",
+        \ "#9d8f92",
+        \ "#4f6589",
+        \ "#6d5a80",
+        \ "#446781",
+        \ "#9096ae",
         \ ]
 endif
 
 " Theme setup
 hi clear
 syntax reset
-let g:colors_name = "faint"
+let g:colors_name = "zero"
 
 " Highlighting function
 " Optional variables are attributes and guisp
-function! g:Fainthi(group, guifg, guibg, ctermfg, ctermbg, ...)
+function! g:Zerohi(group, guifg, guibg, ctermfg, ctermbg, ...)
   let l:attr = get(a:, 1, "")
   let l:guisp = get(a:, 2, "")
 
@@ -173,7 +179,7 @@ endfunction
 
 
 fun <sid>hi(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
-  call g:Fainthi(a:group, a:guifg, a:guibg, a:ctermfg, a:ctermbg, a:attr, a:guisp)
+  call g:Zerohi(a:group, a:guifg, a:guibg, a:ctermfg, a:ctermbg, a:attr, a:guisp)
 endfun
 
 " Vim editor colors
@@ -252,8 +258,8 @@ call <sid>hi("Type",         s:gui0A, "", s:cterm0A, "", "none", "")
 call <sid>hi("Typedef",      s:gui0A, "", s:cterm0A, "", "", "")
 
 " C highlighting
-call <sid>hi("cOperator",   s:gui0C, "", s:cterm0C, "", "", "")
-call <sid>hi("cPreCondit",  s:gui0E, "", s:cterm0E, "", "", "")
+call <sid>hi("cOperator",   s:gui05, "", s:cterm05, "", "bold", "")
+call <sid>hi("cPreCondit",  s:gui0A, "", s:cterm0A, "", "", "")
 
 " C# highlighting
 call <sid>hi("csClass",                 s:gui0A, "", s:cterm0A, "", "", "")
@@ -304,10 +310,23 @@ call <sid>hi("GitGutterDelete",  s:gui08, s:gui01, s:cterm08, s:cterm01, "", "")
 call <sid>hi("GitGutterChangeDelete",  s:gui0E, s:gui01, s:cterm0E, s:cterm01, "", "")
 
 " HTML highlighting
-call <sid>hi("htmlBold",    s:gui0A, "", s:cterm0A, "", "", "")
-call <sid>hi("htmlItalic",  s:gui0E, "", s:cterm0E, "", "", "")
-call <sid>hi("htmlEndTag",  s:gui05, "", s:cterm05, "", "", "")
-call <sid>hi("htmlTag",     s:gui05, "", s:cterm05, "", "", "")
+call <sid>hi("htmlBold",    		s:gui09, "", s:cterm09, "", "bold", "")
+call <sid>hi("htmlItalic",  		s:gui0E, "", s:cterm0E, "", "italic", "")
+call <sid>hi("htmlEndTag",  		s:gui07, "", s:cterm07, "", "", "")
+call <sid>hi("htmlTag",     		s:gui07, "", s:cterm07, "", "", "")
+call <sid>hi("htmlArg",     		s:gui09, "", s:cterm09, "", "", "")
+call <sid>hi("htmlH1",     		s:gui08, "", s:cterm08, "", "", "")
+call <sid>hi("htmlH2",     		s:gui08, "", s:cterm08, "", "", "")
+call <sid>hi("htmlH3",     		s:gui08, "", s:cterm08, "", "", "")
+call <sid>hi("htmlH4",     		s:gui08, "", s:cterm08, "", "", "")
+call <sid>hi("htmlH5",     		s:gui08, "", s:cterm08, "", "", "")
+call <sid>hi("htmlH6",     		s:gui08, "", s:cterm08, "", "", "")
+call <sid>hi("htmlLink",     		s:gui0C, "", s:cterm0C, "", "underline", "")
+call <sid>hi("htmlSpecialChar",     	s:gui09, "", s:cterm09, "", "", "")
+call <sid>hi("htmlSpecialTagName",  	s:gui08, "", s:cterm08, "", "", "")
+call <sid>hi("htmlTagName",     	s:gui08, "", s:cterm08, "", "", "")
+call <sid>hi("htmlTagN",     		s:gui08, "", s:cterm08, "", "", "")
+call <sid>hi("htmlTag",     		s:gui07, "", s:cterm07, "", "", "")
 
 " JavaScript highlighting
 call <sid>hi("javaScript",        s:gui05, "", s:cterm05, "", "", "")
@@ -409,3 +428,4 @@ delf <sid>hi
 " Remove color variables
 unlet s:gui00 s:gui01 s:gui02 s:gui03  s:gui04  s:gui05  s:gui06  s:gui07  s:gui08  s:gui09 s:gui0A  s:gui0B  s:gui0C  s:gui0D  s:gui0E  s:gui0F
 unlet s:cterm00 s:cterm01 s:cterm02 s:cterm03 s:cterm04 s:cterm05 s:cterm06 s:cterm07 s:cterm08 s:cterm09 s:cterm0A s:cterm0B s:cterm0C s:cterm0D s:cterm0E s:cterm0F
+
