@@ -1,3 +1,13 @@
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #Refresh rate of the visualizers. A really high refresh rate may cause screen tearing. Default is 20.
 visualizer.fps=30
 
