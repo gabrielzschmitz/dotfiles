@@ -10,14 +10,15 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!bin/sh
 
-# Faint Theme for i3lock-color(https://github.com/Raymo111/i3lock-color) by gabrielzschmitz(https://github.com/gabrielzschmitz)
+# Zero for i3lock-color(https://github.com/Raymo111/i3lock-color)
+# by gabrielzschmitz(https://github.com/gabrielzschmitz)
 
-B='#232731' # Background
-T='#9faab8' # Text
-V='#487799' # Verifying ring
-W='#a65f69' # Wrong ring
-D='#3b8563' # Default color
-K='#5fb98f' # Keystroke
+B='#262938' # Background
+T='#9096ae' # Text
+V='#4f6589' # Verifying ring
+W='#806382' # Wrong ring
+D='#436668' # Default color
+K='#4f797b' # Keystroke
 BLANK='#00000000' # Blank
 
 i3lock			\
@@ -53,8 +54,8 @@ i3lock			\
 --wrongtext='Wrong!'		\
 --wrongsize=30			\
 \
---ignore-empty-password					\
---nofork						\
---centered						\
---image=$HOME/Pictures/Wallpapers/sandabstract-blur.png	\
+--ignore-empty-password				\
+--nofork					\
+--centered					\
+--image=$HOME/Pictures/Wallpapers/smoking.png	\
 

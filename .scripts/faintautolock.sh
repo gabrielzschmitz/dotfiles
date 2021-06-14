@@ -1,9 +1,13 @@
-#   __ _  ____ ___
-#  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz
-# | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-#  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
-#  |___/
-# 
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!bin/sh
 
 # Auto lock script of Faint Theme for i3lock-color(https://github.com/Raymo111/i3lock-color) by gabrielzschmitz(https://github.com/gabrielzschmitz)
@@ -51,8 +55,8 @@ xautolock		\
 --wrongtext='Wrong!'            \
 --wrongsize=30                  \
 \
---ignore-empty-password                                 \
---nofork						\
---centered                				\
+--ignore-empty-password                                 	\
+--nofork							\
+--centered                					\
 --image=$HOME/Pictures/Wallpapers/sandabstract-blur.png"	\
 
