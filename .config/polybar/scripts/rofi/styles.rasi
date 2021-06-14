@@ -1,11 +1,13 @@
-/*
- *
- * Author  : Aditya Shakya
- * Mail    : adi1090x@gmail.com
- * Github  : @adi1090x
- * Twitter : @adi1090x
- *
- */
+/*         .             .              .		   */
+/*         |             |              |           .	   */
+/* ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, */
+/* | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  */
+/* `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' */
+/*  ,|							   */
+/*  `'							   */
+/* GITHUB:https://github.com/gabrielzschmitz		   */
+/* INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   */
+/* DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   */
 
 configuration {
 	font:							"FiraCode Nerd Font 10";

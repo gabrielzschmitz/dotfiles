@@ -8,7 +8,7 @@
 #GITHUB:https://github.com/gabrielzschmitz                
 #INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/    
 #DOTFILES:https://github.com/gabrielzschmitz/dotfiles/    
-#/bin/sh
+#!/bin/sh
 
 #Directory
 dir="~/.config/polybar/scripts/rofi"
