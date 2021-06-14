@@ -1,21 +1,27 @@
-"   __ _  ____ ___  
-"  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz
-" | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-"  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
-"  |___/
+"         .             .              .                  
+"         |             |              |           .      
+" ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+" | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+" `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+"  ,|                                                     
+"  `'                                                     
+" GITHUB:https://github.com/gabrielzschmitz               
+" INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+" DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 "
 " $HOME/.config/nvim/plugins/startify.vim
 "
 
 let g:startify_session_dir = '~/.config/nvim/session'
 let g:startify_custom_header = [
-        \ '                              _           ',
-        \ '  __ _  ____ ___   _ ____   _(_)_ __ ___  ',
-        \ ' / _` ||_  // __| | `_ \ \ / / | `_ ` _ \ ',
-        \ '| (_| | / / \__ \ | | | \ V /| | | | | | |',
-        \ ' \__, |/___||___/ |_| |_|\_/ |_|_| |_| |_|',
-        \ ' |___/                                    ',
-        \ ]
+        \ '        .             .              .                  ',
+        \ '        |             |              |           .      ',
+        \ ',-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, ',
+        \ '| | ,-| | | |   | |-" |   /  `-. |   | | | | | | |   /  ',
+        \ '`-| `-^ ^-" "   " `-" `" """ `-" `-" " " " " " " `" """ ',
+        \ ' ,|                                                     ',
+        \ ' `"                                                     ',
+	\ ]
 let g:startify_bookmarks = [
         \ { 'c': '~/.config/i3/config' },
         \ { 'i': '~/.config/nvim/init.vim' },

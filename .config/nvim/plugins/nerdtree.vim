@@ -1,8 +1,13 @@
-"   __ _  ____ ___
-"  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz
-" | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-"  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
-"  |___/
+"         .             .              .                  
+"         |             |              |           .      
+" ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+" | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+" `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+"  ,|                                                     
+"  `'                                                     
+" GITHUB:https://github.com/gabrielzschmitz               
+" INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+" DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 "
 " $HOME/.config/nvim/plugins/nerdtree.vim
 "

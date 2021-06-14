@@ -1,23 +1,25 @@
-"   __ _  ____ ___ 
-"  / _` ||_  // __| GITHUB:https://github.com/gabrielzschmitz               
-" | (_| | / / \__ \ INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
-"  \__, |/___||___/ DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
-"  |___/    
-"
-" A dark vim colorscheme based on OneHalfDark.
-" See github.com/gabrielzschmitz/.dotfiles for more info
+"         .             .              .		  
+"         |             |              |           .	  
+" ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+" | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+" `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+"  ,|							  
+"  `'							  
+" GITHUB:https://github.com/gabrielzschmitz		  
+" INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+" DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
-let s:mono0 = [ '#20232d', 236 ]
+let s:mono0 = [ '#242734', 236 ]
 let s:mono1 = [ '#20232d', 238 ]
-let s:mono2 = [ '#343b4b', 243 ]
-let s:mono3 = [ '#9faab8', 255 ]
+let s:mono2 = [ '#35394a', 243 ]
+let s:mono3 = [ '#9096ae', 255 ]
 
-let s:yellow = [ '#b39669', 180 ]
-let s:red = [ '#a65f69', 168 ]
-let s:magenta = [ '#b9637e', 176 ]
-let s:blue = [ '#487799', 75 ]
-let s:cyan = [ '#348396', 73 ]
-let s:green = [ '#3b8563', 114 ]
+let s:yellow = [ '#8c8089', 180 ]
+let s:red = [ '#806382', 168 ]
+let s:magenta = [ '#8f6b8f', 176 ]
+let s:blue = [ '#4f6589', 75 ]
+let s:cyan = [ '#446781', 73 ]
+let s:green = [ '#436668', 114 ]
 
 let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
 
@@ -49,4 +51,4 @@ let s:p.tabline.tabsel = [ [ s:mono3, s:mono2 ] ]
 let s:p.tabline.middle = [ [ s:mono2, s:mono1] ]
 let s:p.tabline.right = [ [ s:mono0, s:green ] ]
 
-let g:lightline#colorscheme#faint#palette = lightline#colorscheme#flatten(s:p)
+let g:lightline#colorscheme#zero#palette = lightline#colorscheme#flatten(s:p)
