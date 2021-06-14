@@ -1,29 +1,40 @@
+!         .             .              .		  
+!         |             |              |           .	  
+! ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+! | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+! `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+!  ,|							  
+!  `'							  
+! GITHUB:https://github.com/gabrielzschmitz		  
+! INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+! DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 ! Black + DarkGrey
-*color0:  #232731
-*color8:  #6f798c
+*color0:  #20232f
+*color8:  #646b8c
 ! DarkRed + Red
-*color1:  #a65f69
-*color9:  #B86974
+*color1:  #806382
+*color9:  #8f6e8d
 ! DarkGreen + Green
-*color2:  #3b8563
-*color10: #469E76
+*color2:  #436668
+*color10: #4f797b
 ! DarkYellow + Yellow
-*color3:  #b39669
-*color11: #C7A775
+*color3:  #8c8089
+*color11: #9d8f92
 ! DarkBlue + Blue
-*color4:  #487799
-*color12: #5287AD
+*color4:  #4f6589
+*color12: #59729a
 ! DarkMagenta + Magenta
-*color5:  #b9637e
-*color13: #CC6D8B
-!DarkCyan + Cyan (both not tango)
-*color6:  #348396
-*color14: #3C97AD
+*color5:  #8f6b8f
+*color13: #9f7699
+!DarkCyan + Cyan
+*color6:  #446781
+*color14: #4d7694
 ! LightGrey + White
-*color7:  #6f798c
-*color15: #9faab8
+*color7:  #646b8c
+*color15: #9096ae
 
-*foreground: #9faab8
-*background: #232731
-*font: FiraCode Nerd Font-10
+*foreground: #646b8c
+*background: #20232f
+*font: FiraCode Nerd Font:pixelsize=15:antialias=true:autohint=true;
+*alpha: 0.9
 
