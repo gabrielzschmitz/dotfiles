@@ -1,14 +1,14 @@
-sw_volume: 60
+sw_volume: 92
 audio_device_state:1:pulse audio
 audio_device_state:1:my_fifo
 state: play
-current: 93
-time: 112.773000
-random: 1
+current: 39
+time: 120.013000
+random: 0
 repeat: 0
 single: 0
 consume: 0
-crossfade: 5
+crossfade: 0
 mixrampdb: 0.000000
 mixrampdelay: -1.000000
 playlist_begin
@@ -44,7 +44,7 @@ playlist_begin
 29:enzo dicarlo - fica tranquila.mp3
 30:enzo dicarlo - LOST ROOM.mp3
 31:enzo dicarlo - mel.mp3
-32:enzo dicarlo - Não Vai.mp3
+32:enzo dicarlo - Não Vai.mp3
 33:enzo dicarlo - Need Chill.mp3
 34:enzo dicarlo - para de caô.mp3
 35:enzo dicarlo - paris (feat. josefe).mp3
@@ -53,7 +53,7 @@ playlist_begin
 38:enzo dicarlo - Sacanagem (ft. Chediak).mp3
 39:enzo dicarlo - sem flow ft. rodrigo zin, adieu, siara.mp3
 40:enzo dicarlo - senta.mp3
-41:enzo dicarlo - Você.mp3
+41:enzo dicarlo - Você.mp3
 42:Flume - Rushing Back (ft. Vera Blue) [slashrr Remix].mp3
 43:førget - hell.mp3
 44:Ginseng - your heart was once like mine.mp3
@@ -145,26 +145,26 @@ playlist_begin
 130:XXXTENTACION - Never.mp3
 131:XXXTENTACION - Riot.mp3
 132:XXXTENTACION - Teeth.mp3
-133:XXXTENTACION - whoa (mind in awe) (Instrumental).mp3
-134:XXXTENTACION - WingRiddenAngel.mp3
-135:Yung Buda - 7K.mp3
-136:Yung Buda - Akatsuki de Vila, Pt. II.mp3
-137:Yung Buda - Akatsuki de Vila.mp3
-138:Yung Buda - Anbu.mp3
-139:Yung Buda - Autobahn (Tempo).mp3
-140:Yung Buda - Autumn Ring Mini (Sozinho no Touge).mp3
-141:Yung Buda - Hacker Dresscode.mp3
-142:Yung Buda - Jesus Chorou Pt. II.mp3
-143:Yung Buda - Light On.mp3
-144:Yung Buda - Madrugada Dos Mortos.mp3
-145:Yung Buda - New Wave.mp3
-146:Yung Buda - Ninja.mp3
-147:Yung Buda - O Segredo Além Do Jardim.mp3
-148:Yung Buda - Piloto.mp3
-149:Yung Buda - Riders.mp3
-150:Yung Buda - Sem Sinal.mp3
-151:Yung Buda - The Storm.mp3
-152:Yung Buda x niLL - Go Home (Very Rare).mp3
-153:Yung Lixo - Syphon Filter (feat. Yung Buda).mp3
-154:Zebu _ Jão - Medo Bobo (FURACÃO 5555 Remix).mp3
+133:XXXTENTACION - WingRiddenAngel.mp3
+134:Yung Buda - 7K.mp3
+135:Yung Buda - Akatsuki de Vila, Pt. II.mp3
+136:Yung Buda - Akatsuki de Vila.mp3
+137:Yung Buda - Anbu.mp3
+138:Yung Buda - Autobahn (Tempo).mp3
+139:Yung Buda - Autumn Ring Mini (Sozinho no Touge).mp3
+140:Yung Buda - Hacker Dresscode.mp3
+141:Yung Buda - Jesus Chorou Pt. II.mp3
+142:Yung Buda - Light On.mp3
+143:Yung Buda - Madrugada Dos Mortos.mp3
+144:Yung Buda - New Wave.mp3
+145:Yung Buda - Ninja.mp3
+146:Yung Buda - O Segredo Além Do Jardim.mp3
+147:Yung Buda - Piloto.mp3
+148:Yung Buda - Riders.mp3
+149:Yung Buda - Sem Sinal.mp3
+150:Yung Buda - The Storm.mp3
+151:Yung Buda x niLL - Go Home (Very Rare).mp3
+152:Yung Lixo - Syphon Filter (feat. Yung Buda).mp3
+153:Zebu _ Jão - Medo Bobo (FURACÃO 5555 Remix).mp3
+154:Lil Peep - U Said (prod. by smokeasac _ IIVI).mp3
 playlist_end
