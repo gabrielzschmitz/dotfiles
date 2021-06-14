@@ -18,10 +18,16 @@ export VISUAL='nvim';
 source $ZDOTDIR/aliases
 
 # History
+export HISTFILE=$ZDOTDIR/.zhistory
+export HISTSIZE=10000
+export SAVEHIST=10000
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt INC_APPEND_HISTORY_TIME
+setopt EXTENDED_HISTORY
 setopt HIST_FIND_NO_DUPS
 setopt INC_APPEND_HISTORY
-export HISTSIZE=10000
-export HISTFILE=$ZDOTDIR/.zhistory
 
 # Prompt
 export TYPEWRITTEN_COLOR_MAPPINGS="primary:red;secondary:green;accent:green"
@@ -56,4 +62,5 @@ zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %
 zstyle :compinstall filename '/home/gabrielzschmitz/.config/zsh/.zshrc'
 autoload -Uz compinit
 compinit
+_comp_options+=(globdots)
 
