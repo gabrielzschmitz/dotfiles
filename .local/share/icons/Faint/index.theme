@@ -1,7 +1,7 @@
 [Icon Theme]
 Name=Faint
 Comment=Papirus icon theme
-Inherits=breeze,hicolor
+Inherits=Quintom_Ink
 
 Example=folder
 
