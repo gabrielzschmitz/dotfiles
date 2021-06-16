@@ -273,7 +273,7 @@ mode "resize" {
 # Scripts
 bindsym $mod+shift+u exec --no-startup-id sh ~/.scripts/umount.sh
 bindsym $mod+shift+m exec --no-startup-id sh ~/.scripts/mount.sh
-bindsym $mod+e exec --no-startup-id sh ~/.scripts/emojis.sh
+bindsym $mod+e exec --no-startup-id sh ~/.scripts/emoji.sh
 bindsym $mod+w exec --no-startup-id sh ~/.scripts/specialchr.sh
 bindsym $mod+shift+w exec --no-startup-id sh ~/.scripts/zerowallpaper.sh
 exec_always --no-startup-id sh $HOME/.scripts/defaultwallpaper.sh
