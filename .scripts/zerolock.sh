@@ -10,7 +10,7 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!bin/sh
 
-# Zero for i3lock-color(https://github.com/Raymo111/i3lock-color)
+# zero for i3lock-color(https://github.com/Raymo111/i3lock-color)
 # by gabrielzschmitz(https://github.com/gabrielzschmitz)
 
 B='#262938' # Background
@@ -22,37 +22,37 @@ K='#4f797b' # Keystroke
 BLANK='#00000000' # Blank
 
 i3lock			\
---ringvercolor=$V	\
---insidevercolor=$B	\
---verifcolor=$T		\
+--ringver-color=$V	\
+--insidever-color=$B	\
+--verif-color=$T	\
 \
---ringwrongcolor=$W	\
---insidewrongcolor=$B	\
---wrongcolor=$T		\
+--ringwrong-color=$W	\
+--insidewrong-color=$B	\
+--wrong-color=$T	\
 \
---ringcolor=$D		\
---insidecolor=$B	\
---linecolor=$BLANK	\
+--ring-color=$D		\
+--inside-color=$B	\
+--line-color=$BLANK	\
 \
---separatorcolor=$D	\
---layoutcolor=$T	\
---keyhlcolor=$K		\
---bshlcolor=$K		\
+--separator-color=$D	\
+--layout-color=$T	\
+--keyhl-color=$K	\
+--bshl-color=$K		\
 \
 --clock			\
---timestr='%H:%M:%S'	\
---timecolor=$T		\
---timesize=35		\
---datestr='%a, %b, %Y'	\
---datecolor=$T		\
---datesize=18		\
+--time-str='%H:%M:%S'	\
+--time-color=$T		\
+--time-size=35		\
+--date-str='%a, %b, %Y'	\
+--date-color=$T		\
+--date-size=18		\
 \
---noinputtext='No Input'	\
---layoutsize=30			\
---veriftext='Verifying'		\
---verifsize=30			\
---wrongtext='Wrong!'		\
---wrongsize=30			\
+--noinput-text='No Input'	\
+--layout-size=30		\
+--verif-text='Verifying'	\
+--verif-size=30			\
+--wrong-text='Wrong!'		\
+--wrong-size=30			\
 \
 --ignore-empty-password				\
 --nofork					\
