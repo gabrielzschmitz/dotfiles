@@ -13,7 +13,7 @@
 # The famous "get a menu of emojis to copy" script by Luke Smith.
 
 # Get user selection via dmenu from emoji file.
-chosen=$(cut -d ';' -f1 ~/.scripts/emojis | dmenu -p 'emojis' -l 15 | sed "s/ .*//")
+chosen=$(cut -d ';' -f1 ~/.scripts/emojisbr | dmenu -p 'emojis' -l 15 | sed "s/ .*//")
 
 # Exit if none chosen.
 [ -z "$chosen" ] && exit
