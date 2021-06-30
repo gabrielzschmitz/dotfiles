@@ -43,8 +43,8 @@ bindsym $mod+d exec "dmenu_run -p 'dmenu'
 #exec_always --no-startup-id kdeconnect-indicator
 #exec --no-startup-id xfce4-power-manager
 #exec --no-startup-id pamac-tray
-#exec --no-startup-id blueman-applet
 #exec --no-startup-id pasystray
+exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
 exec --no-startup-id pulseaudio
 bindsym $mod+Ctrl+m exec pavucontrol
@@ -57,8 +57,8 @@ bindsym XF86AudioPlay exec mpc toggle
 bindsym XF86AudioStop exec mpc stop
 bindsym XF86AudioNext exec mpc next
 bindsym XF86AudioPrev exec mpc prev
-bindsym $mod+F11 exec mpc volume -2
-bindsym $mod+F12 exec mpc volume +2
+bindsym $mod+F11 exec mpc volume -5
+bindsym $mod+F12 exec mpc volume +5
 exec_always mpd
 
 # Brightness controls
@@ -275,7 +275,8 @@ bindsym $mod+shift+u exec --no-startup-id sh ~/.scripts/umount.sh
 bindsym $mod+shift+m exec --no-startup-id sh ~/.scripts/mount.sh
 bindsym $mod+e exec --no-startup-id sh ~/.scripts/emoji.sh
 bindsym $mod+w exec --no-startup-id sh ~/.scripts/specialchr.sh
-bindsym $mod+shift+w exec --no-startup-id sh ~/.scripts/zerowallpaper.sh
+bindsym $mod+Shift+w exec --no-startup-id sh ~/.scripts/zerowallpaper.sh
+bindsym $mod+Ctrl+d exec --no-startup-id sh ~/.scripts/zerodisplay.sh
 exec_always --no-startup-id sh $HOME/.scripts/defaultwallpaper.sh
 
 # Lock screen
@@ -394,15 +395,5 @@ mode "$mode_gaps_outer" {
 }
 
 # Displays Config
-# Second display on left
-exec_always --no-startup-id sh ~/.scripts/seconddisplayleft.sh
-
-# Second display on right
-#exec_always --no-startup-id sh ~/.scripts/seconddisplayright.sh
-
-# Just the Notebook Display
-#exec_always --no-startup-id sh ~/.scripts/notedisplay.sh
-
-# Just the Second Display
-#exec_always --no-startup-id sh ~/.scripts/seconddisplay.sh
+exec_always --no-startup-id sh $HOME/.scripts/defaultdisplay.sh
 
