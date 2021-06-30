@@ -28,6 +28,15 @@ alias cvrtsubmp4='for i in *.mp4; do ffmpeg -i "$i" -map 0:2 -c copy "${i%.*}.as
 alias cvrtvidmkv='for i in *.mkv; do ffmpeg -i "$i" -vcodec libx264 -crf 27 -preset veryfast "${i%.*}.mp4"; done'
 alias cvrtvidmp4='for i in *.mp4; do ffmpeg -i "$i" -vcodec libx264 -crf 27 -preset veryfast "${i%.*}.mp4"; done'
 
+# Folders cd
+alias doc='cd $HOME/Documents'
+alias down='cd $HOME/Downloads'
+alias pic='cd $HOME/Pictures'
+alias vid='cd $HOME/Videos'
+alias mus='cd $HOME/Music'
+alias gg='cd $HOME/gg'
+alias next='cd $HOME/Nextcloud'
+
 alias br='setxkbmap br'
 alias us='setxkbmap us alt-intl'
 alias wallpaper='sxiv $HOME/Pictures/Wallpapers/*'
