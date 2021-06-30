@@ -10,5 +10,5 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!/bin/sh
 
-xwallpaper --zoom /home/gabrielzschmitz/Pictures/Wallpapers/kiss.png
+xwallpaper --zoom /home/gabrielzschmitz/Pictures/Wallpapers/windowsmoke.png
 
