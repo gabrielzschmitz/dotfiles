@@ -17,10 +17,9 @@ export VISUAL='nvim';
 
 source $ZDOTDIR/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
-# Vi mode
+## Vi mode
 bindkey -v
 KEYTIMEOUT=1
-
 # Prompt
 PROMPT_EOL_MARK=''
 sh $HOME/.scripts/quote.textart
@@ -30,7 +29,7 @@ function zvm_after_select_vi_mode() {
   case $ZVM_MODE in
     $ZVM_MODE_NORMAL)
       VIMODE="NORMAL ❯"
-      VICOLORS="primary:red;secondary:green;accent:green"
+      VICOLORS="primary:red;secondary:magenta;accent:green"
       ;;
     $ZVM_MODE_INSERT)
       VIMODE="INSERT ❯"
@@ -49,7 +48,6 @@ function zvm_after_select_vi_mode() {
   export TYPEWRITTEN_COLOR_MAPPINGS="$VICOLORS"
   prompt typewritten
 }
-
 # More keybinds
 bindkey -a u undo
 bindkey -a '^r' redo
