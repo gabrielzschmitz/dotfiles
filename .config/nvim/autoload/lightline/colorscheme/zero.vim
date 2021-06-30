@@ -16,10 +16,10 @@ let s:mono3 = [ '#9096ae', 255 ]
 
 let s:yellow = [ '#8c8089', 180 ]
 let s:red = [ '#806382', 168 ]
-let s:magenta = [ '#8f6b8f', 176 ]
+let s:magenta = [ '#436668', 176 ]
 let s:blue = [ '#4f6589', 75 ]
 let s:cyan = [ '#446781', 73 ]
-let s:green = [ '#436668', 114 ]
+let s:green = [ '#6d5a80', 114 ]
 
 let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
 
