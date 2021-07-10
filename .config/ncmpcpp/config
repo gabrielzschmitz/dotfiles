@@ -10,8 +10,8 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
 # Files
- mpd_music_dir = "~/Music"  
- lyrics_directory  = "~/.config/ncmpcpp/lyrics"
+ mpd_music_dir = "~/mus"
+ lyrics_directory  = "~/.config/ncmpcpp/.lyrics"
  ncmpcpp_directory  = "~/.config/ncmpcpp"
  mpd_host = "localhost"
  mpd_port = "6600"  
@@ -37,7 +37,7 @@ default_place_to_search_in = "database"
 visualizer_data_source = "/tmp/mpd.fifo"
 visualizer_output_name = "my_fifo"
 visualizer_type = "spectrum" (spectrum/wave)
-visualizer_in_stereo = "no"
+visualizer_in_stereo = "yes"
 visualizer_look = "●▒" # other strange characters: ▋░ ●▒ ▋▋
 visualizer_color = "green"
 
@@ -72,7 +72,7 @@ autocenter_mode = "yes"
 centered_cursor = "yes"
 
 # Misc
-#enable_window_title = "no"
+enable_window_title = "yes"
 startup_screen = playlist
 startup_slave_screen = "visualizer"
 startup_slave_screen_focus = no
@@ -82,6 +82,5 @@ display_bitrate = "yes"
 follow_now_playing_lyrics = "yes"
 ignore_leading_the = "yes"
 empty_tag_marker = ""
-
 external_editor = "nvim"
 

@@ -10,8 +10,13 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #
 # Aliases
+alias steam-native='steam-native -noverifyfiles'
 alias lsd='lsd -hA --group-dirs first'
 alias ls='lsd --group-dirs first'
+alias l='lsd --group-dirs first'
+alias nv='nvim'
+alias v='nvim'
+alias vim='nvim'
 alias grep='grep --color=auto'
 alias bat='bat --theme="base16" --style="numbers,changes"'
 alias cat='bat'
@@ -29,17 +34,17 @@ alias cvrtvidmkv='for i in *.mkv; do ffmpeg -i "$i" -vcodec libx264 -crf 27 -pre
 alias cvrtvidmp4='for i in *.mp4; do ffmpeg -i "$i" -vcodec libx264 -crf 27 -preset veryfast "${i%.*}.mp4"; done'
 
 # Folders cd
-alias doc='cd $HOME/Documents'
-alias down='cd $HOME/Downloads'
-alias pic='cd $HOME/Pictures'
-alias vid='cd $HOME/Videos'
-alias mus='cd $HOME/Music'
+alias doc='cd $HOME/doc'
+alias down='cd $HOME/down'
+alias pic='cd $HOME/pic'
+alias vid='cd $HOME/vid'
+alias mus='cd $HOME/mus'
 alias gg='cd $HOME/gg'
 alias next='cd $HOME/Nextcloud'
 
 alias br='setxkbmap br'
 alias us='setxkbmap us alt-intl'
-alias wallpaper='sxiv $HOME/Pictures/Wallpapers/*'
+alias wallpaper='sxiv $HOME/pic/wall/*'
 alias colors='nvim $HOME/.scripts/zerocolors.vim'
 alias sourcezshrc='source $HOME/.config/zsh/.zshrc'
 alias aliases='nvim $HOME/.config/zsh/aliases'
@@ -97,16 +102,16 @@ alias zathurarc='nvim $HOME/.config/zathura/zathurarc'
 alias installsh='nvim $HOME/.scripts/install-script.sh'
 
 # Notes Aliases
-alias dots='/usr/bin/git --git-dir=$HOME/Documents/dotfiles --work-tree=$HOME'
-alias notes='/usr/bin/git --git-dir=$HOME/Documents/notes --work-tree=$HOME'
+alias dots='/usr/bin/git --git-dir=$HOME/doc/dotfiles --work-tree=$HOME'
+alias notes='/usr/bin/git --git-dir=$HOME/doc/notes --work-tree=$HOME'
 # Edit the Main Files
-alias wiki='nvim $HOME/Documents/Wiki/index.md'
-alias database='nvim $HOME/Documents/Wiki/School-Database/Database.md'
-alias school='nvim $HOME/Documents/Wiki/School.md'
+alias wiki='nvim $HOME/doc/Wiki/index.md'
+alias database='nvim $HOME/doc/Wiki/School-Database/Database.md'
+alias school='nvim $HOME/doc/Wiki/School.md'
 # View the Main Folders
-alias cdwiki='cd $HOME/Documents/Wiki'
-alias cddatabase='cd $HOME/Documents/Wiki/School-Database'
-alias lsdatabase='ls $HOME/Documents/Wiki/School-Database'
+alias cdwiki='cd $HOME/doc/Wiki'
+alias cddatabase='cd $HOME/doc/Wiki/School-Database'
+alias lsdatabase='ls $HOME/doc/Wiki/School-Database'
 # Convert to PDF
 alias pandocpdf="pandoc --pdf-engine=xelatex -s -o"
 
