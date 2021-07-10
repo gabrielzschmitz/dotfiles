@@ -37,14 +37,15 @@ bindsym $mod+Return exec $myTerm
 bindsym $mod+Shift+q kill
 
 # Program launcher
-bindsym $mod+d exec "dmenu_run -p 'dmenu'
+bindsym $mod+d exec "dmenu_run -p 'dmenu'"
+bindsym $mod+Ctrl+r exec "sh $HOME/.config/polybar/scripts/launcher.sh"
 
 # System Tray Programs
 #exec_always --no-startup-id kdeconnect-indicator
 #exec --no-startup-id xfce4-power-manager
 #exec --no-startup-id pamac-tray
 #exec --no-startup-id pasystray
-exec --no-startup-id blueman-applet
+#exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
 exec --no-startup-id pulseaudio
 bindsym $mod+Ctrl+m exec pavucontrol
@@ -69,10 +70,9 @@ bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness 
 bindsym $mod+F2 exec brave
 bindsym $mod+F3 exec pcmanfm
 bindsym $mod+Shift+F3 exec "sudo pcmanfm"
-bindsym $mod+F5 exec $myTerm -e 'vis'
-bindsym $mod+F6 exec deadbeef
-bindsym $mod+p exec --no-startup-id pkill picom
-bindsym $mod+Ctrl+p exec --no-startup-id picom --experimental-backends -b
+bindsym $mod+F7 exec "steam-native -noverifyfiles"
+#bindsym $mod+p exec --no-startup-id pkill picom
+#bindsym $mod+Ctrl+p exec --no-startup-id picom --experimental-backends -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
@@ -275,7 +275,7 @@ bindsym $mod+shift+u exec --no-startup-id sh ~/.scripts/umount.sh
 bindsym $mod+shift+m exec --no-startup-id sh ~/.scripts/mount.sh
 bindsym $mod+e exec --no-startup-id sh ~/.scripts/emoji.sh
 bindsym $mod+w exec --no-startup-id sh ~/.scripts/specialchr.sh
-bindsym $mod+Shift+w exec --no-startup-id sh ~/.scripts/zerowallpaper.sh
+bindsym $mod+Ctrl+w exec --no-startup-id sh ~/.scripts/zerowallpaper.sh
 bindsym $mod+Ctrl+d exec --no-startup-id sh ~/.scripts/zerodisplay.sh
 exec_always --no-startup-id sh $HOME/.scripts/defaultwallpaper.sh
 
@@ -288,7 +288,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id numlockx on
 exec --no-startup-id xrdb $HOME/.Xresources
 # exec_always --no-startup-id sbxkb
-exec_always --no-startup-id picom --experimental-backends -b
+#exec_always --no-startup-id picom --experimental-backends -b
 exec_always --no-startup-id sh ~/.scripts/keyrate.sh
 exec_always --no-startup-id sh ~/.scripts/kblayout.sh
 
@@ -323,8 +323,8 @@ exec_always --no-startup-id sh ~/.scripts/kblayout.sh
 # Polybar
 exec_always --no-startup-id sh $HOME/.config/polybar/launch.sh 
 
-# Hide/unhide i3status bar
-bindsym $mod+m bar mode toggle
+## Hide/unhide i3status bar
+# bindsym $mod+m bar mode toggle
 
 # Theme colors
 #   class                   border  bground text    indicator child_border
@@ -343,7 +343,7 @@ bindsym $mod+m bar mode toggle
 
 # Set inner/outer gaps
 gaps inner 10
-gaps outer 0
+gaps outer 5
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
 # gaps inner|outer current|all set|plus|minus <px>
