@@ -8,7 +8,7 @@
 # GITHUB:https://github.com/gabrielzschmitz		  
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
-#!/bin/sh ~/.scripts/displayscripts/
+#!/bin/sh ~/.scripts/displayscripts/seconddisplayright.sh
 
-sh ~/.scripts/displayscripts/
+sh ~/.scripts/displayscripts/seconddisplayright.sh
 

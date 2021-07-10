@@ -12,14 +12,14 @@
 
 scrot print-input.png		\
 --quality 100			\
---exec 'mv $f ~/Pictures/$f'	\
+--exec 'mv $f ~/pic/$f'	\
 
-convert ~/Pictures/print-input.png	\
+convert ~/pic/print-input.png	\
 -quality 100				\
 -flop 					\
 -crop 1440x900+0+0			\
 -flop					\
-~/Pictures/print-output.png		\
-&& rm ~/Pictures/print-input.png	\
-&& mv ~/Pictures/print-output.png ~/Pictures/Fullscreenshot-$(date +%H:%M:%S).png	\
+~/pic/print-output.png		\
+&& rm ~/pic/print-input.png	\
+&& mv ~/pic/print-output.png ~/pic/Fullscreenshot-$(date +%H:%M:%S).png	\
 
