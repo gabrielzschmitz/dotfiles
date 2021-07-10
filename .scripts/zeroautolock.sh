@@ -25,6 +25,7 @@ BLANK='#00000000' # Blank
 xautolock		\
 -time 15		\
 -locker "i3lock         \
+--indicator		\
 --ringver-color=$V	\
 --insidever-color=$B	\
 --verif-color=$T	\
@@ -60,5 +61,5 @@ xautolock		\
 --ignore-empty-password				\
 --nofork					\
 --centered					\
---image=$HOME/Pictures/Wallpapers/smoking.png"	\
+--image=/home/gabrielzschmitz/pic/wall/nsx.png"
 

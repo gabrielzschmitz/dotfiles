@@ -22,6 +22,7 @@ K='#4f797b' # Keystroke
 BLANK='#00000000' # Blank
 
 i3lock			\
+--indicator		\
 --ringver-color=$V	\
 --insidever-color=$B	\
 --verif-color=$T	\
@@ -57,5 +58,5 @@ i3lock			\
 --ignore-empty-password				\
 --nofork					\
 --centered					\
---image=$HOME/Pictures/Wallpapers/smoking.png	\
+--image=/home/gabrielzschmitz/pic/wall/nsx.png
 

@@ -15,5 +15,5 @@ scrot Selectivescreenshot-%H:%M:%S.png           \
 --select			\
 --freeze			\
 --border			\
---exec 'mv $f ~/Pictures/$f'    \
+--exec 'mv $f ~/pic/$f'		\
 

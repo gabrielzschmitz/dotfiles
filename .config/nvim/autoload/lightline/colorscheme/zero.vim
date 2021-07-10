@@ -10,7 +10,7 @@
 " DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
 let s:mono0 = [ '#242734', 236 ]
-let s:mono1 = [ '#20232d', 238 ]
+let s:mono1 = [ '#1c1e29', 238 ]
 let s:mono2 = [ '#35394a', 243 ]
 let s:mono3 = [ '#9096ae', 255 ]
 
