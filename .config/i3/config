@@ -77,8 +77,9 @@ bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart du
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # Printscreen
-bindsym Print exec --no-startup-id sh $HOME/.scripts/fullscreenshot.sh
-bindsym $mod+Shift+Print --release exec --no-startup-id sh $HOME/.scripts/selectivescreenshot.sh
+bindsym Ctrl+Print --release exec --no-startup-id $HOME/.scripts/allscreenshot.sh
+bindsym Print exec --no-startup-id $HOME/.scripts/fullscreenshot.sh
+bindsym Shift+Print --release exec --no-startup-id $HOME/.scripts/selectivescreenshot.sh
 
 # Change focus
 bindsym $mod+Left focus left
