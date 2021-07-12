@@ -10,10 +10,9 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!bin/sh
 
-scrot Selectivescreenshot-%H:%M:%S.png           \
---quality 100                   \
---select			\
---freeze			\
---border			\
---exec 'mv $f ~/pic/$f'		\
-
+scrot Selectivescreenshot-%H:%M:%S.png	\
+--quality 100				\
+--select				\
+--border				\
+--freeze				\
+--exec 'mv $f ~/pic/$f'			\
