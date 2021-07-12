@@ -16,7 +16,7 @@ colors.setTheme({
   darkerbackground:	'#242734'
   lighterbackground: 	'#35394a'
   cursorColor:		'#9096ae'
-  wallpaperColor:	'#2f3445'
+  wallpaperColor:	'#2b3041'
   wallpaperColor:	'#353955'
 
   //black
