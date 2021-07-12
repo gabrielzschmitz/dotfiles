@@ -155,6 +155,8 @@ set $ws4 dev
 set $ws5 chat
 set $ws6 mus
 set $ws7 gg
+set $ws8 vid
+set $ws9 rec
 
 # Force a window on a named workspace
 #assign [class="Alacritty"] $ws1
@@ -178,6 +180,8 @@ bindsym $mod+4 workspace $ws4
 bindsym $mod+5 workspace $ws5
 bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
 
 # Move focused container to workspace
 bindsym $mod+Ctrl+1 move container to workspace $ws1
@@ -187,6 +191,8 @@ bindsym $mod+Ctrl+4 move container to workspace $ws4
 bindsym $mod+Ctrl+5 move container to workspace $ws5
 bindsym $mod+Ctrl+6 move container to workspace $ws6
 bindsym $mod+Ctrl+7 move container to workspace $ws7
+bindsym $mod+Ctrl+8 move container to workspace $ws8
+bindsym $mod+Ctrl+9 move container to workspace $ws9
 
 # Move to workspace with focused container
 bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
@@ -196,6 +202,8 @@ bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
 bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
 bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 
 # Open specific applications in floating mode
 for_window [class="Sxiv"] floating enable
@@ -281,7 +289,7 @@ bindsym $mod+Ctrl+d exec --no-startup-id sh ~/.scripts/zerodisplay.sh
 exec_always --no-startup-id sh $HOME/.scripts/defaultwallpaper.sh
 
 # Lock screen
-bindsym $mod+9 exec --no-startup-id sh ~/.scripts/zerolock.sh
+bindsym $mod+shift+0 exec --no-startup-id sh ~/.scripts/zerolock.sh
 exec_always --no-startup-id sh ~/.scripts/zeroautolock.sh
 
 # Autostart applications
