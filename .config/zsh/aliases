@@ -10,7 +10,9 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #
 # Aliases
-alias steam-native='steam-native -noverifyfiles'
+alias dotsp='dots push -u origin main'
+alias dotsc='dots commit -m'
+alias dotsa='dots add'
 alias lsd='lsd -hA --group-dirs first'
 alias ls='lsd --group-dirs first'
 alias l='lsd --group-dirs first'
