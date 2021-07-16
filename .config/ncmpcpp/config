@@ -10,56 +10,57 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
 # Files
- mpd_music_dir = "~/mus"
- lyrics_directory  = "~/.config/ncmpcpp/.lyrics"
- ncmpcpp_directory  = "~/.config/ncmpcpp"
- mpd_host = "localhost"
- mpd_port = "6600"  
- mpd_connection_timeout = "5"  
- mpd_crossfade_time = "5"  
+mpd_music_dir = "~/mus"
+lyrics_directory  = "~/.config/ncmpcpp/lyrics"
+ncmpcpp_directory  = "~/.config/ncmpcpp"
+mpd_host = "localhost"
+mpd_port = "6600"  
+mpd_connection_timeout = "5"  
+mpd_crossfade_time = "5"  
 
- # Playlist
+# Playlist
 playlist_disable_highlight_delay = "0"  
 playlist_display_mode = "columns"  
 browser_display_mode = "columns"  
 colors_enabled = "yes"  
-main_window_color = "green"  
-header_window_color = "green"  
-volume_color = "green"  
+main_window_color = "magenta"  
+header_window_color = "magenta"  
+volume_color = "magenta"  
 progressbar_color = "black"
 statusbar_color = "white"
-active_window_border = "green"
-song_columns_list_format = " (8)[green]{l} (1)[white]{t} "
+active_window_border = "magenta"
+song_columns_list_format = " (11)[magenta]{l} (17)[magenta]{a} (0)[white]{t} "
 user_interface = "classic"
 default_place_to_search_in = "database"
 
-# visualizer
+# Visualizer
 visualizer_data_source = "/tmp/mpd.fifo"
 visualizer_output_name = "my_fifo"
+visualizer_fps = 60
 visualizer_type = "spectrum" (spectrum/wave)
-visualizer_in_stereo = "yes"
+visualizer_in_stereo = "no"
 visualizer_look = "●▒" # other strange characters: ▋░ ●▒ ▋▋
-visualizer_color = "green"
+visualizer_color = "magenta"
 
-## Navigation ##
+# Navigation
 cyclic_scrolling = "yes"
 header_text_scrolling = "yes"
 jump_to_now_playing_song_at_start = "yes"
 lines_scrolled = "3"
 
-## Other ##
+# Other
 system_encoding = "utf-8"
 regular_expressions = "extended"
 
-## Selected tracks ##
+# Selected tracks
 selected_item_prefix = "* "
 discard_colors_if_item_is_selected = "no"
 
-## Seeking ##
+# Seeking
 incremental_seeking = "yes"
 seek_time = "1"
 
-## Visivility ##
+# Visivility
 header_visibility = "yes"
 statusbar_visibility = "yes"
 titles_visibility = "yes"
@@ -67,12 +68,12 @@ progressbar_look =  "⮞⮞"
 progressbar_elapsed_color = "white"
 now_playing_prefix = $b
 now_playing_suffix = $/b
-song_status_format = " $3%a $4⟫$3⟫ $8%t $4⟫$3⟫ $5%b "
+song_status_format = " $6%a $4⟫$6⟫ $8%t $4⟫$6⟫ $6%b "
 autocenter_mode = "yes"
 centered_cursor = "yes"
 
 # Misc
-enable_window_title = "yes"
+enable_window_title = "no"
 startup_screen = playlist
 startup_slave_screen = "visualizer"
 startup_slave_screen_focus = no
@@ -83,4 +84,5 @@ follow_now_playing_lyrics = "yes"
 ignore_leading_the = "yes"
 empty_tag_marker = ""
 external_editor = "nvim"
+execute_on_song_change="~/.config/ncmpcpp/ueberzug/cover-art.sh"
 
