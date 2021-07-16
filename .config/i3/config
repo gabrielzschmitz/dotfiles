@@ -71,8 +71,9 @@ bindsym $mod+F2 exec brave
 bindsym $mod+F3 exec pcmanfm
 bindsym $mod+Shift+F3 exec "sudo pcmanfm"
 bindsym $mod+F7 exec "steam-native -noverifyfiles"
-#bindsym $mod+p exec --no-startup-id pkill picom
-#bindsym $mod+Ctrl+p exec --no-startup-id picom --experimental-backends -b
+bindsym $mod+p exec --no-startup-id pkill picom
+bindsym $mod+Ctrl+p exec --no-startup-id picom --experimental-backends -b
+#bindsym $mod+Ctrl+p exec --no-startup-id picom
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
@@ -297,50 +298,23 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id numlockx on
 exec --no-startup-id xrdb $HOME/.Xresources
 # exec_always --no-startup-id sbxkb
-#exec_always --no-startup-id picom --experimental-backends -b
+exec_always --no-startup-id picom --experimental-backends -b
 exec_always --no-startup-id sh ~/.scripts/keyrate.sh
 exec_always --no-startup-id sh ~/.scripts/kblayout.sh
 
-# Start i3bar to display a workspace bar (plus the system information i3status if available)
-#bar {
-#	i3bar_command i3bar --transparency	
-#	status_command i3status
-#	position top
-#	font pango:FiraCode Nerd Font 10
-#	separator_symbol |
-#	tray_output primary
-#	tray_output eDP1
-#	bindsym button4 nop
-#	bindsym button5 nop
-#    font xft:FiraCode Nerd Font 10
-##	strip_workspace_numbers yes
-#
-#    colors {
-#        background #232731A8
-#        statusline #9faab8
-#        separator  #9faab8
-#
-##                          border  backgr. text
-#        focused_workspace  #6f798c #6f798c #20242d
-#        active_workspace   #232731 #6f798c #9faab8
-#        inactive_workspace #232731 #232731 #6f798c
-#        urgent_workspace   #a65f69 #a65f69 #9faab8
-#        binding_mode       #a65f69 #a65f69 #9faab8
-#    }
-#}
-
 # Polybar
 exec_always --no-startup-id sh $HOME/.config/polybar/launch.sh 
+bindsym $mod+shift+p exec --no-startup-id sh $HOME/.config/polybar/launch.sh 
 
 ## Hide/unhide i3status bar
 # bindsym $mod+m bar mode toggle
 
 # Theme colors
 #   class                   border  bground text    indicator child_border
-    client.focused          #646b8c #646b8c #20232f #646b8c   #646b8c
+    client.focused          #20232f #646b8c #20232f #646b8c   #20232f
     client.focused_inactive #20232f #20232f #9096ae #20232f   #20232f
     client.unfocused        #20232f #20232f #9096ae #20232f   #20232f
-    client.urgent           #20232f #806382 #20232f #806382   #806382
+    client.urgent           #20232f #806382 #20232f #806382   #20232f
     client.placeholder      #20232f #20232f #9096ae #20232f   #20232f
 
     client.background       #646b8c

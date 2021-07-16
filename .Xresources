@@ -8,7 +8,6 @@
 ! GITHUB:https://github.com/gabrielzschmitz		  
 ! INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 ! DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
-! Alpha
 ! Black + DarkGrey
 *color0:  #20232f
 *color8:  #646b8c
@@ -33,8 +32,12 @@
 ! LightGrey + White
 *color7:  #646b8c
 *color15: #9096ae
-
+! Foreground and Background
 *foreground: #646b8c
 *background: #20232f
+
+! Alpha
+*alpha: 0.85
+! Font
 *font: FiraCode Nerd Font:pixelsize=15:antialias=true:autohint=true;
 
