@@ -36,3 +36,9 @@ sed -i "s|--image=.*|--image=$WALL_FN|\
 sed -i "s|--image=.*|--image=$WALL_FN\"|\
 " ~/.scripts/zeroautolock.sh
 
+# Update picom
+sleep 1 && \
+i3 restart && \
+pkill picom &&\
+picom --experimental-backends -b
+
