@@ -68,7 +68,7 @@ progressbar_look =  "⮞⮞"
 progressbar_elapsed_color = "white"
 now_playing_prefix = $b
 now_playing_suffix = $/b
-song_status_format = " $6%a $4⟫$6⟫ $8%t $4⟫$6⟫ $6%b "
+song_status_format = " $4⟪$6⟪ $6%a $4‖$6‖ $8%t $4⟫$6⟫ "
 autocenter_mode = "yes"
 centered_cursor = "yes"
 
