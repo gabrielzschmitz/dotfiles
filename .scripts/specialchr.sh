@@ -13,7 +13,7 @@
 # A script to copy special characters by gabrielzschmitz.
 
 # Get user selection via dmenu from latin file.
-chosen=$(cut -d ';' -f1 ~/.scripts/specialchrs | dmenu -p 'special character' -l 15 | sed "s/ .*//")
+chosen=$(cat ~/.scripts/specialchrs | dmenu -p 'special character' | sed "s/ .*//")
 
 # Exit if none chosen.
 [ -z "$chosen" ] && exit
