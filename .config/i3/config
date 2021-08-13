@@ -20,7 +20,7 @@ set $mod Mod4
 workspace_layout default
 
 # Border style
-default_border pixel 1
+default_border pixel 0
 default_floating_border normal
 
 # Title font
@@ -56,8 +56,8 @@ bindsym XF86AudioRaiseVolume    exec "$psst pactl set-sink-volume @DEFAULT_SINK@
 bindsym XF86AudioMute           exec "$psst pactl set-sink-mute @DEFAULT_SINK@ toggle $update"
 bindsym XF86AudioPlay exec mpc toggle
 bindsym XF86AudioStop exec mpc stop
-bindsym XF86AudioNext exec mpc next
-bindsym XF86AudioPrev exec mpc prev
+bindsym XF86AudioNext exec "sh ~/.scripts/musnotify.sh; mpc next"
+bindsym XF86AudioPrev exec "sh ~/.scripts/musnotify.sh; mpc prev"
 bindsym $mod+F11 exec mpc volume -5
 bindsym $mod+F12 exec mpc volume +5
 exec_always mpd
@@ -157,7 +157,7 @@ set $ws5 chat
 set $ws6 mus
 set $ws7 gg
 set $ws8 vid
-set $ws9 rec
+set $ws9 pic
 
 # Force a window on a named workspace
 #assign [class="Alacritty"] $ws1
@@ -326,7 +326,7 @@ bindsym $mod+shift+p exec --no-startup-id sh $HOME/.config/polybar/launch.sh
 
 # Set inner/outer gaps
 gaps inner 10
-gaps outer 5
+gaps outer 10
 
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
 # gaps inner|outer current|all set|plus|minus <px>
