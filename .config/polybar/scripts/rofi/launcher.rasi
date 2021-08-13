@@ -10,7 +10,7 @@
 /* DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   */
 
 configuration {
-	font:							"FiraCode Nerd Font 11";
+	font:							"FiraCode Nerd Font 10";
     show-icons:                     true;
 	icon-theme: 					"FiraCode Nerd Font";
     display-drun: 					"";
@@ -110,7 +110,7 @@ element-text {
 
 element selected {
     background-color:               @bga;
-    text-color:                     @fg;
+    text-color:                     @bg;
 	border:							0px;
     border-radius:                  0px;
     border-color:                  	@bg;
