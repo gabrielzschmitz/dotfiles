@@ -1,11 +1,12 @@
 // Change the ASCII Art
 #include "partix.h"
+// 93 yellow; 94 blue; 96 cyan; 95 magenta; 97 white
 // Define the ASCII color
-#define COLORA "\e[1;95m"
+#define COLORA "\e[1;96m"
 // Define the Title color
 #define COLORT "\e[1;97m"
 // Define the Functions colors
-#define COLOR "\e[1;91m"
+#define COLOR "\e[1;96m"
 
 #define CONFIG \
 { \
