@@ -22,18 +22,19 @@ bindkey -v
 KEYTIMEOUT=1
 # Prompt
 PROMPT_EOL_MARK=''
-sh $HOME/.scripts/quote.textart
+#sh $HOME/.scripts/quote.textart
+sh -c "$HOME/.config/zerofetch/zerofetch"
 fpath+=$ZDOTDIR/typewritten
 autoload -U promptinit; promptinit
 function zvm_after_select_vi_mode() {
   case $ZVM_MODE in
     $ZVM_MODE_NORMAL)
       VIMODE="NORMAL ❯"
-      VICOLORS="primary:red;secondary:magenta;accent:green"
+      VICOLORS="primary:red;secondary:green;accent:green"
       ;;
     $ZVM_MODE_INSERT)
       VIMODE="INSERT ❯"
-      VICOLORS="primary:red;secondary:blue;accent:green"
+      VICOLORS="primary:red;secondary:cyan;accent:green"
       ;;
     $ZVM_MODE_VISUAL)
       VIMODE="VISUAL ❯"
@@ -96,4 +97,24 @@ zstyle :compinstall filename '/home/gabrielzschmitz/.config/zsh/.zshrc'
 autoload -Uz compinit
 compinit
 _comp_options+=(globdots)
+
+if [ "$TERM" = "linux" ]; then
+    echo -en "\e]P0232323" #black
+    echo -en "\e]P82B2B2B" #darkgrey
+    echo -en "\e]P1D75F5F" #darkred
+    echo -en "\e]P9E33636" #red
+    echo -en "\e]P287AF5F" #darkgreen
+    echo -en "\e]PA98E34D" #green
+    echo -en "\e]P3D7AF87" #brown
+    echo -en "\e]PBFFD75F" #yellow
+    echo -en "\e]P48787AF" #darkblue
+    echo -en "\e]PC7373C9" #blue
+    echo -en "\e]P5BD53A5" #darkmagenta
+    echo -en "\e]PDD633B2" #magenta
+    echo -en "\e]P65FAFAF" #darkcyan
+    echo -en "\e]PE44C9C9" #cyan
+    echo -en "\e]P7E5E5E5" #lightgrey
+    echo -en "\e]PFFFFFFF" #white
+    clear #for background artifacting
+fi
 
