@@ -5,9 +5,9 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "FiraCode Nerd Font Mono:pixelsize=12:antialias=true:autohint=true";
-static char *font2[] = { "FiraCode Nerd Font:pixelsize=10:antialias=true:autohint=true" };
-static int borderpx = 0;
+static char *font = "FiraCode Nerd Font Mono:size=12:antialias=true:autohint=true";
+static char *font2[] = { "FiraCode Nerd Font:size=10:antialias=true:autohint=true" };
+static int borderpx = 1;
 
 /*
  * What program is execed by st depends of these precedence rules:
