@@ -23,13 +23,13 @@ playlist_disable_highlight_delay = "0"
 playlist_display_mode = "columns"  
 browser_display_mode = "columns"  
 colors_enabled = "yes"  
-main_window_color = "magenta"  
-header_window_color = "magenta"  
-volume_color = "magenta"  
+main_window_color = "cyan"  
+header_window_color = "cyan"  
+volume_color = "cyan"
 progressbar_color = "black"
 statusbar_color = "white"
-active_window_border = "magenta"
-song_columns_list_format = " (11)[magenta]{l} (17)[magenta]{a} (0)[white]{t} "
+active_window_border = "cyan"
+song_columns_list_format = " (11)[cyan]{l} (17)[cyan]{a} (0)[white]{t} "
 user_interface = "classic"
 default_place_to_search_in = "database"
 
@@ -40,7 +40,7 @@ visualizer_fps = 60
 visualizer_type = "spectrum" (spectrum/wave)
 visualizer_in_stereo = "no"
 visualizer_look = "●▒" # other strange characters: ▋░ ●▒ ▋▋
-visualizer_color = "magenta"
+visualizer_color = "cyan"
 
 # Navigation
 cyclic_scrolling = "yes"
@@ -64,11 +64,20 @@ seek_time = "1"
 header_visibility = "yes"
 statusbar_visibility = "yes"
 titles_visibility = "yes"
-progressbar_look =  "⮞⮞"
+#progressbar_look =  "─╼ "
+#progressbar_look =  "■◣ "
+#progressbar_look = "▶▶─"
+#progressbar_look =  "●● "
+#progressbar_look =  "◆◆◇"
+#progressbar_look =  "●●○"
+progressbar_look =  "▬▬▭"
 progressbar_elapsed_color = "white"
 now_playing_prefix = $b
 now_playing_suffix = $/b
-song_status_format = " $6$b❮$4$b❮ $6$b%a $4$b❙$6$b❙ $8$b%t $4$b❯$6$b❯ "
+# redlavender
+#song_status_format = " $6$b❮$4$b❮ $6$b%a $4$b❙$6$b❙ $8$b%t $4$b❯$6$b❯ "
+# oceanblue
+song_status_format = " $7$b❮$5$b❮ $7$b%a $5$b❙$7$b❙ $1$b%t $5$b❯$7$b❯ "
 autocenter_mode = "yes"
 centered_cursor = "yes"
 
@@ -84,5 +93,4 @@ follow_now_playing_lyrics = "yes"
 ignore_leading_the = "yes"
 empty_tag_marker = ""
 external_editor = "nvim"
-execute_on_song_change="~/.config/ncmpcpp/ueberzug/cover-art.sh"
-
+execute_on_song_change=~/.config/ncmpcpp/ueberzug/cover-art.sh
