@@ -35,7 +35,7 @@ if exists('+termguicolors')
 endif
 
 " Lightline
-let g:lightline = { 'colorscheme': 'zero' }
+let g:lightline = { 'colorscheme': 'zerooceanblue' }
 set noshowmode					" To remove the --INSERT-- in command line
 set cmdheight=1
 set cmdwinheight=3
