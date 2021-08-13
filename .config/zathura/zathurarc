@@ -25,14 +25,14 @@ map [fullscreen] f toggle_fullscreen
 
 set font "FiraCode Nerd Font 10"
 set recolor
-set recolor-lightcolor \rgba(35,39,49,0)
-set recolor-darkcolor \#9FAAB8
+set recolor-lightcolor \rgba(32,35,47,0)
+set recolor-darkcolor \#9096ae
 set recolor-keephue true
-set default-bg \rgba(35,39,49,0.8)
-set statusbar-bg \#1b1e26
-set statusbar-fg \#9FAAB8
+set default-bg \rgba(32,35,47,0.8)
+set statusbar-bg \#1c1e29
+set statusbar-fg \#9096ae
 set recolor-reverse-video true
-set inputbar-bg \#1b1e26
-set inputbar-fg \#9FAAB8
-set highlight-color \#469E76
-set highlight-active-color \#3b8563
+set inputbar-bg \#1c1e29
+set inputbar-fg \#9096ae
+set highlight-color \#446781
+set highlight-active-color \#35394a
