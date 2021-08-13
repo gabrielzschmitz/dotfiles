@@ -20,8 +20,8 @@ dmenu -p 'display scripts options' -l 5) \
 # For actual instance
 DSP_FN=$(sh ~/.scripts/displayscripts/$DSP_OPT)
 sleep 1
-killall -q polybar
-sh ~/.config/polybar/launch.sh
+#killall -q polybar
+#sh ~/.config/polybar/launch.sh
 sh ~/.scripts/defaultwallpaper.sh
 # For all instances
 sed -i "s|sh.*|sh ~/.scripts/displayscripts/$DSP_OPT|\

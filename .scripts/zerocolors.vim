@@ -13,6 +13,7 @@ colors.setTheme({
   foreground:   	'#9096ae'
   background:		'#262938'
   darkerbackground:	'#20232f'
+  darkerbackground:	'#1c1f2a'
   darkerbackground:	'#242734'
   lighterbackground: 	'#35394a'
   cursorColor:		'#9096ae'

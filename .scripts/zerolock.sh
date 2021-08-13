@@ -58,5 +58,5 @@ i3lock			\
 --ignore-empty-password				\
 --nofork					\
 --centered					\
---image=/home/gabrielzschmitz/pic/wall/nsx.png
+--image=/home/gabrielzschmitz/pic/wall/zero-oceanblue/storm-ivankonstantinovichaivazovsky.png
 

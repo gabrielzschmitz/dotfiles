@@ -14,7 +14,9 @@
 #!/bin/sh
 
 # Directory of the wallpapers
-WALL_DIR='~/pic/wall/*.png'
+#WALL_DIR=$(echo -e "~/pic/wall/zero-redlavender\n~/pic/wall/zero-oceanblue\n~/pic/wall/zero-yellowambar"|\
+#dmenu -p 'wallpaper folders' -l 3) \
+WALL_DIR='$HOME/pic/wall/zero-oceanblue/'
 
 # User interface
 ## X wallpaper options
@@ -38,7 +40,6 @@ sed -i "s|--image=.*|--image=$WALL_FN\"|\
 
 # Update picom
 sleep 1 && \
-i3 restart && \
-pkill picom &&\
+pkill picom ;\
 picom --experimental-backends -b
 
