@@ -2,6 +2,7 @@
 /* Default settings; can be overriden by command line. */
 
 static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
+static int colorprompt = 1;                /* -p  option; if 1, prompt uses SchemeSel, otherwise SchemeNorm */
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
 	"FiraCode Nerd Font:size=12:antialias=true:autohint=true"
@@ -18,8 +19,8 @@ static const char *colors[SchemeLast][2] = {
 /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
 static unsigned int lines = 10;
 /* -h option; minimum height of a menu line */
-static unsigned int lineheight = 32;
-static unsigned int min_lineheight = 32;
+static unsigned int lineheight = 40;
+static unsigned int min_lineheight = 40;
 
 /*
  * Characters not considered part of a word while deleting words
