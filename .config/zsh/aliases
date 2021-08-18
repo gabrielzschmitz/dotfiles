@@ -24,6 +24,7 @@ alias vim='nvim'
 alias grep='grep --color=auto'
 alias bat='bat --theme="base16" --style="numbers,changes"'
 alias cat='bat'
+alias htop='bashtop'
 alias du='du --human-readable'
 alias cmatrix='cmatrix -bC cyan'
 alias pcm='sudo pacman --color always'
@@ -90,8 +91,8 @@ alias mine='java -jar Downloads/TLauncher-2.75.jar'
 alias zerofetch='sh -c "$HOME/.config/zerofetch/zerofetch"'
 
 # Refresh the Monitors
-alias displayfix='sh $HOME/.scripts/refreshdisplays.sh'
-alias rfshdis='sh $HOME/.scripts/refreshdisplays.sh'
+alias displayfix='sh $HOME/.scripts/displayfix.sh'
+alias disfix='sh $HOME/.scripts/displayfix.sh'
 
 # Config Files
 alias zhis='nvim $HOME/.config/zsh/.zhistory'
