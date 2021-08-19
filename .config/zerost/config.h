@@ -75,7 +75,7 @@ static unsigned int cursorthickness = 2;
  * 0: disable (render all U25XX glyphs normally from the font).
  */
 const int boxdraw = 1;
-const int boxdraw_bold = 0;
+const int boxdraw_bold = 1;
 
 /* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
 const int boxdraw_braille = 0;
@@ -104,7 +104,7 @@ char *termname = "st-256color";
  *
  *	stty tabs
  */
-unsigned int tabspaces = 8;
+unsigned int tabspaces = 4;
 
 /* bg opacity */
 float alpha = 0.8;
