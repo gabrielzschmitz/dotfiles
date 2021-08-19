@@ -245,4 +245,4 @@ send_to_ueberzug() {
 
 main
 
-notify-send -c mus -i $cover_path -t 2500 "NOW PLAYING" "$(mpc --format '%title% \n%artist%' current)"
+notify-send -c mus -i $cover_path -t 2750 "NOW PLAYING" "$(mpc --format '%title% \n%artist%' current)"
