@@ -12,10 +12,10 @@
 { \
    /* name            function                 	cached */\
     { "",             get_title,               	false }, \
-    { "os: ",         get_os,                  	true  }, \
-    { "kernel: ",     get_kernel,              	true  }, \
-    { "pkgs: ",       get_packages_pacman,      true  }, \
-    { "uptime: ",     get_uptime,              	true  }, \
+    { "os: ",         get_os,                  	false }, \
+    { "kernel: ",     get_kernel,              	false }, \
+    { "pkgs: ",       get_packages_pacman,      false }, \
+    { "battery: ",    get_battery_percentage,  	false }, \
     { "memory: ",     get_memory,              	false }, \
     { "",             get_colors1,             	false }, \
     { "",             get_colors2,             	false }, \
