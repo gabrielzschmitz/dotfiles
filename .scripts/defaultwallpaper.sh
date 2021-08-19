@@ -10,5 +10,5 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!/bin/sh
 
-xwallpaper --stretch /home/gabrielzschmitz/pic/wall/zero-oceanblue/storm-ivankonstantinovichaivazovsky.png
+xwallpaper --center /home/gabrielzschmitz/pic/wall/zero-oceanblue/cowboybebop.png
 

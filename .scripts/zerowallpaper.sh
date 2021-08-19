@@ -14,14 +14,14 @@
 #!/bin/sh
 
 # Directory of the wallpapers
-#WALL_DIR=$(echo -e "~/pic/wall/zero-redlavender\n~/pic/wall/zero-oceanblue\n~/pic/wall/zero-yellowambar"|\
-#dmenu -p 'wallpaper folders' -l 3) \
-WALL_DIR='$HOME/pic/wall/zero-oceanblue/'
+#WALL_DIR='$HOME/pic/wall/zero-oceanblue/'
+WALL_DIR=$(echo -e "~/pic/wall/zero-redlavender\n~/pic/wall/zero-oceanblue\n~/pic/wall/zero-yellowambar"|\
+dmenu -l 3) \
 
 # User interface
 ## X wallpaper options
 WALL_OPT=$(echo -e "zoom\ncenter\ntile\nstretch\nmaximize\nno-randr"|\
-dmenu -p 'xwallpaper options' -l 6) \
+dmenu -l 6) \
 ## Wallpaper setter function
 WALL_FN=$(devour sxiv $WALL_DIR -to | tail -n 1)
 
@@ -32,14 +32,10 @@ xwallpaper --$WALL_OPT $WALL_FN
 ### Desktop
 sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $WALL_FN|\
 " ~/.scripts/defaultwallpaper.sh
-### Screen protector
-sed -i "s|--image=.*|--image=$WALL_FN|\
-" ~/.scripts/zerolock.sh
-sed -i "s|--image=.*|--image=$WALL_FN\"|\
-" ~/.scripts/zeroautolock.sh
 
 # Update picom
 sleep 1 && \
 pkill picom ;\
+sh $HOME/.scripts/displayfix.sh ;\
 picom --experimental-backends -b
 

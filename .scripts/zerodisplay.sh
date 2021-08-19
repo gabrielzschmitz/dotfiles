@@ -14,7 +14,7 @@
 #!/bin/sh
 
 DSP_OPT=$(echo -e "800x600display.sh\nseconddisplayright.sh\nnotedisplay.sh\nseconddisplayleft.sh\nseconddisplay.sh"|\
-dmenu -p 'display scripts options' -l 5) \
+dmenu -l 5) \
 
 ## Set display resolution
 # For actual instance

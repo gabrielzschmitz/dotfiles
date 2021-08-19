@@ -8,6 +8,9 @@
 # GITHUB:https://github.com/gabrielzschmitz		  
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
-#/bin/sh
+#!bin/sh
+sh $HOME/.scripts/defaultdisplay.sh
+sleep 1
+sh $HOME/.scripts/defaultdisplay.sh
+sh $HOME/.scripts/defaultwallpaper.sh
 
-rofi -no-config -no-lazy-grab -show drun -mode run -theme ~/.config/polybar/scripts/rofi/launcher.rasi
