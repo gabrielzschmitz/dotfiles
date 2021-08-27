@@ -1,3 +1,15 @@
+/*
+//         .             .              .		  
+//         |             |              |           .	  
+// ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+// | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+// `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+//  ,|							  
+//  `'							  
+// GITHUB:https://github.com/gabrielzschmitz		  
+// INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+// DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
+*/
 /* Key binding functions */
 static void defaultgaps(const Arg *arg);
 static void incrgaps(const Arg *arg);

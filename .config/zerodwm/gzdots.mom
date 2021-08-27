@@ -3,7 +3,7 @@
 .SHIFT_LIST 10p
 ..
 .PARA_SPACE 1m
-.TITLE "\s+(10A Friendly Guide to my rice!\s0"
+.TITLE "\s+(10A Manual to my Rice\s0"
 .AUTHOR "\s+5gabrielzschmitz\s0"
 .DOCTYPE    DEFAULT
 .COPYSTYLE  FINAL
@@ -12,7 +12,7 @@
 .START
 Use vim keys (\f(CWh/j/k/l\fP) to navigate this document.
 Pressing \f(CWs\fP will fit it to window width (\f(CWa\fP to revert).
-\f(CWK\fP and \f(CWJ\fP zoom in and out.
+\f(CW+\fP and \f(CW-\fP zoom in and out.
 \f(CWSuper+f\fP to toggle fullscreen.
 \f(CWq\fP to quit.
 (These are general binds set for \fBzathura\fP, the pdf reader.)
@@ -22,49 +22,22 @@ Pressing \f(CWs\fP will fit it to window width (\f(CWa\fP to revert).
 .ITEM
 By \f(CWMod\fP, I mean the Super Key, usually known as "the Windows Key."
 .LIST OFF
-.PP
-FAQs are at the end of this document.
-.HEADING 1 "Welcome!"
-.HEADING 2 "Basic goals and principles of this system:"
+
+.HEADING 1 "Introduction"
+.HEADING 2 "Keyboard layout"
 .LI
 .ITEM
-\fBNaturalness\fP \(en
-Remove the border between mind and matter:
-everything important should be as few keypresses as possible away from you,
-and you shouldn't have to think about what you're doing.
-Immersion.
+Being a Brazil native, my main language is Portuguese, and for so this system has a litle difference from the default english layout.
+It uses a combination of alt keys to do the latin accents and other symbols.
+To do that, I use a mini script that runs at the xorg startup.
+It is located at \f(CW~/.scripts/kblayout.sh\fP.
 .ITEM
-\fBEconomy\fP \(en
-Programs should be simple and light on system resources and highly extensible.
-Because of this, many are terminal or small ncurses programs that have all the magic inside of them.
-.ITEM
-\fBKeyboard/vim-centrality\fP \(en
-All terminal programs (and other programs) use vim keys when possible.
-Your hands never need leave the home row or thereabout.
-.ITEM
-\fBDecentralization\fP \(en
-This system is a web of small, modifiable and replaceable programs that users can easily customize.
+To remove that feature, delete the script with: \f(CWrm ~/.scripts/kblayout.sh\fP
+And comment it out from \f(CW~/.config/X11/xinitrc\fP.
 .LIST OFF
-.HEADING 2 "General keyboard changes"
-.LI
-.ITEM
-Capslock is a useless key in high quality space.
-It's now remapped.
-If you press it alone, it will function as escape, making vimcraft much more natural,
-but you can also hold it down and it will act as another Windows/super/mod key.
-.ITEM
-The menu button (usually between the right Alt and Ctrl) is an alternative Super/Mod button.
-This is to make one-handing on laptops easier.
-.LIST OFF
-.PP
-If you'd like to change any of these keyboard changes, you need only open and change the \f(CWremaps\fP script.
-All custom scripts in LARBS are located in \f(CW~/.local/bin/\fP.
-Actually, this should go without saying, but \fIeverything\fP here can easily be changed.
-Below in this document, there is information about where to change programs/components.
 .PP
 Addiionally, while this isn't a part of the desktop environment, the default editing mode in the shell is using vi bindings.
-If you want to learn more of this, run \f(CWMod+F2\fP and type and select the option for "vi mode in shell".
-This setting can be changed if you don't like it by deleting or commenting out the contents of \f(CW~/.config/shell/inputrc\fP.
+This setting can be changed if you don't like it by deleting or commenting out the contents of \f(CW~/.config/zsh/.zshrc\fP.
 .HEADING 2 "The Status Bar"
 .PP
 To the left, you'll see the numbers of your current workspace/tag(s).
@@ -80,6 +53,7 @@ You can edit its config/source code in \f(CW~/.local/src/dwmblocks/\fP to tell i
 .PP
 Press \f(CWmod+F2\fP at any time to get a menu of programs to watch videos about streaming directly from YouTube.
 You can also check the config files for programs which detail a lot of the specific bindings.
+
 .HEADING 1 "Key Bindings"
 .PP
 The window manager dwm abstractly orders all of your windows into a stack from most important to least based on when you last manipulated it.

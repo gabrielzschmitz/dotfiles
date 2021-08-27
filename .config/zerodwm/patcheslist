@@ -1,8 +1,16 @@
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 dwm-actualfullscreen.diff
 dwm-bar-height.diff
 dwm-barpadding.diff
-dwm-centeredmaster.diff
 dwm-cursorwarp.diff
 dwm-cyclelayouts.diff
-dwm-ipc.diff
 dwm-vanitygaps.diff

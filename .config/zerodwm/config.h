@@ -1,3 +1,15 @@
+/*
+//         .             .              .		  
+//         |             |              |           .	  
+// ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+// | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+// `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+//  ,|							  
+//  `'							  
+// GITHUB:https://github.com/gabrielzschmitz		  
+// INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+// DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
+*/
 /* See LICENSE file for copyright and license details. */
 #define TERMINAL "st"
 #define TERMCLASS "st"
@@ -35,12 +47,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gcolor3",     NULL,       NULL,       0,            1,           -1 },
-	{ "Pavucontrol", NULL,       NULL,       0,            1,           -1 },
-	{ "Sxiv", 	 NULL,       NULL,       0,            1,           -1 },
-	{ "Pcmanfm", 	 NULL,       NULL,       0,            1,           -1 },
-	{ "Zathura", 	 NULL,       NULL,       0,            1,           -1 },
+	/* class      		instance    title       tags mask     isfloating   monitor */
+	{ "Gcolor3",     	NULL,       NULL,       0,            1,           -1 },
+	{ "Pavucontrol", 	NULL,       NULL,       0,            1,           -1 },
+	{ "Sxiv", 	 	NULL,       NULL,       0,            1,           -1 },
+	{ "Pcmanfm", 	 	NULL,       NULL,       0,            1,           -1 },
+	{ "Zathura", 	 	NULL,       NULL,       0,            1,           -1 },
+	{ "packagesupgrade", 	NULL,       NULL,       0,            1,           -1 },
+	{ "weatherreport", 	NULL,       NULL,       0,            0,           -1 },
 };
 
 /* layout(s) */
@@ -83,10 +97,16 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
+/* commands */
 static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *termcmd[] = { "st", NULL };
 static const char *webcmd[] = { "brave", NULL };
 static const char *filescmd[] = { "pcmanfm", NULL };
+static const char *powermenu[] = { "powermenu", NULL };
+static const char *sysinfo[] = { "sysinfo", NULL };
+static const char *bgset[] = { "bgset", NULL };
+static const char *disset[] = { "disset", NULL };
+static const char *disfix[] = { "disfix", NULL };
 static const char *audiocontrolcmd[] = { "pavucontrol", NULL };
 
 #include <X11/XF86keysym.h>
@@ -98,11 +118,12 @@ static Key keys[] = {
 	{ MODKEY,             		XK_w, 	   spawn,          {.v = webcmd } },
 	{ MODKEY|ShiftMask,           	XK_f, 	   spawn,          {.v = filescmd } },
 	{ MODKEY|ShiftMask,           	XK_m, 	   spawn,          {.v = audiocontrolcmd } },
-	{ MODKEY,             		XK_0, 	   spawn,          SHCMD("$HOME/.scripts/powermenu.sh") },
-	{ MODKEY|ShiftMask,             XK_w, 	   spawn,          SHCMD("$HOME/.scripts/zerowallpaper.sh") },
-	{ MODKEY|ShiftMask,             XK_d, 	   spawn,          SHCMD("$HOME/.scripts/zerodisplay.sh") },
-	{ MODKEY,             		XK_Home,   spawn,          SHCMD("$HOME/.scripts/dmenurecord.sh") },
-	{ MODKEY,			XK_F1,	   spawn,	   SHCMD("groff -mom /usr/local/share/dwm/gzdots.mom -Tpdf | zathura -") },
+	{ MODKEY,             		XK_0, 	   spawn,          {.v = powermenu } },
+	{ MODKEY|ShiftMask,             XK_w, 	   spawn,          {.v = bgset } },
+	{ MODKEY|ShiftMask,             XK_d, 	   spawn,          {.v = disset } },
+	{ MODKEY|Mod1Mask,              XK_d, 	   spawn,          {.v = disfix } },
+	{ MODKEY|ShiftMask,             XK_b, 	   spawn,          {.v = sysinfo } },
+	{ MODKEY,			XK_F1,	   spawn,	   SHCMD("groff -mom $HOME/.local/share/dwm/gzdots.mom -Tpdf | zathura -") },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -153,16 +174,19 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ 0,				XK_Print,  spawn,          SHCMD("$HOME/.scripts/fullscreenshot.sh") },
-	{ ShiftMask,			XK_Print,  spawn,	   SHCMD("$HOME/.scripts/selectivescreenshot.sh") },
-	{ ControlMask,			XK_Print,  spawn,	   SHCMD("$HOME/.scripts/allscreenshot.sh") },
+	{ 0,				XK_Print,  spawn,          SHCMD("$HOME/.scripts/screenshotscripts/fullscreenshot.sh") },
+	{ ShiftMask,			XK_Print,  spawn,	   SHCMD("$HOME/.scripts/screenshotscripts/selectivescreenshot.sh") },
+	{ ShiftMask|ControlMask,	XK_Print,  spawn,	   SHCMD("$HOME/.scripts/screenshotscripts/fullcountdownscreenshot.sh") },
+	{ ControlMask,			XK_Print,  spawn,	   SHCMD("$HOME/.scripts/screenshotscripts/allscreenshot.sh") },
 	{ 0, XF86XK_AudioMute,			   spawn,	   SHCMD("pamixer -t") },
-	{ 0, XF86XK_AudioRaiseVolume,		   spawn,	   SHCMD("pamixer --allow-boost -i 5") },
 	{ 0, XF86XK_AudioLowerVolume,		   spawn,	   SHCMD("pamixer --allow-boost -d 5") },
-	{ 0, XF86XK_AudioPrev,			   spawn,	   SHCMD("mpc prev") },
-	{ 0, XF86XK_AudioNext,			   spawn,	   SHCMD("mpc next") },
-	{ 0, XF86XK_AudioPlay,			   spawn,	   SHCMD("mpc toggle") },
-	{ 0, XF86XK_AudioStop,			   spawn,	   SHCMD("mpc stop") },
+	{ 0, XF86XK_AudioRaiseVolume,		   spawn,	   SHCMD("pamixer --allow-boost -i 5") },
+	{ MODKEY,			XK_F11,	   spawn,	   SHCMD("mpc volume -5") },
+	{ MODKEY,			XK_F12,	   spawn,	   SHCMD("mpc volume +5") },
+	{ 0, XF86XK_AudioPrev,			   spawn,	   SHCMD("mpc prev && covernotify") },
+	{ 0, XF86XK_AudioNext,			   spawn,	   SHCMD("mpc next && covernotify") },
+	{ 0, XF86XK_AudioPlay,			   spawn,	   SHCMD("mpc toggle && covernotify") },
+	{ 0, XF86XK_AudioStop,			   spawn,	   SHCMD("mpc stop && covernotify") },
 	{ 0, XF86XK_AudioMedia,			   spawn,	   SHCMD(TERMINAL " -e ncmpcpp") },
 	{ 0, XF86XK_Calculator,			   spawn,	   SHCMD(TERMINAL " -e bc -l") },
 	{ 0, XF86XK_Music,			   spawn,	   SHCMD(TERMINAL " -e ncmpcpp") },
@@ -171,6 +195,7 @@ static Key keys[] = {
 	{ 0, XF86XK_MonBrightnessDown,		   spawn,	   SHCMD("xbacklight -dec 15") },
 	{ MODKEY|ShiftMask,             XK_c,      quit,           {0} },
 };
+
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
@@ -187,23 +212,5 @@ static Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-};
-
-static const char *ipcsockpath = "/tmp/dwm.sock";
-static IPCCommand ipccommands[] = {
-  IPCCOMMAND(  view,                1,      {ARG_TYPE_UINT}   ),
-  IPCCOMMAND(  toggleview,          1,      {ARG_TYPE_UINT}   ),
-  IPCCOMMAND(  tag,                 1,      {ARG_TYPE_UINT}   ),
-  IPCCOMMAND(  toggletag,           1,      {ARG_TYPE_UINT}   ),
-  IPCCOMMAND(  tagmon,              1,      {ARG_TYPE_UINT}   ),
-  IPCCOMMAND(  focusmon,            1,      {ARG_TYPE_SINT}   ),
-  IPCCOMMAND(  focusstack,          1,      {ARG_TYPE_SINT}   ),
-  IPCCOMMAND(  zoom,                1,      {ARG_TYPE_NONE}   ),
-  IPCCOMMAND(  incnmaster,          1,      {ARG_TYPE_SINT}   ),
-  IPCCOMMAND(  killclient,          1,      {ARG_TYPE_SINT}   ),
-  IPCCOMMAND(  togglefloating,      1,      {ARG_TYPE_NONE}   ),
-  IPCCOMMAND(  setmfact,            1,      {ARG_TYPE_FLOAT}  ),
-  IPCCOMMAND(  setlayoutsafe,       1,      {ARG_TYPE_PTR}    ),
-  IPCCOMMAND(  quit,                1,      {ARG_TYPE_NONE}   )
 };
 
