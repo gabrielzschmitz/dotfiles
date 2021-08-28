@@ -1,17 +1,25 @@
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!/bin/sh
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-sh $HOME/.scripts/kblayout.sh &
-sh $HOME/.scripts/keyrate.sh &
-xrdb $HOME/.Xresources &
+kblayout &
+keyrate &
+xrdb $HOME/.config/X11/xresources &
+mpd &
 dunst &
 pulseaudio &
-mpd &
 numlockx on &
 picom --experimental-backends -b &
 sh $HOME/.scripts/defaultdisplay.sh &
 sh $HOME/.scripts/defaultwallpaper.sh &
-sh $HOME/.scripts/zeroautolock.sh &
-xsetroot -name "`date +%a` `date +%D`" &
-sleep 1 ;
+disautolock &
+xsetroot -name " `date +%a` `date +%D` `date +%H:%M%p` " &
 exec dwm
 
