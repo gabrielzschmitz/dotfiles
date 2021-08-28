@@ -16,7 +16,7 @@ ncmpcpp_directory = "~/.config/ncmpcpp"
 mpd_host = "localhost"
 mpd_port = "6600"  
 mpd_connection_timeout = "5"  
-mpd_crossfade_time = "5"  
+mpd_crossfade_time = "10"  
 
 # Playlist
 playlist_disable_highlight_delay = "0"  
@@ -53,7 +53,7 @@ system_encoding = "utf-8"
 regular_expressions = "extended"
 
 # Selected tracks
-selected_item_prefix = "* "
+selected_item_prefix = "❯ "
 discard_colors_if_item_is_selected = "no"
 
 # Seeking
@@ -88,9 +88,10 @@ startup_slave_screen = "visualizer"
 startup_slave_screen_focus = no
 locked_screen_width_part = 50
 ask_for_locked_screen_width_part = no
-display_bitrate = "no"
+display_bitrate = "yes"
 follow_now_playing_lyrics = "yes"
 ignore_leading_the = "yes"
 empty_tag_marker = ""
 external_editor = "nvim"
-execute_on_player_state_change=~/.config/ncmpcpp/ueberzug/cover-art.sh
+#execute_on_song_change=covernotify
+
