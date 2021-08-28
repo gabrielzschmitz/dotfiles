@@ -9,6 +9,8 @@
 ![dmenu](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/dmenu%5Bdemo%5D.png)
 ### nvim
 ![nvim](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/nvim%5Bdemo%5D.png)
+### walls
+![walls](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/walls%5Bdemo%5D.png)
 
 ## How to Install
 ```shell
