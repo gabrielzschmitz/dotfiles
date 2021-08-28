@@ -163,10 +163,10 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ 0,				XK_Print,  spawn,          SHCMD("$HOME/.scripts/screenshotscripts/fullscreenshot.sh") },
-	{ ShiftMask,			XK_Print,  spawn,	   SHCMD("$HOME/.scripts/screenshotscripts/selectivescreenshot.sh") },
-	{ ShiftMask|ControlMask,	XK_Print,  spawn,	   SHCMD("$HOME/.scripts/screenshotscripts/fullcountdownscreenshot.sh") },
-	{ ControlMask,			XK_Print,  spawn,	   SHCMD("$HOME/.scripts/screenshotscripts/allscreenshot.sh") },
+	{ 0,				XK_Print,  spawn,          SHCMD("fullscreenshot") },
+	{ ShiftMask,			XK_Print,  spawn,	   SHCMD("selectivescreenshot") },
+	{ ShiftMask|ControlMask,	XK_Print,  spawn,	   SHCMD("fullcountdownscreenshot") },
+	{ ControlMask,			XK_Print,  spawn,	   SHCMD("allscreenshot") },
 	{ 0, XF86XK_AudioMute,			   spawn,	   SHCMD("pamixer -t") },
 	{ 0, XF86XK_AudioLowerVolume,		   spawn,	   SHCMD("pamixer --allow-boost -d 5") },
 	{ 0, XF86XK_AudioRaiseVolume,		   spawn,	   SHCMD("pamixer --allow-boost -i 5") },
