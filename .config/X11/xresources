@@ -1,0 +1,42 @@
+!         .             .              .		  
+!         |             |              |           .	  
+! ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+! | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+! `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+!  ,|							  
+!  `'							  
+! GITHUB:https://github.com/gabrielzschmitz		  
+! INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+! DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+! Black + DarkGrey
+*color0:  #1c1f2a
+*color8:  #646b8c
+! DarkRed + Red
+*color1:  #806382
+*color9:  #8f6e8d
+! DarkGreen + Green
+*color2:  #436668
+*color10: #4f797b
+! DarkYellow + Yellow
+*color3:  #8c8089
+*color11: #9d8f92
+! DarkBlue + Blue
+*color4:  #4f6589
+*color12: #59729a
+! DarkMagenta + Magenta
+*color5:  #8f6b8f
+*color13: #9f7699
+!DarkCyan + Cyan
+*color6:  #446781
+*color14: #4d7694
+! LightGrey + White
+*color7:  #646b8c
+*color15: #9096ae
+! Foreground and Background
+*foreground: #9096ae
+*background: #20232f
+
+! Alpha
+*alpha: 1
+! Font
+*font: FiraCode Nerd Font:size=11:antialias=true:autohint=true;
