@@ -35,7 +35,7 @@ if exists('+termguicolors')
 endif
 
 " Lightline
-let g:lightline = { 'colorscheme': 'zerooceanblue' }
+let g:lightline = { 'colorscheme': 'zero' }
 set noshowmode					" To remove the --INSERT-- in command line
 set cmdheight=1
 set cmdwinheight=3
@@ -54,4 +54,6 @@ aug i3config_ft_detection
   au!
   au BufNewFile,BufRead ~/.config/i3/config set filetype=i3config
 aug end
+
+au BufNewFile,BufRead * if &syntax == 'conf' | set syntax=sh | endif
 
