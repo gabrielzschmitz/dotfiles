@@ -1,17 +1,6 @@
 # gabrielzschmitz Dotfiles
 
-## Table of Contents
-- [Screenshots](https://github.com/gabrielzschmitz/dotfiles#screenshots)
-- [How to Install](https://github.com/gabrielzschmitz/dotfiles#how-to-install)
-- [Window Manager Configs](https://github.com/gabrielzschmitz/dotfiles#window-manager-configs)
-- [Other Themes and Configs](https://github.com/gabrielzschmitz/dotfiles#other-themes-and-configs)
-
-### Screenshots
-
 ### How to Install
-
-For all the programs (unless for Ripcord, VSCode, Firefox and DuckDuckGo, for them read the related tutorials)
-
 ```shell
 echo "alias dots='/usr/bin/git --git-dir=$HOME/doc/dotfiles --work-tree=$HOME'" >> $HOME/.zshrc
 source ~/.zshrc
