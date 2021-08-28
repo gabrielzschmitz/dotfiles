@@ -12,48 +12,44 @@
 
 # Preferred editor and visual
 autoload -U colors && colors
-export EDITOR='nvim';
-export VISUAL='nvim';
+export EDITOR='nvim'
+export VISUAL='nvim'
 
+# Vi mode
 source $ZDOTDIR/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-
-## Vi mode
-bindkey -v
 KEYTIMEOUT=1
-# Prompt
-PROMPT_EOL_MARK=''
-#sh $HOME/.scripts/quote.textart
-sh -c "$HOME/.config/zerofetch/zerofetch"
-fpath+=$ZDOTDIR/typewritten
-autoload -U promptinit; promptinit
-function zvm_after_select_vi_mode() {
-  case $ZVM_MODE in
-    $ZVM_MODE_NORMAL)
-      VIMODE="NORMAL ❯"
-      VICOLORS="primary:red;secondary:green;accent:green"
-      ;;
-    $ZVM_MODE_INSERT)
-      VIMODE="INSERT ❯"
-      VICOLORS="primary:red;secondary:cyan;accent:green"
-      ;;
-    $ZVM_MODE_VISUAL)
-      VIMODE="VISUAL ❯"
-      VICOLORS="primary:red;secondary:yellow;accent:green"
-      ;;
-    $ZVM_MODE_VISUAL_LINE)
-      VIMODE="V-LINE ❯"
-      VICOLORS="primary:red;secondary:yellow;accent:green"
-      ;;
-  esac
-  export TYPEWRITTEN_SYMBOL="$VIMODE"
-  export TYPEWRITTEN_COLOR_MAPPINGS="$VICOLORS"
-  prompt typewritten
-}
-# More keybinds
+bindkey -v
 bindkey -a u undo
 bindkey -a '^r' redo
 bindkey '^?' backward-delete-char
 autoload edit-command-line; zle -N edit-command-line # Use v-v to edit the command line in nvim
+
+# Prompt
+zerofetch
+PROMPT_EOL_MARK=''
+setopt prompt_subst
+RPROMPT='%F{red}%1~'
+function zvm_after_select_vi_mode() {
+  case $ZVM_MODE in
+    $ZVM_MODE_NORMAL)
+      VIMODE="NORMAL ❯"
+      VICOLORS="green"
+      ;;
+    $ZVM_MODE_INSERT)
+      VIMODE="INSERT ❯"
+      VICOLORS="cyan"
+      ;;
+    $ZVM_MODE_VISUAL)
+      VIMODE="VISUAL ❯"
+      VICOLORS="yellow"
+      ;;
+    $ZVM_MODE_VISUAL_LINE)
+      VIMODE="V-LINE ❯"
+      VICOLORS="yellow"
+      ;;
+  esac
+  PROMPT='%F{$VICOLORS}$VIMODE %f'
+}
 
 # Aliases
 source $ZDOTDIR/aliases
@@ -72,7 +68,7 @@ setopt INC_APPEND_HISTORY
 
 # Man pages colors
 export LESS_TERMCAP_mb=$'\e[0;32m'
-export LESS_TERMCAP_md=$'\e[1;32m'
+export LESS_TERMCAP_md=$'\e[1;36m'
 export LESS_TERMCAP_me=$'\e[0m'
 export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[01;41;30m'
@@ -97,24 +93,4 @@ zstyle :compinstall filename '/home/gabrielzschmitz/.config/zsh/.zshrc'
 autoload -Uz compinit
 compinit
 _comp_options+=(globdots)
-
-if [ "$TERM" = "linux" ]; then
-    echo -en "\e]P0232323" #black
-    echo -en "\e]P82B2B2B" #darkgrey
-    echo -en "\e]P1D75F5F" #darkred
-    echo -en "\e]P9E33636" #red
-    echo -en "\e]P287AF5F" #darkgreen
-    echo -en "\e]PA98E34D" #green
-    echo -en "\e]P3D7AF87" #brown
-    echo -en "\e]PBFFD75F" #yellow
-    echo -en "\e]P48787AF" #darkblue
-    echo -en "\e]PC7373C9" #blue
-    echo -en "\e]P5BD53A5" #darkmagenta
-    echo -en "\e]PDD633B2" #magenta
-    echo -en "\e]P65FAFAF" #darkcyan
-    echo -en "\e]PE44C9C9" #cyan
-    echo -en "\e]P7E5E5E5" #lightgrey
-    echo -en "\e]PFFFFFFF" #white
-    clear #for background artifacting
-fi
 
