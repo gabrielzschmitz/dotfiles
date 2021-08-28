@@ -1,0 +1,44 @@
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+#
+# System management menu using dmenu
+#!/bin/sh
+
+# Options
+shutdown="⏻  Shutdown"
+reboot="  Restart   "
+logout="  Logout    "
+suspend="⏾  Sleep    "
+lock="  Lock        "
+
+# Variables
+options="$shutdown\n$reboot\n$logout\n$suspend\n$lock"
+
+# Choices
+chosen="$(echo -e "$options" | dmenu)"
+case $chosen in
+    $shutdown)
+		notify-send -t 2750 "⏻ Turning off the machine..." && sleep 0.5  && loginctl poweroff
+        ;;
+    $reboot)
+		notify-send -t 2750 " Restarting the machine..." && sleep 0.5  && loginctl reboot
+	;;
+    $logout)
+		notify-send -t 2750 " Login out of the system..." && sleep 0.5  && loginctl terminate-session $XDG_SESSION_ID
+	;;
+    $suspend)
+		notify-send -t 1500 "⏾ Putting the system to sleep..." && sleep 1.5  && loginctl suspend
+        ;;
+    $lock)
+		notify-send -t 1500 " Locking the system..." && sleep 1.5 && dislock
+        ;;
+esac
+
