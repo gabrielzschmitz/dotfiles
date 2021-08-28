@@ -1,6 +1,16 @@
 # gabrielzschmitz Dotfiles
 
-### How to Install
+## Main configs demonstration:
+### dwm
+![dwm](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/dwm%5Bdemo%5D.png)
+### st
+![st](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/st%5Bdemo%5D.png)
+### dmenu
+![dmenu](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/dmenu%5Bdemo%5D.png)
+### nvim
+![nvim](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/nvim%5Bdemo%5D.png)
+
+## How to Install
 ```shell
 echo "alias dots='/usr/bin/git --git-dir=$HOME/doc/dotfiles --work-tree=$HOME'" >> $HOME/.zshrc
 source ~/.zshrc
@@ -12,7 +22,7 @@ dots checkout
 dots config --local status.showUntrackedFiles no
 ```
 
-#### DuckDuckGO
+### DuckDuckGO
 To configure the Faint Theme in DuckDuckGo:
 1. Go to https://duckduckgo.com/settings#appearance
 2. Put the DuckDuckGo colors like that:
