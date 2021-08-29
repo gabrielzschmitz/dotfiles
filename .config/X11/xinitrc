@@ -15,11 +15,13 @@ xrdb $HOME/.config/X11/xresources &
 mpd &
 dunst &
 pulseaudio &
-numlockx on &
 picom --experimental-backends -b &
-sh $HOME/.scripts/defaultdisplay.sh &
-sh $HOME/.scripts/defaultwallpaper.sh &
+defaultdisplay &
+defaultwallpaper &
 disautolock &
-xsetroot -name " `date +%a` `date +%D` `date +%H:%M%p` " &
+while xsetroot -name " [`date +%a`] `date +%D` `date +%H:%M%p` "
+do
+	sleep 1
+done &
 exec dwm
 
