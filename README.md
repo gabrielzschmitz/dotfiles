@@ -25,7 +25,7 @@ dots config --local status.showUntrackedFiles no
 ```
 
 ### DuckDuckGO
-To configure the Faint Theme in DuckDuckGo:
+To configure the zero theme in DuckDuckGo:
 1. Go to https://duckduckgo.com/settings#appearance
 2. Put the DuckDuckGo colors like that:
 
@@ -38,3 +38,4 @@ Result Description Color:   	#9096ae
 Result Url Color:   		#446781
 Result Hover, Module, and Dropdown Background Color:	#20232f
 ```
+
