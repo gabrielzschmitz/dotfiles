@@ -54,13 +54,14 @@ static const Rule rules[] = {
 	{ "Pcmanfm", 	 	NULL,       NULL,       0,            1,           -1 },
 	{ "Zathura", 	 	NULL,       NULL,       0,            1,           -1 },
 	{ "packagesupgrade", 	NULL,       NULL,       0,            1,           -1 },
+	{ "cpomosai", 		NULL,       NULL,       0,            1,           -1 },
 	{ "weatherreport", 	NULL,       NULL,       0,            0,           -1 },
 };
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
@@ -97,7 +98,6 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-/* commands */
 static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *termcmd[] = { "st", NULL };
 static const char *webcmd[] = { "brave", NULL };
@@ -123,6 +123,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_d, 	   spawn,          {.v = disset } },
 	{ MODKEY|Mod1Mask,              XK_d, 	   spawn,          {.v = disfix } },
 	{ MODKEY,			XK_F1,	   spawn,	   SHCMD("groff -mom $HOME/.local/share/dwm/gzdots.mom -Tpdf | zathura -") },
+	{ MODKEY|ShiftMask,		XK_t,	   spawn,	   SHCMD(TERMINAL " -c cpomosai -e cpomosai") },
 	{ MODKEY,             		XK_b, 	   spawn,          {.v = sysinfo } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
