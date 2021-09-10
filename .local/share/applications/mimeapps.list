@@ -1,0 +1,27 @@
+[Default Applications]
+x-scheme-handler/http=chromium.desktop
+x-scheme-handler/https=chromium.desktop
+x-scheme-handler/ftp=chromium.desktop
+x-scheme-handler/chrome=chromium.desktop
+application/x-extension-htm=chromium.desktop
+application/x-extension-html=chromium.desktop
+application/x-extension-shtml=chromium.desktop
+application/xhtml+xml=chromium.desktop
+application/x-extension-xhtml=chromium.desktop
+application/x-extension-xht=chromium.desktop
+text/html=chromium.desktop
+video/mp4=celluloid.desktop
+video/quicktime=celluloid.desktop
+video/mpeg=celluloid.desktop
+image/svg+xml=inkscape.desktop
+image/jpeg=sxiv.desktop
+image/png=sxiv.desktop
+image/bmp=sxiv.desktop
+image/gif=sxiv.desktop
+image/jpg=sxiv.desktop
+image/tiff=sxiv.desktop
+image/x-bmp=sxiv.desktop
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
+application/epub+zip=zathura.desktop
+application/vnd.ms-htmlhelp=zathura.desktop
+application/zip=xarchiver.desktop
