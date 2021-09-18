@@ -36,12 +36,12 @@ twoscreen() { # If multi-monitor is selected and there are two screens.
         scale_x=$(echo "$res_ext_x / $res_int_x" | bc -l)
         scale_y=$(echo "$res_ext_y / $res_int_y" | bc -l)
 	
-	disset="xrandr --output "$external" --auto --scale 1.0x1.0 \
+	disset="xrandr --output "$external" --auto --primary --scale 1.0x1.0 \
             --output "$internal" --auto --same-as "$external" \
             --scale "$scale_x"x"$scale_y""
 	sed -i "s|xrandr.*|$disset|\
-	" ~/.scripts/defaultdisplay.sh
-        xrandr --output "$external" --auto --scale 1.0x1.0 \
+	" ~/.local/bin/defaultdisplay
+        xrandr --output "$external" --auto --primary --scale 1.0x1.0 \
             --output "$internal" --auto --same-as "$external" \
             --scale "$scale_x"x"$scale_y" && notify-send -t 2750 "  Mirror screens selected"
 	sleep 3
@@ -51,10 +51,10 @@ twoscreen() { # If multi-monitor is selected and there are two screens.
         primary=$(echo "$screens" | dmenu -p "Select primary display:")
         secondary=$(echo "$screens" | grep -v "$primary")
         direction=$(printf "left\\nright" | dmenu -p "What side of $primary should $secondary be on?")
-	disset="xrandr --output "$primary" --auto --scale 1.0x1.0 --output "$secondary" --"$direction"-of "$primary" --auto --scale 1.0x1.0"
+	disset="xrandr --output "$primary" --auto --primary --scale 1.0x1.0 --output "$secondary" --"$direction"-of "$primary" --auto --scale 1.0x1.0"
 	sed -i "s|xrandr.*|$disset|\
-	" ~/.scripts/defaultdisplay.sh
-	xrandr --output "$primary" --auto --scale 1.0x1.0 --output "$secondary" --"$direction"-of "$primary" --auto --scale 1.0x1.0 && notify-send -t 2750 "  Dual screens selected"
+	" ~/.local/bin/defaultdisplay
+	xrandr --output "$primary" --auto --primary --scale 1.0x1.0 --output "$secondary" --"$direction"-of "$primary" --auto --scale 1.0x1.0 && notify-send -t 2750 "  Dual screens selected"
 	sleep 3
 
     fi
@@ -65,10 +65,10 @@ morescreen() { # If multi-monitor is selected and there are more than two screen
 	secondary=$(echo "$screens" | grep -v "$primary" | dmenu -p "Select secondary display:")
 	direction=$(printf "left\\nright" | dmenu -p "What side of $primary should $secondary be on?")
 	tertiary=$(echo "$screens" | grep -v "$primary" | grep -v "$secondary" | dmenu -p "Select third display:")
-	disset="xrandr --output "$primary" --auto --output "$secondary" --"$direction"-of "$primary" --auto --output "$tertiary" --"$(printf "left\\nright" | grep -v "$direction")"-of "$primary" --auto"
+	disset="xrandr --output "$primary" --auto --primary --output "$secondary" --"$direction"-of "$primary" --auto --output "$tertiary" --"$(printf "left\\nright" | grep -v "$direction")"-of "$primary" --auto"
 	sed -i "s|xrandr.*|$disset|\
-	" ~/.scripts/defaultdisplay.sh
-	xrandr --output "$primary" --auto --output "$secondary" --"$direction"-of "$primary" --auto --output "$tertiary" --"$(printf "left\\nright" | grep -v "$direction")"-of "$primary" --auto && notify-send -t 2750 "  Triple screens selected"
+	" ~/.local/bin/defaultdisplay
+	xrandr --output "$primary" --auto --primary --output "$secondary" --"$direction"-of "$primary" --auto --output "$tertiary" --"$(printf "left\\nright" | grep -v "$direction")"-of "$primary" --auto && notify-send -t 2750 "  Triple screens selected"
 	sleep 3
 
 	}
@@ -80,16 +80,16 @@ multimon() { # Multi-monitor handler.
 	esac ;}
 
 onescreen() { # If only one output available or chosen.
-	disset="xrandr --output "$1" --auto --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -)"
+	disset="xrandr --output "$1" --auto --primary --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -)"
 	sed -i "s|xrandr.*|$disset|\
-	" ~/.scripts/defaultdisplay.sh
-	xrandr --output "$1" --auto --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -) && notify-send -t 2750 "  Single screen selected"
+	" ~/.local/bin/defaultdisplay
+	xrandr --output "$1" --auto --primary --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -) && notify-send -t 2750 "  Single screen selected"
 	sleep 3
 
 	}
 
 postrun() { # Stuff to run to clean up.
-	sh $HOME/.scripts/defaultwallpaper.sh		     # Fix background if screen size/arangement has changed.
+	defaultwallpaper		     # Fix background if screen size/arangement has changed.
 	{ killall dunst ; setsid -f dunst ;} >/dev/null 2>&1 # Restart dunst to ensure proper location on screen
 	}
 
