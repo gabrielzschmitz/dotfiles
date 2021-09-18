@@ -25,7 +25,7 @@ export LESSKEY="$XDG_CONFIG_HOME/less/lesskey"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 export EDITOR="nvim"
 export TERMINAL="st"
-export BROWSER="brave"
+export BROWSER="chromium"
 
 export LF_ICONS="di=📁:\
 fi=📃:\
