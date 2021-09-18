@@ -13,5 +13,5 @@
 
 date=$(date '+%b/%d/%Y')
 day=$(date '+%a')
-printf "%s%s%s" " " " [$day]" " $date"
+printf "%s%s%s" " " " $day" " $date"
 
