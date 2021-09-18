@@ -355,7 +355,7 @@ lockscreen(Display *dpy, struct xrandr *rr, int screen)
 	                          CWOverrideRedirect | CWBackPixel, &wa);
     if(lock->bgmap)
         XSetWindowBackgroundPixmap(dpy, lock->win, lock->bgmap);
-	lock->pmap = XCreateBitmapFromData(dpy, lock->win, curs, 8, 8);
+		lock->pmap = XCreateBitmapFromData(dpy, lock->win, curs, 8, 8);
 	invisible = XCreatePixmapCursor(dpy, lock->pmap, lock->pmap,
 	                                &color, &color, 0, 0);
 	XDefineCursor(dpy, lock->win, invisible);

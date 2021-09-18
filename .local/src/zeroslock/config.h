@@ -15,7 +15,7 @@ static const char *user  = "gabrielzschmitz";
 static const char *group = "gabrielzschmitz";
 
 static const char *colorname[NUMCOLS] = {
-	[INIT] =   "#1c1f2a",     /* after initialization */
+	[INIT] =   "#1c1f2a",   /* after initialization */
 	[INPUT] =  "#446781",   /* during input */
 	[FAILED] = "#806382",   /* wrong password */
 };
@@ -24,10 +24,10 @@ static const char *colorname[NUMCOLS] = {
 static const int failonclear = 1;
 
 /* time in seconds to cancel lock with mouse movement */
-static const int timetocancel = 10;
+static const int timetocancel = 15;
 
 /* time in seconds before the monitor shuts down */
-static const int monitortime = 3600;
+static const int monitortime = 300;
 
 /* insert grid pattern with scale 1:1, the size can be changed with logosize */
 static const int logosize = 25;
@@ -55,5 +55,5 @@ static const int blurRadius=5;
 /*Enable Pixelation*/
 //#define PIXELATION
 /*Set pixelation radius*/
-static const int pixelSize=0;
+//static const int pixelSize=0;
 
