@@ -1,0 +1,188 @@
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+#
+#!/bin/sh
+
+cat << "EOF"
+
+	#############################################################
+	##         .             .              .                  ##
+	##         |             |              |           .      ##
+	## ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, ##
+	## | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  ##
+	## `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' ##
+	##  ,|                                                     ##
+	##  `'                                                     ##
+	#############################################################
+	#############################################################
+	##                                                         ##
+	##                 Packages install start:                ##
+	##          (paru is a dependency of this script)          ##
+	##                                                         ##
+	##                   To install it use:                    ##
+	## sudo pacman -S --needed base-devel; cd $HOME/.local/src ##
+	## git clone https://aur.archlinux.org/paru.git && cd paru ##
+	##    makepkg -si && cd && rm -rf $HOME/.local/src/paru    ##
+	##                                                         ##
+	#############################################################
+
+EOF
+
+declare -a pkgs=("artix-archlinux-support"
+"bashtop-git"
+"bat"
+"bc"
+"bluez"
+"bluez-openrc"
+"bluez-utils"
+"cbonsai"
+"celluloid"
+"devour"
+"doasedit"
+"dosfstools"
+"dunst"
+"elogind-openrc"
+"etcher-bin"
+"gcolor3"
+"git"
+"hugo"
+"inkscape"
+"lf"
+"libtool"
+"libxft"
+"libxinerama"
+"linux-firmware"
+"linux-headers"
+"linux"
+"lsd"
+"lxappearance-gtk3"
+"man-db"
+"man-pages"
+"mpc"
+"mpd"
+"mpv"
+"ncmpcpp"
+"neovim"
+"networkmanager"
+"networkmanager-openrc"
+"nextcloud-client"
+"nodejs"
+"npm"
+"numlockx"
+"obs-studio"
+"olive"
+"onlyoffice-bin"
+"opendoas"
+"pamixer"
+"paru"
+"pavucontrol"
+"pcmanfm-gtk3"
+"picom-jonaburg-git"
+"polkit-gnome"
+"pulseaudio"
+"python-gobject"
+"python-pygments"
+"screenkey"
+"scrot"
+"signal-desktop"
+"steam"
+"sxiv"
+"udiskie"
+"udisks2"
+"ungoogled-chromium"
+"xautolock"
+"xbanish"
+"xclip"
+"xdg-user-dirs"
+"xorg-xbacklight"
+"xorg-xinit"
+"xwallpaper"
+"yarn"
+"zathura"
+"zathura-cb"
+"zathura-djvu"
+"zathura-pdf-mupdf"
+"zathura-ps"
+"zsh")
+
+for x in "${pkgs[@]}"; do
+	paru --noconfirm --needed -S "$x"
+done
+
+cat << "EOF"
+
+	#############################################################
+	##         .             .              .                  ##
+	##         |             |              |           .      ##
+	## ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, ##
+	## | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  ##
+	## `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' ##
+	##  ,|                                                     ##
+	##  `'                                                     ##
+	#############################################################
+	#############################################################
+	##                                                         ##
+	##               Packages install completed.              ##
+	##                                                         ##
+	##       Move pacman.conf to /etc/pacman.conf with:        ##
+	##          sudo mv pacman.conf /etc/pacman.conf           ##
+	##                                                         ##
+	##   And then, activate the arch repos and update with:    ##
+	##   sudo pacman-key --populate archlinux && paru -Syyu    ##
+	##                                                         ##
+	#############################################################
+
+EOF
+
+echo "# /etc/pacman.conf
+
+[options]
+HoldPkg      = pacman glibc
+Architecture = auto
+SigLevel    = Required DatabaseOptional
+LocalFileSigLevel = Optional
+
+# Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
+#IgnorePkg   =
+#IgnoreGroup =
+#NoUpgrade   =
+#NoExtract   =
+
+# Misc options
+# ILoveCandy
+Color
+CheckSpace
+
+# ARTIX
+[system]
+Include = /etc/pacman.d/mirrorlist
+[world]
+Include = /etc/pacman.d/mirrorlist
+[galaxy]
+Include = /etc/pacman.d/mirrorlist
+[lib32]
+Include = /etc/pacman.d/mirrorlist
+
+[universe]
+Server = https://universe.artixlinux.org/\$arch
+Server = https://mirror1.artixlinux.org/universe/\$arch
+Server = https://mirror.pascalpuffke.de/artix-universe/\$arch
+Server = https://artixlinux.qontinuum.space:4443/universe/os/\$arch
+
+# ARCH
+[extra]
+Include = /etc/pacman.d/mirrorlist-arch
+[community]
+Include = /etc/pacman.d/mirrorlist-arch
+[multilib]
+Include = /etc/pacman.d/mirrorlist-arch
+" >> pacman.conf
+

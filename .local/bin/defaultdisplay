@@ -10,5 +10,5 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!/bin/sh ~/.scripts/displayscripts/seconddisplayright.sh
 
-xrandr --output VGA1 --auto --scale 1.0x1.0 --output LVDS1 --left-of VGA1 --auto --scale 1.0x1.0
+xrandr --output VGA1 --auto --primary --scale 1.0x1.0 --output LVDS1 --left-of VGA1 --auto --scale 1.0x1.0
 
