@@ -57,3 +57,9 @@ aug end
 
 au BufNewFile,BufRead * if &syntax == 'conf' | set syntax=sh | endif
 
+" set 4 spaces tab
+set tabstop=8
+set softtabstop=0
+set expandtab
+set shiftwidth=4
+set smarttab
