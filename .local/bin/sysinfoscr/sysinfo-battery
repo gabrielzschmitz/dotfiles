@@ -12,5 +12,6 @@
 #!/bin/sh
 
 capacity="$(cat /sys/class/power_supply/BAT?*/capacity 2>/dev/null)"
-printf "$capacity""%%"
+status="$(cat /sys/class/power_supply/BAT?*/status 2>/dev/null)"
+printf "%s%s" "$capacity%" " $status"
 
