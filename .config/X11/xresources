@@ -9,7 +9,7 @@
 ! INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 ! DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 ! Black + DarkGrey
-*color0:  #1c1f2a
+*color0:  #20232f
 *color8:  #646b8c
 ! DarkRed + Red
 *color1:  #806382
@@ -34,7 +34,7 @@
 *color15: #9096ae
 ! Foreground and Background
 *foreground: #9096ae
-*background: #20232f
+*background: #1c1f2a
 
 ! Alpha
 *alpha: 0.8
