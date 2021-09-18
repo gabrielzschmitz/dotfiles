@@ -8,141 +8,131 @@
 # GITHUB:https://github.com/gabrielzschmitz               
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
-#
-# Aliases
-alias mkins='sudo make clean install'
-alias sxiva='sxiv *'
-alias dotsp='dots push -u origin main'
-alias dotsc='dots commit -m'
-alias dotsa='dots add'
-alias lsd='lsd -hA --group-dirs first'
-alias ls='lsd --group-dirs first'
-alias l='lsd --group-dirs first'
-alias nv='nvim'
-alias v='nvim'
-alias vim='nvim'
-alias grep='grep --color=auto'
-alias bat='bat --theme="base16" --style="numbers,changes"'
-alias cat='bat'
-alias battery='sysinfo-battery'
-alias weather='sysinfo-weather'
-alias pcmup='sysinfo-packagesupgrade'
-alias pkgsup='sysinfo-packagesupgrade'
-alias cmatrix='cmatrix -bC cyan'
-alias htop='bashtop'
-alias du='du --human-readable'
-alias pcm='sudo pacman --color always'
-alias paru='paru --color always --skipreview'
-alias clear='clear ; zerofetch'
-alias sshserver='ssh gabrielzschmitz@192.168.0.122'
-alias cl='clear'
-alias propvid='ffprobe -v error -show_entries stream=index,codec_name,codec_type'
-alias cvrtsubmkv='for i in *.mkv; do ffmpeg -i "$i" -map 0:2 -c copy "${i%.*}.ass"; done'
-alias cvrtsubmp4='for i in *.mp4; do ffmpeg -i "$i" -map 0:2 -c copy "${i%.*}.ass"; done'
-alias cvrtvidmkv='for i in *.mkv; do ffmpeg -i "$i" -vcodec libx264 -crf 27 -preset veryfast "${i%.*}.mp4"; done'
-alias cvrtvidmp4='for i in *.mp4; do ffmpeg -i "$i" -vcodec libx264 -crf 27 -preset veryfast "${i%.*}.mp4"; done'
+#----------------------------------------------------------------
 
-# Folders cd
-alias doc='cd $HOME/doc'
-alias down='cd $HOME/down'
-alias pic='cd $HOME/pic'
-alias wallpic='cd $HOME/pic/wall'
-alias vid='cd $HOME/vid'
-alias mus='cd $HOME/mus'
-alias gg='cd $HOME/gg'
-alias next='cd $HOME/next'
-alias cowboybebop='cd $HOME/next/Films/CowboyBebop; celluloid CowboyBebop-01.mp4 CowboyBebop-02.mp4 CowboyBebop-03.mp4 CowboyBebop-04.mp4 CowboyBebop-05.mp4 CowboyBebop-06.mp4 CowboyBebop-07.mp4 CowboyBebop-08.mp4 CowboyBebop-09.mp4 CowboyBebop-10.mp4 CowboyBebop-11.mp4 CowboyBebop-12.mp4 CowboyBebop-13.mp4 CowboyBebop-14.mp4 CowboyBebop-15.mp4 CowboyBebop-16.mp4 CowboyBebop-17.mp4 CowboyBebop-18.mp4 CowboyBebop-19.mp4 CowboyBebop-20.mp4 CowboyBebop-21.mp4 CowboyBebop-22.mp4 CowboyBebop-23.mp4 CowboyBebop-24.mp4 CowboyBebop-25.mp4 CowboyBebop-26.mp4'
-alias scr='cd $HOME/.local/bin; clear && ls'
-alias src='cd $HOME/.local/src; clear && ls'
-alias gittokens='nvim $HOME/next/gittokens'
-alias zerodwm='cd $HOME/.local/src/zerodwm; clear && ls'
-alias zerost='cd $HOME/.local/src/zerost; clear && ls'
-alias zerodmenu='cd $HOME/.local/src/zerodmenu; clear && ls'
-alias zeroslock='cd $HOME/.local/src/zeroslock; clear && ls'
-alias patcha='patch -p1 <'
+    alias zshrc='nvim $HOME/.config/zsh/.zshrc'                                   
+    alias zenv='nvim $HOME/.zshenv'
+    alias zhis='nvim $HOME/.config/zsh/.zhistory'
+    alias aliases='nvim $HOME/.config/zsh/aliases'                                    
 
-alias br='setxkbmap br'
-alias us='setxkbmap us alt-intl'
-alias wallpaper='sxiv $HOME/pic/wall/*'
-alias colors='nvim $HOME/doc/zerocolors.vim'
-alias sourcezshrc='source $HOME/.config/zsh/.zshrc'
-alias aliases='nvim $HOME/.config/zsh/aliases'
-alias xresources='xrdb $HOME/.config/X11/xresources'
-alias xresourcesconf='nvim $HOME/.config/X11/xresources'
-alias xinitrc='nvim $HOME/.config/X11/xinitrc'
-alias cs50='cd $HOME/next/Programming/cs50 ; ls'
-alias prg='cd $HOME/next/Programming ; ls'
-alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
+#--------------------------- sys --------------------------------
+                                                          alias	\
+    ls='lsd --group-dirs first -A'				\
+    l='lsd --group-dirs first -A'				\
+    clear='clear ; zerofetch'					\
+    cl='clear'							\
+    pk='pkill'							\
+    nv='nvim'							\
+    mkins='doas make clean install'				\
+    patcha='patch -p1 <'					\
+    du='du --human-readable'					\
+    grep='grep --color=auto'					\
+    cmatrix='cmatrix -bC cyan'					\
+    bat='bat --theme="base16" --style="numbers,changes"'	\
+    cat='bat'							\
+    sshserver='ssh gabrielzschmitz@192.168.0.122'		\
 
-# Open Programs in the Terminal
-alias celluloid='devour celluloid'
-alias mpv='devour mpv'
-alias feh='devour feh'
-alias sxiv='devour sxiv'
-alias zathura='devour zathura'
-alias ttyclock='tty-clock -s -c -b -C 6'
-alias tty-clock='tty-clock -s -c -b -C 6'
-alias clock='tty-clock -s -c -b -C 6'
-alias music='ncmpcpp'
-alias scvim='sc-im'
-alias scvimrc='nvim $HOME/.scimrc'
-alias scim='sc-im'
-alias scimrc='nvim $HOME/.scimrc'
-alias money='sc-im $HOME/Documents/money.csv'
-alias ytdlmp3='cd $HOME/mus/down; youtube-dl -x --audio-quality 0 --audio-format mp3 --embed-thumbnail'
-alias musdl='cd $HOME/mus/down; youtube-dl -x --audio-quality 0 --audio-format mp3 --embed-thumbnail'
-alias mine='java -jar Downloads/TLauncher-2.75.jar'
-alias zerofetch='zerofetch'
+#--------------------------- cfg ------------------------------
+                                                          alias \
+    xresourcesconf='nvim $HOME/.config/X11/xresources'		\
+    xinitrc='nvim $HOME/.config/X11/xinitrc'			\
+    i3conf='nvim $HOME/.config/i3/config'			\
+    picomconf='nvim $HOME/.config/picom.conf'			\
+    alacrittyconf='nvim $HOME/.config/alacritty/alacritty.yml'	\
+    dunstrc='nvim $HOME/.config/dunst/dunstrc'			\
+    polybarconf='nvim $HOME/.config/polybar/config.ini'		\
+    lfrc='nvim $HOME/.config/lf/lfrc'				\
+    mpdconf='nvim $HOME/.config/mpd/mpd.conf'			\
+    ncmpcppconf='nvim $HOME/.config/ncmpcpp/config'		\
+    musicconf='nvim $HOME/.config/ncmpcpp/config'		\
+    nvimconf='nvim $HOME/.config/nvim/'				\
+    zathurarc='nvim $HOME/.config/zathura/zathurarc'		\
 
-# Config Files
-alias zhis='nvim $HOME/.config/zsh/.zhistory'
-alias zshrc='nvim $HOME/.config/zsh/.zshrc'
-alias zrc='nvim $HOME/.config/zsh/.zshrc'
-alias zprofile='nvim $HOME/.config/zsh/.zprofile'
-alias zenv='nvim $HOME/.zshenv'
-alias i3conf='nvim $HOME/.config/i3/config'
-alias picomconf='nvim $HOME/.config/picom.conf'
-alias picomd='picom -b --experimental-backends'
-alias alacrittyconf='nvim $HOME/.config/alacritty/alacritty.yml'
-alias dunstrc='nvim $HOME/.config/dunst/dunstrc'
-alias polybarconf='nvim $HOME/.config/polybar/config.ini'
-alias polybarmodules='nvim $HOME/.config/polybar/modules.ini'
-alias polybarusermodules='nvim $HOME/.config/polybar/user_modules.ini'
-alias polybarlaunch='nvim $HOME/.config/polybar/launch.sh'
-alias polybarcolors='nvim $HOME/.config/polybar/colors.ini'
-alias polybarroficolors='nvim $HOME/.config/polybar/scripts/rofi/colors.rasi'
-alias lfrc='nvim $HOME/.config/lf/lfrc'
-alias mpdconf='nvim $HOME/.config/mpd/mpd.conf'
-alias ncmpcppconf='nvim $HOME/.config/ncmpcpp/config'
-alias musicconf='nvim $HOME/.config/ncmpcpp/config'
-alias nvimconf='nvim $HOME/.config/nvim/'
-alias zathurarc='nvim $HOME/.config/zathura/zathurarc'
+#--------------------------- git --------------------------------
+                                                          alias \
+    alias dots='/usr/bin/git 					\
+--git-dir=$HOME/doc/dotfiles --work-tree=$HOME'			\
+    alias notes='/usr/bin/git					\
+--git-dir=$HOME/doc/notes --work-tree=$HOME'			\
+    								\
+    dotsp='dots push -u origin main'				\
+    dotsc='dots commit -m'					\
+    dotsa='dots add'						\
+    dotspl='dots pull'						\
+    gitpu='git push -u origin main'				\
+    gitc='dots commit -m'					\
+    gita='git add'                                              \
+    gitp='git push'                                             \
+    gitpl='git pull'                                            \
+    giti='git init'                                             \
+    gits='git status'                                           \
+    gitcl='git clone'						\
+                                  
+#-------------------------- dirs --------------------------------
+                                                          alias	\
+    doc='cd $HOME/doc'						\
+    down='cd $HOME/down'					\
+    pic='cd $HOME/pic'						\
+    wallpic='cd $HOME/pic/wall'					\
+    vid='cd $HOME/vid'						\
+    mus='cd $HOME/mus'						\
+    gg='cd $HOME/gg'						\
+    next='cd $HOME/next'					\
+    site='cd $HOME/doc/site/gabrielzschmitz.xyz; clear && ls'	\
+    scr='cd $HOME/.local/bin; clear && ls'			\
+    src='cd $HOME/.local/src; clear && ls'			\
+    zerodwm='cd $HOME/.local/src/zerodwm; clear && ls'		\
+    zerost='cd $HOME/.local/src/zerost; clear && ls'		\
+    zerodmenu='cd $HOME/.local/src/zerodmenu; clear && ls'	\
+    zeroslock='cd $HOME/.local/src/zeroslock; clear && ls'	\
+    cdzerofetch='cd $HOME/.local/src/zerofetch; clear && ls'	\
 
-# Notes Aliases
-alias dots='/usr/bin/git --git-dir=$HOME/doc/dotfiles --work-tree=$HOME'
-alias notes='/usr/bin/git --git-dir=$HOME/doc/notes --work-tree=$HOME'
-# Edit the Main Files
-alias wiki='nvim $HOME/doc/Wiki/index.md'
-alias database='nvim $HOME/doc/Wiki/School-Database/Database.md'
-alias school='nvim $HOME/doc/Wiki/School.md'
-# View the Main Folders
-alias cdwiki='cd $HOME/doc/Wiki'
-alias cddatabase='cd $HOME/doc/Wiki/School-Database'
-alias lsdatabase='ls $HOME/doc/Wiki/School-Database'
-# Convert to PDF
-alias pandocpdf="pandoc --pdf-engine=xelatex -s -o"
+#-------------------------- pacman ------------------------------
+                                                          alias \
+    pacman='doas pacman --color=always'				\
+    pcm='pacman'						\
+    paru='paru --color always --skipreview'			\
+                                                         	\
+    u='doas pacman -Syu'                                 	\
+    p='doas pacman -S'                                   	\
+    a='paru -S'                                          	\
+    del='doas paru -Rs'		                               	\
 
-# Translate
-alias en-pt='argos-translate --from-lang en --to-lang pt'
-alias pt-en='argos-translate --from-lang pt --to-lang en'
-alias en-es='argos-translate --from-lang en --to-lang es'
-alias es-en='argos-translate --from-lang es --to-lang en'
-alias en-ru='argos-translate --from-lang en --to-lang ru'
-alias ru-en='argos-translate --from-lang ru --to-lang en'
-alias en-ja='argos-translate --from-lang en --to-lang ja'
-alias ja-en='argos-translate --from-lang ja --to-lang en'
-alias en-de='argos-translate --from-lang en --to-lang de'
-alias de-en='argos-translate --from-lang de --to-lang en'
-alias en-fr='argos-translate --from-lang en --to-lang fr'
-alias fr-en='argos-translate --from-lang fr --to-lang en'
+#-------------------------- misc --------------------------------
+                                                          alias \
+    hs='hugo server'                                            \
+    br='setxkbmap br'						\
+    us='setxkbmap us alt-intl'					\
+    colors='nvim $HOME/doc/zerocolors.vim'			\
+    gittokens='nvim $HOME/next/gittokens'			\
+    yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'	\
+    xresources='xrdb $HOME/.config/X11/xresources'		\
+    music='ncmpcpp'						\
+    celluloid='devour celluloid'				\
+    mpv='devour mpv'						\
+    sxiv='devour sxiv'						\
+    zathura='devour zathura'					\
+    clock='tty-clock -s -c -b -C 6'				\
+    musdl='cd $HOME/mus/down; youtube-dl -x			\
+--audio-quality 0 --audio-format mp3 --embed-thumbnail'		\
+    picomd='picom -b --experimental-backends'			\
+    sxiva='sxiv *'						\
+    pksteam='pkill steam'					\
+    pknext='pkill nextcloud'					\
+    battery='sysinfo-battery'					\
+    weather='sysinfo-weather'					\
+    pkgsup='sysinfo-packagesupgrade'				\
+    scrk='screenkey -s small -p bottom --no-systray 		\
+--font "FiraCode Nerd Font" --font-color #9096ae 		\
+--bg-color #20232f --opacity 0.7'				\
+
+#------------------------- youtube ------------------------------
+                                                          alias \
+    ym="youtube-dl --ignore-errors -f bestaudio  		\
+      --extract-audio --audio-format mp3         		\
+      --audio-quality 0 -o './%(title)s.%(ext)s'"		\
+    yv="youtube-dl --ignore-errors -o            		\
+      './%(title)s.%(ext)s'"					\
+
+#----------------------------------------------------------------
 
