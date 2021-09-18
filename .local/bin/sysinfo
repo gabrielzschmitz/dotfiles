@@ -15,7 +15,7 @@
 # Options
 uptime=" $(sysinfo-uptime)"
 internet="$(sysinfo-internet)"
-date="$(sysinfo-date)"
+dates="$(sysinfo-date)"
 memory="$(sysinfo-memory)"
 weather="$(sysinfo-weather)"
 packages="$(sysinfo-packages)"
@@ -25,7 +25,7 @@ battery="$(sysinfo-batteryicon) $(sysinfo-battery)"
 manual="  Rice manual"
 
 # Variables
-options="$uptime\n$internet\n$date\n$memory\n$weather\n$packages\n$disks\n$cpu\n$battery\n$manual"
+options="$uptime\n$internet\n$dates\n$memory\n$weather\n$packages\n$disks\n$cpu\n$battery\n$manual"
 
 # Choices
 chosen="$(echo -e "$options" | dmenu)"
@@ -36,8 +36,8 @@ case $chosen in
     $internet)
 	    	notify-send -t 2750 " Network Manager:" && nmdmenu
         ;;
-    $date)
-		notify-send -t 2750 " This month:" "$(sysinfo-calendar)"
+    $dates)
+	    	notify-send -t 2750 " This month:" "$(sysinfo-calendar)"
         ;;
     $memory)
 	    	notify-send -t 2750 " Most intences in memory:" "$(sysinfo-mostinmemory)"
@@ -58,6 +58,6 @@ case $chosen in
 	    	notify-send -t 2750 "$(sysinfo-batteryicon) Battery now is:" "$(sysinfo-battery)"
         ;;
     $manual)
-	    	notify-send -t 2750 " This is your manual to my rice!" && groff -w rice -mom $HOME/.local/share/dwm/gzdots.mom -Tpdf | zathura -
+	    	notify-send -t 2750 " This is your manual to my rice!" && groff -mom $HOME/.local/share/dwm/gzdots.mom -T pdf | zathura -
 esac
 
