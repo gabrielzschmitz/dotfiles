@@ -59,7 +59,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.52; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -100,7 +100,7 @@ static const Layout layouts[] = {
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *termcmd[] = { "st", NULL };
-static const char *webcmd[] = { "brave", NULL };
+static const char *webcmd[] = { "chromium", NULL };
 static const char *filescmd[] = { "pcmanfm", NULL };
 static const char *powermenu[] = { "powermenu", NULL };
 static const char *sysinfo[] = { "sysinfo", NULL };
@@ -122,7 +122,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_w, 	   spawn,          {.v = bgset } },
 	{ MODKEY|ShiftMask,             XK_d, 	   spawn,          {.v = disset } },
 	{ MODKEY|Mod1Mask,              XK_d, 	   spawn,          {.v = disfix } },
-	{ MODKEY,			XK_F1,	   spawn,	   SHCMD("groff -mom $HOME/.local/share/dwm/gzdots.mom -Tpdf | zathura -") },
+	{ MODKEY,			XK_F1,	   spawn,	   SHCMD("groff -mom $HOME/.local/share/dwm/gzdots.mom -T pdf | zathura -") },
 	{ MODKEY|ShiftMask,		XK_t,	   spawn,	   SHCMD(TERMINAL " -c cpomosai -e cpomosai") },
 	{ MODKEY,             		XK_b, 	   spawn,          {.v = sysinfo } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
