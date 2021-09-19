@@ -30,7 +30,7 @@
     cmatrix='cmatrix -bC cyan'					\
     bat='bat --theme="base16" --style="numbers,changes"'	\
     cat='bat'							\
-    sshserver='ssh gabrielzschmitz@192.168.0.122'		\
+    sshserver='ssh gabrielzschmitz@192.168.0.136'		\
 
 #--------------------------- cfg ------------------------------
                                                           alias \
@@ -78,7 +78,7 @@
     mus='cd $HOME/mus'						\
     gg='cd $HOME/gg'						\
     next='cd $HOME/next'					\
-    site='cd $HOME/doc/site/gabrielzschmitz.xyz; clear && ls'	\
+    site='cd $HOME/next/site/gabrielzschmitz.xyz; clear && ls'	\
     scr='cd $HOME/.local/bin; clear && ls'			\
     src='cd $HOME/.local/src; clear && ls'			\
     zerodwm='cd $HOME/.local/src/zerodwm; clear && ls'		\
@@ -113,8 +113,6 @@
     sxiv='devour sxiv'						\
     zathura='devour zathura'					\
     clock='tty-clock -s -c -b -C 6'				\
-    musdl='cd $HOME/mus/down; youtube-dl -x			\
---audio-quality 0 --audio-format mp3 --embed-thumbnail'		\
     picomd='picom -b --experimental-backends'			\
     sxiva='sxiv *'						\
     pksteam='pkill steam'					\
@@ -133,6 +131,8 @@
       --audio-quality 0 -o './%(title)s.%(ext)s'"		\
     yv="youtube-dl --ignore-errors -o            		\
       './%(title)s.%(ext)s'"					\
+    musdl='cd $HOME/mus/down; youtube-dl -x			\
+--audio-quality 0 --audio-format mp3 --embed-thumbnail'		\
 
 #----------------------------------------------------------------
 
