@@ -21,7 +21,7 @@ weather="$(sysinfo-weather)"
 packages="$(sysinfo-packages)"
 disks="$(sysinfo-disks)"
 cpu="$(sysinfo-cpu)"
-battery="$(sysinfo-batteryicon) $(sysinfo-battery)"
+battery="$(sysinfo-batteryicon)$(sysinfo-battery)"
 manual="  Rice manual"
 
 # Variables
