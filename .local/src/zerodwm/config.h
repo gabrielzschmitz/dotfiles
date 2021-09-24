@@ -179,7 +179,6 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioStop,			   spawn,	   SHCMD("mpc stop && covernotify") },
 	{ MODKEY,			XK_F5,	   spawn,	   SHCMD(TERMINAL " -e ncmpcpp") },
 	{ 0, XF86XK_Calculator,			   spawn,	   SHCMD(TERMINAL " -e bc -l") },
-	{ 0, XF86XK_HomePage,			   spawn,	   SHCMD(TERMINAL " -e lf $HOME") },
 	{ 0, XF86XK_MonBrightnessUp,		   spawn,	   SHCMD("xbacklight -inc 15") },
 	{ 0, XF86XK_MonBrightnessDown,		   spawn,	   SHCMD("xbacklight -dec 15") },
 	{ MODKEY|ShiftMask,             XK_c,      quit,           {0} },
