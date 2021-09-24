@@ -27,15 +27,40 @@ dots config --local status.showUntrackedFiles no
 ### DuckDuckGO
 To configure the zero theme in DuckDuckGo:
 1. Go to https://duckduckgo.com/settings#appearance
-2. Put the DuckDuckGo colors like that:
+
+2.1. Put the DuckDuckGo colors like that:
+|                                                     |         |
+| :-------------------------------------------------: | :-----: |
+| Background Color                                    | #20232f |
+| Header Color                                        | #262938 |
+| Result Title Color                                  | #436668 |
+| Result Visited Title Color                          | #806382 |
+| Result Description Color                            | #9096ae |
+| Result Url Color                                    | #446781 |
+| Result Hover, Module, and Dropdown Background Color | #20232f |
+
+2.2. Or use the load settings with the following phrase:
 
 ```
-Background Color:   		#20232f
-Header Color:   		#262938
-Result Title Color:   		#436668
-Result Visited Title Color:	#806382
-Result Description Color:   	#9096ae
-Result Url Color:   		#446781
-Result Hover, Module, and Dropdown Background Color:	#20232f
+gabrielzschmitz-zero-theme
 ```
 
+### Monkeytype
+
+1.1. Just use this link, with the configured *zero* colors and change the font to 'FiraCode Nerd Font':
+
+```
+https://monkeytype.com?customTheme=%231c1f2a%2C%23446781%2C%23446781%2C%23646b8c%2C%239096ae%2C%23806382%2C%23876f9f%2C%23806382%2C%23876f9f
+```
+
+1.2. Or put the colors like that:
+
+|                |         |             |         |
+| :------------: | :-----: | :---------: | :-----: |
+| background     | #1c1f2a | main        | #1c1f2a |
+| caret          | #446781 | sub         | #646b8c |
+| text           | #9096ae |             |         |
+| error          | #806382 | extra error | #876f9f |
+| colourful mode |         |             |         |
+| error          | #806382 | extra error | #876f9f |
+2. Use the Fira Code font. Put 'FiraCode Nerd Font' in the custom font option.
