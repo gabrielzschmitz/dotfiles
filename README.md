@@ -39,3 +39,9 @@ Result Url Color:   		#446781
 Result Hover, Module, and Dropdown Background Color:	#20232f
 ```
 
+### Monkeytype
+Just use this link, with the configured *zero* colors and change the font to 'FiraCode Nerd Font':
+
+```
+https://monkeytype.com?customTheme=%231c1f2a%2C%23446781%2C%23446781%2C%23646b8c%2C%239096ae%2C%23806382%2C%23876f9f%2C%23806382%2C%23876f9f
+```
