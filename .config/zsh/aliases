@@ -21,6 +21,8 @@
     l='lsd --group-dirs first -A'				\
     clear='clear ; zerofetch'					\
     cl='clear'							\
+    rm='trash-put'						\
+    rmdir='trash-put'						\
     pk='pkill'							\
     nv='nvim'							\
     mkins='doas make clean install'				\
@@ -135,4 +137,7 @@
 --audio-quality 0 --audio-format mp3 --embed-thumbnail'		\
 
 #----------------------------------------------------------------
+                                                          alias \
+    nfsu='sh $HOME/next/gg/NFSU/opt/Need\ For\ Speed\ Underground/\
+exec-vulkan-intel-2.sh'                                         \
 
