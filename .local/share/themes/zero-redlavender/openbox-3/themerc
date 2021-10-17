@@ -32,7 +32,7 @@ menu.separator.padding.height: 4
 window.active.title.separator.color: #20232f
 
 # Active window
-window.active.border.color: #646b8c
+window.active.border.color: #9096ae
 
 
 window.active.title.bg: flat solid
@@ -55,7 +55,7 @@ window.active.button.unpressed.image.color: #9096ae
 
 window.active.button.pressed.bg: flat solid
 window.active.button.pressed.bg.color: #6d5a80
-window.active.button.pressed.image.color: #1d202b
+window.active.button.pressed.image.color: #20232f
 
 window.active.button.disabled.bg: flat solid
 window.active.button.disabled.bg.color: #20232f
@@ -66,10 +66,10 @@ window.active.button.hover.bg.color: #20232f
 window.active.button.hover.image.color: #6d5a80
 
 #window.active.button.toggled.bg: #6d5a80
-#window.active.button.toggled.image.color: #1d202b
+#window.active.button.toggled.image.color: #20232f
 
 # Inactive window
-window.inactive.border.color: #262938
+window.inactive.border.color: #9096ae
 
 window.inactive.title.bg: flat solid
 window.inactive.title.bg.color: #20232f
@@ -91,7 +91,7 @@ window.inactive.button.unpressed.image.color: #74798e
 
 window.inactive.button.pressed.bg: flat solid
 window.inactive.button.pressed.bg.color: #6d5a80
-window.inactive.button.pressed.image.color: #1d202b
+window.inactive.button.pressed.image.color: #20232f
 
 window.inactive.button.disabled.bg: flat solid
 window.inactive.button.disabled.bg.color: #74798e
@@ -124,12 +124,12 @@ osd.unhilight.bg: flat solid
 osd.unhilight.bg.color: #20232f
 
 osd.button.unpressed.bg: flat border
-osd.button.unpressed.bg.color: #6d5a80
-#osd.button.unpressed.*.border.color: #20232f
+osd.button.unpressed.bg.color: #20232f
+#osd.button.unpressed.*.border.color: #9096ae
 
 osd.button.pressed.bg: flat border
 osd.button.pressed.bg.color: #6d5a80
-#osd.button.pressed.*.border.color: #1d202b
+#osd.button.pressed.*.border.color: #20232f
 
 osd.button.focused.bg: flat solid border
 osd.button.focused.bg.color: #9096ae
@@ -146,9 +146,9 @@ menu.title.text.font:shadow=n
 
 
 # Everything else
-border.width: 3
+border.width: 2
 padding.width: 8
-padding.height: 3
+padding.height: 2
 window.handle.width: 0
 window.client.padding.width: 0
 window.label.text.justify: center

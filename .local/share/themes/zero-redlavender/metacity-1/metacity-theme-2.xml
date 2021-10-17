@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <metacity_theme>
 <info>
-	<name>zero</name>
+	<name>zero-redlavender</name>
 	<author>Satyajit Sahoo</author>
 	<copyright>GPL-3.0+</copyright>
 	<date>11 December 2013</date>
@@ -11,8 +11,8 @@
 <!-- ::: CONSTANTS ::: -->
 <constant name="C_titlebar_focused" value="#20232f" />
 <constant name="C_titlebar_unfocused" value="#20232f" />
-<constant name="C_border_focused" value="#646b8c" />
-<constant name="C_border_unfocused" value="#262938" />
+<constant name="C_border_focused" value="#9096ae" />
+<constant name="C_border_unfocused" value="#9096ae" />
 <constant name="C_title_focused" value="#9096ae" />
 <constant name="C_title_unfocused" value="blend/#9096ae/#20232f/0.4" />
 <constant name="C_icons_focused" value="#9096ae" />
