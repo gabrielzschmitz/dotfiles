@@ -11,9 +11,9 @@
 
 #!/bin/sh
 # Script to make US with accents keyboard layout the default
-# plus turn on the numlock
+# plus turn on the numlock and speed up the keypresses
 
-sleep 1
 setxkbmap us alt-intl
 numlockx on
+xset r rate 300 50
 

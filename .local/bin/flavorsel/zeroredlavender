@@ -1,0 +1,76 @@
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+#
+# Migrating to the redlavender flavor of zero
+#!/bin/sh
+
+# Ncmpcpp
+sed -i "s|main_window_color.*|main_window_color = magenta|\
+" ~/.config/ncmpcpp/config
+sed -i "s|header_window_color.*|header_window_color = magenta|\
+" ~/.config/ncmpcpp/config
+sed -i "s|volume_color.*|volume_color = magenta|\
+" ~/.config/ncmpcpp/config
+sed -i "s|active_window_border.*|active_window_border = magenta|\
+" ~/.config/ncmpcpp/config
+sed -i "s|visualizer_color.*|visualizer_color = magenta|\
+" ~/.config/ncmpcpp/config
+sed -i "s|song_columns_list_format.*|song_columns_list_format = ' (11)[magenta]{l} (17)[magenta]{a} (0)[white]{t} '|\
+" ~/.config/ncmpcpp/config
+sed -i "s|song_status_format.*|song_status_format = \$6\$b❮\$2\$b❮ \$8\$b%a \$2\$b❙\$6\$b❙ \$1\$b%t \$2\$b❯\$6\$b❯|\
+" ~/.config/ncmpcpp/config
+sed -i "s|alternative_header_second_line_format.*|alternative_header_second_line_format = \$6\$b❮\$2\$b❮ \$8\$b%a \$2\$b❯\$6\$b❯|\
+" ~/.config/ncmpcpp/config
+
+# Wallpaper
+sed -i "s|WALL_DIR=.*|WALL_DIR='~/pic/wall/zero-redlavender'|\
+" ~/.local/bin/bgset
+
+sed -i 's/oceanblue/redlavender/g' ~/.local/bin/defaultwallpaper
+sed -i 's/emeraldslate/redlavender/g' ~/.local/bin/defaultwallpaper
+sed -i 's/yellowambar/redlavender/g' ~/.local/bin/defaultwallpaper
+defaultwallpaper
+
+# GTK
+sed -i "s|gtk-theme-name.*|gtk-theme-name='zero-redlavender'|\
+" ~/.config/gtk-2.0/gtkrc-2.0
+sed -i "s|gtk-icon-theme-name.*|gtk-icon-theme-name='zero-redlavender'|\
+" ~/.config/gtk-2.0/gtkrc-2.0
+sed -i "s|gtk-theme-name.*|gtk-theme-name=zero-redlavender|\
+" ~/.config/gtk-3.0/settings.ini
+sed -i "s|gtk-icon-theme-name.*|gtk-icon-theme-name=zero-redlavender|\
+" ~/.config/gtk-3.0/settings.ini
+
+# Bar
+sed -i "s|dwm.selbgcolor.*|dwm.selbgcolor: #6d5a80|\
+" ~/.config/X11/xresources
+
+# Dmenu
+sed -i "s|dmenu.selbackground.*|dmenu.selbackground: #6d5a80|\
+" ~/.config/X11/xresources
+
+# Slock
+sed -i "s|slockinput.*|slockinput: #6d5a80|\
+" ~/.config/X11/xresources
+
+# Updating Xresources
+xrdb ~/.config/X11/xresources
+xdotool key super+F1
+
+# Fetch
+sed -i "s|define COLORA\ .*|define COLORA \"\\\e[1;95m\"|\
+" ~/.local/src/zerofetch/config.h
+sed -i "s|define COLOR\ .*|define COLOR \"\\\e[1;91m\"|\
+" ~/.local/src/zerofetch/config.h
+sed -i "s|include\ .*|include \"debian.h\"|\
+" ~/.local/src/zerofetch/config.h
+make clean install -sC ~/.local/src/zerofetch
+

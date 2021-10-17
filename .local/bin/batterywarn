@@ -8,8 +8,18 @@
 # GITHUB:https://github.com/gabrielzschmitz		  
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
-#!bin/sh
+#
+#!/bin/sh
 
-# Increase the default key speed rate (for nvim)
-xset r rate 300 50
+# Set battery capacity file
+capacityicon="$(cat /sys/class/power_supply/BAT?*/capacity 2>/dev/null)"
 
+while [ "$capacityicon" -le 25 ]
+do {
+    # Notify the user
+    notify-send -t 2750 -u critical " Battery is lower 25%" "  $(sysinfo-battery)"
+    
+    # Repeat after every 15 seconds
+    sleep 15;
+}
+done

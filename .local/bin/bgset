@@ -14,8 +14,7 @@
 #!/bin/sh
 
 # Directory of the wallpapers
-WALL_DIR=$(echo -e "~/pic/wall/zero-redlavender\n~/pic/wall/zero-oceanblue\n~/pic/wall/zero-yellowambar"|\
-dmenu -l 3) &&\
+WALL_DIR='~/pic/wall/zero-emeraldslate'
 
 # X wallpaper options
 WALL_OPT=$(echo -e "zoom\ncenter\ntile\nstretch\nmaximize\nno-randr"|\

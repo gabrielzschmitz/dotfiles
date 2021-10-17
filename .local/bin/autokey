@@ -8,7 +8,13 @@
 # GITHUB:https://github.com/gabrielzschmitz		  
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
-#!/bin/sh ~/.scripts/displayscripts/seconddisplayright.sh
+#!/bin/sh
 
-xrandr --output VGA1 --auto --primary --scale 1.0x1.0 --output LVDS1 --off --output DP1 --off --output HDMI1 --off --output VIRTUAL1 --off
+# Minecraft hit loop
+while :
+do {
+    sleep 1;
+    xdotool click 1;
+}
+done
 
