@@ -16,8 +16,8 @@ let s:mono3 = [ '#9096ae', 255 ]
 
 let s:yellow = [ '#8c8089', 180 ]
 let s:red = [ '#6d5a80', 168 ]
-let s:magenta = [ '#436668', 176 ]
-let s:blue = [ '#4f6589', 75 ]
+let s:magenta = [ '#4f6589', 176 ]
+let s:blue = [ '#436668', 75 ]
 let s:cyan = [ '#6d5a80', 73 ]
 let s:green = [ '#446781', 114 ]
 

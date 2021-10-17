@@ -12,13 +12,13 @@
 " $HOME/.config/nvim/general.vim
 "
 
-colorscheme zero				" Colors
+set background=dark
 syntax on
 let g:prettier#autoformat_require_pragma = 0
 set cursorline					" Togle's the current line indicator
 set number					" Number line indicator
 set relativenumber				" Relative number indicator
-set wrap					" Active word warp
+set wrap					" Enable word warp
 set mouse=a					" Activate mouse
 set clipboard=unnamedplus			" Use the same clipboard as system
 set autoindent
@@ -48,13 +48,6 @@ let mapleader=","
 set hidden
 set viminfo='100,n$HOME/.config/nvim/files/info/viminfo
 set clipboard+=unnamedplus			" Give NVim the ability to copy and paste from and to other programs (require Xclip)
-
-" i3config File Detection
-aug i3config_ft_detection
-  au!
-  au BufNewFile,BufRead ~/.config/i3/config set filetype=i3config
-aug end
-
 au BufNewFile,BufRead * if &syntax == 'conf' | set syntax=sh | endif
 
 " set 4 spaces tab
@@ -63,3 +56,4 @@ set softtabstop=0
 set expandtab
 set shiftwidth=4
 set smarttab
+
