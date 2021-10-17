@@ -32,23 +32,23 @@ RPROMPT='%F{red}%1~'
 function zvm_after_select_vi_mode() {
   case $ZVM_MODE in
     $ZVM_MODE_NORMAL)
-      VIMODE="NORMAL ❯"
-      VICOLORS="green"
+      VICOLORS="cyan"
+      VIMODE=" "
       ;;
     $ZVM_MODE_INSERT)
-      VIMODE="INSERT ❯"
-      VICOLORS="cyan"
+      VICOLORS="green"
+      VIMODE=" "
       ;;
     $ZVM_MODE_VISUAL)
-      VIMODE="VISUAL ❯"
       VICOLORS="yellow"
+      VIMODE=" "
       ;;
     $ZVM_MODE_VISUAL_LINE)
-      VIMODE="V-LINE ❯"
       VICOLORS="yellow"
+      VIMODE=" "
       ;;
   esac
-  PROMPT='%F{$VICOLORS}$VIMODE %f'
+  PROMPT='%F{$VICOLORS}%B$VIMODE%b%f'
 }
 
 # Aliases
