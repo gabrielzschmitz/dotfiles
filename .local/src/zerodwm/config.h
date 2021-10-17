@@ -28,15 +28,16 @@ static const int user_bh            = 40;       /* 0 means that dwm will calcula
 static const int vertpad            = 20;       /* vertical padding of bar */
 static const int sidepad            = 20;       /* horizontal padding of bar */
 static const char *fonts[]          = { "FiraCode Nerd Font:size=12:antialias=true:autohint=true" };
-static const char col_gray1[]       = "#20232f";
-static const char col_gray2[]       = "#35394a";
-static const char col_gray3[]       = "#9096ae";
-static const char col_gray4[]       = "#20232f";
-static const char col_cyan[]        = "#446781";
-static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+static char normbgcolor[]           = "#20232f";
+static char normbordercolor[]       = "#35394a";
+static char normfgcolor[]           = "#9096ae";
+static char selfgcolor[]            = "#20232f";
+static char selbordercolor[]        = "#35394a";
+static char selbgcolor[]            = "#436668";
+static char *colors[][3] = {
+       /*               fg           bg           border   */
+       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
 /* tagging */
@@ -53,13 +54,14 @@ static const Rule rules[] = {
 	{ "Sxiv", 	 	NULL,       NULL,       0,            1,           -1 },
 	{ "Pcmanfm", 	 	NULL,       NULL,       0,            1,           -1 },
 	{ "Zathura", 	 	NULL,       NULL,       0,            1,           -1 },
-	{ "packagesupgrade", 	NULL,       NULL,       0,            1,           -1 },
+	{ "retroarch", 	 	NULL,       NULL,       0,            1,           -1 },
 	{ "cpomosai", 		NULL,       NULL,       0,            1,           -1 },
+	{ "packagesupgrade", 	NULL,       NULL,       0,            1,           -1 },
 	{ "weatherreport", 	NULL,       NULL,       0,            0,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.52; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -99,6 +101,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", NULL };
+static const char *flavorsel[] = { "flavorsel", NULL };
+static const char *emojicmd[] = { "emojidmenu", NULL };
 static const char *termcmd[] = { "st", NULL };
 static const char *webcmd[] = { "chromium", NULL };
 static const char *filescmd[] = { "pcmanfm", NULL };
@@ -112,17 +116,17 @@ static const char *audiocontrolcmd[] = { "pavucontrol", NULL };
 #include <X11/XF86keysym.h>
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,             		XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,             		XK_w, 	   spawn,          {.v = webcmd } },
+	{ MODKEY,             		XK_e, 	   spawn,          {.v = emojicmd } },
 	{ MODKEY|ShiftMask,           	XK_f, 	   spawn,          {.v = filescmd } },
 	{ MODKEY|ShiftMask,           	XK_m, 	   spawn,          {.v = audiocontrolcmd } },
 	{ MODKEY,             		XK_0, 	   spawn,          {.v = powermenu } },
 	{ MODKEY|ShiftMask,             XK_w, 	   spawn,          {.v = bgset } },
 	{ MODKEY|ShiftMask,             XK_d, 	   spawn,          {.v = disset } },
 	{ MODKEY|Mod1Mask,              XK_d, 	   spawn,          {.v = disfix } },
-	{ MODKEY,			XK_F1,	   spawn,	   SHCMD("groff -mom $HOME/.local/share/dwm/gzdots.mom -T pdf | zathura -") },
+	{ MODKEY,			XK_F2,	   spawn,	   SHCMD("groff -mom $HOME/.local/share/dwm/gzdots.mom -T pdf | zathura -") },
 	{ MODKEY|ShiftMask,		XK_t,	   spawn,	   SHCMD(TERMINAL " -c cpomosai -e cpomosai") },
 	{ MODKEY,             		XK_b, 	   spawn,          {.v = sysinfo } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
@@ -155,6 +159,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Right,  focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_Left,   tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Right,  tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_F1,     xrdb,           {.v = NULL } },
+	{ MODKEY|Mod1Mask,              XK_f, 	   spawn,          {.v = flavorsel } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -171,6 +177,7 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioMute,			   spawn,	   SHCMD("pamixer -t") },
 	{ 0, XF86XK_AudioLowerVolume,		   spawn,	   SHCMD("pamixer --allow-boost -d 5") },
 	{ 0, XF86XK_AudioRaiseVolume,		   spawn,	   SHCMD("pamixer --allow-boost -i 5") },
+	{ MODKEY,			XK_F10,	   spawn,	   SHCMD("mpc volume 0") },
 	{ MODKEY,			XK_F11,	   spawn,	   SHCMD("mpc volume -5") },
 	{ MODKEY,			XK_F12,	   spawn,	   SHCMD("mpc volume +5") },
 	{ 0, XF86XK_AudioPrev,			   spawn,	   SHCMD("mpc prev && covernotify") },

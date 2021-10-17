@@ -1,10 +1,10 @@
 // Change the ASCII Art
-#include "artix.h"
+#include "void.h"
 // 90 black; 91 red; 92 green; 93 yellow; 94 blue; 95 magenta; 96 cyan; 97 white
 // Define the ASCII color
-#define COLORA "\e[1;94m"
+#define COLORA "\e[1;92m"
 // Define the Functions colors
-#define COLOR "\e[1;96m"
+#define COLOR "\e[1;92m"
 // Define the Title color
 #define COLORT "\e[1;97m"
 
@@ -15,8 +15,8 @@
     { " ~ ",         get_os,                  	false }, \
     { " ~ ",         get_kernel,              	false }, \
     { " ~ ",         get_packages_pacman,      false }, \
-    { " ~ ",         get_battery_percentage,  	false }, \
-    { " ~ ",         get_shell,             	false }, \
+    { "﬙ ~ ",         get_cpu,                	true  }, \
+    { " ~ ",         get_memory,              	false }, \
     { "",             get_colors1,             	false }, \
 }
 
@@ -32,14 +32,3 @@
    REMOVE("CPU"), \
 }
 
-//    { "",             spacer,                 	false },
-//    { "",             get_bar,                 	false },
-//    { "terminal: ",   get_terminal,          		false },
-//    { "host: ",       get_host,                	true  },
-//    { "cpu: ",        get_cpu,                	true  },
-//    { "mem ",         get_memory,              	false },
-//    { "battery: ",    get_battery_percentage,  	false },
-//    { "resolution: ", get_resolution,        		false },
-//    { "disk: ",       get_disk_usage_root,        	false },
-//    { "disk: ",       get_disk_usage_home,        	false },
-//    { "",             get_colors2,             	false },

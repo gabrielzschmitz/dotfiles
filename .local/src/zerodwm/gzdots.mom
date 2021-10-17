@@ -18,7 +18,7 @@ Pressing \f(CWs\fP will fit it to window width (\f(CWa\fP to revert).
 (These are general binds set for \fBzathura\fP, the pdf reader.)
 .LI
 .ITEM
-\f(CWMod+F1\fP will show this document at any time.
+\f(CWMod+F2\fP will show this document at any time.
 .ITEM
 By \f(CWMod\fP, I mean the Super Key, usually known as "the Windows Key."
 .LIST OFF
@@ -114,7 +114,7 @@ To type capital letters, hold down the \f(CWShift key\fP.
 .HEADING 2 "Basic Programs"
 .LI
 .ITEM
-\f(CWMod+F\fP \(en lf (file browser/manager)
+\f(CWMod+F\fP \(en pcmanfm (file browser/manager)
 .ITEM
 \f(CWMod+w\fP \(en Web browser (Brave by default)
 .ITEM
@@ -142,7 +142,7 @@ There are nine tags, active tags are highlighted in the top left.
 .ITEM
 \f(CWMod+0\fP \(en Choose to shutdown, restart, logout, sleep and lock screen
 .ITEM
-\f(CWMod+F1\fP \(en Show this document
+\f(CWMod+F2\fP \(en Show this document
 .ITEM
 \f(CWMod+W\fP \(en Select wallpaper to use
 .ITEM
@@ -178,6 +178,8 @@ I use ncmpcpp as a music player, which is a front end for mpd.
 \f(CWFN+LowerVolume\fP \(en Decrease system volume
 .ITEM
 \f(CWFN+RaiseVolume\fP \(en Increase system volume
+.ITEM
+\f(CWMod+F10\fP \(en Music volume to 0 (use Mod+F12 to increase it again)
 .ITEM
 \f(CWMod+F11\fP \(en Decrease music volume
 .ITEM

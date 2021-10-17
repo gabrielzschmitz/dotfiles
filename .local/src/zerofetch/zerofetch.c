@@ -263,7 +263,7 @@ static char *get_battery_percentage() {
   return battery;
 }
 
-static char *get_packages(const char* dirname, const char* pacname, int num_extraneous) {
+static char *get_packages(const char* dirname, int num_extraneous) {
     int num_packages = 0;
     DIR * dirp;
     struct dirent *entry;
@@ -289,7 +289,7 @@ static char *get_packages(const char* dirname, const char* pacname, int num_extr
 }
 
 static char *get_packages_pacman() {
-    return get_packages("/var/lib/pacman/local", "pacman", 0);
+    return get_packages("/var/lib/pacman/local", 0);
 }
 
 static char *get_shell() {
@@ -517,10 +517,9 @@ static char *get_memory() {
     /* use same calculation as neofetch */
     used_memory = (total + shared - memfree - buffers - cached - reclaimable) / 1024;
     total_memory = total / 1024;
-    int percentage = (int) (100 * (used_memory / (double) total_memory));
 
     char *memory = malloc(BUF_SIZE);
-    snprintf(memory, BUF_SIZE, "%dMiB / %dMiB (%d%%)", used_memory, total_memory, percentage);
+    snprintf(memory, BUF_SIZE, "%dMiB / %dMiB", used_memory, total_memory);
 
     return memory;
 }

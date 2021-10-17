@@ -34,7 +34,7 @@
 
 /* macros */
 #define INTERSECT(x,y,w,h,r)  (MAX(0, MIN((x)+(w),(r).x_org+(r).width)  - MAX((x),(r).x_org)) \
-                             && MAX(0, MIN((y)+(h),(r).y_org+(r).height) - MAX((y),(r).y_org)))
+                             * MAX(0, MIN((y)+(h),(r).y_org+(r).height) - MAX((y),(r).y_org)))
 #define LENGTH(X)             (sizeof X / sizeof X[0])
 #define TEXTW(X)              (drw_fontset_getwidth(drw, (X)) + lrpad)
 
@@ -49,9 +49,9 @@ struct item {
 static char text[BUFSIZ] = "";
 static char *embed;
 static int bh, mw, mh;
-//static int dmx = 0; /* put dmenu at this x offset */
-//static int dmy = 0; /* put dmenu at this y offset (measured from the bottom if topbar is 0) */
-//static unsigned int dmw = 0; /* make dmenu this wide */
+static int dmx = 0; /* put dmenu at this x offset */
+static int dmy = 0; /* put dmenu at this y offset (measured from the bottom if topbar is 0) */
+static unsigned int dmw = 0; /* make dmenu this wide */
 static int inputw = 0, promptw;
 static int lrpad; /* sum of left and right padding */
 static size_t cursor;
@@ -841,7 +841,7 @@ setup(void)
 	}
 	for (j = 0; j < SchemeOut; ++j) {
 		for (i = 0; i < 2; ++i)
-			free((void *)colors[j][i]);
+			free(colors[j][i]);
 	}
 
 	clip = XInternAtom(dpy, "CLIPBOARD",   False);
@@ -1061,7 +1061,7 @@ main(int argc, char *argv[])
 	if (!drw_fontset_create(drw, (const char**)fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 
-	free((void *)fonts[0]);
+	free(fonts[0]);
 	lrpad = drw->fonts->h;
 
     if (lineheight == -1)

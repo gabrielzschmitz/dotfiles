@@ -15,10 +15,19 @@ static const char *user  = "gabrielzschmitz";
 static const char *group = "gabrielzschmitz";
 
 static const char *colorname[NUMCOLS] = {
-	[INIT] =   "#1c1f2a",   /* after initialization */
-	[INPUT] =  "#446781",   /* during input */
+	[INIT] = "#1c1f2a",       /* after initialization */
+	[INPUT] = "#446781",    /* during input */
 	[FAILED] = "#806382",   /* wrong password */
 };
+/*
+ * Xresources preferences to load at startup
+ */
+ResourcePref resources[] = {
+		{ "slockinit",       STRING,  &colorname[INIT] },
+		{ "slockinput",       STRING,  &colorname[INPUT] },
+		{ "slockfailed",       STRING,  &colorname[FAILED] },
+};
+
 
 /* treat a cleared input like a wrong password (color) */
 static const int failonclear = 1;
