@@ -21,8 +21,7 @@
     l='lsd --group-dirs first -A'				\
     clear='clear ; zerofetch'					\
     cl='clear'							\
-    rm='trash-put'						\
-    rmdir='trash-put'						\
+    trrm='trash-put'						\
     pk='pkill'							\
     nv='nvim'							\
     mkins='doas make clean install'				\
@@ -32,7 +31,7 @@
     cmatrix='cmatrix -bC cyan'					\
     bat='bat --theme="base16" --style="numbers,changes"'	\
     cat='bat'							\
-    sshserver='ssh gabrielzschmitz@192.168.0.136'		\
+    sshserver='ssh gabrielzschmitz@192.168.0.149'		\
 
 #--------------------------- cfg ------------------------------
                                                           alias \
@@ -114,15 +113,18 @@
     mpv='devour mpv'						\
     sxiv='devour sxiv'						\
     zathura='devour zathura'					\
-    clock='tty-clock -s -c -b -C 6'				\
+    clock='tty-clock -s -c -b -C 2'				\
     picomd='picom -b --experimental-backends'			\
     sxiva='sxiv *'						\
+    pkpicom='pkill picom'					\
     pksteam='pkill steam'					\
     pknext='pkill nextcloud'					\
+    pkgsup='sysinfo-packagesupgrade'				\
     battery='sysinfo-battery'					\
     weather='sysinfo-weather'					\
-    pkgsup='sysinfo-packagesupgrade'				\
-    scrk='screenkey -s small -p bottom --no-systray 		\
+    weatherdown='curl -sf "wttr.in/Brasil+Parana+Cascavel" >    \
+    ~/.local/share/weatherreport'			        \
+    scrk='screenkey -M -s small -p bottom --no-systray 		\
 --font "FiraCode Nerd Font" --font-color #9096ae 		\
 --bg-color #20232f --opacity 0.7'				\
 
@@ -136,8 +138,13 @@
     musdl='cd $HOME/mus/down; youtube-dl -x			\
 --audio-quality 0 --audio-format mp3 --embed-thumbnail'		\
 
-#----------------------------------------------------------------
+#-------------------------- games -------------------------------
                                                           alias \
     nfsu='sh $HOME/next/gg/NFSU/opt/Need\ For\ Speed\ Underground/\
 exec-vulkan-intel-2.sh'                                         \
+    nfsu2='sh $HOME/next/gg/NFSU2/opt/Need\ For\ Speed\ Underground\ 2/\
+exec-vulkan-intel-2.sh'                                         \
+    nfsmw='sh $HOME/next/gg/NFSMW/opt/Need\ For\ Speed\ Most\ Wanted/\
+exec-vulkan-intel-2.sh'                                         \
+    mine='java -jar next/gg/MINE/TLauncher.jar && exit'         \
 
