@@ -1,10 +1,10 @@
 !         .             .              .		  
 !         |             |              |           .	  
 ! ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
-! | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
-! `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+! | | ,-| | | |   | |-` |   /  `-. |   | | | | | | |   /  
+! `-| `-^ ^-` `   ` `-` `` `"` `-` `-` ` ` ` ` ` ` `` `"` 
 !  ,|							  
-!  `'							  
+!  ``							  
 ! GITHUB:https://github.com/gabrielzschmitz		  
 ! INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 ! DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
@@ -40,3 +40,24 @@
 *alpha: 0.8
 ! Font
 *font: FiraCode Nerd Font:size=11:antialias=true:autohint=true;
+
+! dwm
+dwm.normbgcolor: #20232f
+dwm.normbordercolor: #35394a
+dwm.normfgcolor: #9096ae
+dwm.selbgcolor: #436668
+dwm.selbordercolor: #35394a
+dwm.selfgcolor: #20232f
+
+! dmenu
+dmenu.font: FiraCode Nerd Font:size=12:antialias=true:autohint=true
+dmenu.background: #20232f
+dmenu.foreground: #9096ae
+dmenu.selbackground: #436668
+dmenu.selforeground: #20232f
+
+! slock
+*slockinit: #1c1f2a
+*slockinput: #436668
+*slockfailed: #806382
+
