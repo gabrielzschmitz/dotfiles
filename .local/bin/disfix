@@ -11,5 +11,6 @@
 #!bin/sh
 xrandr --output LVDS1 --auto --rotate normal --output VGA1  --off --output HDMI1 --off;
 defaultdisplay;
-defaultwallpaper
+defaultwallpaper;
+xdotool key super+F1
 
