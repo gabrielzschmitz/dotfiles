@@ -10,5 +10,5 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!/bin/sh
 
-xwallpaper --center /home/gabrielzschmitz/pic/wall/zero-emeraldslate/pinkflowers-lisa.png
+xwallpaper --zoom /home/gabrielzschmitz/pic/wall/zero-emeraldslate/solitarytree-caspardavidfriedrich.png
 
