@@ -1,4 +1,5 @@
 #         .             .              .		  
+#         .             .              .		  
 #         |             |              |           .	  
 # ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
 # | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
@@ -24,20 +25,67 @@ cat << "EOF"
 	#############################################################
 	#############################################################
 	##                                                         ##
-	##                 Packages install start:                ##
-	##          (paru is a dependency of this script)          ##
-	##                                                         ##
-	##                   To install it use:                    ##
-	## sudo pacman -S --needed base-devel; cd $HOME/.local/src ##
-	## git clone https://aur.archlinux.org/paru.git && cd paru ##
-	##    makepkg -si && cd && rm -rf $HOME/.local/src/paru    ##
+	##              Packages installation start:              ##
 	##                                                         ##
 	#############################################################
 
 EOF
 
-declare -a pkgs=("artix-archlinux-support"
-"bashtop-git"
+sudo pacman -S --needed base-devel; cd $HOME/.local/src &&\
+git clone https://aur.archlinux.org/paru.git && cd paru &&\
+makepkg -si && cd && rm -rf $HOME/.local/src/paru
+ 
+sudo pacman -S artix-archlinux-support
+
+
+echo "# /etc/pacman.conf
+
+[options]
+HoldPkg      = pacman glibc
+Architecture = auto
+SigLevel    = Required DatabaseOptional
+LocalFileSigLevel = Optional
+
+# Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
+#IgnorePkg   =
+#IgnoreGroup =
+#NoUpgrade   =
+#NoExtract   =
+
+# Misc options
+# ILoveCandy
+Color
+CheckSpace
+
+# ARTIX
+[system]
+Include = /etc/pacman.d/mirrorlist
+[world]
+Include = /etc/pacman.d/mirrorlist
+[galaxy]
+Include = /etc/pacman.d/mirrorlist
+[lib32]
+Include = /etc/pacman.d/mirrorlist
+
+[universe]
+Server = https://universe.artixlinux.org/\$arch
+Server = https://mirror1.artixlinux.org/universe/\$arch
+Server = https://mirror.pascalpuffke.de/artix-universe/\$arch
+Server = https://artixlinux.qontinuum.space:4443/universe/os/\$arch
+
+# ARCH
+[extra]
+Include = /etc/pacman.d/mirrorlist-arch
+[community]
+Include = /etc/pacman.d/mirrorlist-arch
+[multilib]
+Include = /etc/pacman.d/mirrorlist-arch
+" > pacman.conf
+
+sudo mv pacman.conf /etc/pacman.conf
+sudo pacman-key --populate archlinux && paru -Syyu
+
+declare -a pkgs=("bashtop-git"
 "bat"
 "bc"
 "bluez"
@@ -93,7 +141,6 @@ declare -a pkgs=("artix-archlinux-support"
 "screenkey"
 "scrot"
 "signal-desktop"
-"steam"
 "sxiv"
 "udiskie"
 "udisks2"
@@ -131,59 +178,9 @@ cat << "EOF"
 	#############################################################
 	#############################################################
 	##                                                         ##
-	##               Packages install completed.              ##
-	##                                                         ##
-	##       Move pacman.conf to /etc/pacman.conf with:        ##
-	##          sudo mv pacman.conf /etc/pacman.conf           ##
-	##                                                         ##
-	##   And then, activate the arch repos and update with:    ##
-	##   sudo pacman-key --populate archlinux && paru -Syyu    ##
+	##            Packages installation completed.            ##
 	##                                                         ##
 	#############################################################
 
 EOF
-
-echo "# /etc/pacman.conf
-
-[options]
-HoldPkg      = pacman glibc
-Architecture = auto
-SigLevel    = Required DatabaseOptional
-LocalFileSigLevel = Optional
-
-# Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
-#IgnorePkg   =
-#IgnoreGroup =
-#NoUpgrade   =
-#NoExtract   =
-
-# Misc options
-# ILoveCandy
-Color
-CheckSpace
-
-# ARTIX
-[system]
-Include = /etc/pacman.d/mirrorlist
-[world]
-Include = /etc/pacman.d/mirrorlist
-[galaxy]
-Include = /etc/pacman.d/mirrorlist
-[lib32]
-Include = /etc/pacman.d/mirrorlist
-
-[universe]
-Server = https://universe.artixlinux.org/\$arch
-Server = https://mirror1.artixlinux.org/universe/\$arch
-Server = https://mirror.pascalpuffke.de/artix-universe/\$arch
-Server = https://artixlinux.qontinuum.space:4443/universe/os/\$arch
-
-# ARCH
-[extra]
-Include = /etc/pacman.d/mirrorlist-arch
-[community]
-Include = /etc/pacman.d/mirrorlist-arch
-[multilib]
-Include = /etc/pacman.d/mirrorlist-arch
-" >> pacman.conf
 
