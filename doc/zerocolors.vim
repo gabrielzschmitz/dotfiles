@@ -10,47 +10,42 @@
 " DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
 colors.setTheme({
-  foreground:   	'#9096ae'
-  background:		'#262938'
-  textboxbackground:	'#232533'
-  darkerbackground:	'#20232f'
-  darkerbackground:	'#1c1f2a'
-  darkerbackground:	'#242734'
-  lighterbackground: 	'#35394a'
-  cursorColor:		'#9096ae'
-  wallpaperColor:	'#2b3041'
-  wallpaperColor:	'#353955'
+  foreground:   	'#e5e5e5'
+  background:		'#080808'
+  textboxbackground:	'#141414'
+  darkerbackground:	'#030303'
+  lighterbackground: 	'#1a1a1a'
 
   //black
-  color0:		'#262938'
-  color8:       	'#646b8c'
+  color0:		'#080808'
+  color8:       	'#b3b3b3'
 
   //red
-  color1:      		'#806382'
-  color9:      		'#8f6e8d'
+  color1:      		'#644d66'
+  color9:      		'#735771'
 
   //green
-  color2:      		'#436668'
-  color10:     		'#4f797b'
+  color2:      		'#375759'
+  color10:     		'#3f6566'
 
   //yellow
-  color3:      		'#8c8089'
-  color11:     		'#9d8f92'
+  color3:      		'#736871'
+  color11:     		'#807476'
 
   //blue
-  color4:      		'#4f6589'
-  color12:     		'#59729a'
+  color4:      		'#3f5273'
+  color12:     		'#465b80'
 
   //magenta
-  color5:      		'#6d5a80'
-  color13:     		'#876f9f'
+  color5:      		'#564666'
+  color13:     		'#6b5780'
 
   //cyan
-  color6:      		'#446781'
-  color14:     		'#4d7694'
+  color6:      		'#324f66'
+  color14:     		'#385a73'
 
   //white
-  color7:      		'#646b8c'
-  color15:     		'#9096ae'
+  color7:      		'#b3b3b3'
+  color15:     		'#e5e5e5'
 });
 
