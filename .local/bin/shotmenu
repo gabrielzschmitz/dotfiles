@@ -1,0 +1,52 @@
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+#
+# Screenshot taker menu using dmenu and scrot
+#!/bin/sh
+
+# Options
+extmon="  Print external monitor"
+lapmon="  Print laptop monitor"
+allmon="  Print all monitors"
+selarea="麗  Select a area to print"
+extmontimer=" 福  Print external monitor (10s timer)"
+lapmontimer=" 福  Print laptop monitor (10s timer)"
+allmontimer=" 福  Print all monitors (10s timer)"
+
+# Variables
+options="$extmon\n$lapmon\n$allmon\n$selarea\n$extmontimer\n$lapmontimer\n$allmontimer"
+
+# Choices
+chosen="$(echo -e "$options" | dmenu)"
+case $chosen in
+    $extmon)
+		notify-send -t 1500 "  Taking the screenshot..." && sleep 1.5 && scrot ~/pic/extmon-$(date +%H:%M:%S).png --autoselect 0,0,1440,900 --quality 100 --freeze
+        ;;
+    $lapmon)
+		notify-send -t 1500 "  Taking the screenshot..." && sleep 1.5 && scrot ~/pic/lapmon-$(date +%H:%M:%S).png --autoselect 1440,0,1366,768 --quality 100 --freeze
+	;;
+    $allmon)
+		notify-send -t 1500 "  Taking the screenshot..." && sleep 1.5 && scrot ~/pic/allmon-$(date +%H:%M:%S).png --quality 100 --freeze
+        ;;
+    $selarea)
+		notify-send -t 1500 "麗  Select the area..." && sleep 1.5 && scrot ~/pic/selarea-$(date +%H:%M:%S).png --quality 100 --select --freeze
+        ;;
+    $extmontimer)
+		notify-send -t 1000 "  Taking the screenshot in 10s..." ; scrot ~/pic/extmontimer-$(date +%H:%M:%S).png --autoselect 0,0,1440,900 --quality 100 --delay 10 --freeze --count && notify-send -t 1500 "  Screenshot taked..."
+        ;;
+    $lapmontimer)
+		notify-send -t 1500 "  Taking the screenshot in 10s..." && scrot ~/pic/lapmontimer-$(date +%H:%M:%S).png --autoselect 1440,0,1366,768 --quality 100 --delay 10 --freeze --count && notify-send -t 1500 "  Screenshot taked..."
+        ;;
+    $allmontimer)
+		notify-send -t 1500 "  Taking the screenshot in 10s..." && scrot ~/pic/allmontimer-$(date +%H:%M:%S).png --quality 100 --delay 10 --freeze --count && notify-send -t 1500 "  Screenshot taked..."
+        ;;
+esac
+
