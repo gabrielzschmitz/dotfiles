@@ -14,7 +14,7 @@
 #!/bin/sh
 
 # Directory of the wallpapers
-WALL_DIR='~/pic/wall/zero-emeraldslate'
+WALL_DIR='~/pic/wall/zeromono'
 
 # X wallpaper options
 WALL_OPT=$(echo -e "zoom\ncenter\ntile\nstretch\nmaximize\nno-randr"|\
