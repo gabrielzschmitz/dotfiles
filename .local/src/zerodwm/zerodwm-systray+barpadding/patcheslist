@@ -8,11 +8,12 @@
 # GITHUB:https://github.com/gabrielzschmitz		  
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
-#!bin/sh
+dwm-actualfullscreen.diff
+dwm-alwayscenter.diff
+dwm-bar-height.diff
+dwm-barpadding.diff
+dwm-cursorwarp.diff
+dwm-cyclelayouts.diff
+dwm-vanitygaps.diff
+dwm-xrdb.diff
 
-scrot Selectivescreenshot-%H:%M:%S.png	\
---quality 100				\
---select				\
---border				\
---freeze				\
---exec 'mv $f ~/pic/$f'			\

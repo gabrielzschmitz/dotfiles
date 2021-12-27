@@ -18,18 +18,18 @@ static int centered = 1;                    /* -c option; centers dmenu on scree
 static int min_width = 0;                    /* minimum width when centered */
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
-	"FiraCode Nerd Font:size=10.5:antialias=true:autohint=true"
+	"FiraCode Nerd Font:size=12:antialias=true:autohint=true"
 };
 
 static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
 static const char *colors[SchemeLast][2] = {
-        /*                            fg         bg    */
-	[SchemeNorm] =          { "#b3b3b3", "#080808" },
-	[SchemeSel] =           { "#080808", "#e5e5e5" },
-	[SchemeSelHighlight] =  { "#b3b3b3", "#1a1a1a" },
-	[SchemeNormHighlight] = { "#b3b3b3", "#1a1a1a" },
-	[SchemeOut] =           { "#b3b3b3", "#080808" },
-	[SchemeOutHighlight] =  { "#080808", "#e5e5e5" },
+	/*     fg         bg       */
+	[SchemeNorm] = { "#9096ae", "#20232f" },
+	[SchemeSel] = { "#9096ae", "#436668" },
+	[SchemeSelHighlight] = { "#9096ae", "#232533" },
+	[SchemeNormHighlight] = { "#9096ae", "#232533" },
+	[SchemeOut] = { "#9096ae", "#20232f" },
+	[SchemeOutHighlight] = { "#20232f", "#436668" },
 };
 /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
 static unsigned int lines      = 12;

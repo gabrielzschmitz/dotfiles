@@ -208,6 +208,6 @@ Additionally, I've set vim to use the clipboard as the default buffer, which mea
 You can follow links via the keyboard in this pdf reader by pressing \f(CWf\fP followed by the number that appears on the desired link.
 .LI
 .ITEM
-.PDF_WWW_LINK "https://github.com/gabrielzschmitz/dotfiles" "My dotfiles"
+.PDF_WWW_LINK "https://github.com/gabrielzschmitz/dotfiles/" "My dotfiles"
 \(en For the code behind it!
 .LIST OFF

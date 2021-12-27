@@ -17,23 +17,26 @@
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int gappih    = 5;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 5;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 20;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
+static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayspacing = 2;   /* systray spacing */
+static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const int showsystray        = 1;     /* 0 means no systray */
+static const int user_bh            = 35;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 35;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static const int vertpad            = 10;       /* vertical padding of bar */
-static const int sidepad            = 10;       /* horizontal padding of bar */
 static const char *fonts[]          = { "FiraCode Nerd Font:size=12:antialias=true:autohint=true" };
-static char normbgcolor[]           = "#080808";
-static char normbordercolor[]       = "#1a1a1a";
-static char normfgcolor[]           = "#e5e5e5";
-static char selfgcolor[]            = "#080808";
-static char selbordercolor[]        = "#1a1a1a";
-static char selbgcolor[]            = "#e5e5e5";
+static char normbgcolor[]           = "#20232f";
+static char normbordercolor[]       = "#35394a";
+static char normfgcolor[]           = "#9096ae";
+static char selfgcolor[]            = "#20232f";
+static char selbordercolor[]        = "#35394a";
+static char selbgcolor[]            = "#446781";
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
@@ -54,14 +57,16 @@ static const Rule rules[] = {
 	{ "Sxiv", 	 	NULL,       NULL,       0,            1,           -1 },
 	{ "Pcmanfm", 	 	NULL,       NULL,       0,            1,           -1 },
 	{ "Zathura", 	 	NULL,       NULL,       0,            1,           -1 },
-	{ "blueman-manager",  	NULL,       NULL,       0,            1,           -1 },
+	{ "Blueman-manager",  	NULL,       NULL,       0,            1,           -1 },
+	{ "Blueman-adapters",  	NULL,       NULL,       0,            1,           -1 },
+	{ "Blueman-services",  	NULL,       NULL,       0,            1,           -1 },
 	{ "cpomosai", 		NULL,       NULL,       0,            1,           -1 },
 	{ "packagesupgrade", 	NULL,       NULL,       0,            1,           -1 },
 	{ "weatherreport", 	NULL,       NULL,       0,            0,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.5;  /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -163,7 +168,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Left,   tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Right,  tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_F1,     xrdb,           {.v = NULL } },
-	/*{ MODKEY|Mod2Mask,              XK_f, 	   spawn,          {.v = flavorsel } },*/
+	{ MODKEY|Mod1Mask,              XK_f, 	   spawn,          {.v = flavorsel } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -206,8 +211,8 @@ static Key keys[] = {
 	/* { MODKEY|Mod4Mask,              XK_o,      incrohgaps,     {.i = -1 } }, */
 	/* { MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } }, */
 	/* { MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } }, */
-};
 
+};
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
@@ -225,4 +230,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
