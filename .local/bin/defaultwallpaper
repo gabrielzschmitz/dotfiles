@@ -10,5 +10,5 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!/bin/sh
 
-xwallpaper --zoom /home/gabrielzschmitz/pic/wall/zero-emeraldslate/solitarytree-caspardavidfriedrich.png
+xwallpaper --zoom /home/gabrielzschmitz/pic/wall/zeromono/lightwhite.png
 
