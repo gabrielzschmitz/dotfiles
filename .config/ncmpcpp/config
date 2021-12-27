@@ -16,20 +16,20 @@ ncmpcpp_directory = "~/.config/ncmpcpp"
 mpd_host = "localhost"
 mpd_port = "6600"  
 mpd_connection_timeout = "5"  
-mpd_crossfade_time = "10"  
+mpd_crossfade_time = "15"  
 
 # Playlist
 playlist_disable_highlight_delay = "0"  
 playlist_display_mode = "columns"  
 browser_display_mode = "columns"  
 colors_enabled = "yes"  
-main_window_color = green
-header_window_color = green
-volume_color = green
-progressbar_color = "black"
+main_window_color = black
+header_window_color = white
+volume_color = white
+progressbar_color = "white"
 statusbar_color = "white"
-active_window_border = green
-song_columns_list_format = ' (11)[green]{l} (17)[green]{a} (0)[white]{t} '
+active_window_border = white
+song_columns_list_format = ' (11)[white]{l} (17)[white]{a} (0)[white]{t} '
 user_interface = "alternative"
 default_place_to_search_in = "database"
 
@@ -40,7 +40,7 @@ visualizer_fps = 60
 visualizer_type = "spectrum" (spectrum/wave)
 visualizer_in_stereo = "no"
 visualizer_look = "●▒" # other strange characters: ▋░ ●▒ ▋▋
-visualizer_color = green
+visualizer_color = white
 
 # Navigation
 cyclic_scrolling = "yes"
@@ -74,8 +74,8 @@ progressbar_look =  "▬▬▭"
 progressbar_elapsed_color = "white"
 now_playing_prefix = $b
 now_playing_suffix = $/b
-song_status_format = $3$b❮$3$b❮ $8$b%a $3$b❙$3$b❙ $1$b%t $3$b❯$3$b❯
-alternative_header_second_line_format = $3$b❮$3$b❮ $8$b%a $3$b❯$3$b❯
+song_status_format = $8$b❮$8$b❮ $8$b%a $8$b❙$8$b❙ $8$b%t $8$b❯$8$b❯
+alternative_header_second_line_format = $8$b❮$8$b❮ $8$b%a $8$b❯$8$b❯
 autocenter_mode = "yes"
 centered_cursor = "yes"
 
