@@ -12,6 +12,7 @@
 " $HOME/.config/nvim/general.vim
 "
 
+colorscheme zero
 set background=dark
 syntax on
 let g:prettier#autoformat_require_pragma = 0

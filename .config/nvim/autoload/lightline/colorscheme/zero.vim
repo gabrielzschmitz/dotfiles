@@ -9,17 +9,17 @@
 " INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 " DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
-let s:mono0 = [ '#20232f', 236 ]
-let s:mono1 = [ '#1c1e29', 238 ]
-let s:mono2 = [ '#35394a', 243 ]
-let s:mono3 = [ '#9096ae', 255 ]
+let s:mono0 = [ '#080808', 236 ]
+let s:mono1 = [ '#0f0f0f', 238 ]
+let s:mono2 = [ '#0a0a0a', 243 ]
+let s:mono3 = [ '#e5e5e5', 255 ]
 
-let s:yellow = [ '#8c8089', 180 ]
-let s:red = [ '#6d5a80', 168 ]
-let s:magenta = [ '#4f6589', 176 ]
-let s:blue = [ '#436668', 75 ]
-let s:cyan = [ '#6d5a80', 73 ]
-let s:green = [ '#446781', 114 ]
+let s:yellow = [ '#e5e5e5', 180 ]
+let s:red = [ '#e5e5e5', 168 ]
+let s:magenta = [ '#e5e5e5', 176 ]
+let s:blue = [ '#e5e5e5', 75 ]
+let s:cyan = [ '#e5e5e5', 73 ]
+let s:green = [ '#e5e5e5', 114 ]
 
 let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
 
