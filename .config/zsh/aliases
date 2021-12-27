@@ -13,13 +13,13 @@
     alias zshrc='nvim $HOME/.config/zsh/.zshrc'                                   
     alias zenv='nvim $HOME/.zshenv'
     alias zhis='nvim $HOME/.config/zsh/.zhistory'
-    alias aliases='nvim $HOME/.config/zsh/aliases'                                    
+    alias aliases='nvim $HOME/.config/zsh/aliases'
 
 #--------------------------- sys --------------------------------
                                                           alias	\
     ls='lsd --group-dirs first -A'				\
     l='lsd --group-dirs first -A'				\
-    clear='clear ; zerofetch'					\
+    cnt='lsd --group-dirs first -A | wc -l'			\
     cl='clear'							\
     trrm='trash-put'						\
     pk='pkill'							\
@@ -79,6 +79,7 @@
     mus='cd $HOME/mus'						\
     gg='cd $HOME/gg'						\
     next='cd $HOME/next'					\
+    draw='cd $HOME/next/draw; clear && ls'	                \
     site='cd $HOME/next/site/gabrielzschmitz.xyz; clear && ls'	\
     scr='cd $HOME/.local/bin; clear && ls'			\
     src='cd $HOME/.local/src; clear && ls'			\
@@ -99,8 +100,15 @@
     a='paru -S'                                          	\
     del='doas paru -Rs'		                               	\
 
+#--------------------------- memex ------------------------------
+                                                          alias \
+    memex='nvim ~/next/dev/startpage/memex/content/data.ndtl'   \
+    memexdir='devour pcmanfm ~/next/dev/startpage/memex/content/media'\
+    cdmemex='cd ~/next/dev/startpage/memex/'                    \
+
 #-------------------------- misc --------------------------------
                                                           alias \
+    fetch='zerofetch'                                           \
     hs='hugo server'                                            \
     br='setxkbmap br'						\
     us='setxkbmap us alt-intl'					\
@@ -123,7 +131,7 @@
     battery='sysinfo-battery'					\
     weather='sysinfo-weather'					\
     weatherdown='curl -sf "wttr.in/Brasil+Parana+Cascavel" >    \
-    ~/.local/share/weatherreport'			        \
+    ~/.local/share/weatherreport && sysinfo-weather'	        \
     scrk='screenkey -M -s small -p bottom --no-systray 		\
 --font "FiraCode Nerd Font" --font-color #9096ae 		\
 --bg-color #20232f --opacity 0.7'				\
@@ -140,11 +148,13 @@
 
 #-------------------------- games -------------------------------
                                                           alias \
+    bkpmine="sudo cp -r ~/.minecraft/saves/My\ World ~/next/gg/MINE"\
     nfsu='sh $HOME/next/gg/NFSU/opt/Need\ For\ Speed\ Underground/\
 exec-vulkan-intel-2.sh'                                         \
     nfsu2='sh $HOME/next/gg/NFSU2/opt/Need\ For\ Speed\ Underground\ 2/\
 exec-vulkan-intel-2.sh'                                         \
     nfsmw='sh $HOME/next/gg/NFSMW/opt/Need\ For\ Speed\ Most\ Wanted/\
 exec-vulkan-intel-2.sh'                                         \
-    mine='java -jar next/gg/MINE/TLauncher.jar && exit'         \
+    mine='devour java -jar $HOME/next/gg/MINE/SKlauncher.jar && exit'  \
+    mcasel='cd $HOME/next/gg/MINE/mcaselector/zulu17.30.15-ca-fx-jre17.0.1-linux_x64/bin; ./java -jar $HOME/next/gg/MINE/mcaselector/mcaselector.jar'
 
