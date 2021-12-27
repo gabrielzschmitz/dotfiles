@@ -9,15 +9,16 @@
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!/bin/sh
+xrdb $HOME/.config/X11/xresources &
 kblayout &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 keyrate &
 xbanish -i mod4 -i mod1 -i shift -i control &
-xrdb $HOME/.config/X11/xresources &
 mpd &
 dunst &
 pulseaudio &
 picom --experimental-backends -b &
+blueman-applet &
 udiskie --file-manager=pcmanfm --terminal=st --notify --no-tray --automount &
 defaultdisplay &
 defaultwallpaper &
