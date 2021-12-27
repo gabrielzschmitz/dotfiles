@@ -25,30 +25,30 @@ bindkey '^?' backward-delete-char
 autoload edit-command-line; zle -N edit-command-line # Use v-v to edit the command line in nvim
 
 # Prompt
-zerofetch
+#zerofetch
 PROMPT_EOL_MARK=''
 setopt prompt_subst
-RPROMPT='%F{red}%1~'
+RPROMPT='%F{white}%1~'
 function zvm_after_select_vi_mode() {
   case $ZVM_MODE in
     $ZVM_MODE_NORMAL)
-      VICOLORS="cyan"
-      VIMODE=" "
+      VICOLORS="white"
+      VIMODE="— "
       ;;
     $ZVM_MODE_INSERT)
-      VICOLORS="green"
-      VIMODE=" "
+      VICOLORS="white"
+      VIMODE="⟿  "
       ;;
     $ZVM_MODE_VISUAL)
-      VICOLORS="yellow"
-      VIMODE=" "
+      VICOLORS="white"
+      VIMODE="⤳ "
       ;;
     $ZVM_MODE_VISUAL_LINE)
-      VICOLORS="yellow"
-      VIMODE=" "
+      VICOLORS="white"
+      VIMODE="⤳ "
       ;;
   esac
-  PROMPT='%F{$VICOLORS}%B$VIMODE%b%f'
+  PROMPT='%F{$VICOLORS}$VIMODE%f'
 }
 
 # Aliases
