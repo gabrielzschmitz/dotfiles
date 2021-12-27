@@ -88,6 +88,7 @@ sudo pacman-key --populate archlinux && paru -Syyu
 declare -a pkgs=("bashtop-git"
 "bat"
 "bc"
+"blueman"
 "bluez"
 "bluez-openrc"
 "bluez-utils"
@@ -136,6 +137,7 @@ declare -a pkgs=("bashtop-git"
 "picom-jonaburg-git"
 "polkit-gnome"
 "pulseaudio"
+"pulseaudio-bluetooth"
 "python-gobject"
 "python-pygments"
 "screenkey"
@@ -154,6 +156,7 @@ declare -a pkgs=("bashtop-git"
 "xorg-xinit"
 "xwallpaper"
 "yarn"
+"youtube-dl"
 "zathura"
 "zathura-cb"
 "zathura-djvu"
@@ -164,6 +167,11 @@ declare -a pkgs=("bashtop-git"
 for x in "${pkgs[@]}"; do
 	paru --noconfirm --needed -S "$x"
 done
+
+sudo cp -r .local/share/icons/* /usr/share/icons/
+sudo cp -r .local/share/themes/* /usr/share/themes/
+sudo cp -r .local/share/fonts/* /usr/share/fonts/
+
 
 cat << "EOF"
 
@@ -179,6 +187,13 @@ cat << "EOF"
 	#############################################################
 	##                                                         ##
 	##            Packages installation completed.            ##
+	##                                                         ##
+	#############################################################
+	#############################################################
+	##                                                         ##
+	##                   Recommendations:                     ##
+	##            Set controller mode to bredr in              ##
+	##           sudo nvim /etc/bluetooth/main.conf            ##
 	##                                                         ##
 	#############################################################
 
