@@ -13,8 +13,15 @@
 # Minecraft hit loop
 while :
 do {
-    sleep 1;
+    sleep 1.2;
     xdotool click 1;
 }
 done
 
+# Minecraft ancient debris auto mining
+#while :
+#do {
+#    sleep 4.6;
+#    xdotool click 3;
+#}
+#done
