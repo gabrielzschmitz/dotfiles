@@ -8,56 +8,37 @@
 ! GITHUB:https://github.com/gabrielzschmitz		  
 ! INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 ! DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+
 ! Black + DarkGrey
-*color0:  #20232f
-*color8:  #646b8c
+*color0:  #080808
+*color8:  #b3b3b3
 ! DarkRed + Red
-*color1:  #806382
-*color9:  #8f6e8d
+*color1:  #644d66
+*color9:  #735771
 ! DarkGreen + Green
-*color2:  #436668
-*color10: #4f797b
+*color2:  #375759
+*color10: #3f6566
 ! DarkYellow + Yellow
-*color3:  #8c8089
-*color11: #9d8f92
+*color3:  #736871
+*color11: #807476
 ! DarkBlue + Blue
-*color4:  #4f6589
-*color12: #59729a
+*color4:  #3f5273
+*color12: #465b80
 ! DarkMagenta + Magenta
-*color5:  #8f6b8f
-*color13: #9f7699
+*color5:  #564666
+*color13: #6b5780
 !DarkCyan + Cyan
-*color6:  #446781
-*color14: #4d7694
+*color6:  #324f66
+*color14: #385a73
 ! LightGrey + White
-*color7:  #646b8c
-*color15: #9096ae
+*color7:  #b3b3b3
+*color15: #e5e5e5
 ! Foreground and Background
-*foreground: #9096ae
-*background: #1c1f2a
+*foreground: #b3b3b3
+*background: #080808
 
 ! Alpha
-*alpha: 0.8
+*alpha: 1
 ! Font
-*font: FiraCode Nerd Font:size=11:antialias=true:autohint=true;
-
-! dwm
-dwm.normbgcolor: #20232f
-dwm.normbordercolor: #35394a
-dwm.normfgcolor: #9096ae
-dwm.selbgcolor: #436668
-dwm.selbordercolor: #35394a
-dwm.selfgcolor: #20232f
-
-! dmenu
-dmenu.font: FiraCode Nerd Font:size=12:antialias=true:autohint=true
-dmenu.background: #20232f
-dmenu.foreground: #9096ae
-dmenu.selbackground: #436668
-dmenu.selforeground: #20232f
-
-! slock
-*slockinit: #1c1f2a
-*slockinput: #436668
-*slockfailed: #806382
+*font: FiraCode Nerd Font:size=10.8:antialias=true:autohint=true;
 
