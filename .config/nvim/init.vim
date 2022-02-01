@@ -14,6 +14,5 @@
 
 source $HOME/.config/nvim/plug.vim
 source $HOME/.config/nvim/general.vim
-source $HOME/.config/nvim/plugins/startify.vim
 source $HOME/.config/nvim/plugins/lf.vim
 
