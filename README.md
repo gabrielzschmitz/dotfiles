@@ -1,8 +1,6 @@
 # gabrielzschmitz Dotfiles
 
 ## Main configs demonstration:
-### dwm
-![dwm](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/dwm%5Bdemo%5D.png)
 ### st
 ![st](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/st%5Bdemo%5D.png)
 ### dmenu
@@ -64,3 +62,4 @@ https://monkeytype.com?customTheme=%231c1f2a%2C%23446781%2C%23446781%2C%23646b8c
 | colourful mode |         |             |         |
 | error          | #806382 | extra error | #876f9f |
 2. Use the Fira Code font. Put 'FiraCode Nerd Font' in the custom font option.
+
