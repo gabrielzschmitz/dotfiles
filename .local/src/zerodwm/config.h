@@ -49,6 +49,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      		instance    title       tags mask     isfloating   monitor */
+	{ "Deadbeef",     	NULL,       NULL,       0,            1,           -1 },
 	{ "Gcolor3",     	NULL,       NULL,       0,            1,           -1 },
 	{ "Pavucontrol", 	NULL,       NULL,       0,            1,           -1 },
 	{ "Sxiv", 	 	NULL,       NULL,       0,            1,           -1 },
@@ -101,7 +102,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", NULL };
-static const char *flavorsel[] = { "flavorsel", NULL };
+/*static const char *flavorsel[] = { "flavorsel", NULL };*/
 static const char *emojicmd[] = { "emojidmenu", NULL };
 static const char *chrscmd[] = { "chrs", NULL };
 static const char *termcmd[] = { "st", NULL };
