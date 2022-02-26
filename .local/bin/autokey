@@ -13,7 +13,7 @@
 # Minecraft hit loop
 while :
 do {
-    sleep 1.2;
+    sleep 0.7;
     xdotool click 1;
 }
 done
