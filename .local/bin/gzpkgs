@@ -85,7 +85,7 @@ Include = /etc/pacman.d/mirrorlist-arch
 sudo mv pacman.conf /etc/pacman.conf
 sudo pacman-key --populate archlinux && paru -Syyu
 
-declare -a pkgs=("bashtop-git"
+declare -a pkgs=("btop"
 "bat"
 "bc"
 "blueman"
@@ -103,6 +103,7 @@ declare -a pkgs=("bashtop-git"
 "gcolor3"
 "git"
 "hugo"
+"imlib2"
 "inkscape"
 "lf"
 "libtool"
@@ -136,6 +137,7 @@ declare -a pkgs=("bashtop-git"
 "pcmanfm-gtk3"
 "picom-jonaburg-git"
 "polkit-gnome"
+"puddletag"
 "pulseaudio"
 "pulseaudio-bluetooth"
 "python-gobject"
@@ -171,7 +173,8 @@ done
 sudo cp -r .local/share/icons/* /usr/share/icons/
 sudo cp -r .local/share/themes/* /usr/share/themes/
 sudo cp -r .local/share/fonts/* /usr/share/fonts/
-
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 cat << "EOF"
 
