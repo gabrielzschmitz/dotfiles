@@ -12,7 +12,7 @@
 [global]
     frame_width = 0
     frame_color = "#b3b3b3"
-    font = FiraCode Nerd Font 11
+    font = FiraCode Nerd Font 10
     
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -58,8 +58,8 @@
     # The geometry setting is now deprecated. It's split up into width, height, origin, notification_limit and offset.
     # width = "350"
     # height = "150"
-    origin = "top-right"
-    offset = "20x55"
+    origin = "bottom-left"
+    offset = "12x12"
     notification_limit = "0"
     
     # Specifies a scale factor for dimensions to adapt notifications to HiDPI screens.
