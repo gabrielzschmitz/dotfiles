@@ -1,6 +1,8 @@
 # gabrielzschmitz Dotfiles
 
 ## Main configs demonstration:
+### dwm
+![dwm](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/dwm%5Bdemo%5D.png)
 ### st
 ![st](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/st%5Bdemo%5D.png)
 ### dmenu
