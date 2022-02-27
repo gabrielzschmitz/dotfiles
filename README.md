@@ -31,37 +31,16 @@ To configure the zero theme in DuckDuckGo:
 2.1. Put the DuckDuckGo colors like that:
 |                                                     |         |
 | :-------------------------------------------------: | :-----: |
-| Background Color                                    | #20232f |
-| Header Color                                        | #262938 |
-| Result Title Color                                  | #436668 |
-| Result Visited Title Color                          | #806382 |
-| Result Description Color                            | #9096ae |
-| Result Url Color                                    | #446781 |
-| Result Hover, Module, and Dropdown Background Color | #20232f |
+| Background Color                                    | #080808 |
+| Header Color                                        | #030303 |
+| Result Title Color                                  | #324f66 |
+| Result Visited Title Color                          | #564666 |
+| Result Description Color                            | #b3b3b3 |
+| Result Url Color                                    | #375759 |
+| Result Hover, Module, and Dropdown Background Color | #141414 |
 
 2.2. Or use the load settings with the following phrase:
 
 ```
 gabrielzschmitz-zero-theme
 ```
-
-### Monkeytype
-
-1.1. Just use this link, with the configured *zero* colors and change the font to 'FiraCode Nerd Font':
-
-```
-https://monkeytype.com?customTheme=%231c1f2a%2C%23446781%2C%23446781%2C%23646b8c%2C%239096ae%2C%23806382%2C%23876f9f%2C%23806382%2C%23876f9f
-```
-
-1.2. Or put the colors like that:
-
-|                |         |             |         |
-| :------------: | :-----: | :---------: | :-----: |
-| background     | #1c1f2a | main        | #1c1f2a |
-| caret          | #446781 | sub         | #646b8c |
-| text           | #9096ae |             |         |
-| error          | #806382 | extra error | #876f9f |
-| colourful mode |         |             |         |
-| error          | #806382 | extra error | #876f9f |
-2. Use the Fira Code font. Put 'FiraCode Nerd Font' in the custom font option.
-
