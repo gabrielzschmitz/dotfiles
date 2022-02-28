@@ -14,14 +14,105 @@
 #!/bin/sh
 
 # Directory of the wallpapers
-WALL_DIR='~/pic/wall/zeromono'
+WALL_DIR='/home/gabrielzschmitz/pic/wall/zeromono'
+TIMEBASED_DIR='/home/gabrielzschmitz/pic/wall/timebased'
 
 # X wallpaper options
 WALL_OPT=$(echo -e "zoom\ncenter\ntile\nstretch\nmaximize\nno-randr"|\
 dmenu -l 6) &&\
 # Wallpaper setter function
 WALL_FN=$(devour sxiv $WALL_DIR -to | tail -n 1) && \
-xwallpaper --$WALL_OPT $WALL_FN &&\
-sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $WALL_FN|\
-" ~/.local/bin/defaultwallpaper
+
+case $WALL_FN in
+# light
+	$HOME/pic/wall/zeromono/lightwhite.png)
+                cp $WALL_DIR/lightwhite.png $TIMEBASED_DIR/light.png
+                cp $WALL_DIR/lightblack.png $TIMEBASED_DIR/dark.png
+                sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $TIMEBASED_DIR/light.png|\
+                " ~/.local/bin/defaultwallpaper
+                timebased
+		;;
+	$HOME/pic/wall/zeromono/lightblack.png)
+                cp $WALL_DIR/lightwhite.png $TIMEBASED_DIR/light.png
+                cp $WALL_DIR/lightblack.png $TIMEBASED_DIR/dark.png
+                sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $TIMEBASED_DIR/dark.png|\
+                " ~/.local/bin/defaultwallpaper
+                timebased
+		;;
+# windowguy
+	$HOME/pic/wall/zeromono/windowguywhite.png)
+                cp $WALL_DIR/windowguywhite.png $TIMEBASED_DIR/light.png
+                cp $WALL_DIR/windowguyblack.png $TIMEBASED_DIR/dark.png
+                sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $TIMEBASED_DIR/light.png|\
+                " ~/.local/bin/defaultwallpaper
+                timebased
+		;;
+	$HOME/pic/wall/zeromono/windowguyblack.png)
+                cp $WALL_DIR/windowguywhite.png $TIMEBASED_DIR/light.png
+                cp $WALL_DIR/windowguyblack.png $TIMEBASED_DIR/dark.png
+                sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $TIMEBASED_DIR/dark.png|\
+                " ~/.local/bin/defaultwallpaper
+                timebased
+		;;
+# mariaannunciata
+	$HOME/pic/wall/zeromono/mariaannunciatawhite.png)
+                cp $WALL_DIR/mariaannunciatawhite.png $TIMEBASED_DIR/light.png
+                cp $WALL_DIR/mariaannunciatablack.png $TIMEBASED_DIR/dark.png
+                sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $TIMEBASED_DIR/light.png|\
+                " ~/.local/bin/defaultwallpaper
+                timebased
+		;;
+	$HOME/pic/wall/zeromono/mariaannunciatablack.png)
+                cp $WALL_DIR/mariaannunciatawhite.png $TIMEBASED_DIR/light.png
+                cp $WALL_DIR/mariaannunciatablack.png $TIMEBASED_DIR/dark.png
+                sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $TIMEBASED_DIR/dark.png|\
+                " ~/.local/bin/defaultwallpaper
+                timebased
+		;;
+# untitled
+	$HOME/pic/wall/zeromono/untitledwhite.png)
+                cp $WALL_DIR/untitledwhite.png $TIMEBASED_DIR/light.png
+                cp $WALL_DIR/untitledblack.png $TIMEBASED_DIR/dark.png
+                sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $TIMEBASED_DIR/light.png|\
+                " ~/.local/bin/defaultwallpaper
+                timebased
+		;;
+	$HOME/pic/wall/zeromono/untitledblack.png)
+                cp $WALL_DIR/untitledwhite.png $TIMEBASED_DIR/light.png
+                cp $WALL_DIR/untitledblack.png $TIMEBASED_DIR/dark.png
+                sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $TIMEBASED_DIR/dark.png|\
+                " ~/.local/bin/defaultwallpaper
+                timebased
+		;;
+# cowboy
+	$HOME/pic/wall/zeromono/cowboywhite.png)
+                cp $WALL_DIR/cowboywhite.png $TIMEBASED_DIR/light.png
+                cp $WALL_DIR/cowboyblack.png $TIMEBASED_DIR/dark.png
+                sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $TIMEBASED_DIR/light.png|\
+                " ~/.local/bin/defaultwallpaper
+                timebased
+		;;
+	$HOME/pic/wall/zeromono/cowboyblack.png)
+                cp $WALL_DIR/cowboywhite.png $TIMEBASED_DIR/light.png
+                cp $WALL_DIR/cowboyblack.png $TIMEBASED_DIR/dark.png
+                sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $TIMEBASED_DIR/dark.png|\
+                " ~/.local/bin/defaultwallpaper
+                timebased
+		;;
+# rose
+	$HOME/pic/wall/zeromono/rosewhite.png)
+                cp $WALL_DIR/rosewhite.png $TIMEBASED_DIR/light.png
+                cp $WALL_DIR/roseblack.png $TIMEBASED_DIR/dark.png
+                sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $TIMEBASED_DIR/light.png|\
+                " ~/.local/bin/defaultwallpaper
+                timebased
+		;;
+	$HOME/pic/wall/zeromono/roseblack.png)
+                cp $WALL_DIR/rosewhite.png $TIMEBASED_DIR/light.png
+                cp $WALL_DIR/roseblack.png $TIMEBASED_DIR/dark.png
+                sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $TIMEBASED_DIR/dark.png|\
+                " ~/.local/bin/defaultwallpaper
+                timebased
+		;;
+esac
 
