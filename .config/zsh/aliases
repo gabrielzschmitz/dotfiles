@@ -31,6 +31,7 @@
     cmatrix='cmatrix -bC cyan'					\
     bat='bat --theme="base16" --style="numbers,changes"'	\
     cat='bat'							\
+    nnn='nnn -H'
     sshserver='ssh gabrielzschmitz@192.168.0.149'		\
 
 #--------------------------- cfg ------------------------------
@@ -87,6 +88,8 @@
     zerost='cd $HOME/.local/src/zerost; clear && ls'		\
     zerodmenu='cd $HOME/.local/src/zerodmenu; clear && ls'	\
     zeroslock='cd $HOME/.local/src/zeroslock; clear && ls'	\
+    zeronnn='cd $HOME/.local/src/zeronnn; clear && ls'		\
+    zeroherbe='cd $HOME/.local/src/zeroherbe; clear && ls'	\
     cdzerofetch='cd $HOME/.local/src/zerofetch; clear && ls'	\
 
 #-------------------------- pacman ------------------------------
