@@ -67,17 +67,16 @@ setopt HIST_FIND_NO_DUPS
 setopt INC_APPEND_HISTORY
 
 # Man pages colors
-export LESS_TERMCAP_mb=$'\e[0;32m'
-export LESS_TERMCAP_md=$'\e[1;36m'
+export LESS_TERMCAP_mb=$'\e[0;31m'
+export LESS_TERMCAP_md=$'\e[1;35m'
 export LESS_TERMCAP_me=$'\e[0m'
 export LESS_TERMCAP_se=$'\e[0m'
-export LESS_TERMCAP_so=$'\e[01;46;3m'
+export LESS_TERMCAP_so=$'\e[01;45;3m'
 export LESS_TERMCAP_ue=$'\e[0m'
-export LESS_TERMCAP_us=$'\e[0;36m'
+export LESS_TERMCAP_us=$'\e[0;31m'
 
 # Set 256 color terminal and Highlighting
 export TERM=xterm-256color
-source $ZDOTDIR/highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 setopt NO_CASE_GLOB
 
 # Completition
