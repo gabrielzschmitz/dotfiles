@@ -59,7 +59,7 @@
     # width = "350"
     # height = "150"
     origin = "bottom-left"
-    offset = "12x12"
+    offset = "10x10"
     notification_limit = "0"
     
     # Specifies a scale factor for dimensions to adapt notifications to HiDPI screens.
