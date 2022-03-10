@@ -145,7 +145,7 @@
     icon_position = left
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/zeromono/16x16/status/:/usr/share/icons/zeromono/16x16/devices/
+    icon_path = 
 
     # Limit icons size.
     max_icon_size=128
