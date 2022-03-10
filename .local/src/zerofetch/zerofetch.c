@@ -165,7 +165,7 @@ static char *get_os() {
 
     free(line);
     fclose(os_release);
-    snprintf(os, BUF_SIZE, "%s %s", name, uname_info.machine);
+    snprintf(os, BUF_SIZE, "%s", name);
     free(name);
 
     return os;
@@ -680,7 +680,8 @@ int main(int argc, char *argv[]) {
 
         }
     }
-    puts("\e[0m");
+    /* Put a blank line at the end */
+    //puts("\e[0m");
 
     /* Write out our cache data (if we have any). */
     if(!read_cache && *cache_data) {
