@@ -16,18 +16,18 @@
 
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int gappih    = 5;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 5;       /* vert inner gap between windows */
+static const unsigned int snap      = 10;       /* snap pixel */
+static const unsigned int gappih    = 5;        /* horiz inner gap between windows */
+static const unsigned int gappiv    = 5;        /* vert inner gap between windows */
 static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 35;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh            = 32;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
-static const char *fonts[]          = { "FiraCode Nerd Font:size=12:antialias=true:autohint=true" };
+static const char *fonts[]          = { "CaskaydiaCove Nerd Font:size=10:antialias=true:autohint=true" };
 static char normbgcolor[]           = "#080808";
 static char normbordercolor[]       = "#1a1a1a";
 static char normfgcolor[]           = "#e5e5e5";
@@ -57,6 +57,7 @@ static const Rule rules[] = {
 	{ "Zathura", 	 	NULL,       NULL,       0,            1,           -1 },
 	{ "blueman-manager",  	NULL,       NULL,       0,            1,           -1 },
 	{ "cpomosai", 		NULL,       NULL,       0,            1,           -1 },
+	{ "nnn", 		NULL,       NULL,       0,            1,           -1 },
 	{ "packagesupgrade", 	NULL,       NULL,       0,            1,           -1 },
 	{ "weatherreport", 	NULL,       NULL,       0,            0,           -1 },
 };
@@ -103,17 +104,19 @@ static const Layout layouts[] = {
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", NULL };
 /*static const char *flavorsel[] = { "flavorsel", NULL };*/
-static const char *emojicmd[] = { "emojidmenu", NULL };
+static const char *emojicmd[] = { "emojimenu", NULL };
 static const char *chrscmd[] = { "chrs", NULL };
 static const char *termcmd[] = { "st", NULL };
+static const char *layoutmenu_cmd = "layoutmenu.sh";
 static const char *webcmd[] = { "chromium", NULL };
 static const char *filescmd[] = { "pcmanfm", NULL };
+static const char *nnncmd[] = { "nnnfloat", NULL };
 static const char *powermenu[] = { "powermenu", NULL };
 static const char *shotmenu[] = { "shotmenu", NULL };
 static const char *sysinfo[] = { "sysinfo", NULL };
-static const char *bgset[] = { "bgset", NULL };
-static const char *disset[] = { "disset", NULL };
-static const char *disfix[] = { "disfix", NULL };
+static const char *walle[] = { "walle", NULL };
+static const char *dispset[] = { "dispset", NULL };
+static const char *dispfix[] = { "dispfix", NULL };
 static const char *audiocontrolcmd[] = { "pavucontrol", NULL };
 
 #include <X11/XF86keysym.h>
@@ -123,13 +126,14 @@ static Key keys[] = {
 	{ MODKEY,             		XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,             		XK_w, 	   spawn,          {.v = webcmd } },
 	{ MODKEY,             		XK_e, 	   spawn,          {.v = emojicmd } },
-	{ MODKEY|ShiftMask,           	XK_f, 	   spawn,          {.v = filescmd } },
+	{ MODKEY|ShiftMask,           	XK_f, 	   spawn,          {.v = nnncmd } },
+	{ MODKEY|ControlMask,          	XK_f, 	   spawn,          {.v = filescmd } },
 	{ MODKEY|ShiftMask,           	XK_m, 	   spawn,          {.v = audiocontrolcmd } },
 	{ MODKEY,             		XK_0, 	   spawn,          {.v = powermenu } },
-	{ MODKEY|ShiftMask,             XK_w, 	   spawn,          {.v = bgset } },
+	{ MODKEY|ShiftMask,             XK_w, 	   spawn,          {.v = walle } },
 	{ MODKEY|Mod1Mask,              XK_w, 	   spawn,          {.v = chrscmd } },
-	{ MODKEY|ShiftMask,             XK_d, 	   spawn,          {.v = disset } },
-	{ MODKEY|Mod1Mask,              XK_d, 	   spawn,          {.v = disfix } },
+	{ MODKEY|ShiftMask,             XK_d, 	   spawn,          {.v = dispset } },
+	{ MODKEY|Mod1Mask,              XK_d, 	   spawn,          {.v = dispfix } },
 	{ MODKEY,			XK_F2,	   spawn,	   SHCMD("groff -mom $HOME/.local/share/dwm/gzdots.mom -T pdf | zathura -") },
 	{ MODKEY|ShiftMask,		XK_t,	   spawn,	   SHCMD(TERMINAL " -c cpomosai -e cpomosai") },
 	{ MODKEY,             		XK_b, 	   spawn,          {.v = sysinfo } },
@@ -182,10 +186,10 @@ static Key keys[] = {
 	{ MODKEY,			XK_F10,	   spawn,	   SHCMD("mpc volume 0") },
 	{ MODKEY,			XK_F11,	   spawn,	   SHCMD("mpc volume -5") },
 	{ MODKEY,			XK_F12,	   spawn,	   SHCMD("mpc volume +5") },
-	{ 0, XF86XK_AudioPrev,			   spawn,	   SHCMD("mpc prev && covernotify") },
-	{ 0, XF86XK_AudioNext,			   spawn,	   SHCMD("mpc next && covernotify") },
-	{ 0, XF86XK_AudioPlay,			   spawn,	   SHCMD("mpc toggle && covernotify") },
-	{ 0, XF86XK_AudioStop,			   spawn,	   SHCMD("mpc stop && covernotify") },
+	{ 0, XF86XK_AudioPrev,			   spawn,	   SHCMD("mpc prev && disccover") },
+	{ 0, XF86XK_AudioNext,			   spawn,	   SHCMD("mpc next && disccover") },
+	{ 0, XF86XK_AudioPlay,			   spawn,	   SHCMD("mpc toggle && disccover") },
+	{ 0, XF86XK_AudioStop,			   spawn,	   SHCMD("mpc stop && disccover") },
 	{ MODKEY,			XK_F5,	   spawn,	   SHCMD(TERMINAL " -e ncmpcpp") },
 	{ 0, XF86XK_Calculator,			   spawn,	   SHCMD(TERMINAL " -e bc -l") },
 	{ 0, XF86XK_MonBrightnessUp,		   spawn,	   SHCMD("xbacklight -inc 15") },
@@ -215,7 +219,7 @@ static Key keys[] = {
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+	{ ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },

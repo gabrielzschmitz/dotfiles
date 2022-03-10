@@ -16,4 +16,7 @@ dwm-cursorwarp.diff
 dwm-cyclelayouts.diff
 dwm-vanitygaps.diff
 dwm-xrdb.diff
+dwm-layoutmenu.diff
+dwm-resizecorners.diff
+dwm-togglefloatingcenter.diff
 
