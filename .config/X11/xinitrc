@@ -12,21 +12,21 @@
 xrdb $HOME/.config/X11/xresources &
 kblayout &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-keyrate &
-timebasedtimer &
+sundialclk &
 xbanish -i mod4 -i mod1 -i shift -i control &
 mpd &
 dunst &
 pulseaudio &
-#picom --experimental-backends -b &
-blueman-applet &
+# picom --experimental-backends -b &
+# blueman-applet &
 udiskie --file-manager=pcmanfm --terminal=st --notify --no-tray --automount &
-defaultdisplay &
-defaultwallpaper &
-disautolock &
+dfltdisp &
+dfltwall &
+unlocky &
 while xsetroot -name " [`date +%a`] `date +%D` `date +%H:%M%p` "
 do
 	sleep 1
 done &
+while type dwm >/dev/null ; do dwm && continue || break ; done
 exec dwm
 
