@@ -25,7 +25,8 @@ bindkey '^?' backward-delete-char
 autoload edit-command-line; zle -N edit-command-line # Use v-v to edit the command line in nvim
 
 # Prompt
-#zerofetch
+zerofetch
+source $ZDOTDIR/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 PROMPT_EOL_MARK=''
 setopt prompt_subst
 RPROMPT='%F{white}%1~'
@@ -33,19 +34,19 @@ function zvm_after_select_vi_mode() {
   case $ZVM_MODE in
     $ZVM_MODE_NORMAL)
       VICOLORS="white"
-      VIMODE="— "
+      VIMODE="⤚➛ "
       ;;
     $ZVM_MODE_INSERT)
       VICOLORS="white"
-      VIMODE="⟿  "
+      VIMODE="⤜➙ "
       ;;
     $ZVM_MODE_VISUAL)
       VICOLORS="white"
-      VIMODE="⤳ "
+      VIMODE="⤚➻ "
       ;;
     $ZVM_MODE_VISUAL_LINE)
       VICOLORS="white"
-      VIMODE="⤳ "
+      VIMODE="⤚➻ "
       ;;
   esac
   PROMPT='%F{$VICOLORS}$VIMODE%f'
