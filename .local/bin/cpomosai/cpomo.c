@@ -10,6 +10,7 @@
 // INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 // DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
 */
+
 /*Color Palette*/
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */

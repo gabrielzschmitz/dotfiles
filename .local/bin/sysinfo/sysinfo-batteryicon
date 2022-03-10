@@ -1,0 +1,21 @@
+#!/bin/sh
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+
+capacity="$(cat /sys/class/power_supply/BAT?*/capacity 2>/dev/null)"
+[ "$capacity" -le 200 ] && status="  "
+[ "$capacity" -le 80 ] && status="  "
+[ "$capacity" -le 60 ] && status="  "
+[ "$capacity" -le 40 ] && status="  "
+[ "$capacity" -le 20 ] && status="  "
+[ "$capacity" -le 10 ] && warn=" "
+printf "%s" "$status" "$warn"
+

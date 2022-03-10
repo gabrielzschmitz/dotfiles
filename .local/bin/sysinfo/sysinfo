@@ -1,0 +1,63 @@
+#!/bin/sh
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+
+# System informations menu
+
+# Options
+uptime=" $(sysinfo-uptime)"
+internet="$(sysinfo-internet)"
+dates="$(sysinfo-date)"
+memory="$(sysinfo-memory)"
+weather="$(sysinfo-weather)"
+packages="$(sysinfo-packages)"
+disks="$(sysinfo-disks)"
+cpu="$(sysinfo-cpu)"
+battery="$(sysinfo-batteryicon)$(sysinfo-battery)"
+manual="  Rice manual"
+
+# Variables
+options="$uptime\n$internet\n$dates\n$memory\n$weather\n$packages\n$disks\n$cpu\n$battery\n$manual"
+
+# Choices
+chosen="$(echo "$options" | dmenu)"
+case $chosen in
+    "$uptime")
+	    	notify-send -t 2750 " Uptime now:" "$(sysinfo-uptime)"
+	;;
+    "$internet")
+	    	notify-send -t 2750 " Network Manager:" && nmdmenu
+        ;;
+    "$dates")
+	    	notify-send -t 2750 " This month:" "$(sysinfo-calendar)"
+        ;;
+    "$memory")
+	    	notify-send -t 2750 " Most intences in memory:" "$(sysinfo-mostinmemory)"
+        ;;
+    "$weather")
+	    	notify-send -t 2750 " The weather today:" && setsid -f "st" -c weatherreport -e less -Srf "${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport"
+        ;;
+    "$packages")
+	    	notify-send -t 2750 " Installed packages:" "$(sysinfo-packages)" && setsid -f "st" -c packagesupgrade -e sysinfo-packagesupgrade
+        ;;
+    "$disks")
+	    	notify-send -t 2750 " Disks:" "$(lsblk --output NAME,SIZE,TYPE)"
+        ;;
+    "$cpu")
+	    	notify-send -t 2750 " Most intences in CPU:" "$(sysinfo-mostincpu)"
+        ;;
+    "$battery")
+	    	notify-send -t 2750 "$(sysinfo-batteryicon) Battery now is:" "$(sysinfo-battery)"
+        ;;
+    "$manual")
+	    	notify-send -t 2750 " This is your manual to my rice!" && groff -mom $HOME/.local/share/dwm/gzdots.mom -T pdf | zathura -
+esac
+

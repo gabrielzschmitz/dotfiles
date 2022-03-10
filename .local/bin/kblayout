@@ -1,3 +1,4 @@
+#!/bin/sh
 #         .             .              .                  
 #         |             |              |           .      
 # ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
@@ -9,7 +10,6 @@
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
-#!/bin/sh
 # Script to make US with accents keyboard layout the default
 # plus turn on the numlock and speed up the keypresses
 

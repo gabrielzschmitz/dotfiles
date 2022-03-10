@@ -10,8 +10,7 @@
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
-# Script to launch cpomo in the edge and
-# cbonsai in the middle of screen.
+# Script to launch nnn in a floating window
 
-setsid -f 'st' -g 60x28 -c cpomosai -e cbonsai -lt 18 -b 2 && setsid -f 'st' -g 28x3 -c cpomosai -e cpomo
+setsid -f 'st' -c nnnfloat -e nnn -H
 

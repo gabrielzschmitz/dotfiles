@@ -9,7 +9,7 @@
 # GITHUB:https://github.com/gabrielzschmitz		  
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
-#
+
 # Requirements: NetworkManager; Python 3 & Gobject; Dmenu; Dunst.
 # encoding:utf8
 """NetworkManager command line dmenu script.
