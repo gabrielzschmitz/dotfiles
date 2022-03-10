@@ -37,8 +37,3 @@
 *foreground: #b3b3b3
 *background: #080808
 
-! Alpha
-*alpha: 1
-! Font
-*font: FiraCode Nerd Font:size=10.8:antialias=true:autohint=true;
-
