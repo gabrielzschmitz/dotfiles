@@ -17,8 +17,10 @@
 
 #--------------------------- sys --------------------------------
                                                           alias	\
-    ls='lsd --group-dirs first -A'				\
-    l='lsd --group-dirs first -A'				\
+    ls='lsd --group-dirs first -A --no-symlink'			\
+    l='lsd --group-dirs first -A --no-symlink'			\
+    lb='lsd -lA --group-dirs first --no-symlink                 \
+    --blocks permission,name,size,date --date relative'         \
     cnt='lsd --group-dirs first -A | wc -l'			\
     cl='clear'                  			        \
     trrm='trash-put'						\
@@ -31,8 +33,8 @@
     cmatrix='cmatrix -bC cyan'					\
     bat='bat --theme="base16" --style="numbers,changes"'	\
     cat='bat'							\
-    nnn='nnn -H'
-    sshserver='ssh gabrielzschmitz@192.168.0.149'		\
+    nnn='nnn -H'                                                \
+    sshserver='ssh gabrielzschmitz@192.168.0.105'          	\
 
 #--------------------------- cfg ------------------------------
                                                           alias \
@@ -81,6 +83,7 @@
     gg='cd $HOME/gg'						\
     next='cd $HOME/next'					\
     draw='cd $HOME/next/draw; clear && ls'	                \
+    dev='cd $HOME/next/dev; clear && ls'	                \
     site='cd $HOME/next/site/gabrielzschmitz.xyz; clear && ls'	\
     scr='cd $HOME/.local/bin; clear && ls'			\
     src='cd $HOME/.local/src; clear && ls'			\
@@ -88,7 +91,9 @@
     zerost='cd $HOME/.local/src/zerost; clear && ls'		\
     zerodmenu='cd $HOME/.local/src/zerodmenu; clear && ls'	\
     zeroslock='cd $HOME/.local/src/zeroslock; clear && ls'	\
+    zeroxmenu='cd $HOME/.local/src/zeroxmenu; clear && ls'	\
     zeronnn='cd $HOME/.local/src/zeronnn; clear && ls'		\
+    zerosurf='cd $HOME/.local/src/zerosurf; clear && ls'	\
     zeroherbe='cd $HOME/.local/src/zeroherbe; clear && ls'	\
     cdzerofetch='cd $HOME/.local/src/zerofetch; clear && ls'	\
 
