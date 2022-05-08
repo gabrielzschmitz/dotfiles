@@ -20,14 +20,14 @@ TIME=$(date +%H)
 case "$TIME" in
         # light from 7AM to 6PM
 	07|08|09|10|11|12|13|14|15|16|17|18)
-                sed -i 's/dark/light/g' ~/.local/bin/defaultwallpaper
+                sed -i 's/dark/light/g' ~/.local/bin/dfltwall
 		;;
         # dark from 7PM to 6AM
 	00|01|02|03|04|05|06|19|20|21|22|23)
-                sed -i 's/light/dark/g' ~/.local/bin/defaultwallpaper
+                sed -i 's/light/dark/g' ~/.local/bin/dfltwall
 		;;
 esac
 
 # Changing wallpaper
-defaultwallpaper
+dfltwall
 

@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+#         .             .              .		  
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+
+cat << "EOF"
+
+	#############################################################
+	##         .             .              .                  ##
+	##         |             |              |           .      ##
+	## ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, ##
+	## | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  ##
+	## `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' ##
+	##  ,|                                                     ##
+	##  `'                                                     ##
+	#############################################################
+	#############################################################
+	##                                                         ##
+	##              Packages installation start:              ##
+	##                                                         ##
+	#############################################################
+EOF
+
+paru -S btop \
+bat \
+bc \
+blueman \
+bluez \
+bluez-openrc \
+bluez-utils \
+cbonsai \
+celluloid \
+devour \
+doasedit \
+dosfstools \
+dunst \
+elogind-openrc \
+etcher-bin \
+gcolor3 \
+git \
+hugo \
+imlib2 \
+inkscape \
+lf \
+libtool \
+libxft-bgra \
+libxinerama \
+linux-firmware \
+linux-headers \
+linux \
+lsd \
+lxappearance-gtk3 \
+man-db \
+man-pages \
+mpc \
+mpd \
+mpv \
+ncmpcpp \
+neovim \
+networkmanager \
+networkmanager-openrc \
+nextcloud-client \
+nodejs \
+npm \
+numlockx \
+obs-studio \
+olive \
+onlyoffice-bin \
+opendoas \
+pamixer \
+paru \
+pavucontrol \
+pcmanfm-gtk3 \
+picom-jonaburg-git \
+polkit-gnome \
+puddletag \
+pulseaudio \
+pulseaudio-bluetooth \
+python-gobject \
+python-pygments \
+screenkey \
+scrot \
+signal-desktop \
+sxiv \
+udiskie \
+udisks2 \
+ungoogled-chromium \
+xautolock \
+xbanish \
+xclip \
+xdotool \
+xdg-user-dirs \
+xorg-xbacklight \
+xorg-xinit \
+xwallpaper \
+yarn \
+youtube-dl \
+zathura \
+zathura-cb \
+zathura-djvu \
+zathura-pdf-mupdf \
+zathura-ps \
+zsh\

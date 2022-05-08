@@ -12,4 +12,5 @@
 
 xrandr --output LVDS1 --auto --rotate normal --output VGA1 --off --output HDMI1 --off
 dfltdisp
+sundial
 dfltwall
