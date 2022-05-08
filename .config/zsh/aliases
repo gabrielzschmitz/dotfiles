@@ -26,6 +26,7 @@
     trrm='trash-put'						\
     pk='pkill'							\
     nv='nvim'							\
+    vi='nvim'							\
     mkins='doas make clean install'				\
     patcha='patch -p1 <'					\
     du='du --human-readable'					\
@@ -34,7 +35,7 @@
     bat='bat --theme="base16" --style="numbers,changes"'	\
     cat='bat'							\
     nnn='nnn -H'                                                \
-    sshserver='ssh gabrielzschmitz@192.168.0.105'          	\
+    sshserver='ssh gabrielzschmitz@192.168.0.107'          	\
 
 #--------------------------- cfg ------------------------------
                                                           alias \
@@ -87,6 +88,8 @@
     site='cd $HOME/next/site/gabrielzschmitz.xyz; clear && ls'	\
     scr='cd $HOME/.local/bin; clear && ls'			\
     src='cd $HOME/.local/src; clear && ls'			\
+    biblio='cd doc/UTFPR/biblio'                                \
+    work='cd doc/UTFPR/work'                                    \
     zerodwm='cd $HOME/.local/src/zerodwm; clear && ls'		\
     zerost='cd $HOME/.local/src/zerost; clear && ls'		\
     zerodmenu='cd $HOME/.local/src/zerodmenu; clear && ls'	\
