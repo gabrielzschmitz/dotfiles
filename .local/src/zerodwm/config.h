@@ -1,14 +1,14 @@
 /*
-//         .             .              .		  
-//         |             |              |           .	  
-// ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
-// | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
-// `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
-//  ,|							  
-//  `'							  
-// GITHUB:https://github.com/gabrielzschmitz		  
-// INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
-// DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
+//         .             .              .		    
+//         |             |              |           .	    
+// ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_,  
+// | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /   
+// `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"'  
+//  ,|							    
+//  `'							    
+// GITHUB:https://github.com/gabrielzschmitz		    
+// INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/    
+// DOTFILES:https://github.com/gabrielzschmitz/dotfiles/    
 */
 /* See LICENSE file for copyright and license details. */
 #define TERMINAL "st"
@@ -57,7 +57,6 @@ static const Rule rules[] = {
 	{ "Zathura", 	 	NULL,       NULL,       0,            1,           -1 },
 	{ "blueman-manager",  	NULL,       NULL,       0,            1,           -1 },
 	{ "cpomosai", 		NULL,       NULL,       0,            1,           -1 },
-	{ "nnn", 		NULL,       NULL,       0,            1,           -1 },
 	{ "packagesupgrade", 	NULL,       NULL,       0,            1,           -1 },
 	{ "weatherreport", 	NULL,       NULL,       0,            0,           -1 },
 };
@@ -110,7 +109,6 @@ static const char *termcmd[] = { "st", NULL };
 static const char *layoutmenu_cmd = "layoutmenu.sh";
 static const char *webcmd[] = { "chromium", NULL };
 static const char *filescmd[] = { "pcmanfm", NULL };
-static const char *nnncmd[] = { "nnnfloat", NULL };
 static const char *powermenu[] = { "powermenu", NULL };
 static const char *shotmenu[] = { "shotmenu", NULL };
 static const char *sysinfo[] = { "sysinfo", NULL };
@@ -126,8 +124,7 @@ static Key keys[] = {
 	{ MODKEY,             		XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,             		XK_w, 	   spawn,          {.v = webcmd } },
 	{ MODKEY,             		XK_e, 	   spawn,          {.v = emojicmd } },
-	{ MODKEY|ShiftMask,           	XK_f, 	   spawn,          {.v = nnncmd } },
-	{ MODKEY|ControlMask,          	XK_f, 	   spawn,          {.v = filescmd } },
+	{ MODKEY|ShiftMask,          	XK_f, 	   spawn,          {.v = filescmd } },
 	{ MODKEY|ShiftMask,           	XK_m, 	   spawn,          {.v = audiocontrolcmd } },
 	{ MODKEY,             		XK_0, 	   spawn,          {.v = powermenu } },
 	{ MODKEY|ShiftMask,             XK_w, 	   spawn,          {.v = walle } },
