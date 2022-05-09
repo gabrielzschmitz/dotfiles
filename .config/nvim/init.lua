@@ -18,13 +18,14 @@ require('packer').startup(function()
     use 'itchyny/lightline.vim'             -- lightline
     use 'nvim-treesitter/nvim-treesitter'   -- treesitter
     use 'norcalli/nvim-colorizer.lua'       -- colorizer
-    use 'neovim/nvim-lspconfig'             -- lsp config
     use 'williamboman/nvim-lsp-installer'   -- lsp installer
+    use 'neovim/nvim-lspconfig'             -- lsp config
     use 'hrsh7th/cmp-nvim-lsp'              -- lsp completion
     use 'hrsh7th/cmp-buffer'                -- lsp completion
     use 'hrsh7th/cmp-path'                  -- lsp completion
     use 'hrsh7th/cmp-cmdline'               -- lsp completion
     use 'hrsh7th/nvim-cmp'                  -- lsp completion
+    use 'windwp/nvim-autopairs'             -- autopair
 end)
 
 -- Visual
@@ -35,21 +36,23 @@ vim.cmd [[set termguicolors]]                           -- make nvim 256 colors
 require'colorizer'.setup()                              -- enable colorizer
 
 -- General
-vim.cmd [[set noswapfile]]      -- don't keep swap files
-vim.o.clipboard = "unnamedplus" -- make nvim use system clipboard
-vim.cmd [[set mouse=a]]         -- use mouse
-vim.wo.number = true            -- active numbers
-vim.wo.relativenumber = true    -- relative numbers
-vim.wo.cursorline = true        -- colorized cursorline
-vim.wo.wrap = true              -- wrap lines
-vim.o.hidden = true             -- set hidden buffers
-vim.bo.autoindent = true        -- auto indent
-vim.o.ignorecase = true         -- case insensitive
-vim.o.smartcase = true          -- smart case insensitive
-vim.o.smarttab = true           -- smart tabs
-vim.bo.expandtab = true         -- set 4 spaces for tab
-vim.bo.shiftwidth = 4
-vim.bo.softtabstop = 4
+vim.opt.swapfile = false            -- don't keep swap files
+vim.opt.clipboard = "unnamedplus"   -- make nvim use system clipboard
+vim.opt.mouse = "a"                 -- use mouse
+vim.opt.number = true               -- active numbers
+vim.opt.relativenumber = true       -- relative numbers
+vim.opt.cursorline = true           -- colorized cursorline
+vim.opt.wrap = true                 -- wrap lines
+vim.opt.updatetime = 300            -- make updates faster
+vim.opt.hidden = true               -- set hidden buffers
+vim.opt.autoindent = true           -- auto indent
+vim.opt.smartindent = true          -- smart indenting
+vim.opt.ignorecase = true           -- case insensitive
+vim.opt.smartcase = true            -- smart case insensitive
+vim.opt.smarttab = true             -- smart tabs
+vim.opt.expandtab = true            -- set 4 spaces for tab
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
 
 -- Treesitter
 local configs = require'nvim-treesitter.configs'
@@ -64,9 +67,12 @@ configs.setup {
     }
 }
 
--- Keybinds
-require('keybinds') -- call keybinds
+-- Autopairs
+require('nvim-autopairs').setup{}
 
--- LSP Server
-require('lsp')      -- call lsp configuration
+-- Keybinds
+require('user.keybinds') -- call keybinds
+
+-- LSP Completion
+require('user.lsp')
 
