@@ -52,6 +52,7 @@
     musicconf='nvim $HOME/.config/ncmpcpp/config'		\
     nvimconf='nvim $HOME/.config/nvim/'				\
     zathurarc='nvim $HOME/.config/zathura/zathurarc'		\
+    yarn='yarn --use-yarnrc $XDG_CONFIG_HOME/yarn/config'       \
 
 #--------------------------- git --------------------------------
                                                           alias \
