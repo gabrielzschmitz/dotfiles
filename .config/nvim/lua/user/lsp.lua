@@ -1,13 +1,13 @@
---         .             .              .                  
---         |             |              |           .      
--- ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
--- | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
--- `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
---  ,|                                                     
---  `'                                                     
--- GITHUB:https://github.com/gabrielzschmitz               
--- INSTAGRAM:https://www.instagram.com/gabrielzschmitzzz/  
--- DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+--         .             .              .
+--         |             |              |           .
+-- ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_,
+-- | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /
+-- `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"'
+--  ,|
+--  `'
+-- GITHUB:https://github.com/gabrielzschmitz
+-- INSTAGRAM:https://www.instagram.com/gabrielzschmitzzz
+-- DOTFILES:https://github.com/gabrielzschmitz/dotfiles
 --
 -- $HOME/.config/nvim/lsp.lua
 --

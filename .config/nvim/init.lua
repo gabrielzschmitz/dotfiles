@@ -1,13 +1,13 @@
---         .             .              .                  
---         |             |              |           .      
--- ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
--- | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
--- `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
---  ,|                                                     
---  `'                                                     
--- GITHUB:https://github.com/gabrielzschmitz               
--- INSTAGRAM:https://www.instagram.com/gabrielzschmitzzz/  
--- DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+--         .             .              .
+--         |             |              |           .
+-- ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_,
+-- | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /
+-- `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"'
+--  ,|
+--  `'
+-- GITHUB:https://github.com/gabrielzschmitz
+-- INSTAGRAM:https://www.instagram.com/gabrielzschmitzzz
+-- DOTFILES:https://github.com/gabrielzschmitz/dotfiles
 --
 -- $HOME/.config/nvim/init.lua
 --
@@ -26,6 +26,7 @@ require('packer').startup(function()
     use 'hrsh7th/cmp-cmdline'               -- lsp completion
     use 'hrsh7th/nvim-cmp'                  -- lsp completion
     use 'windwp/nvim-autopairs'             -- autopair
+    use 'mg979/vim-visual-multi'            -- multi cursors
 end)
 
 -- Visual
