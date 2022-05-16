@@ -108,7 +108,6 @@ end
 ---@param value string
 ---@return nil
 function utils.set_or_create_color(colors, key, value)
-    -- Patch: https://github.com/ful1e5/onedark.nvim/issues/6
     if value:lower() == "none" then
         colors[key] = "NONE"
     elseif string.sub(value, 1, 1) == "#" then

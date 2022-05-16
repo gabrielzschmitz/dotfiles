@@ -5,11 +5,14 @@ M.config = {
     -- This enables the Neovim background to set either zerodark or zerolight 
     dark_theme = "zerodark", -- The default dark theme
     light_theme = "zerolight", -- The default light theme
+    vivid_theme = "zerodark_vivid", -- The default vivid theme
     theme = function()
         if vim.o.background == "dark" then
             return M.config.dark_theme
-        else
+        elseif vim.o.background == "light" then
             return M.config.light_theme
+        else
+            return M.config.vivid_theme
         end
     end,
     colors = {}, -- Override default colors

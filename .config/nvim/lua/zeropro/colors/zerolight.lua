@@ -8,7 +8,7 @@ function M.load(config)
         name = "zerolight",
 
         bg = "#fafafa",
-        fg = "#212121",
+        fg = "#141414",
         red = "#7b4d80",
         orange = "#b39568",
         yellow = "#8c6a87",
@@ -17,8 +17,8 @@ function M.load(config)
         blue = "#38578c",
         purple = "#634580",
         white = "#808080",
-        black = "#212121",
-        gray = "#808080",
+        black = "#141414",
+        gray = "#4d4d4d",
         highlight = "#2e2e2e",
         none = "NONE",
     }

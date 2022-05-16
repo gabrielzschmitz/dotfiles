@@ -30,7 +30,8 @@ require('packer').startup(function()
 end)
 
 -- Visual
-require('zeropro').load()                               -- colorscheme
+vim.o.background = "dark"                               -- select colorscheme version (leave it empty to set vivid dark)
+require('zeropro').load()                               -- colorscheme setup
 vim.cmd [[let g:lightline = { 'colorscheme': 'zero' }]] -- lightline colorscheme
 vim.cmd [[set noshowmode]]                              -- no --INSERT--
 vim.cmd [[set termguicolors]]                           -- make nvim 256 colors
