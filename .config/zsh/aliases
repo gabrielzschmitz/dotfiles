@@ -35,7 +35,7 @@
     bat='bat --theme="base16" --style="numbers,changes"'	\
     cat='bat'							\
     nnn='nnn -H'                                                \
-    sshserver='ssh gabrielzschmitz@192.168.0.107'          	\
+    sshserver='ssh gabrielzschmitz@192.168.0.109'          	\
 
 #--------------------------- cfg ------------------------------
                                                           alias \
@@ -89,8 +89,8 @@
     site='cd $HOME/next/site/gabrielzschmitz.xyz; clear && ls'	\
     scr='cd $HOME/.local/bin; clear && ls'			\
     src='cd $HOME/.local/src; clear && ls'			\
-    biblio='cd doc/UTFPR/biblio'                                \
-    work='cd $HOME/doc/UTFPR/work'                              \
+    biblio='cd $HOME/next/work/UTFPR/biblio'                    \
+    work='cd $HOME/next/work/UTFPR/work'                        \
     zerodwm='cd $HOME/.local/src/zerodwm; clear && ls'		\
     zerost='cd $HOME/.local/src/zerost; clear && ls'		\
     zerodmenu='cd $HOME/.local/src/zerodmenu; clear && ls'	\
@@ -106,7 +106,6 @@
     pacman='doas pacman --color=always'				\
     pcm='pacman'						\
     paru='paru --color always --skipreview'			\
-                                                         	\
     u='doas pacman -Syu'                                 	\
     p='doas pacman -S'                                   	\
     a='paru -S'                                          	\
