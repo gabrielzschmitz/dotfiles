@@ -14,6 +14,7 @@
 # plus turn on the numlock and speed up the keypresses
 
 setxkbmap us alt-intl
+# setxkbmap br
 numlockx on
 xset r rate 300 50
 

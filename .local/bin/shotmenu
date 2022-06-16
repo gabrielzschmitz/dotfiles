@@ -28,25 +28,39 @@ options="$extmon\n$lapmon\n$allmon\n$selarea\n$extmontimer\n$lapmontimer\n$allmo
 chosen="$(printf "$options" | dmenu)"
 case $chosen in
     "$extmon")
-		notify-send -t 1500 "  Taking the screenshot..." && sleep 1.6 && scrot ~/pic/extmon-$(date +%H:%M:%S).png --autoselect 0,0,1440,900 --quality 100 --freeze
+		notify-send -t 1500 "  Taking the screenshot..." && sleep 1.5 &&\
+                pic="$HOME/pic/extmon-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect 0,0,1440,900 --quality 100 --freeze &&\
+                xclip -t image/png $pic -selection clipboard && notify-send -t 1500 -i $pic "  Screnshot taken:"
         ;;
     "$lapmon")
-		notify-send -t 1500 "  Taking the screenshot..." && sleep 1.6 && scrot ~/pic/lapmon-$(date +%H:%M:%S).png --autoselect 1440,0,1366,768 --quality 100 --freeze
+		notify-send -t 1500 "  Taking the screenshot..." && sleep 1.5 &&\
+                pic="$HOME/pic/lapmon-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect 1440,0,1366,768 --quality 100 --freeze &&\
+                xclip -t image/png $pic -selection clipboard && notify-send -t 1500 -i $pic "  Screnshot taken:"
 	;;
     "$allmon")
-		notify-send -t 1500 "  Taking the screenshot..." && sleep 1.6 && scrot ~/pic/allmon-$(date +%H:%M:%S).png --quality 100 --freeze
+		notify-send -t 1500 "  Taking the screenshot..." && sleep 1.5 &&\
+                pic="$HOME/pic/allmon-$(date +%H:%M:%S).png" && scrot "$pic" --quality 100 --freeze &&\
+                xclip -t image/png $pic -selection clipboard && notify-send -t 1500 -i $pic "  Screnshot taken:"
         ;;
     "$selarea")
-		notify-send -t 1500 "麗  Select the area..." && sleep 1.5 && scrot ~/pic/selarea-$(date +%H:%M:%S).png --quality 100 --select --freeze
+		notify-send -t 1500 "麗 Select the area..." && sleep 1.5 &&\
+                pic="$HOME/pic/selarea-$(date +%H:%M:%S).png" && scrot "$pic" --select --quality 100 --freeze &&\
+                xclip -t image/png $pic -selection clipboard && notify-send -t 1500 -i $pic "  Screnshot taken:"
         ;;
     "$extmontimer")
-		notify-send -t 1000 "  Taking the screenshot in 10s..." ; scrot ~/pic/extmontimer-$(date +%H:%M:%S).png --autoselect 0,0,1440,900 --quality 100 --delay 10 --freeze --count && notify-send -t 1500 "  Screenshot taked..."
+		notify-send -t 1000 "  Taking the screenshot in 10s..." &&\
+                pic="$HOME/pic/extmontimer-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect 0,0,1440,900 --quality 100 --delay 10 --freeze &&\
+                xclip -t image/png $pic -selection clipboard && notify-send -t 1500 -i $pic "  Screnshot taken:"
         ;;
     "$lapmontimer")
-		notify-send -t 1500 "  Taking the screenshot in 10s..." && scrot ~/pic/lapmontimer-$(date +%H:%M:%S).png --autoselect 1440,0,1366,768 --quality 100 --delay 10 --freeze --count && notify-send -t 1500 "  Screenshot taked..."
+		notify-send -t 1500 "  Taking the screenshot in 10s..." &&\
+                pic="$HOME/pic/lapmontimer-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect 1440,0,1366,768 --quality 100 --delay 10 --freeze &&\
+                xclip -t image/png $pic -selection clipboard && notify-send -t 1500 -i $pic "  Screnshot taken:"
         ;;
     "$allmontimer")
-		notify-send -t 1500 "  Taking the screenshot in 10s..." && scrot ~/pic/allmontimer-$(date +%H:%M:%S).png --quality 100 --delay 10 --freeze --count && notify-send -t 1500 "  Screenshot taked..."
+		notify-send -t 1500 "  Taking the screenshot in 10s..." &&\
+                pic="$HOME/pic/allmontimer-$(date +%H:%M:%S).png" && scrot "$pic" --quality 100 --delay 10 --freeze &&\
+                xclip -t image/png $pic -selection clipboard && notify-send -t 1500 -i $pic "  Screnshot taken:"
         ;;
 esac
 
