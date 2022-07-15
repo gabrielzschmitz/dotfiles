@@ -25,7 +25,7 @@ bindkey '^?' backward-delete-char
 autoload edit-command-line; zle -N edit-command-line # Use v-v to edit the command line in nvim
 
 # Prompt
-zerofetch
+cfetch
 source $ZDOTDIR/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 PROMPT_EOL_MARK=''
 setopt prompt_subst
