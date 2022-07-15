@@ -1,0 +1,147 @@
+.TH sfm 1 sfm\-VERSION
+.SH NAME
+sfm \- simple file manager
+.SH SYNOPSIS
+.B sfm
+.RB [ \-v ]
+.SH DESCRIPTION
+sfm is a simple file manager for unix-like systems based on termbox.
+dual panes, bottom statusbar, bookmarks, open files by extention, vim-like key bindings as default configuration. cwd is left pane dir.
+.P
+.SH OPTIONS
+.TP
+.B \-v
+print version.
+.SH USAGE
+.SS Normal Mode
+.TP
+.B q
+quit
+.TP
+.B h
+back
+.TP
+.B j
+down
+.TP
+.B k
+up
+.TP
+.B l
+open dir | file
+.TP
+.B g
+top
+.TP
+.B G
+bottom
+.TP
+.B ctrl+u
+scroll up
+.TP
+.B ctrl+d
+scroll down
+.TP
+.B n
+create new file if not exists
+.TP
+.B N
+create new directory if not exists
+.TP
+.B d
+delete file | directory recursively
+.TP
+.B D
+duplicate file | directory recursively
+.TP
+.B y
+yank
+.TP
+.B p
+paste
+.TP
+.B P
+move
+.TP
+.B b
+spawn a shell in the current directory
+.TP
+.B c
+start change
+.TP
+.B cw
+rename
+.TP
+.B co
+change owner and group (chown)
+.TP
+.B cm
+change mode (chmod)
+.TP
+.B cf
+change flags (chflags | chattr)
+.TP
+.B cc
+exit change
+.TP
+.B cq
+exit change
+.TP
+.B .
+toggle dotfiles
+.TP
+.B v
+start visual mode
+.TP
+.B /
+start filter
+.TP
+.B ENTER
+find filter
+.TP
+.B ESC
+exit filter
+.TP
+.B SPACE
+switch pane
+.TP
+.B ctrl+r
+refresh panes
+.SS Visual Mode
+.TP
+.B j
+select down
+.TP
+.B k
+select up
+.TP
+.B d
+delete selection
+.TP
+.B v
+exit visual mode
+.TP
+.B q
+exit visual mode
+.TP
+.B ESC
+exit visual mode | change
+.SH CUSTOMIZATION
+sfm is customized by creating a custom
+.IR config.h
+and (re)compiling the source
+code. This keeps it fast, secure and simple.
+.SH ENVIRONMENT
+.TP
+.B EDITOR
+open unconfigured file extention. vi(1) if not set.
+.TP
+.B HOME
+right pane default directory. / if not set.
+.TP
+.B SHELL
+shell spawned with the 'b' key. /bin/sh if not set.
+.SH AUTHORS
+See the LICENSE file for the authors.
+.SH LICENSE
+See the LICENSE file for the terms of redistribution.
