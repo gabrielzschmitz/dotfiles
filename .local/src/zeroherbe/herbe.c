@@ -206,8 +206,6 @@ int main(int argc, char *argv[])
 	Visual *visual = DefaultVisual(display, screen);
 	Colormap colormap = DefaultColormap(display, screen);
 
-	int screen_x = 0;
-	int screen_y = 0;
 	int screen_width = DisplayWidth(display, screen);
 	int screen_height = DisplayHeight(display, screen);
 	if(use_primary_monitor) {
@@ -215,8 +213,6 @@ int main(int argc, char *argv[])
 		XRRMonitorInfo* info = XRRGetMonitors(display, RootWindow(display, screen), 1, &nMonitors);
 		for(int i = 0; i < nMonitors; i++) {
 			if(info[i].primary) {
-				screen_x = info[i].x;
-				screen_y = info[i].y;
 				screen_width = info[i].width;
 				screen_height = info[i].height;
 			}
@@ -231,14 +227,14 @@ int main(int argc, char *argv[])
 	XftColorAllocName(display, visual, colormap, border_color, &color);
 	attributes.border_pixel = color.pixel;
 
+	XftFont *font = XftFontOpenName(display, screen, font_pattern);
+
 	int num_of_lines = 0;
 	int max_text_width = width - 2 * padding;
 	int lines_size = 5;
 	char **lines = malloc(lines_size * sizeof(char *));
 	if (!lines)
 		die("malloc failed");
-
-	XftFont *font = XftFontOpenName(display, screen, font_pattern);
 
 	for (int i = 1; i < argc; i++)
 	{
@@ -300,9 +296,17 @@ int main(int argc, char *argv[])
 		if (event.type == Expose)
 		{
 			XClearWindow(display, window);
-			for (int i = 0; i < num_of_lines; i++)
-				XftDrawStringUtf8(draw, &color, font, padding, line_spacing * i + text_height * (i + 1) + padding,
-								  (FcChar8 *)lines[i], strlen(lines[i]));
+			for (int i = 0; i < num_of_lines; i++){
+				int len = strlen(lines[i]);
+			{
+				XGlyphInfo info;
+
+				XftTextExtentsUtf8(display, font, (XftChar8 *)lines[i], len, &info);
+				XftDrawStringUtf8(draw, &color, font, (width - info.width) / 2,
+				                  line_spacing * i + text_height * (i + 1) + padding,
+				                  (FcChar8 *)lines[i], len);
+			}
+			}
 		}
 		else if (event.type == ButtonPress)
 		{
@@ -330,3 +334,4 @@ int main(int argc, char *argv[])
 
 	return exit_code;
 }
+

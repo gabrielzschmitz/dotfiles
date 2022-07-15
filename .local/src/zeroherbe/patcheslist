@@ -6,10 +6,11 @@
 #  ,|							  
 #  `'							  
 # GITHUB:https://github.com/gabrielzschmitz		  
-# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# INSTAGRAM:https://www.instagram.com/gabrielzschmitz_/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
-commandlineoptions.diff
-primarydisplay.diff
-verticalstacking.diff
+commandline-options.diff
+primary-display.diff
+vertical-stacking.diff
 xresources.diff
+centered-text.diff
 

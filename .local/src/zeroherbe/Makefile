@@ -22,6 +22,7 @@ herbe: herbe.c herbe.h config.h
 install: herbe
 	mkdir -p ${DESTDIR}${PREFIX}/bin
 	cp -f herbe ${DESTDIR}${PREFIX}/bin
+	cp -f notify-send ${DESTDIR}${PREFIX}/bin
 
 uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/herbe
