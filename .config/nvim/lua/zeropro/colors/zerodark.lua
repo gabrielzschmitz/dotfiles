@@ -15,7 +15,7 @@ function M.load(config)
         green = "#375759",
         cyan = "#324f66",
         blue = "#3f5273",
-        purple = "#564666",
+        purple = "#543f66",
         white = "#b3b3b3",
         black = "#080808",
         gray = "#b3b3b3",
@@ -27,7 +27,7 @@ function M.load(config)
     utils.color_overrides(colors, config)
 
     -- Additional colors
-    colors.cursorline = colors.cursorline or utils.lighten(colors.bg, 0.97)
+    colors.cursorline = colors.cursorline or utils.lighten(colors.bg, 0.94)
     colors.color_column = colors.color_column or utils.lighten(colors.bg, 0.97)
     colors.comment = colors.comment or utils.lighten(colors.gray, 0.80)
     colors.indentline = colors.indentline or utils.lighten(colors.bg, 0.93)
@@ -38,7 +38,7 @@ function M.load(config)
 
     -- Git diff
     colors.diff_add = colors.diff_add or "#324f66"
-    colors.diff_delete = colors.diff_delete or "#564666"
+    colors.diff_delete = colors.diff_delete or "#543f66"
     colors.diff_text = colors.diff_text or "#324f66"
 
     -- Lualine colors
