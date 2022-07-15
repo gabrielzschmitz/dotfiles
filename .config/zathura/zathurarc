@@ -22,7 +22,7 @@ map p print
 map i recolor
 set selection-clipboard clipboard
 
-set font "FiraCode Nerd Font 10"
+set font "CaskaydiaCove Nerd Font 10"
 set recolor
 set recolor-lightcolor \#080808
 set recolor-darkcolor \#b3b3b3
