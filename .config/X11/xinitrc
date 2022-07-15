@@ -12,21 +12,15 @@
 xrdb $HOME/.config/X11/xresources &
 kblayout &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-sundialclk &
 xbanish -i mod4 -i mod1 -i shift -i control &
 mpd &
-dunst &
 pulseaudio &
 picom --experimental-backends -b &
-# blueman-applet &
 udiskie --file-manager=pcmanfm --terminal=st --notify --no-tray --automount &
 dfltdisp &
-dfltwall &
+sundialclk &
 unlocky &
-while xsetroot -name " [`date +%a`] `date +%D` `date +%H:%M%p` "
-do
-	sleep 1
-done &
+zerobar &
+mpv --no-vid --volume=75 /home/gabrielzschmitz/doc/startupsound.wav &
 while type dwm >/dev/null ; do dwm && continue || break ; done
-exec dwm
 
