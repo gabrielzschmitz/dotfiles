@@ -21,7 +21,7 @@ static const char *fonts[] = {
 	"CaskaydiaCove Nerd Font:size=10:antialias=true:autohint=true"
 };
 
-static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
+static const char *prompt      = " ";      /* -p  option; prompt to the left of input field */
 static const char *colors[SchemeLast][2] = {
         /*                            fg         bg    */
 	[SchemeNorm] =          { "#b3b3b3", "#080808" },
