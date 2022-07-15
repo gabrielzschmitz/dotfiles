@@ -7,6 +7,8 @@
 
 #include "st.h"
 
+#define FEATURE(c1,c2,c3,c4) { .tag = HB_TAG(c1,c2,c3,c4), .value = 1, .start = HB_FEATURE_GLOBAL_START, .end = HB_FEATURE_GLOBAL_END }
+
 void hbtransformsegment(XftFont *xfont, const Glyph *string, hb_codepoint_t *codepoints, int start, int length);
 hb_font_t *hbfindfont(XftFont *match);
 
@@ -17,6 +19,12 @@ typedef struct {
 
 static int hbfontslen = 0;
 static HbFontMatch *hbfontcache = NULL;
+
+/*
+ * Replace 0 with a list of font features, wrapped in FEATURE macro, e.g.
+ * FEATURE('c', 'a', 'l', 't'), FEATURE('d', 'l', 'i', 'g')
+ */
+hb_feature_t features[] = { 0 };
 
 void
 hbunloadfonts()
@@ -59,7 +67,7 @@ void
 hbtransform(XftGlyphFontSpec *specs, const Glyph *glyphs, size_t len, int x, int y)
 {
 	int start = 0, length = 1, gstart = 0;
-	hb_codepoint_t *codepoints = calloc(len, sizeof(hb_codepoint_t));
+	hb_codepoint_t *codepoints = calloc((unsigned int)len, sizeof(hb_codepoint_t));
 
 	for (int idx = 1, specidx = 1; idx < len; idx++) {
 		if (glyphs[idx].mode & ATTR_WDUMMY) {
@@ -88,10 +96,6 @@ hbtransform(XftGlyphFontSpec *specs, const Glyph *glyphs, size_t len, int x, int
 	for (int i = 0, specidx = 0; i < len; i++) {
 		if (glyphs[i].mode & ATTR_WDUMMY)
 			continue;
-		if (glyphs[i].mode & ATTR_BOXDRAW) {
-			specidx++;
-			continue;
-		}
 
 		if (codepoints[i] != specs[specidx].glyph)
 			((Glyph *)glyphs)[i].mode |= ATTR_LIGA;
@@ -124,7 +128,7 @@ hbtransformsegment(XftFont *xfont, const Glyph *string, hb_codepoint_t *codepoin
 	}
 
 	/* Shape the segment. */
-	hb_shape(font, buffer, NULL, 0);
+	hb_shape(font, buffer, features, sizeof(features));
 
 	/* Get new glyph info. */
 	hb_glyph_info_t *info = hb_buffer_get_glyph_infos(buffer, NULL);
