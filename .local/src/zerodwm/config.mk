@@ -1,15 +1,5 @@
-#         .             .              .		  
-#         |             |              |           .	  
-# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
-# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
-# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
-#  ,|							  
-#  `'							  
-# GITHUB:https://github.com/gabrielzschmitz		  
-# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
-# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 # dwm version
-VERSION = 6.2
+VERSION = 6.3
 
 # Customize below to fit your system
 
@@ -29,6 +19,7 @@ FREETYPELIBS = -lfontconfig -lXft
 FREETYPEINC = /usr/include/freetype2
 # OpenBSD (uncomment)
 #FREETYPEINC = ${X11INC}/freetype2
+#MANPREFIX = ${PREFIX}/man
 
 # includes and libs
 INCS = -I${X11INC} -I${FREETYPEINC}

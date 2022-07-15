@@ -6,17 +6,18 @@
 #  ,|							  
 #  `'							  
 # GITHUB:https://github.com/gabrielzschmitz		  
-# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# INSTAGRAM:https://www.instagram.com/gabrielzschmitz_/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 dwm-actualfullscreen.diff
 dwm-alwayscenter.diff
-dwm-bar-height.diff
-dwm-barpadding.diff
+dwm-bar-height-spacing.diff
 dwm-cursorwarp.diff
-dwm-cyclelayouts.diff
-dwm-vanitygaps.diff
-dwm-xrdb.diff
+dwm-hide_vacant_tags.diff
+dwm-holdbar-modkey-pertag-nobar.diff
 dwm-layoutmenu.diff
 dwm-resizecorners.diff
-dwm-togglefloatingcenter.diff
+dwm-status2d.diff
+dwm-statusallmons.diff
+dwm-underlinetags.diff
+dwm-vanitygaps.diff
 

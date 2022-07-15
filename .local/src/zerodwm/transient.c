@@ -1,15 +1,3 @@
-/*
-//         .             .              .		  
-//         |             |              |           .	  
-// ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
-// | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
-// `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
-//  ,|							  
-//  `'							  
-// GITHUB:https://github.com/gabrielzschmitz		  
-// INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
-// DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
-*/
 /* cc transient.c -o transient -lX11 */
 
 #include <stdlib.h>

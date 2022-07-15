@@ -16,53 +16,76 @@
 
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
-static const unsigned int snap      = 10;       /* snap pixel */
-static const unsigned int gappih    = 5;        /* horiz inner gap between windows */
-static const unsigned int gappiv    = 5;        /* vert inner gap between windows */
-static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static const unsigned int snap      = 20;       /* snap pixel */
+static const unsigned int gappih    = 15;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 15;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 20;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 32;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
-static const int vertpad            = 10;       /* vertical padding of bar */
-static const int sidepad            = 10;       /* horizontal padding of bar */
+static const int user_bh            = 15;        /* 2 is the default spacing around the bar's font */
+static const int colorfultag        = 1;        /* 0 means use SchemeSel for selected non vacant tag */
+
 static const char *fonts[]          = { "CaskaydiaCove Nerd Font:size=10:antialias=true:autohint=true" };
-static char normbgcolor[]           = "#080808";
-static char normbordercolor[]       = "#1a1a1a";
-static char normfgcolor[]           = "#e5e5e5";
-static char selfgcolor[]            = "#080808";
-static char selbordercolor[]        = "#1a1a1a";
-static char selbgcolor[]            = "#e5e5e5";
-static char *colors[][3] = {
-       /*               fg           bg           border   */
-       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+
+#include "zerotheme.h"
+static const char *colors[][3]      = {
+    /*                     fg       bg      border */
+    [SchemeNorm]       = { black,   black,  gray2 },
+    [SchemeSel]        = { black,   black,  blue  },
+    [TabSel]           = { blue,    gray2,  black },
+    [TabNorm]          = { gray3,   black,  black },
+    [SchemeTag]        = { gray3,   black,  black },
+    [SchemeTag1]       = { cyan,    black,  black },
+    [SchemeTag2]       = { magenta, black,  black },
+    [SchemeTag3]       = { orange,  black,  black },
+    [SchemeTag4]       = { green,   black,  black },
+    [SchemeTag5]       = { blue,    black,  black },
+    [SchemeTag6]       = { red,     black,  black },
+    [SchemeTag7]       = { yellow,  black,  black },
+    [SchemeTag8]       = { gray,    black,  black },
+    [SchemeLayout]     = { white,   black,  black },
+    [SchemeBtnPrev]    = { green,   black,  black },
+    [SchemeBtnNext]    = { yellow,  black,  black },
+    [SchemeBtnClose]   = { red,     black,  black },
 };
 
 /* tagging */
-static const char *tags[] = { "I", "II", "III", "IV", "V" };
+static const char *tags[] = { "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " };
+
+static const int tagschemes[] = {
+    SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4, SchemeTag5, SchemeTag6, SchemeTag7, SchemeTag8
+};
+
+static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke	= 3;	/* thickness / height of the underline */
+static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
+static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
 
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      		instance    title       tags mask     isfloating   monitor */
+	/* class                instance    title       tags mask     isfloating   monitor */
 	{ "Deadbeef",     	NULL,       NULL,       0,            1,           -1 },
 	{ "Gcolor3",     	NULL,       NULL,       0,            1,           -1 },
 	{ "Pavucontrol", 	NULL,       NULL,       0,            1,           -1 },
-	{ "Sxiv", 	 	NULL,       NULL,       0,            1,           -1 },
+	{ "Nsxiv", 	 	NULL,       NULL,       0,            1,           -1 },
 	{ "Pcmanfm", 	 	NULL,       NULL,       0,            1,           -1 },
 	{ "Zathura", 	 	NULL,       NULL,       0,            1,           -1 },
-	{ "blueman-manager",  	NULL,       NULL,       0,            1,           -1 },
-	{ "cpomosai", 		NULL,       NULL,       0,            1,           -1 },
+	{ "Blueman-manager",  	NULL,       NULL,       0,            1,           -1 },
+	{ "tomato", 		NULL,       NULL,       0,            1,           -1 },
+	{ "calc", 		NULL,       NULL,       0,            1,           -1 },
+	{ "sfm", 		NULL,       NULL,       0,            1,           -1 },
+	{ "ncmpcpp", 		NULL,       NULL,       0,            1,           -1 },
 	{ "packagesupgrade", 	NULL,       NULL,       0,            1,           -1 },
 	{ "weatherreport", 	NULL,       NULL,       0,            0,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.5;  /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -96,19 +119,22 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+#define HOLDKEY 0xffe9 // 0 - disable; 0xffe9 - Mod1Mask; 0xffeb - Mod4Mask
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *dmenucmd[] = { "dmenu_run", NULL };
 /*static const char *flavorsel[] = { "flavorsel", NULL };*/
-static const char *emojicmd[] = { "emojimenu", NULL };
-static const char *chrscmd[] = { "chrs", NULL };
-static const char *termcmd[] = { "st", NULL };
+static const char *termcmd[]  = { "st", NULL };
 static const char *layoutmenu_cmd = "layoutmenu.sh";
+static const char *dmenucmd[] = { "dmenu_run", NULL };
+static const char *filescmd[] = { TERMINAL, "-c", "sfm", "-g", "100x30", "-e", "sfm", NULL };
+static const char *emojicmd[] = { "emojimenu", NULL };
+static const char *picomcmd[] = { "picomtoggle", NULL };
+static const char *unlockycmd[] = { "unlocky", NULL };
+static const char *chrscmd[] = { "chrs", NULL };
 static const char *webcmd[] = { "chromium", NULL };
-static const char *filescmd[] = { "pcmanfm", NULL };
 static const char *powermenu[] = { "powermenu", NULL };
 static const char *shotmenu[] = { "shotmenu", NULL };
 static const char *sysinfo[] = { "sysinfo", NULL };
@@ -118,6 +144,7 @@ static const char *dispfix[] = { "dispfix", NULL };
 static const char *audiocontrolcmd[] = { "pavucontrol", NULL };
 
 #include <X11/XF86keysym.h>
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
@@ -125,6 +152,7 @@ static Key keys[] = {
 	{ MODKEY,             		XK_w, 	   spawn,          {.v = webcmd } },
 	{ MODKEY,             		XK_e, 	   spawn,          {.v = emojicmd } },
 	{ MODKEY|ShiftMask,          	XK_f, 	   spawn,          {.v = filescmd } },
+	{ MODKEY|ShiftMask,          	XK_l, 	   spawn,          {.v = unlockycmd } },
 	{ MODKEY|ShiftMask,           	XK_m, 	   spawn,          {.v = audiocontrolcmd } },
 	{ MODKEY,             		XK_0, 	   spawn,          {.v = powermenu } },
 	{ MODKEY|ShiftMask,             XK_w, 	   spawn,          {.v = walle } },
@@ -132,9 +160,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_d, 	   spawn,          {.v = dispset } },
 	{ MODKEY|Mod1Mask,              XK_d, 	   spawn,          {.v = dispfix } },
 	{ MODKEY,			XK_F2,	   spawn,	   SHCMD("groff -mom $HOME/.local/share/dwm/gzdots.mom -T pdf | zathura -") },
-	{ MODKEY|ShiftMask,		XK_t,	   spawn,	   SHCMD(TERMINAL " -c cpomosai -e cpomosai") },
-	{ MODKEY,             		XK_b, 	   spawn,          {.v = sysinfo } },
+	{ MODKEY|ShiftMask,		XK_t,	   spawn,	   SHCMD(TERMINAL " -g 25x14 -c tomato -e tomato") },
+	{ MODKEY,                       XK_b, 	   spawn,          {.v = sysinfo } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,          	XK_p, 	   spawn,          {.v = picomcmd } },
+	{ MODKEY|ShiftMask,           	XK_m, 	   spawn,          {.v = audiocontrolcmd } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_i,      incnmaster,     {.i = +1 } },
@@ -142,10 +172,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
-	{ MODKEY,			XK_z,	   incrgaps,	   {.i = +3 } },
-	{ MODKEY,			XK_x,	   incrgaps,	   {.i = -3 } },
-	{ MODKEY,	                XK_a,      togglegaps,     {0} },
-	{ MODKEY|ShiftMask,    		XK_a,      defaultgaps,    {0} },
+	{ MODKEY|Mod4Mask,              XK_u,      incrgaps,       {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,      incrgaps,       {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_a,      togglegaps,     {0} },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_a,      defaultgaps,    {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
@@ -154,17 +184,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_s,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_c,      setlayout,      {.v = &layouts[11]} },
 	{ MODKEY,                       XK_space,  setlayout,      {.v = &layouts[13]} },
-	{ MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,             		XK_f,      togglefullscr,  {0} },
+	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
 	{ MODKEY|ControlMask,           XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_Left,   focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_Right,  focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_Left,   tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Right,  tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_F1,     xrdb,           {.v = NULL } },
 	/*{ MODKEY|Mod2Mask,              XK_f, 	   spawn,          {.v = flavorsel } },*/
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
@@ -175,6 +202,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
+	{ MODKEY|ShiftMask,             XK_c,      quit,           {0} },
+	/*{ 0,                            HOLDKEY,   holdbar,        {0} },*/
 	{ 0,			        XK_Print,  spawn,          SHCMD("scrot ~/pic/allmon-$(date +%H:%M:%S).png --quality 100 --freeze") },
 	{ MODKEY,			XK_Print,  spawn,          {.v = shotmenu } },
         { 0, XF86XK_AudioMute,			   spawn,	   SHCMD("pamixer -t") },
@@ -187,11 +216,10 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioNext,			   spawn,	   SHCMD("mpc next && disccover") },
 	{ 0, XF86XK_AudioPlay,			   spawn,	   SHCMD("mpc toggle && disccover") },
 	{ 0, XF86XK_AudioStop,			   spawn,	   SHCMD("mpc stop && disccover") },
-	{ MODKEY,			XK_F5,	   spawn,	   SHCMD(TERMINAL " -e ncmpcpp") },
-	{ 0, XF86XK_Calculator,			   spawn,	   SHCMD(TERMINAL " -e bc -l") },
+	{ MODKEY,			XK_F5,	   spawn,	   SHCMD(TERMINAL " -c ncmpcpp -e ncmpcpp") },
+	{ 0, XF86XK_Calculator,			   spawn,	   SHCMD(TERMINAL " -c calc -e eva") },
 	{ 0, XF86XK_MonBrightnessUp,		   spawn,	   SHCMD("xbacklight -inc 15") },
 	{ 0, XF86XK_MonBrightnessDown,		   spawn,	   SHCMD("xbacklight -dec 15") },
-	{ MODKEY|ShiftMask,             XK_c,      quit,           {0} },
 
 	/* { MODKEY|Mod4Mask,              XK_h,      incrgaps,       {.i = +1 } }, */
 	/* { MODKEY|Mod4Mask,              XK_l,      incrgaps,       {.i = -1 } }, */
@@ -206,10 +234,7 @@ static Key keys[] = {
 	/* { MODKEY|ControlMask,           XK_o,      incrivgaps,     {.i = -1 } }, */
 	/* { MODKEY|Mod4Mask,              XK_y,      incrohgaps,     {.i = +1 } }, */
 	/* { MODKEY|Mod4Mask,              XK_o,      incrohgaps,     {.i = -1 } }, */
-	/* { MODKEY|ShiftMask,             XK_y,      incrovgaps,     {.i = +1 } }, */
-	/* { MODKEY|ShiftMask,             XK_o,      incrovgaps,     {.i = -1 } }, */
 };
-
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
