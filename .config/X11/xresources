@@ -9,6 +9,7 @@
 ! INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 ! DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
+! zeromono
 ! Black + DarkGrey
 *color0:  #080808
 *color8:  #b3b3b3
@@ -25,8 +26,8 @@
 *color4:  #3f5273
 *color12: #465b80
 ! DarkMagenta + Magenta
-*color5:  #564666
-*color13: #6b5780
+*color5:  #543f66
+*color13: #533969
 !DarkCyan + Cyan
 *color6:  #324f66
 *color14: #385a73
