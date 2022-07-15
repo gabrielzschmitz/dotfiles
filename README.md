@@ -1,46 +1,52 @@
-# gabrielzschmitz Dotfiles
+<h1 align="center">
+    <br>
+    <img src="./doc/dotfiles[demo].png" alt="cfetch">
+    <br>
+    gabrielzschmitz dotfiles
+    <br>
+</h1>
 
-## Main configs demonstration:
-### dwm
-![dwm](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/dwm%5Bdemo%5D.png)
-### st
-![st](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/st%5Bdemo%5D.png)
-### dmenu
-![dmenu](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/dmenu%5Bdemo%5D.png)
-### nvim
-![nvim](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/nvim%5Bdemo%5D.png)
-### walls
-![walls](https://github.com/gabrielzschmitz/dotfiles/blob/main/pic/%5Bricedemo%5D/walls%5Bdemo%5D.png)
+<h4 align="center">A rice focused in speed, produtivity and to suck less.</h4>
+<p align="center">
+<a href="./LICENSE"><img src="https://img.shields.io/badge/license-GPL-3.svg" alt="License"></a>
+<a href="https://www.buymeacoffee.com/gabrielzschmitz" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 20px !important;width: 87px;" ></a>
+<a href="https://github.com/gabrielzschmitz/dotfiles"><img src="https://img.shields.io/github/stars/gabrielzschmitz/dotfiles?style=social" alt="Give me a Star"></a>
+</p>
 
-## How to Install
+## 💾 How to Install
+<b>Note</b>: change<i> $REPOPATH</i> to wherever you'd like to clone the bare repository and<i> $REPOALIAS</i> to whatever you want the alias to the repo be.
+
+Just follow this <b>steps</b>:
 ```shell
-echo "alias dots='/usr/bin/git --git-dir=$HOME/doc/dotfiles --work-tree=$HOME'" >> $HOME/.zshrc
-source ~/.zshrc
-echo "$HOME/doc/dotfiles" >> .gitignore
-git clone --bare https://www.github.com/gabrielzschmitz/dotfiles.git $HOME/doc/dotfiles
-
-('rm' and 'rm -rf' all the files/folders that are making it impossible to checkout)
-dots checkout
-dots config --local status.showUntrackedFiles no
+$ REPOPATH="$HOME/doc/dotfiles"
+$ REPOALIAS="dots"
+$ echo "alias $REPOALIAS='/usr/bin/git --git-dir=$REPOPATH --work-tree=$HOME'" >> $HOME/.zshrc
+$ source ~/.zshrc
+$ git clone --bare https://www.github.com/gabrielzschmitz/dotfiles.git $REPOPATH
 ```
 
-### DuckDuckGO
-To configure the zero theme in DuckDuckGo:
-1. Go to https://duckduckgo.com/settings#appearance
-
-2.1. Put the DuckDuckGo colors like that:
-|                                                     |         |
-| :-------------------------------------------------: | :-----: |
-| Background Color                                    | #080808 |
-| Header Color                                        | #030303 |
-| Result Title Color                                  | #324f66 |
-| Result Visited Title Color                          | #564666 |
-| Result Description Color                            | #b3b3b3 |
-| Result Url Color                                    | #375759 |
-| Result Hover, Module, and Dropdown Background Color | #141414 |
-
-2.2. Or use the load settings with the following phrase:
-
+<b>Note</b>: if checkout is impossible try to <i>'rm'</i> and <i>'rm -rf'</i> all the files/folders that are appearing as a conflict.
+```shell
+$ $REPOALIAS checkout
+$ $REPOALIAS config --local status.showUntrackedFiles no
 ```
-gabrielzschmitz-zero-theme
-```
+
+## 🎨 Riced programs
+The following software were <b>riced</b>:
+<i>
+ * [dwm](https://github.com/gabrielzschmitz/dotfiles/tree/main/.local/src/zerodwm)
+ * [dmenu](https://github.com/gabrielzschmitz/dotfiles/tree/main/.local/src/zerodmenu)
+ * [st](https://github.com/gabrielzschmitz/dotfiles/tree/main/.local/src/zerost)
+ * [herbe](https://github.com/gabrielzschmitz/dotfiles/tree/main/.local/src/zeroherbe)
+ * [slock](https://github.com/gabrielzschmitz/dotfiles/tree/main/.local/src/zeroslock)
+ * [sfm](https://github.com/gabrielzschmitz/dotfiles/tree/main/.local/src/zerosfm)
+ * [xmenu](https://github.com/gabrielzschmitz/dotfiles/tree/main/.local/src/zeroxmenu)
+ * [nvim](https://github.com/gabrielzschmitz/dotfiles/tree/main/.config/nvim)
+ * [ncmpcpp](https://github.com/gabrielzschmitz/dotfiles/tree/main/.config/ncmpcpp)
+ * [zsh](https://github.com/gabrielzschmitz/dotfiles/tree/main/.config/zsh)
+ * [picom](https://github.com/gabrielzschmitz/dotfiles/blob/main/.config/picom.conf)
+</i>
+
+## 📜 License
+This project is licensed under the [GPL-3](./LICENSE) license.
+
