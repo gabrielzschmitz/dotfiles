@@ -1,3 +1,4 @@
+#!bin/sh
 #         .             .              .		  
 #         |             |              |           .	  
 # ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
@@ -8,7 +9,7 @@
 # GITHUB:https://github.com/gabrielzschmitz		  
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
-#!bin/sh
+
 # Clean Up $HOME Directory
 export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 export XDG_DATA_HOME="$HOME/.local/share"
