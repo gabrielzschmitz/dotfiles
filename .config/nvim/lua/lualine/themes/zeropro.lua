@@ -4,7 +4,7 @@ local zeropro = {}
 
 zeropro.normal = {
     a = { bg = colors.green, fg = colors.bg },
-    b = { bg = colors.bg_gutter, fg = colors.green },
+    b = { bg = colors.bg_statusline, fg = colors.green },
     c = { bg = colors.bg_statusline, fg = colors.fg },
     x = { bg = colors.bg_statusline, fg = colors.fg },
     y = { bg = colors.bg_statusline, fg = colors.fg },
@@ -13,7 +13,7 @@ zeropro.normal = {
 
 zeropro.insert = {
     a = { bg = colors.cyan, fg = colors.bg },
-    b = { bg = colors.bg_gutter, fg = colors.blue },
+    b = { bg = colors.bg_statusline, fg = colors.blue },
     c = { bg = colors.bg_statusline, fg = colors.fg },
     x = { bg = colors.bg_statusline, fg = colors.fg },
     y = { bg = colors.bg_statusline, fg = colors.fg },
@@ -22,7 +22,7 @@ zeropro.insert = {
 
 zeropro.command = {
     a = { bg = colors.fg, fg = colors.bg },
-    b = { bg = colors.bg_gutter, fg = colors.purple },
+    b = { bg = colors.bg_statusline, fg = colors.purple },
     c = { bg = colors.bg_statusline, fg = colors.fg },
     x = { bg = colors.bg_statusline, fg = colors.fg },
     y = { bg = colors.bg_statusline, fg = colors.fg },
@@ -31,7 +31,7 @@ zeropro.command = {
 
 zeropro.visual = {
     a = { bg = colors.yellow, fg = colors.bg },
-    b = { bg = colors.bg_gutter, fg = colors.yellow },
+    b = { bg = colors.bg_statusline, fg = colors.yellow },
     c = { bg = colors.bg_statusline, fg = colors.fg },
     x = { bg = colors.bg_statusline, fg = colors.fg },
     y = { bg = colors.bg_statusline, fg = colors.fg },
@@ -40,7 +40,7 @@ zeropro.visual = {
 
 zeropro.replace = {
     a = { bg = colors.purple, fg = colors.bg },
-    b = { bg = colors.bg_gutter, fg = colors.red },
+    b = { bg = colors.bg_statusline, fg = colors.red },
     c = { bg = colors.bg_statusline, fg = colors.fg },
     x = { bg = colors.bg_statusline, fg = colors.fg },
     y = { bg = colors.bg_statusline, fg = colors.fg },
