@@ -26,19 +26,24 @@ options="$shutdown\n$reboot\n$logout\n$suspend\n$lock"
 chosen="$(printf "$options" | dmenu)"
 case $chosen in
     "$shutdown")
-		notify-send -t 2750 "⏻ Turning off the machine..." && sleep 0.5  && loginctl poweroff
+		herbe "⏻ Turning off the machine..." &
+                sleep 1  && loginctl poweroff
         ;;
     "$reboot")
-		notify-send -t 2750 " Restarting the machine..." && sleep 0.5  && loginctl reboot
+		herbe " Restarting the machine..." &
+                sleep 1  && loginctl reboot
 	;;
     "$logout")
-		notify-send -t 2750 " Login out of the system..." && sleep 0.5  && loginctl terminate-session $XDG_SESSION_ID
+		herbe " Login out of the system..." &
+                sleep 1  && loginctl terminate-session $XDG_SESSION_ID
 	;;
     "$suspend")
-		notify-send -t 1500 "⏾ Putting the system to sleep..." && sleep 1.5  && loginctl suspend
+		herbe "⏾ Putting the system to sleep..." &
+                sleep 1  && loginctl suspend
         ;;
     "$lock")
-		notify-send -t 1500 " Locking the system..." && sleep 1.5 && slock
+		herbe " Locking the system..." &
+                sleep 5.1 && slock
         ;;
 esac
 

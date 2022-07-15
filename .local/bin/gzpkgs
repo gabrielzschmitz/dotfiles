@@ -89,15 +89,15 @@ declare -a pkgs=("btop"
 "bc"
 "blueman"
 "bluez"
-"bluez-openrc"
+"bluez-runit"
 "bluez-utils"
 "cbonsai"
 "celluloid"
 "devour"
 "doasedit"
 "dosfstools"
-"dunst"
-"elogind-openrc"
+"dragon-drop"
+"elogind-runit"
 "etcher-bin"
 "gcolor3"
 "git"
@@ -121,10 +121,11 @@ declare -a pkgs=("btop"
 "ncmpcpp"
 "neovim"
 "networkmanager"
-"networkmanager-openrc"
+"networkmanager-runit"
 "nextcloud-client"
 "nodejs"
 "npm"
+"nsxiv"
 "numlockx"
 "obs-studio"
 "olive"
@@ -144,7 +145,7 @@ declare -a pkgs=("btop"
 "screenkey"
 "scrot"
 "signal-desktop"
-"sxiv"
+"openssh"
 "udiskie"
 "udisks2"
 "ungoogled-chromium"
@@ -169,9 +170,10 @@ for x in "${pkgs[@]}"; do
 	paru --noconfirm --needed -S "$x"
 done
 
-sudo cp -r .local/share/icons/* /usr/share/icons/
-sudo cp -r .local/share/themes/* /usr/share/themes/
-sudo cp -r .local/share/fonts/* /usr/share/fonts/
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+
+sudo cp -r $HOME/.local/share/icons/* /usr/share/icons/; sudo cp -r $HOME/.local/share/themes/* /usr/share/themes/; sudo cp -r $HOME/.local/share/fonts/* /usr/share/fonts/
 
 cat << "EOF"
 

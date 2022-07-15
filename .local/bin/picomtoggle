@@ -1,0 +1,24 @@
+#!/bin/sh
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielzschmitz_/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+
+# Just a small tool to toggle/untoggle picom
+# by using the pid of it
+toggle="$(pidof picom)"
+status=$?
+
+if [ $status = 1 ]
+then
+    picom --experimental-backends -b &
+else
+    pkill picom
+fi
+

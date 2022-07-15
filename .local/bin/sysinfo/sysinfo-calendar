@@ -11,6 +11,6 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
 
-calendar="$(cal --color=always | sed "s/..7m/<b><span color=\"#385a73\">/;s/..27m/<\/span><\/b>/")"
+calendar="$(cal)"
 printf "%s" "$calendar"
 

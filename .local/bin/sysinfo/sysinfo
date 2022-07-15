@@ -31,33 +31,37 @@ options="$uptime\n$internet\n$dates\n$memory\n$weather\n$packages\n$disks\n$cpu\
 chosen="$(echo "$options" | dmenu)"
 case $chosen in
     "$uptime")
-	    	notify-send -t 2750 " Uptime now:" "$(sysinfo-uptime)"
+	    	herbe " Uptime now:" "$(sysinfo-uptime)"
 	;;
     "$internet")
-	    	notify-send -t 2750 " Network Manager:" && nmdmenu
+	    	herbe " Network Manager:" &
+                nmdmenu
         ;;
     "$dates")
-	    	notify-send -t 2750 " This month:" "$(sysinfo-calendar)"
+	    	herbe " This month:" "$(sysinfo-calendar)"
         ;;
     "$memory")
-	    	notify-send -t 2750 " Most intences in memory:" "$(sysinfo-mostinmemory)"
+	    	herbe " Most intences in memory:" "$(sysinfo-mostinmemory)"
         ;;
     "$weather")
-	    	notify-send -t 2750 " The weather today:" && setsid -f "st" -c weatherreport -e less -Srf "${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport"
+	    	herbe " The weather today:" &
+                setsid -f "st" -c weatherreport -e less -Srf "${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport"
         ;;
     "$packages")
-	    	notify-send -t 2750 " Installed packages:" "$(sysinfo-packages)" && setsid -f "st" -c packagesupgrade -e sysinfo-packagesupgrade
+	    	herbe " Installed packages:" "$(sysinfo-packages)" &
+                setsid -f "st" -c packagesupgrade -e sysinfo-packagesupgrade
         ;;
     "$disks")
-	    	notify-send -t 2750 " Disks:" "$(lsblk --output NAME,SIZE,TYPE)"
+	    	herbe " Disks:" "$(lsblk --output NAME,SIZE,TYPE)"
         ;;
     "$cpu")
-	    	notify-send -t 2750 " Most intences in CPU:" "$(sysinfo-mostincpu)"
+	    	herbe " Most intences in CPU:" "$(sysinfo-mostincpu)"
         ;;
     "$battery")
-	    	notify-send -t 2750 "$(sysinfo-batteryicon) Battery now is:" "$(sysinfo-battery)"
+	    	herbe "$(sysinfo-batteryicon) Battery now is:" "$(sysinfo-battery)"
         ;;
     "$manual")
-	    	notify-send -t 2750 " This is your manual to my rice!" && groff -mom $HOME/.local/share/dwm/gzdots.mom -T pdf | zathura -
+	    	herbe " This is your manual to my rice!" &
+                groff -mom $HOME/.local/share/dwm/gzdots.mom -T pdf | zathura -
 esac
 

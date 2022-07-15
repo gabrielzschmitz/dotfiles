@@ -11,14 +11,14 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
 # Wallpaper setter program integrated with sundial
-# using sxiv and xwallpaper gabrielzschmitz
+# using nsxiv and xwallpaper gabrielzschmitz
 
 # Directory of the wallpapers
 WALL_DIR=$HOME/pic/wall/zeromono
 SUNDIAL_DIR=$HOME/pic/wall/sundial
 
 # Wallpaper selecting function
-WALL_SEL=$(devour sxiv "$WALL_DIR" -to)
+WALL_SEL=$(nsxiv "$WALL_DIR" -to)
 # Remove everything up to the last slash
 WALL_SEL=${WALL_SEL##*/}
 # Remove "white.png" and "black.png" from the end

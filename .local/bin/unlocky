@@ -7,13 +7,21 @@
 #  ,|
 #  `'
 # GITHUB:https://github.com/gabrielzschmitz
-# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
+# INSTAGRAM:https://www.instagram.com/gabrielzschmitz_/
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
 
 # Auto lock script for slock
 # by gabrielzschmitz (https://github.com/gabrielzschmitz)
 
-xautolock	\
--time 10	\
--locker slock	\
+toggle="$(pidof xautolock)"
+status=$?
+
+if [ $status = 1 ]
+then
+    xautolock -time 10 -locker slock &
+    notify-send -t 2750 "  Launching xautolock"
+else
+    pkill xautolock
+    notify-send -t 2750 "  Killing xautolock"
+fi
 
