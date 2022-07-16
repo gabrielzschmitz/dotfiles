@@ -12,51 +12,65 @@
 
 # Screenshot taker menu using dmenu and scrot
 
+# Get main monitor size and position
+mainsp="$(xrandr | grep -E "* primary*" | cut -d ' ' -f4)"
+mainsx="$(echo "${mainsp%%x*}")"
+mainsy="$echo "${mainsp##*x}" | cut -d '+' -f1)"
+mainx="$(echo "${mainsp##*x}" | cut -d '+' -f2)"
+mainy="$(echo "${mainsp##*x}" | cut -d '+' -f3)"
+
+# Get external monitor size and position
+extsp="$(xrandr | grep -E "* connected*" | grep -v -E "*primary*" | cut -d ' ' -f3)"
+extsx="$(echo "${extsp%x*}")"
+extsy="$echo "${extsp#*x}" | cut -d '+' -f1)"
+extx="$(echo "${extsp#*x}" | cut -d '+' -f2)"
+exty="$(echo "${extsp#*x}" | cut -d '+' -f3)"
+
 # Options
-extmon="  Print external monitor"
-lapmon="  Print laptop monitor"
-allmon="  Print all monitors"
-selarea="麗  Select a area to print"
-extmontimer=" 福  Print external monitor (10s timer)"
-lapmontimer=" 福  Print laptop monitor (10s timer)"
-allmontimer=" 福  Print all monitors (10s timer)"
+main="  Print main monitor"
+ext="  Print external monitor"
+all="  Print all monitors"
+area="麗 Select a area to print"
+maintimer=" 福 Print main monitor (10s timer)"
+exttimer=" 福 Print external monitor (10s timer)"
+alltimer=" 福 Print all monitors (10s timer)"
 
 # Variables
-options="$extmon\n$lapmon\n$allmon\n$selarea\n$extmontimer\n$lapmontimer\n$allmontimer"
+options="$main\n$ext\n$all\n$area\n$maintimer\n$exttimer\n$alltimer"
 
 # Choices
 chosen="$(printf "$options" | dmenu)"
 case $chosen in
-    "$extmon")
-                pic="$HOME/pic/extmon-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect 0,0,1440,900 --quality 100 --freeze &&\
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken"
+    "$main")
+                sleep 0.5 && pic="$HOME/pic/main-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$mainx","$mainy","$mainsx","$mainsy" --quality 100 --freeze &&
+                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
         ;;
-    "$lapmon")
-                pic="$HOME/pic/lapmon-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect 1440,0,1366,768 --quality 100 --freeze &&\
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken"
+    "$ext")
+                sleep 0.5 && pic="$HOME/pic/ext-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$extx","$exty","$extsx","$extsy" --quality 100 --freeze &&
+                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
 	;;
-    "$allmon")
-                pic="$HOME/pic/allmon-$(date +%H:%M:%S).png" && scrot "$pic" --quality 100 --freeze &&\
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken"
+    "$all")
+                sleep 0.5 && pic="$HOME/pic/all-$(date +%H:%M:%S).png" && scrot "$pic" --quality 100 --freeze &&
+                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
         ;;
-    "$selarea")
-                sleep 0.5 && pic="$HOME/pic/selarea-$(date +%H:%M:%S).png" && scrot "$pic" --select --quality 100 --freeze &&
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken"
+    "$area")
+                sleep 0.5 && pic="$HOME/pic/area-$(date +%H:%M:%S).png" && scrot "$pic" --select --quality 100 --freeze &&
+                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
         ;;
-    "$extmontimer")
+    "$maintimer")
 		herbe "  Taking the screenshot in 10s..." &
-                pic="$HOME/pic/extmontimer-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect 0,0,1440,900 --quality 100 --delay 10 --freeze &&\
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken"
+                pic="$HOME/pic/maintimer-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$mainx","$mainy","$mainsx","$mainsy" --quality 100 --delay 10 --freeze &&
+                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
         ;;
-    "$lapmontimer")
+    "$exttimer")
 		herbe "  Taking the screenshot in 10s..." &
-                pic="$HOME/pic/lapmontimer-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect 1440,0,1366,768 --quality 100 --delay 10 --freeze &&\
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken"
+                pic="$HOME/pic/exttimer-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$extx","$exty","$extsx","$extsy" --quality 100 --delay 10 --freeze &&
+                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
         ;;
-    "$allmontimer")
+    "$alltimer")
 		herbe "  Taking the screenshot in 10s..." &
-                pic="$HOME/pic/allmontimer-$(date +%H:%M:%S).png" && scrot "$pic" --quality 100 --delay 10 --freeze &&\
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken"
+                pic="$HOME/pic/alltimer-$(date +%H:%M:%S).png" && scrot "$pic" --quality 100 --delay 10 --freeze &&
+                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
         ;;
 esac
 
