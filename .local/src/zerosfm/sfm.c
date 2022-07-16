@@ -2068,7 +2068,7 @@ main(int argc, char *argv[])
 	if (argc == 1)
 		start();
 	else if (argc == 2 && strncmp("-v", argv[1], 2) == 0)
-		die("sfm-" VERSION);
+		die("sfm-"VERSION);
 	else
 		die("usage: sfm [-v]");
 	return 0;

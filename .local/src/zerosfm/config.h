@@ -34,7 +34,7 @@ static const char *chown_cmd[]   = { "chown", "-R" }; /* change file owner and g
 static const char *chmod_cmd[]   = { "chmod" }; /* change file mode bits */
 static const char *chflags_cmd[] = { CHFLAG }; /* change file flags */
 static const char *mv_cmd[]      = { "mv" }; /* move */
-static const char delconf[]      = "yes";
+static const char delconf[]      = "y";
 
 static const size_t rm_cmd_len      = LEN(rm_cmd);
 static const size_t cp_cmd_len      = LEN(cp_cmd);
