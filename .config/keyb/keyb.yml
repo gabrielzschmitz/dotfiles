@@ -1,0 +1,115 @@
+- name: apps
+  keybinds:
+  - name: spawn this (keyb)
+    key: super + shift + /
+  - name: spawn a rice manual (gzdots.mom)
+    key: super + f1
+  - name: spawn terminal (st)
+    key: super + return
+  - name: spawn application launcher (dmenu)
+    key: super + d
+  - name: spawn file manager (sfm)
+    key: super + shift + f
+  - name: spawn browser (chromium)
+    key: super + w
+  - name: spawn window layout menu (xmenu)
+    key: right click bar layout indicator
+  - name: spawn music player (ncmcppp)
+    key: super + f5
+  - name: spawn terminal calculator (eva)
+    key: fn + calculator
+  - name: spawn audio control (pavucontrol)
+    key: super + shift + m
+  - name: spawn wallpaper changer (walle)
+    key: super + shift + w
+  - name: spawn a pomodoro technique timer (tomato.c)
+    key: super + shift + t
+  - name: screenshots menu (shotmenu)
+    key: super + print
+  - name: spawn menu with power options (powermenu)
+    key: super + 0
+  - name: spawn menu of system infos (sysinfo)
+    key: super + b
+  - name: spawn emoji selector (emojimenu)
+    -key: super + e
+  - name: spawn display setter (dispset)
+    key: super + shift + d
+  - name: spawn diplay fixer (dispfix)
+    key: super + alt + d
+  - name: toggle auto locker (unlocky)
+    key: super + shift + l
+  - name: toggle picom (picomtoggle)
+    key: super + shift + p
+
+- name: audio
+  keybinds:
+  - name: increase/decrease sound volume
+    key: fn + audiolowervolume/audioraisevolume
+  - name: mute sound
+    key: fn + audiomute
+  - name: increase/decrease mpd volume
+    key: super + f11/f12
+  - name: mute mpd
+    key: super + f10
+  - name: next/previous mpd song
+    key: fn + audionext/audioprev
+  - name: play/pause mpd song
+    key: fn + audioplay
+  - name: stop mpd song
+    key: fn + audiostop
+
+- name: dwm
+  keybinds:
+  - name: close window
+    key: super + shift + q
+  - name: change tag
+    key: super + 1-8
+  - name: send window to tag
+    key: super + shift + 1-8
+  - name: cycle thru windows
+    key: super + j/k
+  - name: change width of master
+    key: super + h/l
+  - name: make selected master
+    key: super + shift + enter
+  - name: make selected float
+    key: super + shift + space
+  - name: take a screenshot
+    key: print
+  - name: increase/decrease gaps
+    key: super + u/super + shift + u
+  - name: toggle gaps
+    key: super + a
+  - name: default gaps
+    key: super + shift + a
+  - name: toggle statusbar
+    key: super + shift + b
+  - name: set tiling mode
+    key: super + t
+  - name: set floating mode
+    key: super + space
+  - name: set fullscreen
+    key: super + f
+  - name: set deck mode
+    key: super + m
+  - name: set fibonacci mode
+    key: super + s
+  - name: set center master mode
+    key: super + c
+  - name: increase/decrease brightness
+    key: fn + monbrightnessup/monbrightnessdown
+  - name: increase/decrease number of masters
+    key: super + control + i/d
+  - name: go to another display
+    key: super + right/left
+  - name: move window to another display
+    key: super + shift + right/left
+  - name: go to previous tag
+    key: super + tab
+  - name: see all tags
+    key: super + ctrl + 0
+  - name: see all windows
+    key: super + shift + 0
+  - name: shutdown dwm
+    key: super + shift + c
+

@@ -1,0 +1,20 @@
+settings:
+  keyb_path: /home/gabrielzschmitz/.config/keyb/keyb.yml
+  debug: false
+  reverse: false
+  mouse: true
+  title: "keyboard macros"
+  prompt: 'keyb > '
+  placeholder: '...'
+  prefix_sep: ;
+  sep_width: 4
+  margin: 0
+  padding: 1
+  border: hidden
+color:
+  prompt: "3"
+  cursor_fg: "7"
+  cursor_bg: ""
+  filter_fg: "3"
+  filter_bg: ""
+  border_color: "3"
