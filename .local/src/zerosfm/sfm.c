@@ -1623,8 +1623,9 @@ dragon(const Arg *arg)
         sel_files = ecalloc(sel_len, sizeof(char *));
         sel_files[0] = ecalloc(MAX_P, sizeof(char));
         strncpy(sel_files[0], CURSOR(cpane).name, MAX_P);
-        strcpy(cmd, "dragon-drop -i -x ");
+        strcpy(cmd, "dragon-drop -i -x \"");
         strcat(cmd, sel_files[0]);
+        strcat(cmd, "\"");
         system(cmd);
         print_status(cprompt, "1 file dropped", sel_len);
 }
@@ -1639,7 +1640,9 @@ seldragon(const Arg *arg)
         strcpy(cmd, "dragon-drop -i -a ");
         int n = sel_len;
         for (int i = 0; i < n; i++){
+            strcat(cmd, "\"");
             strcat(cmd, sel_files[i]);
+            strcat(cmd, "\"");
             strcat(cmd, " ");
         }
         system(cmd);
