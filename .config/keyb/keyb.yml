@@ -18,7 +18,7 @@
     key: super + f5
   - name: spawn terminal calculator (eva)
     key: fn + calculator
-  - name: spawn audio control (pavucontrol)
+  - name: spawn audio control (ncpamixer)
     key: super + shift + m
   - name: spawn wallpaper changer (walle)
     key: super + shift + w

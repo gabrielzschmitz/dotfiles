@@ -3,7 +3,7 @@ settings:
   debug: false
   reverse: false
   mouse: true
-  title: "keyboard macros"
+  title: "$USER"
   prompt: 'keyb > '
   placeholder: '...'
   prefix_sep: ;
