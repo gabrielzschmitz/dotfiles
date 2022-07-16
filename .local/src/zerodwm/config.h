@@ -78,6 +78,7 @@ static const Rule rules[] = {
 	{ "Blueman-manager",  	NULL,       NULL,       0,            1,           -1 },
 	{ "tomato", 		NULL,       NULL,       0,            1,           -1 },
 	{ "calc", 		NULL,       NULL,       0,            1,           -1 },
+	{ "ncpamixer", 		NULL,       NULL,       0,            1,           -1 },
 	{ "sfm", 		NULL,       NULL,       0,            1,           -1 },
 	{ "keyb", 		NULL,       NULL,       0,            1,           -1 },
 	{ "ncmpcpp", 		NULL,       NULL,       0,            1,           -1 },
@@ -141,7 +142,9 @@ static const char *sysinfo[] = { "sysinfo", NULL };
 static const char *walle[] = { "walle", NULL };
 static const char *dispset[] = { "dispset", NULL };
 static const char *dispfix[] = { "dispfix", NULL };
-static const char *audiocontrolcmd[] = { "pavucontrol", NULL };
+static const char *audiocontrolcmd[] = { TERMINAL, "-c", "ncpamixer", "-g", "80x15", "-e", "ncpamixer", NULL };
+static const char *tomatocmd[] = { TERMINAL, "-c", "tomato", "-g", "25x14", "-e", "tomato", NULL };
+static const char *keybcmd[] = { TERMINAL, "-c", "keyb", "-g", "100x30", "-e", "keyb", NULL };
 
 #include <X11/XF86keysym.h>
 
@@ -161,8 +164,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_b, 	   spawn,          {.v = sysinfo } },
 	{ MODKEY|ShiftMask,          	XK_p, 	   spawn,          {.v = picomcmd } },
 	{ MODKEY,			XK_F1,	   spawn,	   SHCMD("groff -mom $HOME/.local/share/dwm/gzdots.mom -T pdf | zathura -") },
-	{ MODKEY|ShiftMask,		XK_slash,  spawn,          SHCMD(TERMINAL " -g 100x30 -c keyb -e keyb") },
-	{ MODKEY|ShiftMask,		XK_t,	   spawn,	   SHCMD(TERMINAL " -g 25x14 -c tomato -e tomato") },
+	{ MODKEY|ShiftMask,		XK_slash,  spawn,          {.v = keybcmd } },
+	{ MODKEY|ShiftMask,		XK_t,	   spawn,	   {.v = tomatocmd } },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
