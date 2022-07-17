@@ -7,9 +7,8 @@
 #  ,|							  
 #  `'							  
 # GITHUB:https://github.com/gabrielzschmitz		  
-# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# INSTAGRAM:https://www.instagram.com/gabrielzschmitz_/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
-
 # Screenshot taker menu using dmenu and scrot
 
 # Get main monitor size and position
@@ -19,6 +18,8 @@ mainsy="$echo "${mainsp##*x}" | cut -d '+' -f1)"
 mainx="$(echo "${mainsp##*x}" | cut -d '+' -f2)"
 mainy="$(echo "${mainsp##*x}" | cut -d '+' -f3)"
 
+# Check if there is a external monitor
+extconnected="$(xrandr | grep -E "* connected*" | wc -l)"
 # Get external monitor size and position
 extsp="$(xrandr | grep -E "* connected*" | grep -v -E "*primary*" | cut -d ' ' -f3)"
 extsx="$(echo "${extsp%x*}")"
@@ -36,10 +37,17 @@ exttimer=" 福 Print external monitor (10s timer)"
 alltimer=" 福 Print all monitors (10s timer)"
 
 # Variables
-options="$main\n$ext\n$all\n$area\n$maintimer\n$exttimer\n$alltimer"
+case $extconnected in
+    '1')
+        options="$main\n$all\n$area\n$maintimer\n$alltimer"
+    ;;
+    *)
+        options="$main\n$ext\n$all\n$area\n$maintimer\n$exttimer\n$alltimer"
+    ;;
+esac
 
 # Choices
-chosen="$(printf "$options" | dmenu)"
+chosen="$(printf "$options" | dmenu -l 7)"
 case $chosen in
     "$main")
                 sleep 0.5 && pic="$HOME/pic/main-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$mainx","$mainy","$mainsx","$mainsy" --quality 100 --freeze &&
