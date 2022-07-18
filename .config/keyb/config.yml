@@ -1,9 +1,9 @@
 settings:
   keyb_path: /home/gabrielzschmitz/.config/keyb/keyb.yml
   debug: false
-  reverse: false
+  reverse: true
   mouse: true
-  title: "$USER"
+  title: ""
   prompt: 'keyb > '
   placeholder: '...'
   prefix_sep: ;
@@ -12,9 +12,14 @@ settings:
   padding: 1
   border: hidden
 color:
-  prompt: "3"
+  prompt: "6"
   cursor_fg: "7"
   cursor_bg: ""
-  filter_fg: "3"
+  filter_fg: "6"
   filter_bg: ""
-  border_color: "3"
+  counter_fg: "4"
+  counter_bg: ""
+  placeholder_fg: "4"
+  placeholder_bg: ""
+  border_color: "6"
+

@@ -31,7 +31,7 @@
   - name: spawn menu of system infos (sysinfo)
     key: super + b
   - name: spawn emoji selector (emojimenu)
-    -key: super + e
+    key: super + e
   - name: spawn display setter (dispset)
     key: super + shift + d
   - name: spawn diplay fixer (dispfix)
