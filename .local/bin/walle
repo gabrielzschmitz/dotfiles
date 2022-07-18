@@ -19,19 +19,28 @@ SUNDIAL_DIR=$HOME/pic/wall/sundial
 
 # Wallpaper selecting function
 WALL_SEL=$(nsxiv "$WALL_DIR" -to)
-# Remove everything up to the last slash
-WALL_SEL=${WALL_SEL##*/}
-# Remove "white.png" and "black.png" from the end
-WALL_SEL=${WALL_SEL%white.png}
-WALL_SEL=${WALL_SEL%black.png}
 
-# X wallpaper options
-WALL_OPT=$(printf "zoom\ncenter\ntile\nstretch\nmaximize"|dmenu -l 6)
+case $WALL_SEL in
+    '')
+        herbe "  To set a wallpaper use 'm' to mark the selected one" "  If multiple was selected then the last will be setted"
+    ;;
+    *)
+        # Remove everything up to the last slash
+        WALL_SEL=${WALL_SEL##*/}
+        # Remove "white.png" and "black.png" from the end
+        WALL_SEL=${WALL_SEL%white.png}
+        WALL_SEL=${WALL_SEL%black.png}
 
-# Change wallpaper
-cp "$WALL_DIR/${WALL_SEL}white.png" "$SUNDIAL_DIR/light.png"
-cp "$WALL_DIR/${WALL_SEL}black.png" "$SUNDIAL_DIR/dark.png"
-sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $SUNDIAL_DIR/light.png|" \
-    ~/.local/bin/dfltwall
-sundial
+        # X wallpaper options
+        WALL_OPT=$(printf "zoom\ncenter\ntile\nstretch\nmaximize"|dmenu -l 6)
+
+        # Change wallpaper
+        cp "$WALL_DIR/${WALL_SEL}white.png" "$SUNDIAL_DIR/light.png"
+        cp "$WALL_DIR/${WALL_SEL}black.png" "$SUNDIAL_DIR/dark.png"
+        sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $SUNDIAL_DIR/light.png|" \
+            ~/.local/bin/dfltwall
+        sundial
+        herbe "  Wallpaper setted"
+    ;;
+esac
 
