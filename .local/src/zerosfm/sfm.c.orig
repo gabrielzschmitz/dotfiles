@@ -290,10 +290,6 @@ print_info(Pane *pane, char *dirsize)
 {
 	char *sz, *ur, *gr, *dt, *prm;
 
-	char *rez_pth, *lnk_full;
-
-	lnk_full = ecalloc(MAX_N, sizeof(char));
-
 	dt = ecalloc(MAX_DTF, sizeof(char));
 
 	prm = get_fperm(CURSOR(pane).mode);
@@ -314,24 +310,14 @@ print_info(Pane *pane, char *dirsize)
 		}
 	}
 
-	if (S_ISLNK(CURSOR(pane).mode) != 0) {
-		rez_pth = ecalloc(MAX_P, sizeof(char));
-		if (realpath(CURSOR(pane).name, rez_pth) != NULL) {
-			snprintf(
-				lnk_full, MAX_N, "->%s", rez_pth);
-		}
-		free(rez_pth);
-	}
-
-	print_status(cstatus, "%s %s %s %s %02d/%02d %s", prm, ur, dt,
-              sz, pane->hdir, pane->dirc, lnk_full);
+	print_status(cstatus, "%s %s %s %s %02d/%02d", prm, ur, dt,
+              sz, pane->hdir, pane->dirc);
 
 	free(prm);
 	free(ur);
 	free(gr);
 	free(dt);
 	free(sz);
-	free(lnk_full);
 }
 
 static void
@@ -339,12 +325,22 @@ print_row(Pane *pane, size_t entpos, Cpair col)
 {
 
 	int x, y;
-	char *full_str;
+	char *full_str, *rez_pth;
+	char lnk_full[MAX_N];
 
 	full_str = basename(pane->direntr[entpos].name);
 	x = pane->x_srt;
 	y = entpos - pane->firstrow + 1;
 
+	if (S_ISLNK(pane->direntr[entpos].mode) != 0) {
+		rez_pth = ecalloc(MAX_P, sizeof(char));
+		if (realpath(pane->direntr[entpos].name, rez_pth) != NULL) {
+			snprintf(
+				lnk_full, MAX_N, "%s -> %s", full_str, rez_pth);
+			full_str = lnk_full;
+		}
+		free(rez_pth);
+	}
         char *icon = get_icon(pane, entpos, col, pane->direntr[entpos].mode);
         
         if(strcmp(icon, "") == 0)

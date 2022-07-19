@@ -32,7 +32,7 @@ case $WALL_SEL in
         WALL_SEL=${WALL_SEL%black.png}
 
         # X wallpaper options
-        WALL_OPT=$(printf "zoom\ncenter\ntile\nstretch\nmaximize"|dmenu -l 6)
+        WALL_OPT=$(printf "zoom\ncenter\ntile\nstretch\nmaximize"|dmenucenter -l 6)
 
         # Change wallpaper
         cp "$WALL_DIR/${WALL_SEL}white.png" "$SUNDIAL_DIR/light.png"

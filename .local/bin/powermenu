@@ -23,7 +23,7 @@ lock="  Lock    "
 options="$shutdown\n$reboot\n$logout\n$suspend\n$lock"
 
 # Choices
-chosen="$(printf "$options" | dmenu)"
+chosen="$(printf "$options" | dmenucenter -l 5)"
 case $chosen in
     "$shutdown")
 		herbe "⏻ Turning off the machine..." &

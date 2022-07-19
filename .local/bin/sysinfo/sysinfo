@@ -28,7 +28,7 @@ manual="  Rice manual"
 options="$uptime\n$internet\n$dates\n$memory\n$weather\n$packages\n$disks\n$cpu\n$battery\n$manual"
 
 # Choices
-chosen="$(echo "$options" | dmenu)"
+chosen="$(echo "$options" | dmenucenter -l 10)"
 case $chosen in
     "$uptime")
 	    	herbe " Uptime now:" "$(sysinfo-uptime)"

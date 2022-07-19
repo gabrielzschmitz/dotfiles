@@ -132,6 +132,7 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *layoutmenu_cmd = "layoutmenu.sh";
 static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *filescmd[] = { TERMINAL, "-c", "sfm", "-g", "100x30", "-e", "sfm", NULL };
+static const char *musiccmd[] = { TERMINAL, "-c", "ncmpcpp", "-e", "ncmpcpp", NULL };
 static const char *emojicmd[] = { "emojimenu", NULL };
 static const char *picomcmd[] = { "picomtoggle", NULL };
 static const char *unlockycmd[] = { "unlocky", NULL };
@@ -215,7 +216,7 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioNext,			   spawn,	   SHCMD("mpc next && disccover") },
 	{ 0, XF86XK_AudioPlay,			   spawn,	   SHCMD("mpc toggle && disccover") },
 	{ 0, XF86XK_AudioStop,			   spawn,	   SHCMD("mpc stop && disccover") },
-	{ MODKEY,			XK_F5,	   spawn,	   SHCMD(TERMINAL " -c ncmpcpp -e ncmpcpp") },
+	{ MODKEY,			XK_F5,	   spawn,	   {.v = musiccmd } },
 	{ 0, XF86XK_Calculator,			   spawn,	   SHCMD(TERMINAL " -c calc -e eva") },
 	{ 0, XF86XK_MonBrightnessUp,		   spawn,	   SHCMD("xbacklight -inc 15") },
 	{ 0, XF86XK_MonBrightnessDown,		   spawn,	   SHCMD("xbacklight -dec 15") },

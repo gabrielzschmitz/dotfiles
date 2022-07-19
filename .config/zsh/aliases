@@ -17,12 +17,11 @@
 
 #--------------------------- sys --------------------------------
                                                           alias	\
-    ls='lsd --group-dirs first -A --no-symlink'			\
-    l='lsd --group-dirs first -A --no-symlink'			\
-    lb='lsd -lA --group-dirs first --no-symlink                 \
-    --blocks permission,name,size,date --date relative'         \
+    ls='ls -A --color=always --group-directories-first'         \
+    l='ls -A --color=always --group-directories-first'          \
+    lb='ls -Ahs --color=always --group-directories-first'       \
     diff='diff --color'			                        \
-    cnt='lsd --group-dirs first -A | wc -l'			\
+    cnt='ls -A | wc -l'			                        \
     cl='clear'                  			        \
     pk='pkill'							\
     nv='nvim'							\
@@ -33,7 +32,7 @@
     du='du --human-readable'					\
     grep='grep --color=auto'					\
     cmatrix='cmatrix -bC cyan'					\
-    bat='bat --theme="base16" --style="numbers,changes"'	\
+    bat='bat --theme=base16 -p'	                                \
     cat='bat'							\
     sshserver='ssh gabrielzschmitz@192.168.0.109'          	\
 
@@ -82,7 +81,7 @@
     draw='cd $HOME/next/draw; clear && ls'	                \
     dev='cd $HOME/next/dev; clear && ls'	                \
     site='cd $HOME/next/site/gabrielzschmitz.xyz; clear && ls'	\
-    scr='cd $HOME/.local/bin; clear && ls'			\
+    bin='cd $HOME/.local/bin; clear && ls'			\
     src='cd $HOME/.local/src; clear && ls'			\
     biblio='cd $HOME/next/work/UTFPR/biblio; clear && ls'       \
     work='cd $HOME/next/work/UTFPR/work; clear && ls'           \
@@ -126,6 +125,7 @@
     xresources='xrdb $HOME/.config/X11/xresources'		\
     music='ncmpcpp'						\
     mpv='devour mpv'						\
+    sxiv='nsxiv -a'					        \
     nsxiv='nsxiv -a'					        \
     zathura='devour zathura'					\
     clock='tty-clock -s -c -b -C 2'				\

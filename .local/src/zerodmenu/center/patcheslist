@@ -1,4 +1,3 @@
-#!/bin/sh
 #         .             .              .		  
 #         |             |              |           .	  
 # ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
@@ -7,8 +6,14 @@
 #  ,|							  
 #  `'							  
 # GITHUB:https://github.com/gabrielzschmitz		  
-# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# INSTAGRAM:https://www.instagram.com/gabrielzschmitz_/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
-
-xwallpaper --zoom /home/gabrielzschmitz/pic/wall/sundial/dark.png
+dmenu-caseinsensitive.diff
+dmenu-center.diff
+dmenu-highlight.diff
+dmenu-lineheight.diff
+dmenu-linesbelowprompt.diff
+dmenu-mousesupporthoverbgcol.diff
+dmenu-xresources.diff
+dmenu-numbers.diff
 

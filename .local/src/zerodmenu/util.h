@@ -1,15 +1,3 @@
-/*
-//         .             .              .		  
-//         |             |              |           .	  
-// ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
-// | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
-// `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
-//  ,|							  
-//  `'							  
-// GITHUB:https://github.com/gabrielzschmitz		  
-// INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
-// DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
-*/
 /* See LICENSE file for copyright and license details. */
 
 #define MAX(A, B)               ((A) > (B) ? (A) : (B))

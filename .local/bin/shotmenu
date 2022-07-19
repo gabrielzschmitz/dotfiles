@@ -47,7 +47,7 @@ case $extconnected in
 esac
 
 # Choices
-chosen="$(printf "$options" | dmenu -l 7)"
+chosen="$(printf "$options" | dmenucenter -l 7)"
 case $chosen in
     "$main")
                 sleep 0.5 && pic="$HOME/pic/main-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$mainx","$mainy","$mainsx","$mainsy" --quality 100 --freeze &&
