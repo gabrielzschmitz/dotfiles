@@ -24,10 +24,10 @@ static const unsigned int gappov    = 20;       /* vert outer gap between window
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int user_bh            = 15;        /* 2 is the default spacing around the bar's font */
+static const int user_bh            = 20;        /* 2 is the default spacing around the bar's font */
 static const int colorfultag        = 1;        /* 0 means use SchemeSel for selected non vacant tag */
 
-static const char *fonts[]          = { "CaskaydiaCove Nerd Font:size=10:antialias=true:autohint=true" };
+static const char *fonts[]          = { "CaskaydiaCove Nerd Font:size=12:antialias=true:autohint=true" };
 
 #include "zerotheme.h"
 static const char *colors[][3]      = {

@@ -13,14 +13,14 @@
 static const char *background_color = "#080808";
 static const char *border_color = "#080808";
 static const char *font_color = "#b3b3b3";
-static const char *font_pattern = "CaskaydiaCove Nerd Font:size=10:antialias=true:autohint=true";
+static const char *font_pattern = "CaskaydiaCove Nerd Font:size=12:antialias=true:autohint=true";
 static unsigned line_spacing = 10;
 static unsigned int padding = 15;
 static const int use_primary_monitor = 1;
 
 static unsigned int width = 300;
 static unsigned int border_size = 0;
-static unsigned int pos_x = 533;
+static unsigned int pos_x = 810;
 static unsigned int pos_y = 52;
 
 enum corners { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT };
