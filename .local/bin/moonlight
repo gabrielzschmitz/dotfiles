@@ -1,0 +1,19 @@
+#!/bin/sh
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielzschmitz_/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+
+actual=$(cat /sys/class/backlight/amdgpu_bl0/brightness)
+new=255
+[ "$actual" -le 255 ] && new=$(echo "$actual - 25" | bc)
+[ "$new" -le 30 ] && new=30
+echo $new
+echo $new > /sys/class/backlight/amdgpu_bl0/brightness
+

@@ -216,10 +216,10 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioNext,			   spawn,	   SHCMD("mpc next && disccover") },
 	{ 0, XF86XK_AudioPlay,			   spawn,	   SHCMD("mpc toggle && disccover") },
 	{ 0, XF86XK_AudioStop,			   spawn,	   SHCMD("mpc stop && disccover") },
-	{ MODKEY,			XK_F5,	   spawn,	   {.v = musiccmd } },
+	{ MODKEY,			XK_F4,	   spawn,	   {.v = musiccmd } },
 	{ 0, XF86XK_Calculator,			   spawn,	   SHCMD(TERMINAL " -c calc -e eva") },
-	{ 0, XF86XK_MonBrightnessUp,		   spawn,	   SHCMD("xbacklight -inc 15") },
-	{ 0, XF86XK_MonBrightnessDown,		   spawn,	   SHCMD("xbacklight -dec 15") },
+	{ 0, XF86XK_MonBrightnessUp,		   spawn,	   SHCMD("doas /home/gabrielzschmitz/.local/bin/sunlight") },
+	{ 0, XF86XK_MonBrightnessDown,		   spawn,	   SHCMD("doas /home/gabrielzschmitz/.local/bin/moonlight") },
 };
 
 /* button definitions */
