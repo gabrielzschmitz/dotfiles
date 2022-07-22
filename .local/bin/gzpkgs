@@ -30,13 +30,48 @@ cat << "EOF"
 
 EOF
 
-sudo pacman -S --needed base-devel; cd $HOME/.local/src &&\
-git clone https://aur.archlinux.org/paru.git && cd paru &&\
-makepkg -si && cd && rm -rf $HOME/.local/src/paru
- 
-sudo pacman -S artix-archlinux-support
+sudo pacman -Syyu
+echo "# /etc/pacman.conf
 
+[options]
+HoldPkg      = pacman glibc
+Architecture = auto
+SigLevel    = Required DatabaseOptional
+LocalFileSigLevel = Optional
 
+# Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
+#IgnorePkg   =
+#IgnoreGroup =
+#NoUpgrade   =
+#NoExtract   =
+
+# Misc options
+# ILoveCandy
+Color
+CheckSpace
+
+# ARTIX
+[system]
+Include = /etc/pacman.d/mirrorlist
+[world]
+Include = /etc/pacman.d/mirrorlist
+[galaxy]
+Include = /etc/pacman.d/mirrorlist
+[lib32]
+Include = /etc/pacman.d/mirrorlist
+
+[universe]
+Server = https://universe.artixlinux.org/\$arch
+Server = https://mirror1.artixlinux.org/universe/\$arch
+Server = https://mirror.pascalpuffke.de/artix-universe/\$arch
+Server = https://artixlinux.qontinuum.space:4443/universe/os/\$arch
+" > pacman.conf
+sudo pacman -Syyu
+
+sudo mv pacman.conf /etc/pacman.conf
+sudo pacman -Sy
+
+sudo pacman -Syyu artix-archlinux-support
 echo "# /etc/pacman.conf
 
 [options]
@@ -82,29 +117,24 @@ Include = /etc/pacman.d/mirrorlist-arch
 " > pacman.conf
 
 sudo mv pacman.conf /etc/pacman.conf
-sudo pacman-key --populate archlinux && paru -Syyu
+sudo pacman-key --populate archlinux
+sudo pacman -Sy
 
+sudo pacman -Sy --needed base-devel; cd $HOME/.local/src &&\
+git clone https://aur.archlinux.org/paru.git && cd paru &&\
+makepkg -si && cd && rm -rf $HOME/.local/src/paru
+ 
 declare -a pkgs=("btop"
 "bat"
-"bluez"
-"bluez-runit"
-"bluez-utils"
 "devour"
 "doasedit"
-"dosfstools"
 "dragon-drop"
-"elogind-runit"
-"etcher-bin"
 "gcolor3"
-"git"
 "imlib2"
 "inkscape"
 "libtool"
 "libxft-bgra"
 "libxinerama"
-"linux-firmware"
-"linux-headers"
-"linux"
 "lxappearance-gtk3"
 "man-db"
 "man-pages"
@@ -114,8 +144,6 @@ declare -a pkgs=("btop"
 "ncmpcpp"
 "ncpamixer"
 "neovim"
-"networkmanager"
-"networkmanager-runit"
 "nextcloud-client"
 "nodejs"
 "npm"
@@ -124,8 +152,8 @@ declare -a pkgs=("btop"
 "obs-studio"
 "onlyoffice-bin"
 "opendoas"
+"p7zip"
 "pamixer"
-"paru"
 "pcmanfm-gtk3"
 "picom-jonaburg-git"
 "polkit-gnome"
@@ -138,14 +166,15 @@ declare -a pkgs=("btop"
 "openssh"
 "udiskie"
 "udisks2"
+"unzip"
 "ungoogled-chromium"
 "xautolock"
+"xarchiver"
 "xbanish"
 "xclip"
 "xdotool"
 "xdg-user-dirs"
 "xorg-xbacklight"
-"xorg-xinit"
 "xwallpaper"
 "yarn"
 "youtube-dl"
