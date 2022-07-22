@@ -22,13 +22,8 @@ static const unsigned int gappiv    = 15;       /* vert inner gap between window
 static const unsigned int gappoh    = 20;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
-static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 2;   /* systray spacing */
-static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 1;     /* 0 means no systray */
-static const int showbar            = 1;     /* 0 means no bar */
-static const int topbar             = 1;     /* 0 means bottom bar */
+static const int showbar            = 1;        /* 0 means no bar */
+static const int topbar             = 1;        /* 0 means bottom bar */
 static const int user_bh            = 20;        /* 2 is the default spacing around the bar's font */
 static const int colorfultag        = 1;        /* 0 means use SchemeSel for selected non vacant tag */
 
@@ -37,9 +32,9 @@ static const char *fonts[]          = { "CaskaydiaCove Nerd Font:size=12:antiali
 #include "zerotheme.h"
 static const char *colors[][3]      = {
     /*                     fg       bg      border */
-    [SchemeNorm]       = { black,   black,  black },
-    [SchemeSel]        = { black,   black,  black },
-    [TabSel]           = { blue,    black,  black },
+    [SchemeNorm]       = { black,   black,  gray2 },
+    [SchemeSel]        = { black,   black,  blue  },
+    [TabSel]           = { blue,    gray2,  black },
     [TabNorm]          = { gray3,   black,  black },
     [SchemeTag]        = { gray3,   black,  black },
     [SchemeTag1]       = { cyan,    black,  black },
@@ -231,7 +226,6 @@ static Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },

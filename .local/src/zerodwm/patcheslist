@@ -16,7 +16,7 @@ dwm-hide_vacant_tags.diff
 dwm-holdbar-modkey-pertag-nobar.diff
 dwm-layoutmenu.diff
 dwm-resizecorners.diff
-dwm-status2d.diff
+dwm-status2d-systray.diff
 dwm-statusallmons.diff
 dwm-underlinetags.diff
 dwm-vanitygaps.diff
