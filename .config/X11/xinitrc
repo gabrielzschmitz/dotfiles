@@ -18,6 +18,7 @@ pulseaudio &
 picom -b &
 udiskie --file-manager=pcmanfm --terminal=st --notify --no-tray --automount &
 dfltdisp &
+dfltwall &
 #sundialclk &
 unlocky &
 zerobar &
