@@ -15,12 +15,13 @@ kblayout &
 xbanish -i mod4 -i mod1 -i shift -i control &
 mpd &
 pulseaudio &
-picom --experimental-backends -b &
+picom -b &
 udiskie --file-manager=pcmanfm --terminal=st --notify --no-tray --automount &
 dfltdisp &
-sundialclk &
+#sundialclk &
 unlocky &
 zerobar &
+weatherdown &
 mpv --no-vid --volume=75 /home/gabrielzschmitz/doc/startupsound.wav &
 while type dwm >/dev/null ; do dwm && continue || break ; done
 
