@@ -39,9 +39,9 @@ static const char *colors[][3]      = {
     /*                     fg       bg      border */
     [SchemeNorm]       = { black,   black,  black },
     [SchemeSel]        = { black,   black,  black },
-    [TabSel]           = { blue,    black,  black },
-    [TabNorm]          = { gray3,   black,  black },
-    [SchemeTag]        = { gray3,   black,  black },
+    [TabSel]           = { cyan,    black,  black },
+    [TabNorm]          = { white,   black,  black },
+    [SchemeTag]        = { gray2,   black,  black },
     [SchemeTag1]       = { cyan,    black,  black },
     [SchemeTag2]       = { magenta, black,  black },
     [SchemeTag3]       = { orange,  black,  black },
@@ -50,7 +50,7 @@ static const char *colors[][3]      = {
     [SchemeTag6]       = { red,     black,  black },
     [SchemeTag7]       = { yellow,  black,  black },
     [SchemeTag8]       = { gray,    black,  black },
-    [SchemeLayout]     = { white,   black,  black },
+    [SchemeLayout]     = { gray3,   black,  black },
     [SchemeBtnPrev]    = { green,   black,  black },
     [SchemeBtnNext]    = { yellow,  black,  black },
     [SchemeBtnClose]   = { red,     black,  black },
@@ -97,26 +97,17 @@ static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
-#define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
 
 static const Layout layouts[] = {
-/* symbol     arrange function */
-{ "[T]",      tile },			/* 0 first entry is default */
-{ "[M]",      monocle },		/* 1 */
-{ "[S]",      spiral },			/* 2 */
-{ "[DW]",     dwindle },		/* 3 */
-{ "[D]",      deck },			/* 4 */
-{ "[BS]",     bstack },			/* 5 */
-{ "[BSH]",    bstackhoriz },		/* 6 */
-{ "[G]",      grid },			/* 7 */
-{ "[RG]",     nrowgrid },		/* 8 */
-{ "[HG]",     horizgrid },		/* 9 */
-{ "[GG]",     gaplessgrid },		/* 10 */
-{ "[C]",      centeredmaster },		/* 11 */
-{ "[CF]",     centeredfloatingmaster },	/* 12 */
-{ "[F]",      NULL },			/* 13 no layout function means floating behavior */
-{ NULL,       NULL },			/* 14 */
+/* symbol   arrange function */
+{ " ﬿ ",    tile },			/* 0 first entry is default */
+{ "  ",    monocle },		        /* 1 */
+{ " ﬷ ",    deck },			/* 2 */
+{ " 﩯 ",    grid },		        /* 3 */
+{ " 柳",    centeredfloatingmaster },	/* 4 */
+{ "  ",    NULL },			/* 5 no layout function means floating behavior */
+{ NULL,     NULL },			/* 6 */
 };
 
 /* key definitions */
@@ -134,7 +125,7 @@ static const Layout layouts[] = {
 /* commands */
 /*static const char *flavorsel[] = { "flavorsel", NULL };*/
 static const char *termcmd[]  = { "st", NULL };
-static const char *layoutmenu_cmd = "layoutmenu.sh";
+static const char *layoutmenu_cmd = "layoutmenu";
 static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *filescmd[] = { TERMINAL, "-c", "sfm", "-g", "100x30", "-e", "sfm", NULL };
 static const char *musiccmd[] = { TERMINAL, "-c", "ncmpcpp", "-e", "ncmpcpp", NULL };
@@ -187,10 +178,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[4]} },
-	{ MODKEY,                       XK_s,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_c,      setlayout,      {.v = &layouts[11]} },
-	{ MODKEY,                       XK_space,  setlayout,      {.v = &layouts[13]} },
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,                       XK_c,      setlayout,      {.v = &layouts[4]} },
+	{ MODKEY,                       XK_space,  setlayout,      {.v = &layouts[5]} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
 	{ MODKEY|ControlMask,           XK_0,      view,           {.ui = ~0 } },
