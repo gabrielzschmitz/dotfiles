@@ -850,7 +850,7 @@ setup(void)
 	XIM xim;
 	Window w, dw, *dws;
 	XWindowAttributes wa;
-	XClassHint ch = {"dmenu", "dmenu"};
+	XClassHint ch = {"dmenucenter", "dmenucenter"};
 #ifdef XINERAMA
 	XineramaScreenInfo *info;
 	Window pw;
@@ -966,7 +966,7 @@ setup(void)
 static void
 usage(void)
 {
-	fputs("usage: dmenu [-bfscv] [-l lines] [-h height] [-p prompt] [-fn font] [-m monitor]\n"
+	fputs("usage: dmenucenter [-bfscv] [-l lines] [-h height] [-p prompt] [-fn font] [-m monitor]\n"
 	      "             [-nb color] [-nf color] [-sb color] [-sf color] [-w windowid]\n", stderr);
 	exit(1);
 }
@@ -1015,7 +1015,7 @@ main(int argc, char *argv[])
 	for (i = 1; i < argc; i++)
 		/* these options take no arguments */
 		if (!strcmp(argv[i], "-v")) {      /* prints version information */
-			puts("dmenu-"VERSION);
+			puts("dmenucenter-"VERSION);
 			exit(0);
 		} else if (!strcmp(argv[i], "-b")) /* appears at the bottom of the screen */
 			topbar = 0;
