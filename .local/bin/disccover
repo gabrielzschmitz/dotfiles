@@ -14,8 +14,8 @@
 # based on ncmpcpp-ueberzug(https://github.com/tam-carre/ncmpcpp-ueberzug)
 
 # SETTINGS
-#music_library="$HOME/mus"
-#fallback_image="$HOME/.config/ncmpcpp/fallback.png"
+music_library="$HOME/mus"
+fallback_image="$HOME/.config/ncmpcpp/fallback.png"
 
 cover() {
     kill_previous_instances >/dev/null 2>&1
@@ -54,11 +54,12 @@ find_cover_image() {
     fi
 }
 
-#cover
+cover
 
-#notify-send -i $cover_path -t 2750 "$(mpc --format '%title%\n%artist%' current)"
+# Using dunst
+dunstify -i $cover_path -t 2750 "$(mpc --format '%title%\n%artist%' current)" 
 
-# Using herbe now
-pkill herbe
-herbe "$(mpc --format '%title%\n%artist%' current)" && setsid -f "$TERMINAL" -c ncmpcpp -e ncmpcpp
+## Using herbe
+#pkill herbe
+#herbe "$(mpc --format '%title%\n%artist%' current)" && setsid -f "$TERMINAL" -c ncmpcpp -e ncmpcpp
 
