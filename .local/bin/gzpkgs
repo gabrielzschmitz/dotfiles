@@ -223,5 +223,25 @@ cat << "EOF"
 	##                                                         ##
 	#############################################################
 
+ Note: Create /etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf.disabled:
+```
+### @KD Custom ###
+# dGPU only, fixes nvidia HDMI support, breaks dGPU powersaving
+
+Section "Module"
+    Load "modesetting"
+EndSection
+
+Section "Device"
+    Identifier "nvidia"
+    Driver "nvidia"
+
+    # NOTE: verify your BusID with command: `lspci | grep -E "VGA|3D"`
+    BusID "PCI:1:0:0"
+
+    Option "AllowEmptyInitialConfiguration"
+EndSection
+```
+
 EOF
 

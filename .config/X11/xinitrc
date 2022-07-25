@@ -24,5 +24,13 @@ unlocky &
 zerobar &
 weatherdown &
 mpv --no-vid --volume=75 /home/gabrielzschmitz/doc/startupsound.wav &
+# NVIDIA
+if [[ -f '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf' ]]; then
+    # NOTE: verify provider names with command: `xrandr --listproviders`
+    xrandr --setprovideroutputsource modesetting NVIDIA-G0
+
+    xrandr --auto
+    xrandr --dpi 96
+fi
 while type dwm >/dev/null ; do dwm && continue || break ; done
 

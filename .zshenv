@@ -30,3 +30,6 @@ export EDITOR="nvim"
 export TERMINAL="st"
 export BROWSER="chromium"
 
+# GPU Stuff
+export vblank_mode=0
+

@@ -129,7 +129,7 @@
     nsxiv='nsxiv -a'					        \
     zathura='devour zathura'					\
     clock='tty-clock -s -c -b -C 2'				\
-    picomd='picom -b --experimental-backends'			\
+    picomd='picom -b'			                        \
     nsxiva='devour nsxiv -a *'					\
     pkpicom='pkill picom'					\
     pksteam='pkill steam'					\
@@ -155,8 +155,11 @@
     wavdl='cd $HOME/doc/mus; youtube-dl -x			\
 --audio-quality 0 --audio-format wav --embed-thumbnail'		\
 #-------------------------- games -------------------------------
+    #mine='prime-run devour java -jar $HOME/next/gg/MINE/TLauncher.jar && exit'  \
                                                           alias \
     bkpmine="sudo cp -r ~/.minecraft/saves/My\ World ~/next/gg/MINE"\
-    mine='devour java -jar $HOME/next/gg/MINE/SKlauncher.jar && exit'  \
-    mcasel='cd $HOME/next/gg/MINE/mcaselector/zulu17.30.15-ca-fx-jre17.0.1-linux_x64/bin; ./java -jar $HOME/next/gg/MINE/mcaselector/mcaselector.jar'
+    mine='devour java -jar $HOME/next/gg/MINE/TLauncher.jar && exit'  \
+    mcasel='cd $HOME/next/gg/MINE/mcaselector/zulu17.30.15-ca-fx-jre17.0.1-linux_x64/bin; ./java -jar $HOME/next/gg/MINE/mcaselector/mcaselector.jar'\
+    nvidiaon="sudo ln -s '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf.disabled' '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf'"\
+    nvidiaoff="rm '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf'"
 
