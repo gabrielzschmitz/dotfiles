@@ -14,18 +14,18 @@
 # Get main monitor size and position
 mainsp="$(xrandr | grep -E "* primary*" | cut -d ' ' -f4)"
 mainsx="$(echo "${mainsp%%x*}")"
-mainsy="$echo "${mainsp##*x}" | cut -d '+' -f1)"
-mainx="$(echo "${mainsp##*x}" | cut -d '+' -f2)"
-mainy="$(echo "${mainsp##*x}" | cut -d '+' -f3)"
+mainsy="$echo "${mainsp##*x}" | cut -d'+' -f1)"
+mainx="$(echo "${mainsp##*x}" | cut -d'+' -f2)"
+mainy="$(echo "${mainsp##*x}" | cut -d'+' -f3)"
 
 # Check if there is a external monitor
 extconnected="$(xrandr | grep -E "* connected*" | wc -l)"
 # Get external monitor size and position
 extsp="$(xrandr | grep -E "* connected*" | grep -v -E "*primary*" | cut -d ' ' -f3)"
 extsx="$(echo "${extsp%x*}")"
-extsy="$echo "${extsp#*x}" | cut -d '+' -f1)"
-extx="$(echo "${extsp#*x}" | cut -d '+' -f2)"
-exty="$(echo "${extsp#*x}" | cut -d '+' -f3)"
+extsy="$echo "${extsp#*x}" | cut -d'+' -f1)"
+extx="$(echo "${extsp#*x}" | cut -d'+' -f2)"
+exty="$(echo "${extsp#*x}" | cut -d'+' -f3)"
 
 # Options
 main="  Print main monitor"
@@ -39,7 +39,7 @@ alltimer=" 福 Print all monitors (10s timer)"
 # Variables
 case $extconnected in
     '1')
-        options="$main\n$all\n$area\n$maintimer\n$alltimer"
+        options="$main\n$area\n$maintimer"
     ;;
     *)
         options="$main\n$ext\n$all\n$area\n$maintimer\n$exttimer\n$alltimer"
@@ -51,34 +51,34 @@ chosen="$(printf "$options" | dmenucenter -l 7)"
 case $chosen in
     "$main")
                 sleep 0.5 && pic="$HOME/pic/main-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$mainx","$mainy","$mainsx","$mainsy" --quality 100 --freeze &&
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
+                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
         ;;
     "$ext")
                 sleep 0.5 && pic="$HOME/pic/ext-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$extx","$exty","$extsx","$extsy" --quality 100 --freeze &&
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
+                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
 	;;
     "$all")
                 sleep 0.5 && pic="$HOME/pic/all-$(date +%H:%M:%S).png" && scrot "$pic" --quality 100 --freeze &&
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
+                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
         ;;
     "$area")
                 sleep 0.5 && pic="$HOME/pic/area-$(date +%H:%M:%S).png" && scrot "$pic" --select --quality 100 --freeze &&
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
+                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
         ;;
     "$maintimer")
-		herbe "  Taking the screenshot in 10s..." &
+		herbe $pic "  Taking the screenshot in 10s..." &
                 pic="$HOME/pic/maintimer-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$mainx","$mainy","$mainsx","$mainsy" --quality 100 --delay 10 --freeze &&
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
+                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
         ;;
     "$exttimer")
-		herbe "  Taking the screenshot in 10s..." &
+		herbe $pic "  Taking the screenshot in 10s..." &
                 pic="$HOME/pic/exttimer-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$extx","$exty","$extsx","$extsy" --quality 100 --delay 10 --freeze &&
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
+                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
         ;;
     "$alltimer")
-		herbe "  Taking the screenshot in 10s..." &
+		herbe $pic "  Taking the screenshot in 10s..." &
                 pic="$HOME/pic/alltimer-$(date +%H:%M:%S).png" && scrot "$pic" --quality 100 --delay 10 --freeze &&
-                xclip -t image/png $pic -selection clipboard && herbe "  Screnshot taken" "and copied to clipboard"
+                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
         ;;
 esac
 
