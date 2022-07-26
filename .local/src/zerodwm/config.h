@@ -104,10 +104,10 @@ static const Layout layouts[] = {
 { " ﬿ ",    tile },			/* 0 first entry is default */
 { "  ",    monocle },		        /* 1 */
 { " ﬷ ",    deck },			/* 2 */
-{ " 﩯 ",    grid },		        /* 3 */
+{ " 﩯 ",    grid },		         /* 3 */
 { " 柳",    centeredfloatingmaster },	/* 4 */
 { "  ",    NULL },			/* 5 no layout function means floating behavior */
-{ NULL,     NULL },			/* 6 */
+{ NULL,     NULL },
 };
 
 /* key definitions */
@@ -128,7 +128,9 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *layoutmenu_cmd = "layoutmenu";
 static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *filescmd[] = { TERMINAL, "-c", "sfm", "-g", "100x30", "-e", "sfm", NULL };
-static const char *musiccmd[] = { TERMINAL, "-c", "ncmpcpp", "-e", "ncmpcpp", NULL };
+static const char *altfilescmd[] = { "pcmanfm", NULL };
+//static const char *musiccmd[] = { TERMINAL, "-c", "ncmpcpp", "-e", "ncmpcpp", NULL };
+static const char *musiccmd[] = { "musiccmd", NULL };
 static const char *emojicmd[] = { "emojimenu", NULL };
 static const char *picomcmd[] = { "picomtoggle", NULL };
 static const char *unlockycmd[] = { "unlocky", NULL };
@@ -152,6 +154,7 @@ static Key keys[] = {
 	{ MODKEY,             		XK_w, 	   spawn,          {.v = webcmd } },
 	{ MODKEY,             		XK_e, 	   spawn,          {.v = emojicmd } },
 	{ MODKEY|ShiftMask,          	XK_f, 	   spawn,          {.v = filescmd } },
+	{ Mod1Mask|ShiftMask,          	XK_f, 	   spawn,          {.v = altfilescmd } },
 	{ MODKEY|ShiftMask,          	XK_l, 	   spawn,          {.v = unlockycmd } },
 	{ MODKEY|ShiftMask,           	XK_m, 	   spawn,          {.v = audiocontrolcmd } },
 	{ MODKEY,             		XK_0, 	   spawn,          {.v = powermenu } },
@@ -209,10 +212,10 @@ static Key keys[] = {
 	{ MODKEY,			XK_F10,	   spawn,	   SHCMD("mpc volume 0") },
 	{ MODKEY,			XK_F11,	   spawn,	   SHCMD("mpc volume -5") },
 	{ MODKEY,			XK_F12,	   spawn,	   SHCMD("mpc volume +5") },
-	{ 0, XF86XK_AudioPrev,			   spawn,	   SHCMD("mpc prev && disccover") },
-	{ 0, XF86XK_AudioNext,			   spawn,	   SHCMD("mpc next && disccover") },
-	{ 0, XF86XK_AudioPlay,			   spawn,	   SHCMD("mpc toggle && disccover") },
-	{ 0, XF86XK_AudioStop,			   spawn,	   SHCMD("mpc stop && disccover") },
+	{ 0, XF86XK_AudioPrev,			   spawn,	   SHCMD("mpc prev && disccover notify") },
+	{ 0, XF86XK_AudioNext,			   spawn,	   SHCMD("mpc next && disccover notify") },
+	{ 0, XF86XK_AudioPlay,			   spawn,	   SHCMD("mpc toggle && disccover notify") },
+	{ 0, XF86XK_AudioStop,			   spawn,	   SHCMD("mpc stop && disccover notify") },
 	{ MODKEY,			XK_F4,	   spawn,	   {.v = musiccmd } },
 	{ 0, XF86XK_Calculator,			   spawn,	   SHCMD(TERMINAL " -c calc -e eva") },
 	{ 0, XF86XK_MonBrightnessUp,		   spawn,	   SHCMD("doas /home/gabrielzschmitz/.local/bin/sunlight") },

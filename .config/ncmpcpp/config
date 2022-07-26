@@ -31,7 +31,7 @@ now_playing_suffix = ""
 # Visualizer
 visualizer_data_source = "/tmp/mpd.fifo"
 visualizer_output_name = "my_fifo"
-visualizer_fps = 60
+visualizer_fps = 120
 visualizer_type = "spectrum" (spectrum/wave)
 visualizer_in_stereo = "no"
 visualizer_look = "▋▋" # other strange characters: ▋░ ●▒ ▋▋
@@ -60,6 +60,7 @@ main_window_color = "cyan"
 header_window_color = "white"
 
 # Misc ..   
+execute_on_song_change = "disccover"
 follow_now_playing_lyrics = "yes"
 display_bitrate = "yes"
 autocenter_mode = "yes"
