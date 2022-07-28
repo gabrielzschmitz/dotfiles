@@ -14,6 +14,7 @@ kblayout &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 xbanish -i mod4 -i mod1 -i shift -i control &
 mpd &
+dunst &
 pulseaudio &
 picom -b &
 udiskie --file-manager=pcmanfm --terminal=st --notify --no-tray --automount &
