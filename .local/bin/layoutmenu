@@ -12,11 +12,11 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
 cat <<EOF | xmenu -i
-0 ﬿ TILE
-1  MONOCLE
-2 ﬷ DECK
-3 﩯 GRID
-4 柳 CENTER
-5  FLOAT
+1 ﬿ TILE
+2  MONOCLE
+3 ﬷ DECK
+4 﩯 GRID
+5 柳 CENTER
+6  FLOAT
 EOF
 

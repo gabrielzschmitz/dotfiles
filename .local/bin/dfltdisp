@@ -10,5 +10,5 @@
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
-xrandr --output LVDS1 --auto --primary --scale 1.0x1.0 --output DP1 --off --output HDMI1 --off --output VGA1 --off --output VIRTUAL1 --off
+xrandr --output eDP-1-1 --auto --primary --scale 1.0x1.0 --output HDMI-0 --right-of eDP-1-1 --auto --scale 1.0x1.0 --rotate right
 

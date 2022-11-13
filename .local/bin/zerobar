@@ -14,7 +14,7 @@
 # ^b$var^ = bg color
 
 # load colors
-black=#080808
+black=#050c0f
 green=#375759
 white=#e5e5e5
 grey=#141414
@@ -47,14 +47,23 @@ pkg_updates() {
 battery() {
     get_capacity="$(cat /sys/class/power_supply/BAT1/capacity)"
     capacity="$(cat /sys/class/power_supply/BAT?*/capacity 2>/dev/null)"
-    [ "$capacity" -le 200 ] && status="" 
-    [ "$capacity" -le 80 ] && status=""
-    [ "$capacity" -le 60 ] && status=""
-    [ "$capacity" -le 40 ] && status=""
-    [ "$capacity" -le 20 ] && status=""
-    [ "$capacity" -le 10 ] && warn=""
-    [ "$capacity" -le 5 ] && herbe " Battery is low " &
-    printf " ^c$blue^""$status""$warn"
+    cable="$(cat /sys/class/power_supply/BAT1/current_now)"
+    case $cable in
+        0)
+            status=""
+            printf " ^c$blue^""$status"
+        ;;
+        *)
+            [ "$capacity" -le 200 ] && status="" 
+            [ "$capacity" -le 80 ] && status=""
+            [ "$capacity" -le 60 ] && status=""
+            [ "$capacity" -le 40 ] && status=""
+            [ "$capacity" -le 20 ] && status=""
+            [ "$capacity" -le 10 ] && warn=""
+            [ "$capacity" -le 5 ] && herbe " Battery is low " &
+            printf " ^c$blue^""$status""$warn"
+        ;;
+    esac
 
     case "$get_capacity" in
         96|97|98|99|100|101|102|103|104|105) printf "^c$blue^ 100";;
@@ -63,8 +72,8 @@ battery() {
 }
 
 brightness() {
-    brightness_val=$(cat /sys/class/backlight/*/brightness)
-    brightness_max=$(cat /sys/class/backlight/*/max_brightness)
+    brightness_val=$(cat /sys/class/backlight/*/brightness | head -n1)
+    brightness_max=$(cat /sys/class/backlight/*/max_brightness | head -n1)
     brightness_level=$(echo "scale=2; ($brightness_val / $brightness_max) * 100" | bc)
     printf "^c$yellow^  "
     printf "^c$yellow^%.0f\n" $brightness_level

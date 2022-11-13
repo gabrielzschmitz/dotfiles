@@ -13,7 +13,6 @@
 actual=$(cat /sys/class/backlight/amdgpu_bl0/brightness)
 new=255
 [ "$actual" -lt 255 ] && new=$(echo "$actual + 25" | bc)
-[ "$actual" -le 20 ] && new=255
-echo $new
+[ "$actual" -le 20 ] && new=30
 echo $new > /sys/class/backlight/amdgpu_bl0/brightness
 

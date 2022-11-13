@@ -19,7 +19,6 @@ status=$?
 if [ $status = 1 ]
 then
     xautolock -time 10 -locker slock &
-    notify-send -t 2750 "  Launching xautolock"
 else
     pkill xautolock
     notify-send -t 2750 "  Killing xautolock"

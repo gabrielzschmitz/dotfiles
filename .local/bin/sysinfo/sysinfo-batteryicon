@@ -11,11 +11,19 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
 capacity="$(cat /sys/class/power_supply/BAT?*/capacity 2>/dev/null)"
-[ "$capacity" -le 200 ] && status="  "
-[ "$capacity" -le 80 ] && status="  "
-[ "$capacity" -le 60 ] && status="  "
-[ "$capacity" -le 40 ] && status="  "
-[ "$capacity" -le 20 ] && status="  "
-[ "$capacity" -le 10 ] && warn=" "
-printf "%s" "$status" "$warn"
+cable="$(cat /sys/class/power_supply/BAT1/current_now)"
+case $cable in
+    0)
+        status="  "
+        printf "$status"
+    ;;
+    *)
+        [ "$capacity" -le 200 ] && status=" "
+        [ "$capacity" -le 80 ] && status=" "
+        [ "$capacity" -le 60 ] && status=" "
+        [ "$capacity" -le 40 ] && status=" "
+        [ "$capacity" -le 20 ] && status=" "
+        [ "$capacity" -le 10 ] && warn=" "
+        printf "%s" "$status" "$warn"
+esac
 

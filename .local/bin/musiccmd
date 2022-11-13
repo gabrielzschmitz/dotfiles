@@ -1,0 +1,3 @@
+#!/bin/sh
+setsid -f $TERMINAL -c ncmpcpp -e ncmpcpp ; setsid -f $TERMINAL -g 100x1000 -e devour nsxiv -b -g 256x256 /tmp/mpd_cover.jpg
+

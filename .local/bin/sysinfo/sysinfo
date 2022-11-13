@@ -20,17 +20,17 @@ memory="$(sysinfo-memory)"
 weather="$(sysinfo-weather)"
 packages="$(sysinfo-packages)"
 disks="$(sysinfo-disks)"
-cpu="$(sysinfo-cpu)"
 battery="$(sysinfo-batteryicon)$(sysinfo-battery)"
 manual="  Rice manual"
 
 # Variables
-options="$uptime\n$internet\n$dates\n$memory\n$weather\n$packages\n$disks\n$cpu\n$battery\n$manual"
+options="$uptime\n$internet\n$dates\n$memory\n$weather\n$packages\n$disks\n$battery\n$manual"
 
 # Choices
-chosen="$(echo "$options" | dmenucenter -l 10)"
+chosen="$(echo -e "$options" | dmenucenter -l 10)"
 case $chosen in
     "$uptime")
+
 	    	herbe " Uptime now:" "$(sysinfo-uptime)"
 	;;
     "$internet")
@@ -53,9 +53,6 @@ case $chosen in
         ;;
     "$disks")
 	    	herbe " Disks:" "$(lsblk --output NAME,SIZE,TYPE)"
-        ;;
-    "$cpu")
-	    	herbe " Most intences in CPU:" "$(sysinfo-mostincpu)"
         ;;
     "$battery")
 	    	herbe "$(sysinfo-batteryicon) Battery now is:" "$(sysinfo-battery)"
