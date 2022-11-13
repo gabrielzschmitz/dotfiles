@@ -11,7 +11,7 @@
 
 ! zeromono
 ! Black + DarkGrey
-*color0:  #080808
+*color0:  #050c0f
 *color8:  #b3b3b3
 ! DarkRed + Red
 *color1:  #644d66
@@ -36,5 +36,5 @@
 *color15: #e5e5e5
 ! Foreground and Background
 *foreground: #b3b3b3
-*background: #080808
+*background: #050c0f
 
