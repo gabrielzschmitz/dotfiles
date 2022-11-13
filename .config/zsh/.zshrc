@@ -34,19 +34,19 @@ function zvm_after_select_vi_mode() {
   case $ZVM_MODE in
     $ZVM_MODE_NORMAL)
       VICOLORS="white"
-      VIMODE="⤚➛ "
+      VIMODE="⤖➛ "
       ;;
     $ZVM_MODE_INSERT)
       VICOLORS="white"
-      VIMODE="⤜➙ "
+      VIMODE="⤖➙ "
       ;;
     $ZVM_MODE_VISUAL)
       VICOLORS="white"
-      VIMODE="⤚➻ "
+      VIMODE="⤖➻ "
       ;;
     $ZVM_MODE_VISUAL_LINE)
       VICOLORS="white"
-      VIMODE="⤚➻ "
+      VIMODE="⤖➻ "
       ;;
   esac
   PROMPT='%F{$VICOLORS}$VIMODE%f'

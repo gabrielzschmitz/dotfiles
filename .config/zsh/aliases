@@ -40,6 +40,7 @@
                                                           alias \
     xresourcesconf='nvim $HOME/.config/X11/xresources'		\
     xinitrc='nvim $HOME/.config/X11/xinitrc'			\
+    dunstrc='nvim $HOME/.config/dunst/dunstrc'			\
     picomconf='nvim $HOME/.config/picom.conf'			\
     mpdconf='nvim $HOME/.config/mpd/mpd.conf'			\
     ncmpcppconf='nvim $HOME/.config/ncmpcpp/config'		\
@@ -157,9 +158,11 @@
 #-------------------------- games -------------------------------
     #mine='prime-run devour java -jar $HOME/next/gg/MINE/TLauncher.jar && exit'  \
                                                           alias \
+    mineserver="cd $HOME/next/gg/MINE/server && java -Xmx4G -Xms4G -jar server.jar nogui" \
+    ngrokmine="ngrok tcp 25565" \
     bkpmine="sudo cp -r ~/.minecraft/saves/My\ World ~/next/gg/MINE"\
     mine='devour java -jar $HOME/next/gg/MINE/TLauncher.jar && exit'  \
     mcasel='cd $HOME/next/gg/MINE/mcaselector/zulu17.30.15-ca-fx-jre17.0.1-linux_x64/bin; ./java -jar $HOME/next/gg/MINE/mcaselector/mcaselector.jar'\
     nvidiaon="sudo ln -s '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf.disabled' '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf'"\
-    nvidiaoff="rm '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf'"
+    nvidiaoff="sudo rm '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf'"
 
