@@ -375,7 +375,9 @@ get_icon(Pane *pane, size_t entpos, Cpair col, mode_t mode){
                 else if(strcmp(ex, "ext") == 0) /* nextcloud */
                     icon = " ";
                 else if(strcmp(ex, "stea") == 0) /* steam */
-                    icon = " ";
+                    icon = "戮";
+                else if(strcmp(ex, "g") == 0) /* steam */
+                    icon = " ";
                 else
                     /* Uncomment to get the folders "extensions"
                      * then change above (comment again after) */
@@ -394,6 +396,8 @@ get_icon(Pane *pane, size_t entpos, Cpair col, mode_t mode){
                     icon = " ";
                 else if(strcmp(ex, "h") == 0)
                     icon = " ";
+                else if(strcmp(ex, "zshe") == 0)
+                    icon = " ";
                 else if(strcmp(ex, "mk") == 0 || strcmp(ex, "akef") == 0)
                     icon = " ";
                 else if(strcmp(ex, "o") == 0 || strcmp(ex, "a") == 0 || strcmp(ex, "so") == 0)
@@ -2216,3 +2220,4 @@ main(int argc, char *argv[])
 		die("usage: sfm [-v]");
 	return 0;
 }
+
