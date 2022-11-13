@@ -10,7 +10,7 @@
 " DOTFILES:https://github.com/gabrielzschmitz/dotfiles    
 
 let s:foreground        = "#e5e5e5"
-let g:background        = "#080808"
+let g:background        = "#050c0f"
 let s:textboxbackground = "#141414"
 let g:darkerbackground  = "#030303"
 let s:lighterbackground = "#1a1a1a"
