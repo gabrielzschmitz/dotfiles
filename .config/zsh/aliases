@@ -34,6 +34,8 @@
     cmatrix='cmatrix -bC cyan'					\
     bat='bat --theme=base16 -p'	                                \
     cat='bat'							\
+    webcam='v4l2-ctl --set-fmt-video=width=720 &&               \
+mpv av://v4l2:/dev/video0'                                      \
     sshserver='ssh gabrielzschmitz@192.168.0.109'          	\
 
 #--------------------------- cfg ------------------------------
