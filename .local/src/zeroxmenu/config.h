@@ -3,10 +3,10 @@ static struct Config config = {
 	.font = "CaskaydiaCove Nerd Font:size=12",
 
 	/* colors */
-	.background_color = "#050c0f",
+	.background_color = "#0a0a0a",
 	.foreground_color = "#b3b3b3",
 	.selbackground_color = "#e5e5e5",
-	.selforeground_color = "#050c0f",
+	.selforeground_color = "#0a0a0a",
 	.separator_color = "#644d66",
 	.border_color = "#b3b3b3",
 
