@@ -93,6 +93,7 @@ static Key nkeys[] = {
 	{ {.key = TB_KEY_ARROW_LEFT},  mvbk,         {.i = 0}        },
 	{ {.ch = 'g'},                 mvtop,        {.i = 0}        },
 	{ {.ch = 'G'},                 mvbtm,        {.i = 0}        },
+	{ {.ch = 'C'},                 cppane,       {0}             },
 	{ {.ch = 'o'},                 dragon,       {0}             },
 	{ {.ch = 'n'},                 crnf,         {0}             },
 	{ {.ch = 'N'},                 crnd,         {0}             },

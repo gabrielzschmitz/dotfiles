@@ -143,6 +143,7 @@ static void mvbtm(const Arg *arg);
 static void mvfwd(const Arg *arg);
 static void mvtop(const Arg *arg);
 static void bkmrk(const Arg *arg);
+static void cppane(const Arg *arg);
 static int get_usrinput(char *, size_t, const char *, ...);
 static int frules(char *);
 static int spawn(const void *, size_t, const void *, size_t, char *, int);
@@ -1066,6 +1067,20 @@ bkmrk(const Arg *arg)
 	cpane->parent_row = 1;
 	cpane->hdir = 1;
 	PERROR(listdir(cpane) < 0);
+}
+
+static void
+cppane(const Arg *arg)
+{
+	(void) arg;
+	int other_idx;
+
+	other_idx = pane_idx ^ 1;
+	strncpy(panes[other_idx].dirn, panes[pane_idx].dirn, MAX_P);
+	panes[other_idx].hdir = panes[pane_idx].hdir;
+	panes[other_idx].firstrow = panes[pane_idx].firstrow;
+	panes[other_idx].parent_row= panes[pane_idx].parent_row;
+	PERROR(listdir(&panes[other_idx]) < 0);
 }
 
 static int

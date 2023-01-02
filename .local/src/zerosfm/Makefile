@@ -23,7 +23,7 @@ sfm: ${OBJ}
 	${CC} ${LDFLAGS} -o $@ ${OBJ}
 
 clean:
-	rm -f sfm ${OBJ} sfm-${VERSION}.tar.gz
+	rm -f sfm ${OBJ} sfm-${VERSION}.tar.gz *.orig *.rej
 
 dist: clean
 	mkdir -p sfm-${VERSION}
