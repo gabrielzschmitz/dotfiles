@@ -29,6 +29,7 @@ export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 export EDITOR="nvim"
 export TERMINAL="st"
 export BROWSER="chromium"
+export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
 
 # GPU Stuff
 export vblank_mode=0
