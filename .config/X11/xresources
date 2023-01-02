@@ -35,6 +35,8 @@
 *color7:  #b3b3b3
 *color15: #e5e5e5
 ! Foreground and Background
+!*foreground: #b3b3b3
+!*background: #050c0f
 *foreground: #b3b3b3
-*background: #050c0f
+*background: #0a0a0a
 
