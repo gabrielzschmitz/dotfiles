@@ -10,5 +10,5 @@
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
-xrandr --output eDP-1-1 --auto --primary --scale 1.0x1.0 --output HDMI-0 --right-of eDP-1-1 --auto --scale 1.0x1.0 --rotate right
+xrandr --output eDP-1-1 --auto --rate 120 --primary --scale 1.0x1.0 --output HDMI-0 --off --output DP-1-1 --off
 
