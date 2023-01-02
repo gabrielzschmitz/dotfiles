@@ -33,5 +33,6 @@ if [[ -f '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf' ]]; then
 fi
 mpv --no-vid --volume=75 /home/gabrielzschmitz/doc/startupsound.wav &
 sundialclk &
+$(sleep 4 && pamixer set Headphone playback 87) &
 while type dwm >/dev/null ; do dwm && continue || break ; done
 
