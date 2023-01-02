@@ -98,6 +98,7 @@ mpv av://v4l2:/dev/video0'                                      \
     zeroxmenu='cd $HOME/.local/src/zeroxmenu; clear && ls'	\
     zeroherbe='cd $HOME/.local/src/zeroherbe; clear && ls'	\
     zerosfm='cd $HOME/.local/src/zerosfm; clear && ls'	        \
+    zerobar='cd $HOME/.config/polybar; clear && ls'	        \
     cdzerofetch='cd $HOME/.local/src/zerofetch; clear && ls'	\
 
 #-------------------------- pacman ------------------------------
@@ -127,7 +128,7 @@ mpv av://v4l2:/dev/video0'                                      \
     yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'	\
     xresources='xrdb $HOME/.config/X11/xresources'		\
     music='ncmpcpp'						\
-    mpv='devour mpv'						\
+    mpv='devour gnome-mplayer'					\
     sxiv='nsxiv -a'					        \
     nsxiv='nsxiv -a'					        \
     zathura='devour zathura'					\
@@ -161,6 +162,7 @@ mpv av://v4l2:/dev/video0'                                      \
     #mine='prime-run devour java -jar $HOME/next/gg/MINE/TLauncher.jar && exit'  \
                                                           alias \
     mineserver="cd $HOME/next/gg/MINE/server && java -Xmx4G -Xms4G -jar server.jar nogui" \
+    fabricmineserver="cd $HOME/next/gg/MINE/server && java -Xmx4G -Xms4G -jar fabric-server-launch.jar nogui" \
     ngrokmine="ngrok tcp 25565" \
     bkpmine="sudo cp -r ~/.minecraft/saves/My\ World ~/next/gg/MINE"\
     mine='devour java -jar $HOME/next/gg/MINE/TLauncher.jar && exit'  \
