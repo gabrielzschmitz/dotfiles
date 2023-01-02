@@ -83,7 +83,7 @@ mpv av://v4l2:/dev/video0'                                      \
     next='cd $HOME/next'					\
     draw='cd $HOME/next/draw; clear && ls'	                \
     dev='cd $HOME/next/dev; clear && ls'	                \
-    site='cd $HOME/next/site/gabrielzschmitz.xyz; clear && ls'	\
+    site='cd $HOME/next/site/blog; clear && ls'	                \
     bin='cd $HOME/.local/bin; clear && ls'			\
     src='cd $HOME/.local/src; clear && ls'			\
     biblio='cd $HOME/next/work/UTFPR/biblio; clear && ls'       \
