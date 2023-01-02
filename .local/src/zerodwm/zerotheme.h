@@ -1,4 +1,16 @@
-static const char black[]       = "#050c0f";
+/*
+//         .             .              .		    
+//         |             |              |           .	    
+// ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_,  
+// | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /   
+// `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"'  
+//  ,|							    
+//  `'							    
+// GITHUB:https://github.com/gabrielzschmitz		    
+// INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/    
+// DOTFILES:https://github.com/gabrielzschmitz/dotfiles/    
+*/
+static const char black[]       = "#0a0a0a";
 static const char white[]       = "#b3b3b3";
 static const char gray[]        = "#e5e5e5";
 static const char gray2[]       = "#262626";

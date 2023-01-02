@@ -7,66 +7,34 @@
 //  ,|							    
 //  `'							    
 // GITHUB:https://github.com/gabrielzschmitz		    
-// INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/    
+// INSTAGRAM:https://www.instagram.com/gabrielzschmitz_/    
 // DOTFILES:https://github.com/gabrielzschmitz/dotfiles/    
 */
+
 /* See LICENSE file for copyright and license details. */
 #define TERMINAL "st"
 #define TERMCLASS "st"
 
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
+static const unsigned int gappx     = 15;        /* gaps between windows */
 static const unsigned int snap      = 20;       /* snap pixel */
-static const unsigned int gappih    = 15;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 15;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 20;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
-static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
-static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 2;   /* systray spacing */
-static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 1;     /* 0 means no systray */
-static const int showbar            = 1;     /* 0 means no bar */
-static const int topbar             = 1;     /* 0 means bottom bar */
-static const int user_bh            = 20;        /* 2 is the default spacing around the bar's font */
-static const int colorfultag        = 1;        /* 0 means use SchemeSel for selected non vacant tag */
-
+static const int showbar            = 1;        /* 0 means no bar */
+static const int topbar             = 1;        /* 0 means bottom bar */
+static const int usealtbar          = 1;        /* 1 means use non-dwm status bar */
+static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
+static const char *alttrayname      = "tray";    /* Polybar tray instance name */
+static const char *altbarcmd        = "$HOME/.config/polybar/launch.sh"; /* Alternate bar launch command */
 static const char *fonts[]          = { "CaskaydiaCove Nerd Font:size=12:antialias=true:autohint=true" };
-
 #include "zerotheme.h"
 static const char *colors[][3]      = {
-    /*                     fg       bg      border */
-    [SchemeNorm]       = { black,   black,  black },
-    [SchemeSel]        = { black,   black,  black },
-    [TabSel]           = { cyan,    black,  black },
-    [TabNorm]          = { white,   black,  black },
-    [SchemeTag]        = { gray2,   black,  black },
-    [SchemeTag1]       = { cyan,    black,  black },
-    [SchemeTag2]       = { magenta, black,  black },
-    [SchemeTag3]       = { orange,  black,  black },
-    [SchemeTag4]       = { green,   black,  black },
-    [SchemeTag5]       = { blue,    black,  black },
-    [SchemeTag6]       = { red,     black,  black },
-    [SchemeTag7]       = { yellow,  black,  black },
-    [SchemeTag8]       = { gray,    black,  black },
-    [SchemeLayout]     = { gray3,   black,  black },
-    [SchemeBtnPrev]    = { green,   black,  black },
-    [SchemeBtnNext]    = { yellow,  black,  black },
-    [SchemeBtnClose]   = { red,     black,  black },
+	/*               fg         bg          border   */
+	[SchemeNorm] = { white,     black,      black},
+	[SchemeSel]  = { white,      black,      black},
 };
 
 /* tagging */
-static const char *tags[] = { "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " };
-
-static const int tagschemes[] = {
-    SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4, SchemeTag5, SchemeTag6, SchemeTag7, SchemeTag8
-};
-
-static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
-static const unsigned int ulinestroke	= 3;	/* thickness / height of the underline */
-static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
-static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
+static const char *tags[] = { "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " , "  " };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -89,25 +57,20 @@ static const Rule rules[] = {
 	{ "ncmpcpp", 		NULL,       NULL,       0,            1,           -1 },
 	{ "packagesupgrade", 	NULL,       NULL,       0,            1,           -1 },
 	{ "weatherreport", 	NULL,       NULL,       0,            0,           -1 },
+        { "eww",                NULL,       NULL,       1 << 0,	      1,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
-#include "vanitygaps.c"
-
 static const Layout layouts[] = {
-/* symbol   arrange function */
-{ " ﬿ ",    tile },			/* 0 first entry is default */
-{ "  ",    monocle },		        /* 1 */
-{ " ﬷ ",    deck },			/* 2 */
-{ " 﩯 ",    grid },		         /* 3 */
-{ " 柳",    centeredfloatingmaster },	/* 4 */
-{ "  ",    NULL },			/* 5 no layout function means floating behavior */
-{ NULL,     NULL },
+	/* symbol     arrange function */
+	{ " ﬿ ",      tile },    /* first entry is default */
+	{ "  ",      NULL },    /* no layout function means floating behavior */
+	{ "  ",      monocle },
 };
 
 /* key definitions */
@@ -117,21 +80,16 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
-#define HOLDKEY 0xffe9 // 0 - disable; 0xffe9 - Mod1Mask; 0xffeb - Mod4Mask
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-/*static const char *flavorsel[] = { "flavorsel", NULL };*/
-static const char *termcmd[]  = { "st", NULL };
-static const char *layoutmenu_cmd = "layoutmenu";
-static const char *dmenucmd[] = { "dmenu_run", NULL };
+static const char *dmenucmd[] = { "dmenucenter_run", NULL };
+static const char *termcmd[]  = { TERMINAL , NULL };
 static const char *filescmd[] = { TERMINAL, "-c", "sfm", "-g", "100x30", "-e", "sfm", NULL };
 static const char *altfilescmd[] = { "pcmanfm", NULL };
-//static const char *musiccmd[] = { TERMINAL, "-c", "ncmpcpp", "-e", "ncmpcpp", NULL };
 static const char *musiccmd[] = { "musiccmd", NULL };
-static const char *emojicmd[] = { "emojimenu", NULL };
 static const char *picomcmd[] = { "picomtoggle", NULL };
 static const char *unlockycmd[] = { "unlocky", NULL };
 static const char *webcmd[] = { "chromium", NULL };
@@ -140,33 +98,30 @@ static const char *shotmenu[] = { "shotmenu", NULL };
 static const char *sysinfo[] = { "sysinfo", NULL };
 static const char *walle[] = { "walle", NULL };
 static const char *dispset[] = { "dispset", NULL };
-static const char *dispfix[] = { "dispfix", NULL };
 static const char *audiocontrolcmd[] = { TERMINAL, "-c", "ncpamixer", "-g", "80x15", "-e", "ncpamixer", NULL };
 static const char *tomatocmd[] = { TERMINAL, "-c", "tomato", "-g", "25x14", "-e", "tomato", NULL };
 static const char *keybcmd[] = { TERMINAL, "-c", "keyb", "-g", "100x30", "-e", "keyb", NULL };
 
 #include <X11/XF86keysym.h>
-
-static Key keys[] = {
+static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,             		XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,             		XK_w, 	   spawn,          {.v = webcmd } },
-	{ MODKEY,             		XK_e, 	   spawn,          {.v = emojicmd } },
+	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,          	XK_f, 	   spawn,          {.v = filescmd } },
 	{ Mod1Mask|ShiftMask,          	XK_f, 	   spawn,          {.v = altfilescmd } },
+	{ MODKEY|ShiftMask,          	XK_p, 	   spawn,          {.v = picomcmd } },
 	{ MODKEY|ShiftMask,          	XK_l, 	   spawn,          {.v = unlockycmd } },
-	{ MODKEY|ShiftMask,           	XK_m, 	   spawn,          {.v = audiocontrolcmd } },
+	{ MODKEY,             		XK_w, 	   spawn,          {.v = webcmd } },
 	{ MODKEY,             		XK_0, 	   spawn,          {.v = powermenu } },
+	{ MODKEY,                       XK_b, 	   spawn,          {.v = sysinfo } },
 	{ MODKEY|ShiftMask,             XK_w, 	   spawn,          {.v = walle } },
 	{ MODKEY|ShiftMask,             XK_d, 	   spawn,          {.v = dispset } },
-	{ MODKEY|Mod1Mask,              XK_d, 	   spawn,          {.v = dispfix } },
-	{ MODKEY,                       XK_b, 	   spawn,          {.v = sysinfo } },
-	{ MODKEY|ShiftMask,          	XK_p, 	   spawn,          {.v = picomcmd } },
-	{ MODKEY,			XK_F1,	   spawn,	   SHCMD("groff -mom $HOME/.local/share/dwm/gzdots.mom -T pdf | zathura -") },
 	{ MODKEY|ShiftMask,		XK_slash,  spawn,          {.v = keybcmd } },
 	{ MODKEY|ShiftMask,		XK_t,	   spawn,	   {.v = tomatocmd } },
+	{ MODKEY,			XK_F1,	   spawn,	   SHCMD("groff -mom $HOME/.local/share/dwm/gzdots.mom -T pdf | zathura -") },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_j,      rotatestack,    {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      rotatestack,    {.i = -1 } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_i,      incnmaster,     {.i = +1 } },
@@ -174,18 +129,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_u,      incrgaps,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_u,      incrgaps,       {.i = -1 } },
-	{ MODKEY,                       XK_a,      togglegaps,     {0} },
-	{ MODKEY|ShiftMask,             XK_a,      defaultgaps,    {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ Mod1Mask,                     XK_f,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_space,  setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[3]} },
-	{ MODKEY,                       XK_c,      setlayout,      {.v = &layouts[4]} },
-	{ MODKEY,                       XK_space,  setlayout,      {.v = &layouts[5]} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
 	{ MODKEY|ControlMask,           XK_0,      view,           {.ui = ~0 } },
@@ -194,6 +142,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Right,  focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_Left,   tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Right,  tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
+	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -204,11 +155,13 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_c,      quit,           {0} },
-	{ 0,			        XK_Print,  spawn,          SHCMD("scrot ~/pic/allmon-$(date +%H:%M:%S).png --quality 100 --freeze") },
 	{ MODKEY,			XK_Print,  spawn,          {.v = shotmenu } },
+	{ 0,			        XK_Print,  spawn,          SHCMD("scrot ~/pic/allmon-$(date +%H:%M:%S).png --quality 100 --freeze") },
+	{ MODKEY|ShiftMask,           	XK_m, 	   spawn,          {.v = audiocontrolcmd } },
         { 0, XF86XK_AudioMute,			   spawn,	   SHCMD("pamixer -t") },
 	{ 0, XF86XK_AudioLowerVolume,		   spawn,	   SHCMD("pamixer --allow-boost -d 5") },
 	{ 0, XF86XK_AudioRaiseVolume,		   spawn,	   SHCMD("pamixer --allow-boost -i 5") },
+	{ MODKEY,			XK_F4,	   spawn,	   {.v = musiccmd } },
 	{ MODKEY,			XK_F10,	   spawn,	   SHCMD("mpc volume 0") },
 	{ MODKEY,			XK_F11,	   spawn,	   SHCMD("mpc volume -5") },
 	{ MODKEY,			XK_F12,	   spawn,	   SHCMD("mpc volume +5") },
@@ -216,19 +169,17 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioNext,			   spawn,	   SHCMD("mpc next && disccover notify") },
 	{ 0, XF86XK_AudioPlay,			   spawn,	   SHCMD("mpc toggle && disccover notify") },
 	{ 0, XF86XK_AudioStop,			   spawn,	   SHCMD("mpc stop && disccover notify") },
-	{ MODKEY,			XK_F4,	   spawn,	   {.v = musiccmd } },
-	{ 0, XF86XK_Calculator,			   spawn,	   SHCMD(TERMINAL " -c calc -e eva") },
+	{ 0, XF86XK_Calculator,			   spawn,	   SHCMD(TERMINAL " -c calc -e qalc") },
 	{ 0, XF86XK_MonBrightnessUp,		   spawn,	   SHCMD("doas /home/gabrielzschmitz/.local/bin/sunlight") },
 	{ 0, XF86XK_MonBrightnessDown,		   spawn,	   SHCMD("doas /home/gabrielzschmitz/.local/bin/moonlight") },
 };
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
-static Button buttons[] = {
+static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} },
+	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
@@ -238,5 +189,23 @@ static Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+};
+
+static const char *ipcsockpath = "/tmp/dwm.sock";
+static IPCCommand ipccommands[] = {
+  IPCCOMMAND(  view,                1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  toggleview,          1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  tag,                 1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  toggletag,           1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  tagmon,              1,      {ARG_TYPE_UINT}   ),
+  IPCCOMMAND(  focusmon,            1,      {ARG_TYPE_SINT}   ),
+  IPCCOMMAND(  focusstack,          1,      {ARG_TYPE_SINT}   ),
+  IPCCOMMAND(  zoom,                1,      {ARG_TYPE_NONE}   ),
+  IPCCOMMAND(  incnmaster,          1,      {ARG_TYPE_SINT}   ),
+  IPCCOMMAND(  killclient,          1,      {ARG_TYPE_SINT}   ),
+  IPCCOMMAND(  togglefloating,      1,      {ARG_TYPE_NONE}   ),
+  IPCCOMMAND(  setmfact,            1,      {ARG_TYPE_FLOAT}  ),
+  IPCCOMMAND(  setlayoutsafe,       1,      {ARG_TYPE_PTR}    ),
+  IPCCOMMAND(  quit,                1,      {ARG_TYPE_NONE}   )
 };
 
