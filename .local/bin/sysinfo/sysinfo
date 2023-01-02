@@ -30,35 +30,34 @@ options="$uptime\n$internet\n$dates\n$memory\n$weather\n$packages\n$disks\n$batt
 chosen="$(echo -e "$options" | dmenucenter -l 10)"
 case $chosen in
     "$uptime")
-
-	    	herbe " Uptime now:" "$(sysinfo-uptime)"
+	    	notify-send " Uptime now:" "$(sysinfo-uptime)"
 	;;
     "$internet")
-	    	herbe " Network Manager:" &
+	    	notify-send " Network Manager:" &
                 nmdmenu
         ;;
     "$dates")
-	    	herbe " This month:" "$(sysinfo-calendar)"
+	    	notify-send " This month:" "$(sysinfo-calendar)"
         ;;
     "$memory")
-	    	herbe " Most intences in memory:" "$(sysinfo-mostinmemory)"
+	    	notify-send " Most intences in memory:" "$(sysinfo-mostinmemory)"
         ;;
     "$weather")
-	    	herbe " The weather today:" &
+	    	notify-send " The weather today:" &
                 setsid -f "st" -c weatherreport -e less -Srf "${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport"
         ;;
     "$packages")
-	    	herbe " Installed packages:" "$(sysinfo-packages)" &
+	    	notify-send " Installed packages:" "$(sysinfo-packages)" &
                 setsid -f "st" -c packagesupgrade -e sysinfo-packagesupgrade
         ;;
     "$disks")
-	    	herbe " Disks:" "$(lsblk --output NAME,SIZE,TYPE)"
+	    	notify-send " Disks:" "$(lsblk --output NAME,SIZE,TYPE)"
         ;;
     "$battery")
-	    	herbe "$(sysinfo-batteryicon) Battery now is:" "$(sysinfo-battery)"
+	    	notify-send "$(sysinfo-batteryicon) Battery now is:" "$(sysinfo-battery)"
         ;;
     "$manual")
-	    	herbe " This is your manual to my rice!" &
+	    	notify-send " This is your manual to my rice!" &
                 groff -mom $HOME/.local/share/dwm/gzdots.mom -T pdf | zathura -
 esac
 

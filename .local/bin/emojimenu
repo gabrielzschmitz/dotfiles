@@ -25,6 +25,6 @@ if [ -n "$1" ]; then
 	xdotool type "$chosen"
 else
 	printf '%s' "$chosen" | xclip -selection clipboard
-	herbe "Emoji copied to clipboard."
+	notify-send "Emoji copied to clipboard."
 fi
 

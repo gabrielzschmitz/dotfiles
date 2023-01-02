@@ -11,5 +11,5 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
 mv -f ~/.icons/default .local/share/icons || rm -rf .local/share/icons/default && mv -f ~/.icons/default .local/share/icons ; rm -rf ~/.icons
-mkdir ~/.config/gtk-2.0 ; mv ~/.gtkrc-2.0 ~/.config/gtk-2.0/gtkrc-2.0
+mkdir ~/.config/gtk-2.0 ; mv ~/.gtkrc-2.0 ~/.config/gtk-2.0/gtkrc-2.0 ; mv ~/.gtk-bookmarks ~/.config/gtk-2.0/bookmarks
 
