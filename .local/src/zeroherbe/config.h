@@ -10,8 +10,8 @@
 // INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 // DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
 */
-static const char *background_color = "#050c0f";
-static const char *border_color = "#050c0f";
+static const char *background_color = "#0a0a0a";
+static const char *border_color = "#0a0a0a";
 static const char *font_color = "#b3b3b3";
 static const char *font_pattern = "CaskaydiaCove Nerd Font:size=12:antialias=true:autohint=true";
 static unsigned line_spacing = 10;
