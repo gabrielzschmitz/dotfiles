@@ -51,34 +51,34 @@ chosen="$(printf "$options" | dmenucenter -l 7)"
 case $chosen in
     "$main")
                 sleep 0.5 && pic="$HOME/pic/main-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$mainx","$mainy","$mainsx","$mainsy" --quality 100 --freeze &&
-                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
+                xclip -t image/png $pic -selection clipboard && notify-send -i $pic "  Screnshot taken" "and copied to clipboard"
         ;;
     "$ext")
                 sleep 0.5 && pic="$HOME/pic/ext-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$extx","$exty","$extsx","$extsy" --quality 100 --freeze &&
-                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
+                xclip -t image/png $pic -selection clipboard && notify-send -i $pic "  Screnshot taken" "and copied to clipboard"
 	;;
     "$all")
                 sleep 0.5 && pic="$HOME/pic/all-$(date +%H:%M:%S).png" && scrot "$pic" --quality 100 --freeze &&
-                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
+                xclip -t image/png $pic -selection clipboard && notify-send -i $pic "  Screnshot taken" "and copied to clipboard"
         ;;
     "$area")
-                sleep 0.5 && pic="$HOME/pic/area-$(date +%H:%M:%S).png" && scrot "$pic" --select --quality 100 --freeze &&
-                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
+                pkill xbanish ; sleep 0.5 && pic="$HOME/pic/area-$(date +%H:%M:%S).png" && scrot "$pic" --select --quality 100 --freeze &&
+                xclip -t image/png $pic -selection clipboard && notify-send -i $pic "  Screnshot taken" "and copied to clipboard" && xbanish -i mod4 -i mod1 -i shift -i control &
         ;;
     "$maintimer")
-		herbe $pic "  Taking the screenshot in 10s..." &
+		notify-send $pic "  Taking the screenshot in 10s..." &
                 pic="$HOME/pic/maintimer-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$mainx","$mainy","$mainsx","$mainsy" --quality 100 --delay 10 --freeze &&
-                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
+                xclip -t image/png $pic -selection clipboard && notify-send -i $pic "  Screnshot taken" "and copied to clipboard"
         ;;
     "$exttimer")
-		herbe $pic "  Taking the screenshot in 10s..." &
+		notify-send $pic "  Taking the screenshot in 10s..." &
                 pic="$HOME/pic/exttimer-$(date +%H:%M:%S).png" && scrot "$pic" --autoselect "$extx","$exty","$extsx","$extsy" --quality 100 --delay 10 --freeze &&
-                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
+                xclip -t image/png $pic -selection clipboard && notify-send -i $pic "  Screnshot taken" "and copied to clipboard"
         ;;
     "$alltimer")
-		herbe $pic "  Taking the screenshot in 10s..." &
+		notify-send $pic "  Taking the screenshot in 10s..." &
                 pic="$HOME/pic/alltimer-$(date +%H:%M:%S).png" && scrot "$pic" --quality 100 --delay 10 --freeze &&
-                xclip -t image/png $pic -selection clipboard && dunstify -i $pic "  Screnshot taken" "and copied to clipboard"
+                xclip -t image/png $pic -selection clipboard && notify-send -i $pic "  Screnshot taken" "and copied to clipboard"
         ;;
 esac
 
