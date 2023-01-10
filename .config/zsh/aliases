@@ -26,8 +26,10 @@
     pk='pkill'							\
     nv='nvim'							\
     vi='nvim'							\
+    cf='cfiles'                                                 \
     mkins='make install'				        \
     sumkins='doas make install'				        \
+    sumkclins='doas make clean install'				\
     patcha='patch -p1 <'					\
     du='du --human-readable'					\
     grep='grep --color=auto'					\
@@ -63,7 +65,7 @@ mpv av://v4l2:/dev/video0'                                      \
     dotsa='dots add'						\
     dotspl='dots pull'						\
     gitpu='git push -u origin main'				\
-    gitc='dots commit -m'					\
+    gitc='git commit -m'					\
     gita='git add'                                              \
     gitp='git push'                                             \
     gitpl='git pull'                                            \
@@ -89,8 +91,9 @@ mpv av://v4l2:/dev/video0'                                      \
     biblio='cd $HOME/next/work/UTFPR/biblio; clear && ls'       \
     work='cd $HOME/next/work/UTFPR/work; clear && ls'           \
     tc='cd $HOME/.local/src/typer.c ;clear; ls'                 \
-    cf='cd $HOME/.local/src/cfetch ;clear; ls'                  \
-    tmt='cd $HOME/.local/src/tomato.c && clear; ls'             \
+    tmt='cd $HOME/.local/src/Tomato.C && clear; ls'             \
+    zerocfetch='cd $HOME/.local/src/cfetch ;clear; ls'          \
+    zerocfiles='cd $HOME/.local/src/zerocfiles ;clear; ls'      \
     zerodwm='cd $HOME/.local/src/zerodwm; clear && ls'		\
     zerost='cd $HOME/.local/src/zerost; clear && ls'		\
     zerodmenu='cd $HOME/.local/src/zerodmenu; clear && ls'	\
