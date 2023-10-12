@@ -1,0 +1,28 @@
+#!/bin/sh
+arg=$1
+file=$HOME/.local/share/touchpad
+filecontent=$(cat $file)
+
+case $arg in
+    "--enable")
+        xinput set-prop 13 182 1
+        echo 1 > $file
+    ;;
+    "--disable")
+        xinput set-prop 13 182 0
+        echo 0 > $file
+    ;;
+    *)
+        case $filecontent in
+            "1")
+                xinput set-prop 13 182 0
+                echo 0 > $file
+            ;;
+            "0")
+                xinput set-prop 13 182 1
+                echo 1 > $file
+            ;;
+        esac
+    ;;
+esac
+

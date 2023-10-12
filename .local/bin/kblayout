@@ -13,8 +13,8 @@
 # Script to make US with accents keyboard layout the default
 # plus turn on the numlock and speed up the keypresses
 
-setxkbmap us alt-intl
 # setxkbmap br
+setxkbmap us alt-intl
 numlockx on
 xset r rate 300 50
 setxkbmap -option caps:escape

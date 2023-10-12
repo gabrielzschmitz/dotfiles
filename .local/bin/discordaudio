@@ -1,0 +1,11 @@
+#!/bin/sh
+load-module module-null-sink sink_name=Combined_Output sink_properties=device.description=Combined_Output
+load-module module-null-sink sink_name=Recorded_Sink sink_properties=device.description=Recorded_Sink
+load-module module-loopback source=0 sink=Combined_Output
+load-module module-loopback source=3 sink=Combined_Output
+load-module module-loopback source=3 sink=alsa_output.pci-0000_05_00.6.HiFi__hw_Generic_1__sink
+
+pactl load-module module-null-sink sink_name=Virtual1
+pactl load-module module-loopback source=alsa_input.usb-C-Media_Electronics_Inc._USB_PnP_Sound_Device-00.analog-mono sink=Virtual1
+pactl load-module module-loopback source=Virtual1.monitor sink=alsa_output.pci-0000_05_00.6.HiFi__hw_Generic_1__sink
+

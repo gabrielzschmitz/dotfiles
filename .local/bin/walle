@@ -18,43 +18,52 @@ WALL_PATH=$HOME/pic/wall/zeromono
 SUNDIAL_DIR=$HOME/pic/wall/sundial
 WALL_DIR=${WALL_PATH##*/}
 DFLT_WALL=$HOME/.local/bin/dfltwall
-XINITRC=$HOME/.config/X11/xinitrc
 
 # Wallpaper selecting function
 WALL_SEL=$(nsxiv "$WALL_PATH" -to)
 
 case $WALL_DIR in
-    'zeromono')
-        case $WALL_SEL in
-            '')
-                notify-send "  To set a wallpaper use 'm' to mark the selected one" "  If multiple was selected then the last will be setted" &
-            ;;
-            *)
-                # Remove everything up to the last slash
-                WALL_SEL=${WALL_SEL##*/}
-                # Remove "white.png" and "black.png" from the end
-                WALL_SEL=${WALL_SEL%white.png}
-                WALL_SEL=${WALL_SEL%black.png}
-        
-                # X wallpaper options
-                WALL_OPT=$(printf "zoom\ncenter\ntile\nstretch\nmaximize"| dmenucenter -l 6)
-        
-                # Change wallpaper
-                cp "$WALL_PATH/${WALL_SEL}white.png" "$SUNDIAL_DIR/light.png"
-                cp "$WALL_PATH/${WALL_SEL}black.png" "$SUNDIAL_DIR/dark.png"
-                sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $SUNDIAL_DIR/light.png|" \
-                    $DFLT_WALL
-                sundial
-                notify-send "  Wallpaper setted"
-            ;;
-        esac
-    ;;
+    #'zeromono')
+    #    case $WALL_SEL in
+    #        '')
+    #            # Send a notification with a little tutorial of how to select a wallpaper
+    #            notify-send "  To set a wallpaper use 'm' to mark the selected one" "  If multiple was selected then the last will be setted" &
+    #        ;;
+    #        *)
+    #            # Save the wallpaper icon
+    #            WALL_ICON=$WALL_SEL
+
+    #            # Remove everything up to the last slash
+    #            WALL_SEL=${WALL_SEL##*/}
+    #            # Remove "white.png" and "black.png" from the end
+    #            WALL_SEL=${WALL_SEL%white.png}
+    #            WALL_SEL=${WALL_SEL%black.png}
+    #    
+    #            # X wallpaper options
+    #            WALL_OPT=$(printf "zoom\ncenter\ntile\nstretch\nmaximize"| dmenucenter -l 6)
+    #    
+    #            # Change wallpaper
+    #            cp "$WALL_PATH/${WALL_SEL}white.png" "$SUNDIAL_DIR/light.png"
+    #            cp "$WALL_PATH/${WALL_SEL}black.png" "$SUNDIAL_DIR/dark.png"
+    #            sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $SUNDIAL_DIR/light.png|" \
+    #                $DFLT_WALL
+    #            sundial
+
+    #            # Notify the user
+    #            notify-send -i $WALL_ICON "  Wallpaper setted"
+    #        ;;
+    #    esac
+    #;;
     *)
         case $WALL_SEL in
             '')
+                # Send a notification with a little tutorial of how to select a wallpaper
                 notify-send "  To set a wallpaper use 'm' to mark the selected one" "  If multiple was selected then the last will be setted" &
             ;;
             *)
+                # Save the wallpaper icon
+                WALL_ICON=$WALL_SEL
+
                 # X wallpaper options
                 WALL_OPT=$(printf "zoom\ncenter\ntile\nstretch\nmaximize"| dmenucenter -l 6)
         
@@ -62,7 +71,9 @@ case $WALL_DIR in
                 sed -i "s|xwallpaper.*|xwallpaper --$WALL_OPT $WALL_SEL|" \
                     $DFLT_WALL
                 xwallpaper --$WALL_OPT $WALL_SEL
-                notify-send "  Wallpaper setted"
+
+                # Notify the user
+                notify-send -i $WALL_ICON "  Wallpaper setted"
             ;;
         esac
     ;;

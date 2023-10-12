@@ -1,0 +1,15 @@
+#!/bin/sh
+arg=$1
+
+case $arg in
+    "--enable")
+        xrandr --output eDP-1-1 --primary --mode 1920x1080 --scale-from 1280x960 --rate 120
+    ;;
+    "--disable")
+        dfltdisp
+    ;;
+    *)
+        echo "error"
+    ;;
+esac
+

@@ -12,18 +12,18 @@
 # Screenshot taker menu using dmenu and scrot
 
 # Get main monitor size and position
-mainsp="$(xrandr | grep -E "* primary*" | cut -d ' ' -f4)"
+mainsp="$(xrandr | grep -E " primary*" | cut -d ' ' -f4)"
 mainsx="$(echo "${mainsp%%x*}")"
-mainsy="$echo "${mainsp##*x}" | cut -d'+' -f1)"
+mainsy="$(echo "${mainsp##*x}" | cut -d'+' -f1)"
 mainx="$(echo "${mainsp##*x}" | cut -d'+' -f2)"
 mainy="$(echo "${mainsp##*x}" | cut -d'+' -f3)"
 
 # Check if there is a external monitor
-extconnected="$(xrandr | grep -E "* connected*" | wc -l)"
+extconnected="$(xrandr | grep -E " connected*" | wc -l)"
 # Get external monitor size and position
-extsp="$(xrandr | grep -E "* connected*" | grep -v -E "*primary*" | cut -d ' ' -f3)"
+extsp="$(xrandr | grep -E " connected*" | grep -v -E "primary*" | cut -d ' ' -f3)"
 extsx="$(echo "${extsp%x*}")"
-extsy="$echo "${extsp#*x}" | cut -d'+' -f1)"
+extsy="$(echo "${extsp#*x}" | cut -d'+' -f1)"
 extx="$(echo "${extsp#*x}" | cut -d'+' -f2)"
 exty="$(echo "${extsp#*x}" | cut -d'+' -f3)"
 

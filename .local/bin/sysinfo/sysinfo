@@ -20,7 +20,7 @@ memory="$(sysinfo-memory)"
 weather="$(sysinfo-weather)"
 packages="$(sysinfo-packages)"
 disks="$(sysinfo-disks)"
-battery="$(sysinfo-batteryicon)$(sysinfo-battery)"
+battery="$(sysinfo-batteryicon) $(sysinfo-battery)"
 manual="  Rice manual"
 
 # Variables

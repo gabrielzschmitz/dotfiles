@@ -54,11 +54,11 @@ twoscreen() { # If multi-monitor is selected and there are two screens.
         secondary=$(echo "$screens" | grep -v "$primary")
         direction=$(printf "left\\nright" | dmenu -p "What side of $primary should $secondary be on?")
         rotate=$(printf "normal\\nright" | dmenu -p "Want to rotate the second display?")
-	dispset="xrandr --output "$primary" --auto --rate 120 --primary --scale 1.0x1.0 --output "$secondary" --"$direction"-of "$primary" --auto --scale 1.0x1.0 --rotate "$rotate""
+	dispset="xrandr --output "$primary" --mode 1920x1080 --rate 120 --primary --scale 1.0x1.0 --output "$secondary" --"$direction"-of "$primary" --auto --scale 1.0x1.0 --rotate "$rotate""
         echo $dispset
 	sed -i "s|xrandr.*|$dispset|\
 	" ~/.local/bin/dfltdisp
-	xrandr --output "$primary" --auto --rate 120 --primary --scale 1.0x1.0 --output "$secondary" --"$direction"-of "$primary" --auto --scale 1.0x1.0 --rotate "$rotate" && notify-send -t 2750 "  Dual screens selected"
+	xrandr --output "$primary" --mode 1920x1080 --rate 120 --primary --scale 1.0x1.0 --output "$secondary" --"$direction"-of "$primary" --auto --scale 1.0x1.0 --rotate "$rotate" && notify-send -t 2750 "  Dual screens selected"
 	sleep 3 && $HOME/.config/polybar/launch.sh &
 
     fi
@@ -69,11 +69,11 @@ morescreen() { # If multi-monitor is selected and there are more than two screen
 	secondary=$(echo "$screens" | grep -v "$primary" | dmenu -p "Select secondary display:")
 	direction=$(printf "left\\nright" | dmenu -p "What side of $primary should $secondary be on?")
 	tertiary=$(echo "$screens" | grep -v "$primary" | grep -v "$secondary" | dmenu -p "Select third display:")
-	dispset="xrandr --output "$primary" --auto --rate 120 --primary --output "$secondary" --"$direction"-of "$primary" --auto --output "$tertiary" --"$(printf "left\\nright" | grep -v "$direction")"-of "$primary" --auto"
+	dispset="xrandr --output "$primary" --mode 1920x1080 --rate 120 --primary --output "$secondary" --"$direction"-of "$primary" --auto --output "$tertiary" --"$(printf "left\\nright" | grep -v "$direction")"-of "$primary" --auto"
         echo $dispset
 	sed -i "s|xrandr.*|$dispset|\
 	" ~/.local/bin/dfltdisp
-	xrandr --output "$primary" --auto --rate 120 --primary --output "$secondary" --"$direction"-of "$primary" --auto --output "$tertiary" --"$(printf "left\\nright" | grep -v "$direction")"-of "$primary" --auto && notify-send -t 2750 "  Triple screens selected"
+	xrandr --output "$primary" --mode 1920x1080 --rate 120 --primary --output "$secondary" --"$direction"-of "$primary" --auto --output "$tertiary" --"$(printf "left\\nright" | grep -v "$direction")"-of "$primary" --auto && notify-send -t 2750 "  Triple screens selected"
 	sleep 3 && $HOME/.config/polybar/launch.sh &
 
 	}
@@ -85,11 +85,11 @@ multimon() { # Multi-monitor handler.
 	esac ;}
 
 onescreen() { # If only one output available or chosen.
-	dispset="xrandr --output "$1" --auto --rate 120 --primary --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -)"
+	dispset="xrandr --output "$1" --mode 1920x1080 --rate 120 --primary --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -)"
         echo $dispset
 	sed -i "s|xrandr.*|$dispset|\
 	" ~/.local/bin/dfltdisp
-	xrandr --output "$1" --auto --rate 120 --primary --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -) && notify-send -t 2750 "  Single screen selected"
+	xrandr --output "$1" --mode 1920x1080 --rate 120 --primary --scale 1.0x1.0 $(echo "$allposs" | grep -v "\b$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' ' -) && notify-send -t 2750 "  Single screen selected"
 	sleep 3 && $HOME/.config/polybar/launch.sh &
 
 	}

@@ -16,11 +16,24 @@
 toggle="$(pidof xautolock)"
 status=$?
 
-if [ $status = 1 ]
-then
-    xautolock -time 10 -locker slock &
-else
-    pkill xautolock
-    notify-send -t 2750 "  Killing xautolock"
-fi
+case $1 in
+    "--silent")
+        if [ $status = 1 ]
+        then
+            xautolock -time 10 -locker slock &
+        else
+            pkill xautolock
+        fi
+    ;;
+    *)
+        if [ $status = 1 ]
+        then
+            notify-send -t 2000 "  Running xautolock"
+            xautolock -time 10 -locker slock &
+        else
+            pkill xautolock
+            notify-send -t 2000 "  Killing xautolock"
+        fi
+    ;;
+esac
 

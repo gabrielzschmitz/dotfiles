@@ -10,11 +10,18 @@
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
-# A simple loop to refresh sundial
-while :
-do {
-    sundial;
-    sleep 5m;
-}
-done
+toggle="$(pidof keymacrostoggle)"
+status=$?
+
+if [ $status = 1 ]
+then
+    while :
+    do {
+        sleep 0.001;
+        xdotool key Up;
+    }
+    done
+else
+    pkill keymacrostoggle
+fi
 

@@ -1,0 +1,32 @@
+#!/bin/sh
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+#
+# Video to gif conversor using gifski to convert
+# and pv to have a progressbar
+
+FILE=$1
+FPS=${2%%fps*}
+FILENAME=${FILE%%.*}
+
+FRAMESDIR="_${FILENAME}_FRAMES_"
+mkdir ${FRAMESDIR}
+
+echo -e "Getting all the video frames:"
+pv ${FILE} | ffmpeg -i pipe:0 -v warning ${FRAMESDIR}/frame%04d.png
+
+echo -e "\nConverting all frames to a high quality gif:"
+gifski -o ${FILENAME}.gif --fps ${FPS} --quality 100 ${FRAMESDIR}/frame*.png
+rm -rf ${FRAMESDIR}
+
+echo -e "\n"
+echo -e "${FILENAME}.gif is ready!"
+

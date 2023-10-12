@@ -1,0 +1,68 @@
+#!/bin/sh
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielzschmitz_/   
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+
+# Just a small tool to toggle/untoggle the fan
+# by using the pid of steam
+arg=$1
+toggle="$(pidof steam)"
+status=$?
+
+case $arg in
+    "--daemon")
+        sleep 4;
+        while :
+        do {
+            toggle="$(pidof steam)"
+            status=$?
+            fans="$(i8kctl | awk '{ print $5, $6 }')"
+
+            if [ $status = 1 ]
+            then
+                case $fans in
+                    '1 1')
+                        i8kctl fan - -
+                    ;;
+                    *)
+                        i8kctl fan 2 1
+                    ;;
+                esac
+            else
+                case $fans in
+                    '2 2')
+                        i8kctl fan - -
+                    ;;
+                    *)
+                        i8kctl fan 2 2
+                    ;;
+                esac
+            fi
+
+            sleep 20;
+        }
+        done
+    ;;
+    "1")
+        i8kctl fan 2 1
+    ;;
+    "2")
+        i8kctl fan 2 2
+    ;;
+    *)
+        if [ $status = 1 ]
+        then
+            i8kctl fan 2 1
+        else
+            i8kctl fan 2 2
+        fi
+    ;;
+esac
+

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+password=$(find ~/next/pass -type f -name '*.gpg' |
+	sed 's/.*\/\(.*\)\.gpg$/\1/' | dmenu -p "Pass:")
+
+case $password in
+    '')
+    ;;
+    *'2fa')
+        pass otp -c "$password" && notify-send '2FA Password copied to clipboard for 45s!'
+    ;;
+    *)
+        pass -c "$password" && notify-send 'Password copied to clipboard for 45s!'
+    ;;
+esac
+

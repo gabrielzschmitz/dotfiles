@@ -1,0 +1,110 @@
+# NEXTCLOUD
+su -
+apt update && apt upgrade
+apt install sudo git build-essential curl apache2 mariadb-server gnupg zip neovim -y
+EDITOR=nvim visudo
+gabrielzschmitz ALL=(ALL) NOPASSWD: ALL
+exit
+echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/sury-php.list
+wget -qO - https://packages.sury.org/php/apt.gpg | sudo apt-key add -
+sudo apt update && sudo apt install php8.0-{xml,cli,fpm,cgi,mysql,mbstring,gd,curl,zip,imagick,bcmath,gmp,intl} libmagickcore-6.q16-6-extra libapache2-mod-php8.0
+sudo apt update && sudo apt upgrade
+sudo a2enmod proxy_fcgi setenvif
+sudo a2enconf php8.0-fpm
+sudo mysql_secure_installation
+sudo mysql
+CREATE DATABASE nextdb;
+CREATE USER 'gabrielzschmitz'@'localhost' IDENTIFIED BY '88547471';
+GRANT ALL ON nextdb.* TO 'gabrielzschmitz'@'localhost';
+FLUSH PRIVILEGES;
+exit
+wget https://download.nextcloud.com/server/releases/latest.zip
+unzip latest.zip
+sudo mv nextcloud /var/www/html/ && rm latest.zip
+sudo chown -R www-data:www-data /var/www/html/nextcloud
+sudo touch /etc/apache2/sites-available/nextcloud.conf
+
+sudo nvim /etc/apache2/sites-available/nextcloud.conf
+sudo echo "<VirtualHost *:80>
+     ServerAdmin gabrielzschmitz@localhost
+     DocumentRoot /var/www/html/nextcloud
+
+     ServerName 192.168.0.105
+
+     <Directory /var/www/html/nextcloud/>
+          Options FollowSymlinks
+          AllowOverride All
+          Require all granted
+     </Directory>
+     ErrorLog ${APACHE_LOG_DIR}/error.log
+     CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+     <Directory /var/www/html/nextcloud/>
+            RewriteEngine on
+            RewriteBase /
+ 
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteRule ^(.*) index.php [PT,L]
+    </Directory>
+</VirtualHost>
+" > /etc/apache2/sites-available/nextcloud.conf
+
+sudo a2dissite 000-default.conf
+sudo a2ensite nextcloud.conf
+sudo a2enmod headers rewrite env dir mime
+sudo systemctl reboot
+sudo systemctl restart apache2
+
+# add 'default_phone_region' => 'BR', to /var/www/html/nextcloud/config/config.php
+sudo nvim /var/www/html/nextcloud/config/config.php
+# change memory_limit to 1G in /etc/php/8.0/fpm/php.ini
+sudo nvim /etc/php/8.0/fpm/php.ini
+sudo systemctl restart apache2
+sudo systemctl restart php8.0-fpm
+
+sudo apt install php8.0-{apcu,redis} redis-server
+redis-server
+sudo systemctl reboot
+sudo service apache2 restart
+
+sudo nvim /etc/redis/redis.conf
+
+port 6379
+to
+port 0
+
+uncomment
+unixsocket /var/run/redis/redis.sock
+
+unixsocketperm 700
+Change to
+unixsocketperm 770
+
+sudo usermod -a -G redis www-data
+sudo service apache2 restart
+sudo service redis-server start
+sudo nvim /var/www/html/nextcloud/config/config.php
+  'memcache.local' => '\OC\Memcache\APCu',
+  'distributed' => '\\OC\\Memcache\\Redis',
+  'memcache.locking' => '\\OC\\Memcache\\Redis',
+  'filelocking.enabled' => 'true',
+  'redis' =>
+  array (
+          'host' => '/var/run/redis/redis-server.sock',
+          'port' => 0,
+          'timeout' => 0.0,
+  ),
+
+sudo systemctl enable redis-server
+sudo nvim /etc/apache2/apache2.conf
+<Directory /var/www/>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+</Directory>
+
+sudo service apache2 restart
+
+sudo crontab -u www-data -e
+*/5 * * * * /usr/bin/php -f /var/www/nextcloud/cron.php
+

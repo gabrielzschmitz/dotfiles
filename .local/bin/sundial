@@ -13,44 +13,98 @@
 # Script that change the wallpaper based on the hour of day
 # to be easier on eyes, by gabrielzschmitz
 
-# Getting the time
-TIME=$(date +%H)
-PID=$(cat /tmp/sundial.pid)
+# Making deamon a flag to sundial
+case $1 in
+    "--daemon")
+        # A simple loop to refresh sundial
+        sleep 4;
+        while :
+        do {
+            # Getting the time
+            TIME=$(date +%H)
+            PID=$(cat /tmp/sundial.pid)
+            
+            # Scheduling each wallpaper/bar
+            case "$TIME" in
+                # light from 7AM to 6PM
+            	  07|08|09|10|11|12|13|14|15|16|17|18)
+                    # Changing wallpaper
+                    sed -i 's/dark/light/g' ~/.local/bin/dfltwall
+                    dfltwall
+            
+                    ## Changing bar
+                    #if [[ $PID = "D" || $PID = "" ]]; then
+                    #    sleep 4
+                    #    sed -i 's|fg .*|fg = #030303|g' ~/.config/polybar/colors.ini
+                    #    sed -i 's|fg-alt .*|fg-alt = #1a1a1a|g' ~/.config/polybar/colors.ini
+            
+                    #    $HOME/.config/polybar/launch.sh &
+                    #    echo "L" > /tmp/sundial.pid
+                    #fi
+                ;;
+                # dark from 7PM to 6AM
+            	  00|01|02|03|04|05|06|19|20|21|22|23)
+                    # Changing wallpaper
+                    sed -i 's/light/dark/g' ~/.local/bin/dfltwall
+                    dfltwall
+            
+                    ## Changing bar
+                    #if [[ $PID = "L" || $PID = "" ]]; then
+                    #    sleep 4
+                    #    sed -i 's|fg .*|fg = #e5e5e5|g' ~/.config/polybar/colors.ini
+                    #    sed -i 's|fg-alt .*|fg-alt = #b3b3b3|g' ~/.config/polybar/colors.ini
+                    #    
+                    #    $HOME/.config/polybar/launch.sh &
+                    #    echo "D" > /tmp/sundial.pid
+                    #fi
+                ;;
+            esac
 
-# Scheduling each wallpaper/bar
-case "$TIME" in
-        # light from 7AM to 6PM
-	07|08|09|10|11|12|13|14|15|16|17|18)
-            # Changing wallpaper
-            sed -i 's/dark/light/g' ~/.local/bin/dfltwall
-            dfltwall
+            # Wait 5m and rerun
+            sleep 5m;
+        }
+        done
+    ;;
 
-            # Changing bar
-            if [[ $PID = "D" || $PID = "" ]]; then
-                sleep 4
-                sed -i 's|fg .*|fg = #030303|g' ~/.config/polybar/colors.ini
-                sed -i 's|fg-alt .*|fg-alt = #1a1a1a|g' ~/.config/polybar/colors.ini
-
-                $HOME/.config/polybar/launch.sh &
-                echo "L" > /tmp/sundial.pid
-            fi
-        ;;
-        # dark from 7PM to 6AM
-	00|01|02|03|04|05|06|19|20|21|22|23)
-            # Changing wallpaper
-            sed -i 's/light/dark/g' ~/.local/bin/dfltwall
-            dfltwall
-
-            # Changing bar
-            if [[ $PID = "L" || $PID = "" ]]; then
-                sleep 4
-                sed -i 's|fg .*|fg = #e5e5e5|g' ~/.config/polybar/colors.ini
-                sed -i 's|fg-alt .*|fg-alt = #b3b3b3|g' ~/.config/polybar/colors.ini
+    *)
+        # Getting the time
+        TIME=$(date +%H)
+        PID=$(cat /tmp/sundial.pid)
+        
+        # Scheduling each wallpaper/bar
+        case "$TIME" in
+            # light from 7AM to 6PM
+            07|08|09|10|11|12|13|14|15|16|17|18)
+                # Changing wallpaper
+                sed -i 's/dark/light/g' ~/.local/bin/dfltwall
+                dfltwall
                 
-                $HOME/.config/polybar/launch.sh &
-                echo "D" > /tmp/sundial.pid
-            fi
-        ;;
+                ## Changing bar
+                #if [[ $PID = "D" || $PID = "" ]]; then
+                #    sleep 4
+                #    sed -i 's|fg .*|fg = #030303|g' ~/.config/polybar/colors.ini
+                #    sed -i 's|fg-alt .*|fg-alt = #1a1a1a|g' ~/.config/polybar/colors.ini
+                
+                #    $HOME/.config/polybar/launch.sh &
+                #    echo "L" > /tmp/sundial.pid
+                #fi
+            ;;
+            # dark from 7PM to 6AM
+            00|01|02|03|04|05|06|19|20|21|22|23)
+                # Changing wallpaper
+                sed -i 's/light/dark/g' ~/.local/bin/dfltwall
+                dfltwall
+        
+                ## Changing bar
+                #if [[ $PID = "L" || $PID = "" ]]; then
+                #    sleep 4
+                #    sed -i 's|fg .*|fg = #e5e5e5|g' ~/.config/polybar/colors.ini
+                #    sed -i 's|fg-alt .*|fg-alt = #b3b3b3|g' ~/.config/polybar/colors.ini
+                #    
+                #    $HOME/.config/polybar/launch.sh &
+                #    echo "D" > /tmp/sundial.pid
+                #fi
+            ;;
+        esac
+    ;;
 esac
-
-

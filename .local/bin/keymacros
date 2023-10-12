@@ -10,13 +10,35 @@
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
-# Minecraft hit loop
-while :
-do {
-    sleep 0.7;
-    xdotool click 1;
-}
-done
+# Retrowave peaceful cash farm loop
+sleep 5
+case $1 in
+    "--retrowaveup")
+        while :
+        do {
+            sleep 0.001;
+            xdotool key Up;
+        }
+        done
+    ;;
+    "--retrowaveclick")
+        while :
+        do {
+            sleep 1;
+            xdotool mousemove 770 903;
+            xdotool click 1;
+        }
+        done
+    ;;
+esac
+
+## Minecraft hit loop
+#while :
+#do {
+#    sleep 0.7;
+#    xdotool click 1;
+#}
+#done
 
 # Minecraft ancient debris auto mining
 #while :

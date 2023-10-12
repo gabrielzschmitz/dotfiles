@@ -9,8 +9,22 @@
 # GITHUB:https://github.com/gabrielzschmitz		  
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
+#
+# Video subtitles embedder using ffmpeg
 
-#mv -f ~/.icons/default .local/share/icons || rm -rf .local/share/icons/default && mv -f ~/.icons/default .local/share/icons ; rm -rf ~/.icons
-#mkdir ~/.config/gtk-2.0 ; mv ~/.gtkrc-2.0 ~/.config/gtk-2.0/gtkrc-2.0 ; mv ~/.gtk-bookmarks ~/.config/gtk-2.0/bookmarks
-cp -rf /home/gabrielzschmitz/.local/share/themes /usr/share/ && cp -rf /home/gabrielzschmitz/.local/share/icons /usr/share/
+FILE=$1
+FILENAME=${FILE%%.*}
+
+echo -e "Getting the soft subtitle from file"
+ffmpeg -i "${FILE}" -map 0:s:0 "${FILENAME}.srt"
+
+echo -e "\n"
+echo -e "Hard coding the subtitles in the file"
+ffmpeg -i "${FILE}" -vf "subtitles='${FILENAME}'.srt:force_style='PrimaryColour=&H03fcff,Italic=1,Spacing=0.8'" "${FILENAME}SUB.mkv"
+
+rm "${FILENAME}.srt"
+mv "${FILENAME}SUB.mkv" "${FILE}"
+
+echo -e "\n"
+echo -e "${FILE} is ready!"
 

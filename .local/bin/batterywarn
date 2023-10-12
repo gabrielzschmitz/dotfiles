@@ -1,0 +1,31 @@
+#!/bin/sh
+#         .             .              .		  
+#         |             |              |           .	  
+# ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
+# | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
+# `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
+#  ,|							  
+#  `'							  
+# GITHUB:https://github.com/gabrielzschmitz		  
+# INSTAGRAM:https://www.instagram.com/gabrielzschmitz_    
+# DOTFILES:https://github.com/gabrielzschmitz/dotfiles    
+
+# A simple loop to get battery status than warn the user about low battery
+while :
+do {
+    # Getting the battery capacity and if cable is connected or not
+    capacity="$(cat /sys/class/power_supply/BAT?*/capacity 2>/dev/null)"
+    cable="$(cat /sys/class/power_supply/BAT?*/status 2>/dev/null)"
+
+    # Sending warn a notification if the battery is below 10% and discharging
+    case $cable in
+        Discharging)
+            [ "$capacity" -le 10 ] && notify-send -u critical -t 2500 "Battery is at $capacity%" "Plug the charger"
+        ;;
+    esac
+
+    # Wait 10s and redo
+    sleep 10;
+}
+done
+

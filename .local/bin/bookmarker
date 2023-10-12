@@ -10,15 +10,19 @@
 # INSTAGRAM:https://www.instagram.com/gabrielzschmitz_/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
-# Just a small tool to toggle/untoggle picom
-# by using the pid of it
-toggle="$(pidof picom)"
-status=$?
+BOOKMARKSFILE="$HOME/.local/share/bookmarks"
 
-if [ $status = 1 ]
-then
-    picom -b --experimental-backends &
-else
-    pkill picom
-fi
+case $1 in
+    "--show")
+        BOOKMARK="$(grep -v '^#' $HOME/.local/share/bookmarks | dmenu -l 50 | cut -d' ' -f1)" 
+        echo "$BOOKMARK" | xclip -i -selection clipboard && notify-send "bookmark copied to clipboard"
+    ;;
+    "--add")
+        CLIPBOARD="$(xclip -o)"
+        echo "$CLIPBOARD" >> "$BOOKMARKSFILE" && notify-send "link bookmarked"
+    ;;
+    *)
+        echo 'usage: bookmarker [--show][--add]'
+    ;;
+esac
 
