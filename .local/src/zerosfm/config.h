@@ -48,7 +48,7 @@ static const size_t delconf_len     = LEN(delconf);
 static const char root[]   = "/";
 
 /* software */
-static const char *mpv[]        = { "mpv", "--fullscreen" };
+static const char *mpv[]        = { "mpv", "--fullscreen", "--loop" };
 static const char *nsxiv[]      = { "nsxiv", "-a" };
 static const char *zathura[]    = { "zathura" };
 static const char *office[]     = { "onlyoffice-desktopeditors" };

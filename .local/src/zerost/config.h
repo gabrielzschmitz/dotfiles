@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "CaskaydiaCove Nerd Font:size=12:antialias=true:autohint=true";
-static char *font2[] = { "CaskaydiaCove Nerd Font:size=12:antialias=true:autohint=true" };
+static char *font = "scientifica Nerd Font:size=14:antialias=false:autohint=false";
+static char *font2[] = { "scientifica Nerd Font:size=14:antialias=false:autohint=false" };
 static int borderpx = 5;
 
 /*
@@ -113,7 +113,7 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-float alpha = 0.88, alphaUnfocused = 0.82;
+float alpha = 0.92, alphaUnfocused = 0.9;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
@@ -191,7 +191,7 @@ static unsigned int defaultattr = 11;
  * Note that if you want to use ShiftMask with selmasks, set this to an other
  * modifier, set to 0 to not use it.
  */
-static uint forcemousemod = ShiftMask;
+static uint forcemousemod = 0;
 
 /*
  * Xresources preferences to load at startup

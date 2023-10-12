@@ -36,7 +36,7 @@ void initScreen(){
             for(fg = COLOR_BLACK; fg <= COLOR_WHITE; fg++)
                 init_pair(bg*PALLETE_SIZE + fg + 1, fg, -1);
     }
-    noecho();   // Teclas digitadas pelo usuário não aparecem na tela
+    echo();   // Teclas digitadas pelo usuário não aparecem na tela
     curs_set(0);    // Cursor invisível
     nodelay(stdscr, TRUE);  // Define getch como non-blocking
     timeout(0); // Timeout em 0 determina getch como non-blocking
@@ -208,8 +208,6 @@ void doUpdate(gameData * game){
         game->currentMode = 4;
     }
 
-    getWindowSize(game);
-
 }
 
 // Imprime na tela
@@ -233,6 +231,7 @@ void drawScreen(gameData * game){
             break;
     }
 
+    getWindowSize(game);
     refresh();
 }
 

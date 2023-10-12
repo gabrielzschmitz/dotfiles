@@ -1,0 +1,213 @@
+.de LI
+.LIST
+.SHIFT_LIST 10p
+..
+.PARA_SPACE 1m
+.TITLE "\s+(10A Manual to my Rice\s0"
+.AUTHOR "\s+5gabrielzschmitz\s0"
+.DOCTYPE    DEFAULT
+.COPYSTYLE  FINAL
+.PRINTSTYLE TYPESET
+.PT_SIZE 12
+.START
+Use vim keys (\f(CWh/j/k/l\fP) to navigate this document.
+Pressing \f(CWs\fP will fit it to window width (\f(CWa\fP to revert).
+\f(CW+\fP and \f(CW-\fP zoom in and out.
+\f(CWSuper+f\fP to toggle fullscreen.
+\f(CWq\fP to quit.
+(These are general binds set for \fBzathura\fP, the pdf reader.)
+.LI
+.ITEM
+\f(CWMod+F2\fP will show this document at any time.
+.ITEM
+By \f(CWMod\fP, I mean the Super Key, usually known as "the Windows Key."
+.LIST OFF
+
+.HEADING 1 "Introduction"
+
+.HEADING 2 "Keyboard layout"
+.LI
+.ITEM
+Being a Brazil native, my main language is Portuguese, and for so this system has a litle difference from the default english layout.
+It uses a combination of alt keys to do the latin accents and other symbols.
+To do that, I use a mini script that runs at the xorg startup.
+It is located at \f(CW~/.scripts/kblayout.sh\fP.
+.ITEM
+To remove that feature, delete the script with: \f(CWrm ~/.scripts/kblayout.sh\fP
+And comment it out from \f(CW~/.config/X11/xinitrc\fP.
+.LIST OFF
+.PP
+Additionally, while this isn't a part of the desktop environment, the default editing mode in the shell is using vi bindings.
+This setting can be changed if you don't like it by deleting or commenting out the contents of \f(CW~/.config/zsh/.zshrc\fP.
+
+.HEADING 2 "The Status Bar"
+.PP
+To the left, the numbers of your current tag(s): \f(CW I II III IV V VI VII VIII IX\fP.
+On the right, you'll see the date: \f(CW [Sun] 01/01/21 01:00AM\fP.
+.PP
+To make the setup cleaner I've decided to just include the date in the statusbar.
+But to see more system informations you can press \f(CWMod+b\fP.
+A dmenu will popup with some data, like the uptime, ethernet and wifi status, date, ram usage, weather, installed package count, disk usage, CPU usage, battery status and a shortcut to that manual.
+And by selecting one of the options a notification will popup with some useful or fun script (being the most important the wifi status, which spawns the network manager).
+.PP
+The dmenu script can be found in \f(CW~/.local/bin/sysinfo\fP.
+And the modules it uses can be found in \f(CW~/.local/bin/sysinfoscr/\fP.
+You can see what they do and modify them from there.
+.PP
+Additionally, to toggle the power menu press \f(CWMod+0\fP.
+A dmenu will appear with the shutdown, restart, logout, sleep and lock options.
+
+.HEADING 1 "Key Bindings"
+.PP
+The window manager dwm abstractly orders all of your windows into a stack from most important to least based on when you last manipulated it.
+dwm is an easy to use window manager, but you should understand that it makes use of that stack layout.
+.PP
+Notice also the case sensitivity of the shortcuts.
+.FOOTNOTE
+To type capital letters, hold down the \f(CWShift key\fP.
+.FOOTNOTE OFF
+.LI
+.ITEM
+\f(CWMod+Enter\fP \(en Spawn terminal (the default terminal is \f(CWst\fP; run \f(CWman st\fP for more)
+.ITEM
+\f(CWMod+Q\fP \(en Close window
+.ITEM
+\f(CWMod+d\fP \(en dmenu (For running commands or programs without shortcuts)
+.ITEM
+\f(CWMod+j/k\fP \(en Cycle thru windows by their stack order
+.ITEM
+\f(CWMod+Shift+Enter\fP \(en Make selected window the master (or switch master with 2nd)
+.ITEM
+\f(CWMod+h/l\fP \(en Change width of master window
+.ITEM
+\f(CWMod+z/x\fP \(en Increase/decrease gaps
+.ITEM
+\f(CWMod+a\fP \(en Toggle gaps
+.ITEM
+\f(CWMod+A\fP \(en Gaps return to default values
+.ITEM
+\f(CWMod+Shift+Space\fP \(en Make a window float (move and resize with \f(CWMod+\fPleft/right click)
+.ITEM
+\f(CWMod+B\fP \(en Toggle statusbar
+.LIST OFF
+
+.HEADING 2 "Window layouts"
+.LI
+.ITEM
+\f(CWMod+t\fP \(en Tiling mode (active by default)
+.ITEM
+\f(CWMod+f\fP \(en Fullscreen mode
+.ITEM
+\f(CWMod+Space\fP \(en Floating mode
+.ITEM
+\f(CWMod+s\fP \(en Fibbonacci spiral mode
+.ITEM
+\f(CWMod+m\fP \(en Master on left, other windows in monocle mode
+.ITEM
+\f(CWMod+M\fP \(en Monocle mode (all windows fullscreen and cycle through)
+.ITEM
+\f(CWMod+c\fP \(en Center the master window
+.ITEM
+\f(CWMod+Control+i/d\fP \(en Increase/decrease the number of master windows
+.LIST OFF
+
+.HEADING 2 "Basic Programs"
+.LI
+.ITEM
+\f(CWMod+F\fP \(en pcmanfm (file browser/manager)
+.ITEM
+\f(CWMod+w\fP \(en Web browser (Brave by default)
+.ITEM
+\f(CWMod+M\fP \(en pavucontrol (audio system manager)
+.LIST OFF
+
+.HEADING 2 "Tags/Workspaces"
+.PP
+There are nine tags, active tags are highlighted in the top left.
+.LI
+.ITEM
+\f(CWMod+(Number)\fP \(en Go to that number tag
+.ITEM
+\f(CWMod+Shift+(Number)\fP \(en Send window to that tag
+.ITEM
+\f(CWMod+Tab\fP \(en Go to previous tag
+.ITEM
+\f(CWMod+Left/Right\fP \(en Go to another display
+.ITEM
+\f(CWMod+Shift+Left/+Right\fP \(en Move window to another display
+.LIST OFF
+
+.HEADING 2 "System"
+.LI
+.ITEM
+\f(CWMod+0\fP \(en Choose to shutdown, restart, logout, sleep and lock screen
+.ITEM
+\f(CWMod+F2\fP \(en Show this document
+.ITEM
+\f(CWMod+W\fP \(en Select wallpaper to use
+.ITEM
+\f(CWMod+D\fP \(en Select screen/display to use
+.Item
+\f(CWMod+D\fP \(en Select screen/display to use
+
+.ITEM
+\f(CWMod+M\fP \(en pavucontrol (audio control)
+.ITEM
+\f(CWFN+Brightnessdown\fP \(en Decrease display brightness
+.ITEM
+\f(CWFN+Brightnessup\fP \(en Increase display brightness
+.LIST OFF
+
+.HEADING 2 "Audio"
+.PP
+I use ncmpcpp as a music player, which is a front end for mpd.
+.LI
+.ITEM
+\f(CWMod+F5\fP \(en ncmpcpp, the music player
+.ITEM
+\f(CWFN+Next\fP \(en Next track
+.ITEM
+\f(CWFN+Prev\fP \(en Previous track
+.ITEM
+\f(CWFN+Pause\fP \(en Toggle pause
+.ITEM
+\f(CWFN+Stop\fP \(en Toggle stop
+.ITEM
+\f(CWFN+Mute\fP \(en Mute all audio
+.ITEM
+\f(CWFN+LowerVolume\fP \(en Decrease system volume
+.ITEM
+\f(CWFN+RaiseVolume\fP \(en Increase system volume
+.ITEM
+\f(CWMod+F10\fP \(en Music volume to 0 (use Mod+F12 to increase it again)
+.ITEM
+\f(CWMod+F11\fP \(en Decrease music volume
+.ITEM
+\f(CWMod+F12\fP \(en Increase music volume
+.ITEM
+\f(CWMod+M\fP \(en pavucontrol (general audio/volume sink/source manager)
+.LIST OFF
+
+.HEADING 1 "Configuration"
+.PP
+Dotfiles/settings files are located in \f(CW~/.config/\fP.
+.PP
+Suckless programs, dwm (the window manager), st (the terminal) and dmenu among others do not have traditional config files, but have their source code location is \f(CW~/.local/src/\fP.
+There you can modify their \f(CWconfig.h\fP files or other source code, then \f(CWsudo make install\fP to reinstall.
+You'll have to restart the program to see its effects, obviously.
+
+.HEADING 1 "My keyboard isn't working as expected!"
+.PP
+As mentioned above, I've made some keyboard changes with the \f(CWkblayout\fP script.
+These settings may override your preferred settings, so you should open this file and comment out troublesome lines if you have issues.
+.PP
+Additionally, I've set vim to use the clipboard as the default buffer, which means when you yank or delete something in vim, it will be in your system clipboard as well, so you can \f(CWctrl-v\fP it into your browser instance, etc. You can also paste material copied from other programs into vim with the typical vim bindings.
+
+.HEADING 1 "Important Links"
+.PP
+You can follow links via the keyboard in this pdf reader by pressing \f(CWf\fP followed by the number that appears on the desired link.
+.LI
+.ITEM
+.PDF_WWW_LINK "https://github.com/gabrielzschmitz/dotfiles" "My dotfiles"
+\(en For the code behind it!
+.LIST OFF

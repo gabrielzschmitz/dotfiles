@@ -1,0 +1,22 @@
++PROJECT:
+  - title: task1
+    deadline: 24/08/23
+    urgency: 2
+  - title: task2
+    deadline: 25/08/23
+    urgency: 1
+  +SUBPROJECT:
+    - title: task1
+      deadline: 23/08/23
+      urgency: 5
++PROJECT:
+  - title: task1
+    deadline: 24/08/23
+    urgency: 2
+  - title: task2
+    deadline: 25/08/23
+    urgency: 1
+  +SUBPROJECT:
+    - title: task1
+      deadline: 23/08/23
+      urgency: 5

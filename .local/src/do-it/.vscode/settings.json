@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/gabrielzschmitz/.local/src/do-it",
+            "binaryPath": "/home/gabrielzschmitz/.local/src/do-it/doit",
+            "binaryArgs": []
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/gabrielzschmitz/.local/src/typer.c",
+            "binaryPath": "/home/gabrielzschmitz/.local/src/typer.c/typer.c",
+            "binaryArgs": []
+        }
+    ]
+}

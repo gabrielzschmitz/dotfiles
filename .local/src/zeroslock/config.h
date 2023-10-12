@@ -15,9 +15,9 @@ static const char *user  = "gabrielzschmitz";
 static const char *group = "gabrielzschmitz";
 
 static const char *colorname[NUMCOLS] = {
-	[INIT] = "#0a0a0a",       /* after initialization */
-	[INPUT] = "#e5e5e5",    /* during input */
-	[FAILED] = "#644d66",   /* wrong password */
+	[INIT] = "#1d2021",       /* after initialization */
+	[INPUT] = "#ebdbb2",    /* during input */
+	[FAILED] = "#cc241d",   /* wrong password */
 };
 /*
  * Xresources preferences to load at startup

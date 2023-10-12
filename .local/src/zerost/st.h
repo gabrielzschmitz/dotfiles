@@ -23,7 +23,7 @@
 
 enum glyph_attribute {
 	ATTR_NULL       = 0,
-	ATTR_BOLD       = 1 << 0,
+	ATTR_BOLD       = 0 << 0,
 	ATTR_FAINT      = 1 << 1,
 	ATTR_ITALIC     = 1 << 2,
 	ATTR_UNDERLINE  = 1 << 3,

@@ -113,7 +113,7 @@ char** readInputedWords(gameData * game){
     game->LIW++;
     game->NIW = 0;
 
-    char words [100000];
+    char words [100];
 
     while ((aux = fscanf (fptr, "%s", words)) == 1){
         game->NIW++;
