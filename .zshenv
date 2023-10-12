@@ -12,25 +12,33 @@
 
 # Clean Up $HOME Directory
 export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
+export NEXTCLOUD_HOME="$HOME/next"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CONFIG_CACHE="$HOME/.cache"
 export XDG_STATE_HOME="$HOME/.local/state"
-export XAUTHORITY="$HOME/.config/X11"/xauthority
 export XDG_CACHE_HOME="$HOME/.cache"
 export ZDOTDIR="$HOME/.config/zsh"
 export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export GOPATH="$XDG_DATA_HOME/go"
-export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export LESSKEY="$XDG_CONFIG_HOME/less/lesskey"
+export PULSE_COOKIE="$XDG_CONFIG_HOME/pulse/cookie"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
+export XAUTHORITY="$HOME/.config/X11"/xauthority
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
+export PASSWORD_STORE_DIR="$NEXTCLOUD_HOME"/pass
 export EDITOR="nvim"
 export TERMINAL="st"
 export BROWSER="chromium"
-export VSCODE_PORTABLE="$XDG_DATA_HOME"/vscode
+export MPLAYER_HOME="$XDG_CONFIG_HOME"/mplayer
+export PYTHONPYCACHEPREFIX=$XDG_CACHE_HOME/python
+export PYTHONUSERBASE=$XDG_DATA_HOME/python
 
 # GPU Stuff
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 export vblank_mode=0
 
