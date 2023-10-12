@@ -26,6 +26,12 @@ require('packer').startup(function()
     use 'hrsh7th/nvim-cmp'                  -- lsp completion
     use 'windwp/nvim-autopairs'             -- autopair
     use 'mg979/vim-visual-multi'            -- multi cursors
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
     use({
         "iamcco/markdown-preview.nvim",
         run = function() vim.fn["mkdp#util#install"]() end,
@@ -38,7 +44,7 @@ end)
 
 -- Visual
 vim.o.background = "dark"                               -- select colorscheme version (leave it empty to set vivid dark)
-require('zeropro').load()                               -- colorscheme setup
+require('zeropro').load()                            -- colorscheme setup
 vim.cmd [[set noshowmode]]                              -- no --INSERT--
 vim.cmd [[set termguicolors]]                           -- make nvim 256 colors
 require'colorizer'.setup()                              -- enable colorizer
@@ -83,7 +89,7 @@ vim.opt.softtabstop = 4
 local configs = require'nvim-treesitter.configs'
 configs.setup {
     ensure_installed = "all",   -- use all parsers
-    ingore_install = "phpdoc",  -- unless this one
+    -- ingore_install = "phpdoc",  -- unless this one
     highlight = {               -- enable highlighting
         enable = true,
     },
@@ -94,6 +100,7 @@ configs.setup {
 
 -- Autopairs
 require('nvim-autopairs').setup{}
+require('Comment').setup()
 
 -- Keybinds
 require('user.keybinds') -- call keybinds

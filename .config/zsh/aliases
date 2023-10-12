@@ -10,10 +10,10 @@
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #----------------------------------------------------------------
 
-    alias zshrc='nvim $HOME/.config/zsh/.zshrc'                                   
-    alias zenv='nvim $HOME/.zshenv'
-    alias zhis='nvim $HOME/.config/zsh/.zhistory'
-    alias aliases='nvim $HOME/.config/zsh/aliases'
+    alias zshrc='lvim $HOME/.config/zsh/.zshrc'                                   
+    alias zenv='lvim $HOME/.zshenv'
+    alias zhis='lvim $HOME/.config/zsh/.zhistory'
+    alias aliases='lvim $HOME/.config/zsh/aliases'
 
 #--------------------------- sys --------------------------------
                                                           alias	\
@@ -24,10 +24,12 @@
     cnt='ls -A | wc -l'			                        \
     cl='clear'                  			        \
     pk='pkill'							\
-    nv='nvim'							\
-    vi='nvim'							\
+    lv='lvim'							\
+    nv='lvim'							\
+    vi='lvim'							\
     cf='cfiles'                                                 \
     mkins='make install'				        \
+    mkclins='make clean install'				\
     sumkins='doas make install'				        \
     sumkclins='doas make clean install'				\
     patcha='patch -p1 <'					\
@@ -36,21 +38,25 @@
     cmatrix='cmatrix -bC cyan'					\
     bat='bat --theme=base16 -p'	                                \
     cat='bat'							\
+    nvidia-settings='devour nvidia-settings                     \
+    --config="$XDG_CONFIG_HOME"/nvidia/settings'                \
+    nvs='devour nvidia-settings                                 \
+    --config="$XDG_CONFIG_HOME"/nvidia/settings'                \
     webcam='v4l2-ctl --set-fmt-video=width=720 &&               \
 mpv av://v4l2:/dev/video0'                                      \
-    sshserver='ssh gabrielzschmitz@192.168.0.109'          	\
+    sshserver='ssh gabrielzschmitz@192.168.0.101'          	\
 
 #--------------------------- cfg ------------------------------
                                                           alias \
-    xresourcesconf='nvim $HOME/.config/X11/xresources'		\
-    xinitrc='nvim $HOME/.config/X11/xinitrc'			\
-    dunstrc='nvim $HOME/.config/dunst/dunstrc'			\
-    picomconf='nvim $HOME/.config/picom.conf'			\
-    mpdconf='nvim $HOME/.config/mpd/mpd.conf'			\
-    ncmpcppconf='nvim $HOME/.config/ncmpcpp/config'		\
-    musicconf='nvim $HOME/.config/ncmpcpp/config'		\
-    nvimconf='nvim $HOME/.config/nvim/'				\
-    zathurarc='nvim $HOME/.config/zathura/zathurarc'		\
+    xresourcesconf='lvim $HOME/.config/X11/xresources'		\
+    xinitrc='lvim $HOME/.config/X11/xinitrc'			\
+    dunstrc='lvim $HOME/.config/dunst/dunstrc'			\
+    picomconf='lvim $HOME/.config/picom.conf'			\
+    mpdconf='lvim $HOME/.config/mpd/mpd.conf'			\
+    ncmpcppconf='lvim $HOME/.config/ncmpcpp/config'		\
+    musicconf='lvim $HOME/.config/ncmpcpp/config'		\
+    lvimconf='lvim $HOME/.config/lvim/'				\
+    zathurarc='lvim $HOME/.config/zathura/zathurarc'		\
     yarn='yarn --use-yarnrc $XDG_CONFIG_HOME/yarn/config'       \
 
 #--------------------------- git --------------------------------
@@ -72,6 +78,8 @@ mpv av://v4l2:/dev/video0'                                      \
     giti='git init'                                             \
     gits='git status'                                           \
     gitcl='git clone'						\
+    gitd='git diff'						\
+    gitr='git reset'						\
                                   
 #-------------------------- dirs --------------------------------
                                                           alias	\
@@ -85,13 +93,14 @@ mpv av://v4l2:/dev/video0'                                      \
     next='cd $HOME/next'					\
     draw='cd $HOME/next/draw; clear && ls'	                \
     dev='cd $HOME/next/dev; clear && ls'	                \
-    site='cd $HOME/next/site/blog; clear && ls'	                \
+    site='cd $HOME/next/site/blog; clear && ls'	        \
     bin='cd $HOME/.local/bin; clear && ls'			\
     src='cd $HOME/.local/src; clear && ls'			\
-    biblio='cd $HOME/next/work/UTFPR/biblio; clear && ls'       \
-    work='cd $HOME/next/work/UTFPR/work; clear && ls'           \
+    biblio='cd $HOME/next/work/UTFPR/biblio; clear && ls'  \
+    work='cd $HOME/next/work/UTFPR/work; clear && ls'      \
     tc='cd $HOME/.local/src/typer.c ;clear; ls'                 \
     tmt='cd $HOME/.local/src/Tomato.C && clear; ls'             \
+    dt='cd $HOME/.local/src/do-it && clear; ls'             \
     zerocfetch='cd $HOME/.local/src/cfetch ;clear; ls'          \
     zerocfiles='cd $HOME/.local/src/zerocfiles ;clear; ls'      \
     zerodwm='cd $HOME/.local/src/zerodwm; clear && ls'		\
@@ -116,7 +125,7 @@ mpv av://v4l2:/dev/video0'                                      \
 
 #--------------------------- memex ------------------------------
                                                           alias \
-    memex='nvim ~/next/dev/startpage/memex/content/data.ndtl'   \
+    memex='lvim ~/next/dev/startpage/memex/content/data.ndtl'   \
     memexdir='devour pcmanfm ~/next/dev/startpage/memex/content/media'\
     cdmemex='cd ~/next/dev/startpage/memex/'                    \
 
@@ -126,12 +135,11 @@ mpv av://v4l2:/dev/video0'                                      \
     hs='hugo server'                                            \
     br='setxkbmap br'						\
     us='setxkbmap us alt-intl'					\
-    colors='nvim $HOME/doc/zerocolors.vim'			\
-    gittokens='nvim $HOME/next/gittokens'			\
+    colors='lvim $HOME/doc/zerocolors.vim'			\
+    gittokens='lvim $HOME/next/gittokens'			\
     yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'	\
     xresources='xrdb $HOME/.config/X11/xresources'		\
     music='ncmpcpp'						\
-    mpv='devour gnome-mplayer'					\
     sxiv='nsxiv -a'					        \
     nsxiv='nsxiv -a'					        \
     zathura='devour zathura'					\
@@ -160,7 +168,7 @@ mpv av://v4l2:/dev/video0'                                      \
     musdl='cd $HOME/mus/down; youtube-dl -x			\
 --audio-quality 0 --audio-format mp3 --embed-thumbnail'		\
     wavdl='cd $HOME/doc/mus; youtube-dl -x			\
---audio-quality 0 --audio-format wav --embed-thumbnail'		\
+--audio-quality 0 --audio-format wav'		\
 #-------------------------- games -------------------------------
     #mine='prime-run devour java -jar $HOME/next/gg/MINE/TLauncher.jar && exit'  \
                                                           alias \

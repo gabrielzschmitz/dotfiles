@@ -9,9 +9,10 @@
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #!/bin/sh
-xrdb $HOME/.config/X11/xresources &
-kblayout &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+xrdb $HOME/.config/X11/xresources &
+batterywarn &
+kblayout &
 xbanish -i mod4 -i mod1 -i shift -i control &
 mpd &
 dunst &
@@ -20,19 +21,20 @@ picom -b &
 udiskie --file-manager=pcmanfm --terminal=st --notify --no-tray --automount &
 dfltdisp &
 dfltwall &
-unlocky &
-weatherdown &
-play-with-mpv &
+unlocky --silent &
+blueman-applet &
+nextcloud --background &
 # NVIDIA
 if [[ -f '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf' ]]; then
     # NOTE: verify provider names with command: `xrandr --listproviders`
     xrandr --setprovideroutputsource modesetting NVIDIA-G0
-
     xrandr --auto
     xrandr --dpi 96
 fi
-mpv --no-vid --volume=75 /home/gabrielzschmitz/doc/startupsound.wav &
-sundialclk &
-$(sleep 4 && pamixer set Headphone playback 87) &
+sudo modprobe i8k force=1 &
+$(sleep 5 && fantoggle --daemon) &
+$(sleep 5 && /home/gabrielzschmitz/.config/polybar/launch.sh) &
+#sundial --daemon &
+#$(sleep 4 && mpv --no-vid --volume=75 /home/gabrielzschmitz/doc/startupsound.wav) &
 while type dwm >/dev/null ; do dwm && continue || break ; done
 
