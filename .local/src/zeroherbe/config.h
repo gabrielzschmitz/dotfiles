@@ -1,19 +1,20 @@
 /*
-//         .             .              .		  
-//         |             |              |           .	  
-// ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_, 
-// | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /  
-// `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"' 
-//  ,|							  
-//  `'							  
-// GITHUB:https://github.com/gabrielzschmitz		  
-// INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+//         .             .              .
+//         |             |              |           .
+// ,-. ,-. |-. ,-. . ,-. |  ,_, ,-. ,-. |-. ,-,-. . |- ,_,
+// | | ,-| | | |   | |-' |   /  `-. |   | | | | | | |   /
+// `-| `-^ ^-' '   ' `-' `' '"' `-' `-' ' ' ' ' ' ' `' '"'
+//  ,|
+//  `'
+// GITHUB:https://github.com/gabrielzschmitz
+// INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/
 // DOTFILES:https://github.com/gabrielzschmitz/dotfiles/
 */
 static const char *background_color = "#1d2021";
 static const char *border_color = "#1d2021";
 static const char *font_color = "#ebdbb2";
-static const char *font_pattern = "MonoLisa Nerd Font Mono:size=12:antialias=true:autohint=true";
+static const char *font_pattern =
+    "SpaceMono Nerd Font Mono:size=10:antialias=true:autohint=true";
 static unsigned line_spacing = 10;
 static unsigned int padding = 15;
 static const int use_primary_monitor = 1;
@@ -30,4 +31,3 @@ static unsigned int duration = 5; /* in seconds */
 
 #define DISMISS_BUTTON Button3
 #define ACTION_BUTTON Button1
-

@@ -318,14 +318,13 @@ print_info(Pane *pane, char *dirsize)
 	if (S_ISLNK(CURSOR(pane).mode) != 0) {
 		rez_pth = ecalloc(MAX_P, sizeof(char));
 		if (realpath(CURSOR(pane).name, rez_pth) != NULL) {
-			snprintf(
-				lnk_full, MAX_N, "->%s", rez_pth);
+			snprintf(lnk_full, MAX_N, "->%s", rez_pth);
 		}
 		free(rez_pth);
 	}
 
-	print_status(cstatus, "%s %s %s %s %02d/%02d %s", prm, ur, dt,
-              sz, pane->hdir, pane->dirc, lnk_full);
+	print_status(cstatus, "%s %s %s %s %02d/%02d %s", prm, ur, dt, sz,
+		pane->hdir, pane->dirc, lnk_full);
 
 	free(prm);
 	free(ur);
@@ -346,145 +345,195 @@ print_row(Pane *pane, size_t entpos, Cpair col)
 	x = pane->x_srt;
 	y = entpos - pane->firstrow + 1;
 
-        char *icon = get_icon(pane, entpos, col, pane->direntr[entpos].mode);
-        
-        if(strcmp(icon, "") == 0)
-	    printf_tb(x, y, col, "%s%*.*s", icon, ~hwidth, hwidth, full_str);
-        else
-	    printf_tb(x, y, col, "%s%*.*s", icon, ~hwidth+2, hwidth, full_str);
+	char *icon = get_icon(pane, entpos, col, pane->direntr[entpos].mode);
+
+	if (strcmp(icon, "") == 0)
+		printf_tb(
+			x, y, col, "%s%*.*s", icon, ~hwidth, hwidth, full_str);
+	else
+		printf_tb(x, y, col, "%s%*.*s", icon, ~hwidth + 2, hwidth,
+			full_str);
 }
 
 static char *
-get_icon(Pane *pane, size_t entpos, Cpair col, mode_t mode){
-        char *ex, *icon;
+get_icon(Pane *pane, size_t entpos, Cpair col, mode_t mode)
+{
+	char *ex, *icon;
 	char *full_str;
 	full_str = basename(pane->direntr[entpos].name);
 	ex = get_ext(full_str);
-        
+
 	switch (mode & S_IFMT) {
 	case S_IFDIR: /* folders */
-                if(strcmp(ex, "own") == 0)  /* downloads */
-                    icon = " ";
-                else if(strcmp(ex, "oc") == 0) /* documents */
-                    icon = " ";
-                else if(strcmp(ex, "us") == 0) /* music */
-                    icon = "ﱘ ";
-                else if(strcmp(ex, "ic") == 0) /* pictures */
-                    icon = " ";
-                else if(strcmp(ex, "id") == 0) /* videos */
-                    icon = " ";
-                else if(strcmp(ex, "ext") == 0) /* nextcloud */
-                    icon = " ";
-                else if(strcmp(ex, "stea") == 0) /* steam */
-                    icon = "戮";
-                else if(strcmp(ex, "g") == 0) /* steam */
-                    icon = " ";
-                else
-                    /* Uncomment to get the folders "extensions"
+		if (strcmp(ex, "own") == 0) /* downloads */
+			icon = " ";
+		else if (strcmp(ex, "oc") == 0) /* documents */
+			icon = " ";
+		else if (strcmp(ex, "us") == 0) /* music */
+			icon = "ﱘ ";
+		else if (strcmp(ex, "ic") == 0) /* pictures */
+			icon = " ";
+		else if (strcmp(ex, "id") == 0) /* videos */
+			icon = " ";
+		else if (strcmp(ex, "ext") == 0) /* nextcloud */
+			icon = " ";
+		else if (strcmp(ex, "stea") == 0) /* steam */
+			icon = "戮";
+		else if (strcmp(ex, "g") == 0) /* steam */
+			icon = " ";
+		else
+			/* Uncomment to get the folders "extensions"
                      * then change above (comment again after) */
-                    //icon = ex; /* debug */
-                    icon = " "; /* default folder */
-                break;
+			//icon = ex; /* debug */
+			icon = " "; /* default folder */
+		break;
 	case S_IFLNK: /* links */
-                icon = " ";
-                break;
+		icon = " ";
+		break;
 	case S_IFREG:
 	case S_IFBLK:
 	case S_IFCHR:
 	case S_IFIFO:
 	case S_IFSOCK: /* files */
-                if(strcmp(ex, "c") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "h") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "zshe") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "mk") == 0 || strcmp(ex, "akef") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "o") == 0 || strcmp(ex, "a") == 0 || strcmp(ex, "so") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "git") == 0 || strcmp(ex, "giti") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "diff") == 0 || strcmp(ex, "patch") == 0 || strcmp(ex, "atch") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "c++") == 0)
-                    icon = "ﭱ ";
-                else if(strcmp(ex, "cs") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "html") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "css") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "md") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "bib") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "sh") == 0 || strcmp(ex, "ksh") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "Rmd") == 0 || strcmp(ex, "r") == 0 || strcmp(ex, "R") == 0 || strcmp(ex, "rmd") == 0 || strcmp(ex, "m") == 0)
-                    icon = "ﳒ ";
-                else if(strcmp(ex, "go") == 0)
-                    icon = "ﳑ ";
-                else if(strcmp(ex, "jar") == 0 || strcmp(ex, "java") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "js") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "php") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "py") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "swift") == 0)
-                    icon = "ﯣ ";
-                else if(strcmp(ex, "ts") == 0)
-                    icon = "ﯤ ";
-                else if(strcmp(ex, "1") == 0 || strcmp(ex, "man") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "pdf") == 0 || strcmp(ex, "djvu") == 0 || strcmp(ex, "epub") == 0){
-                    icon = " ";
-                }
-                else if(strcmp(ex, "zip") == 0 || strcmp(ex, "rar") == 0 || strcmp(ex, "tar") == 0 || strcmp(ex, "gz") == 0 || strcmp(ex, "7z") == 0 || strcmp(ex, "gzip") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "txt") == 0 || strcmp(ex, "me") == 0 || strcmp(ex, "ms") == 0 || strcmp(ex, "org") == 0 || strcmp(ex, "doc") == 0 || strcmp(ex, "docx") == 0 || strcmp(ex, "odt") == 0 || strcmp(ex, "gdoc") == 0 || strcmp(ex, "gdocx") == 0 || strcmp(ex, "tex") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "xls") == 0 || strcmp(ex, "xlsx") == 0 || strcmp(ex, "ods") == 0 || strcmp(ex, "csv") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "odp") == 0 || strcmp(ex, "pptx") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "mp3") == 0 || strcmp(ex, "wav") == 0 || strcmp(ex, "flac") == 0 || strcmp(ex, "m4a") == 0 || strcmp(ex, "opus") == 0 || strcmp(ex, "ogg") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "png") == 0 || strcmp(ex, "webp") == 0 || strcmp(ex, "ico") == 0 || strcmp(ex, "jpg") == 0 || strcmp(ex, "jpe") == 0 || strcmp(ex, "jpeg") == 0 || strcmp(ex, "gif") == 0 || strcmp(ex, "art") == 0 || strcmp(ex, "tif") == 0 || strcmp(ex, "tiff") == 0 || strcmp(ex, "xpm") == 0 || strcmp(ex, "icon") == 0 || strcmp(ex, "xcf") == 0 || strcmp(ex, "psd") == 0 || strcmp(ex, "bmp") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "svg") == 0 || strcmp(ex, "ps") == 0 || strcmp(ex, "ai") == 0 || strcmp(ex, "cdr") == 0 || strcmp(ex, "inx") == 0 || strcmp(ex, "odg") == 0)
-                    icon = "縉";
-                else if(strcmp(ex, "mp4") == 0 || strcmp(ex, "kden") == 0 || strcmp(ex, "mov") == 0 || strcmp(ex, "mkv") == 0 || strcmp(ex, "webm") == 0 || strcmp(ex, "mpeg") == 0 || strcmp(ex, "avi") == 0 || strcmp(ex, "wmv") == 0 || strcmp(ex, "mpg") == 0 || strcmp(ex, "flv") == 0 || strcmp(ex, "m4b") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "xml") == 0)
-                    icon = "爵";
-                else if(strcmp(ex, "gpg") == 0 || strcmp(ex, "pgp") == 0 || strcmp(ex, "icen") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "vim") == 0 || strcmp(ex, "nvim") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "nfo") == 0 || strcmp(ex, "info") == 0)
-                    icon = " ";
-                else if(strcmp(ex, "torrent") == 0 || strcmp(ex, "part") == 0)
-                    icon = "ﯲ ";
-                else if(strcmp(ex, "iso") == 0 || strcmp(ex, "img") == 0 || strcmp(ex, "rom") == 0 || strcmp(ex, "dmg") == 0)
-                    icon = "﫭 ";
-                else if(strcmp(ex, "log") == 0)
-                    icon = "ﴬ ";
-                else if(strcmp(ex, "z64") == 0 || strcmp(ex, "v64") == 0 || strcmp(ex, "n64") == 0 || strcmp(ex, "jap") == 0 || strcmp(ex, "gba") == 0 || strcmp(ex, "gb") == 0 || strcmp(ex, "gbc") == 0 || strcmp(ex, "agb") == 0 || strcmp(ex, "nes") == 0 || strcmp(ex, "sms") == 0 || strcmp(ex, "smc") == 0 || strcmp(ex, "sfc") == 0 || strcmp(ex, "fds") == 0 || strcmp(ex, "nds") == 0 || strcmp(ex, "vb") == 0 || strcmp(ex, "gcm") == 0 || strcmp(ex, "3ds") == 0 || strcmp(ex, "gdi") == 0 || strcmp(ex, "rvz") == 0 || strcmp(ex, "srl") == 0 || strcmp(ex, "sms") == 0 || strcmp(ex, "sgb") == 0 || strcmp(ex, "gcz") == 0 || strcmp(ex, "3dz") == 0 || strcmp(ex, "gen") == 0 || strcmp(ex, "smd") == 0 || strcmp(ex, "gg") == 0 || strcmp(ex, "32x") == 0 || strcmp(ex, "st") == 0 || strcmp(ex, "atr") == 0 || strcmp(ex, "mii") == 0 || strcmp(ex, "pss") == 0 || strcmp(ex, "ngp") == 0 || strcmp(ex, "ngc") == 0 || strcmp(ex, "elf") == 0 || strcmp(ex, "wud") == 0 || strcmp(ex, "nro") == 0)
-                    icon = " ";
-                else
-                    //icon = ex; /* debug */
-                    icon = "";
+		if (strcmp(ex, "c") == 0)
+			icon = " ";
+		else if (strcmp(ex, "h") == 0)
+			icon = " ";
+		else if (strcmp(ex, "zshe") == 0)
+			icon = " ";
+		else if (strcmp(ex, "mk") == 0 || strcmp(ex, "akef") == 0)
+			icon = " ";
+		else if (strcmp(ex, "o") == 0 || strcmp(ex, "a") == 0 ||
+			strcmp(ex, "so") == 0)
+			icon = " ";
+		else if (strcmp(ex, "git") == 0 || strcmp(ex, "giti") == 0)
+			icon = " ";
+		else if (strcmp(ex, "diff") == 0 || strcmp(ex, "patch") == 0 ||
+			strcmp(ex, "atch") == 0)
+			icon = " ";
+		else if (strcmp(ex, "c++") == 0)
+			icon = "ﭱ ";
+		else if (strcmp(ex, "cs") == 0)
+			icon = " ";
+		else if (strcmp(ex, "html") == 0)
+			icon = " ";
+		else if (strcmp(ex, "css") == 0)
+			icon = " ";
+		else if (strcmp(ex, "md") == 0)
+			icon = " ";
+		else if (strcmp(ex, "bib") == 0)
+			icon = " ";
+		else if (strcmp(ex, "sh") == 0 || strcmp(ex, "ksh") == 0)
+			icon = " ";
+		else if (strcmp(ex, "Rmd") == 0 || strcmp(ex, "r") == 0 ||
+			strcmp(ex, "R") == 0 || strcmp(ex, "rmd") == 0 ||
+			strcmp(ex, "m") == 0)
+			icon = "ﳒ ";
+		else if (strcmp(ex, "go") == 0)
+			icon = "ﳑ ";
+		else if (strcmp(ex, "jar") == 0 || strcmp(ex, "java") == 0)
+			icon = " ";
+		else if (strcmp(ex, "js") == 0)
+			icon = " ";
+		else if (strcmp(ex, "php") == 0)
+			icon = " ";
+		else if (strcmp(ex, "py") == 0)
+			icon = " ";
+		else if (strcmp(ex, "swift") == 0)
+			icon = "ﯣ ";
+		else if (strcmp(ex, "ts") == 0)
+			icon = "ﯤ ";
+		else if (strcmp(ex, "1") == 0 || strcmp(ex, "man") == 0)
+			icon = " ";
+		else if (strcmp(ex, "pdf") == 0 || strcmp(ex, "djvu") == 0 ||
+			strcmp(ex, "epub") == 0) {
+			icon = " ";
+		} else if (strcmp(ex, "zip") == 0 || strcmp(ex, "rar") == 0 ||
+			strcmp(ex, "tar") == 0 || strcmp(ex, "gz") == 0 ||
+			strcmp(ex, "7z") == 0 || strcmp(ex, "gzip") == 0)
+			icon = " ";
+		else if (strcmp(ex, "txt") == 0 || strcmp(ex, "me") == 0 ||
+			strcmp(ex, "ms") == 0 || strcmp(ex, "org") == 0 ||
+			strcmp(ex, "doc") == 0 || strcmp(ex, "docx") == 0 ||
+			strcmp(ex, "odt") == 0 || strcmp(ex, "gdoc") == 0 ||
+			strcmp(ex, "gdocx") == 0 || strcmp(ex, "tex") == 0)
+			icon = " ";
+		else if (strcmp(ex, "xls") == 0 || strcmp(ex, "xlsx") == 0 ||
+			strcmp(ex, "ods") == 0 || strcmp(ex, "csv") == 0)
+			icon = " ";
+		else if (strcmp(ex, "odp") == 0 || strcmp(ex, "pptx") == 0)
+			icon = " ";
+		else if (strcmp(ex, "mp3") == 0 || strcmp(ex, "wav") == 0 ||
+			strcmp(ex, "flac") == 0 || strcmp(ex, "m4a") == 0 ||
+			strcmp(ex, "opus") == 0 || strcmp(ex, "ogg") == 0)
+			icon = " ";
+		else if (strcmp(ex, "png") == 0 || strcmp(ex, "webp") == 0 ||
+			strcmp(ex, "ico") == 0 || strcmp(ex, "jpg") == 0 ||
+			strcmp(ex, "jpe") == 0 || strcmp(ex, "jpeg") == 0 ||
+			strcmp(ex, "gif") == 0 || strcmp(ex, "art") == 0 ||
+			strcmp(ex, "tif") == 0 || strcmp(ex, "tiff") == 0 ||
+			strcmp(ex, "xpm") == 0 || strcmp(ex, "icon") == 0 ||
+			strcmp(ex, "xcf") == 0 || strcmp(ex, "psd") == 0 ||
+			strcmp(ex, "bmp") == 0)
+			icon = " ";
+		else if (strcmp(ex, "svg") == 0 || strcmp(ex, "ps") == 0 ||
+			strcmp(ex, "ai") == 0 || strcmp(ex, "cdr") == 0 ||
+			strcmp(ex, "inx") == 0 || strcmp(ex, "odg") == 0)
+			icon = "縉";
+		else if (strcmp(ex, "mp4") == 0 || strcmp(ex, "kden") == 0 ||
+			strcmp(ex, "mov") == 0 || strcmp(ex, "mkv") == 0 ||
+			strcmp(ex, "webm") == 0 || strcmp(ex, "mpeg") == 0 ||
+			strcmp(ex, "avi") == 0 || strcmp(ex, "wmv") == 0 ||
+			strcmp(ex, "mpg") == 0 || strcmp(ex, "flv") == 0 ||
+			strcmp(ex, "m4b") == 0)
+			icon = " ";
+		else if (strcmp(ex, "xml") == 0)
+			icon = "爵";
+		else if (strcmp(ex, "gpg") == 0 || strcmp(ex, "pgp") == 0 ||
+			strcmp(ex, "icen") == 0)
+			icon = " ";
+		else if (strcmp(ex, "vim") == 0 || strcmp(ex, "nvim") == 0)
+			icon = " ";
+		else if (strcmp(ex, "nfo") == 0 || strcmp(ex, "info") == 0)
+			icon = " ";
+		else if (strcmp(ex, "torrent") == 0 || strcmp(ex, "part") == 0)
+			icon = "ﯲ ";
+		else if (strcmp(ex, "iso") == 0 || strcmp(ex, "img") == 0 ||
+			strcmp(ex, "rom") == 0 || strcmp(ex, "dmg") == 0)
+			icon = "﫭 ";
+		else if (strcmp(ex, "log") == 0)
+			icon = "ﴬ ";
+		else if (strcmp(ex, "z64") == 0 || strcmp(ex, "v64") == 0 ||
+			strcmp(ex, "n64") == 0 || strcmp(ex, "jap") == 0 ||
+			strcmp(ex, "gba") == 0 || strcmp(ex, "gb") == 0 ||
+			strcmp(ex, "gbc") == 0 || strcmp(ex, "agb") == 0 ||
+			strcmp(ex, "nes") == 0 || strcmp(ex, "sms") == 0 ||
+			strcmp(ex, "smc") == 0 || strcmp(ex, "sfc") == 0 ||
+			strcmp(ex, "fds") == 0 || strcmp(ex, "nds") == 0 ||
+			strcmp(ex, "vb") == 0 || strcmp(ex, "gcm") == 0 ||
+			strcmp(ex, "3ds") == 0 || strcmp(ex, "gdi") == 0 ||
+			strcmp(ex, "rvz") == 0 || strcmp(ex, "srl") == 0 ||
+			strcmp(ex, "sms") == 0 || strcmp(ex, "sgb") == 0 ||
+			strcmp(ex, "gcz") == 0 || strcmp(ex, "3dz") == 0 ||
+			strcmp(ex, "gen") == 0 || strcmp(ex, "smd") == 0 ||
+			strcmp(ex, "gg") == 0 || strcmp(ex, "32x") == 0 ||
+			strcmp(ex, "st") == 0 || strcmp(ex, "atr") == 0 ||
+			strcmp(ex, "mii") == 0 || strcmp(ex, "pss") == 0 ||
+			strcmp(ex, "ngp") == 0 || strcmp(ex, "ngc") == 0 ||
+			strcmp(ex, "elf") == 0 || strcmp(ex, "wud") == 0 ||
+			strcmp(ex, "nro") == 0)
+			icon = " ";
+		else
+			//icon = ex; /* debug */
+			icon = "";
 		break;
-        default:
-                //icon = ex; /* debug */
-                icon = "";
-                break;
-        }
+	default:
+		//icon = ex; /* debug */
+		icon = "";
+		break;
+	}
 
-        return icon;
+	return icon;
 }
 
 static void
@@ -620,8 +669,8 @@ get_ext(char *str)
 	ext = ecalloc(MAX_EXT + 1, sizeof(char));
 	strncpy(ext, &str[len - counter], MAX_EXT);
 	ext[MAX_EXT] = '\0';
-	for(char *p=ext; *p; p++) {
-		*p=tolower(*p);
+	for (char *p = ext; *p; p++) {
+		*p = tolower(*p);
 	}
 	return ext;
 }
@@ -977,7 +1026,7 @@ mvbk(const Arg *arg)
 		return;
 	}
 
-        rm_hi(cpane, cpane->hdir - 1);
+	rm_hi(cpane, cpane->hdir - 1);
 	cpane->firstrow = cpane->parent_firstrow;
 	cpane->hdir = cpane->parent_row;
 	PERROR(listdir(cpane) < 0);
@@ -1013,7 +1062,7 @@ mvfwd(const Arg *arg)
 
 	switch (check_dir(CURSOR(cpane).name)) {
 	case 0:
-                rm_hi(cpane, cpane->hdir - 1);
+		rm_hi(cpane, cpane->hdir - 1);
 		strncpy(cpane->dirn, CURSOR(cpane).name, MAX_P);
 		cpane->parent_row = cpane->hdir;
 		cpane->parent_firstrow = cpane->firstrow;
@@ -1072,14 +1121,14 @@ bkmrk(const Arg *arg)
 static void
 cppane(const Arg *arg)
 {
-	(void) arg;
+	(void)arg;
 	int other_idx;
 
 	other_idx = pane_idx ^ 1;
 	strncpy(panes[other_idx].dirn, panes[pane_idx].dirn, MAX_P);
 	panes[other_idx].hdir = panes[pane_idx].hdir;
 	panes[other_idx].firstrow = panes[pane_idx].firstrow;
-	panes[other_idx].parent_row= panes[pane_idx].parent_row;
+	panes[other_idx].parent_row = panes[pane_idx].parent_row;
 	PERROR(listdir(&panes[other_idx]) < 0);
 }
 
@@ -1774,39 +1823,39 @@ yank(const Arg *arg)
 static void
 dragon(const Arg *arg)
 {
-        if (cpane->dirc < 1)
-            return;
+	if (cpane->dirc < 1)
+		return;
 
-        char cmd [500];
-        free_files();
-        sel_len = 1;
-        sel_files = ecalloc(sel_len, sizeof(char *));
-        sel_files[0] = ecalloc(MAX_P, sizeof(char));
-        strncpy(sel_files[0], CURSOR(cpane).name, MAX_P);
-        strcpy(cmd, "dragon-drop -i -x \"");
-        strcat(cmd, sel_files[0]);
-        strcat(cmd, "\"");
-        system(cmd);
-        print_status(cprompt, "1 file dropped", sel_len);
+	char cmd[500];
+	free_files();
+	sel_len = 1;
+	sel_files = ecalloc(sel_len, sizeof(char *));
+	sel_files[0] = ecalloc(MAX_P, sizeof(char));
+	strncpy(sel_files[0], CURSOR(cpane).name, MAX_P);
+	strcpy(cmd, "dragon-drop -i -x \"");
+	strcat(cmd, sel_files[0]);
+	strcat(cmd, "\"");
+	system(cmd);
+	print_status(cprompt, "1 file dropped", sel_len);
 }
 
 static void
 seldragon(const Arg *arg)
 {
-        init_files();
-        refresh_pane(cpane);
-        add_hi(cpane, cpane->hdir - 1);
-        char cmd [500];
-        strcpy(cmd, "dragon-drop -i -a ");
-        int n = sel_len;
-        for (int i = 0; i < n; i++){
-            strcat(cmd, "\"");
-            strcat(cmd, sel_files[i]);
-            strcat(cmd, "\" ");
-        }
-        system(cmd);
-        print_status(cprompt, "%zu files dropped", sel_len);
-        cont_vmode = -1;
+	init_files();
+	refresh_pane(cpane);
+	add_hi(cpane, cpane->hdir - 1);
+	char cmd[500];
+	strcpy(cmd, "dragon-drop -i -a ");
+	int n = sel_len;
+	for (int i = 0; i < n; i++) {
+		strcat(cmd, "\"");
+		strcat(cmd, sel_files[i]);
+		strcat(cmd, "\" ");
+	}
+	system(cmd);
+	print_status(cprompt, "%zu files dropped", sel_len);
+	cont_vmode = -1;
 }
 
 static void
@@ -2230,9 +2279,8 @@ main(int argc, char *argv[])
 	if (argc == 1)
 		start();
 	else if (argc == 2 && strncmp("-v", argv[1], 2) == 0)
-		die("sfm-"VERSION);
+		die("sfm-" VERSION);
 	else
 		die("usage: sfm [-v]");
 	return 0;
 }
-

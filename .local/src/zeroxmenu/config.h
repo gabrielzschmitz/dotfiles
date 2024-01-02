@@ -1,39 +1,40 @@
 static struct Config config = {
-	/* font, separate different fonts with comma */
-	.font = "Lilex Nerd Font Propo:size=12",
+    /* font, separate different fonts with comma */
+    .font = "iMWritingMono Nerd Font Propo:size=12",
 
-	/* colors */
-	.background_color = "#0a0a0a",
-	.foreground_color = "#b3b3b3",
-	.selbackground_color = "#e5e5e5",
-	.selforeground_color = "#0a0a0a",
-	.separator_color = "#644d66",
-	.border_color = "#b3b3b3",
+    /* colors */
+    .background_color = "#0a0a0a",
+    .foreground_color = "#b3b3b3",
+    .selbackground_color = "#e5e5e5",
+    .selforeground_color = "#0a0a0a",
+    .separator_color = "#644d66",
+    .border_color = "#b3b3b3",
 
-	/* sizes in pixels */
-	.width_pixels = 130,        /* minimum width of a menu */
-	.height_pixels = 25,        /* height of a single menu item */
-	.border_pixels = 0,         /* menu border */
-	.separator_pixels = 3,      /* space around separator */
-	.gap_pixels = 0,            /* gap between menus */
+    /* sizes in pixels */
+    .width_pixels = 130,   /* minimum width of a menu */
+    .height_pixels = 25,   /* height of a single menu item */
+    .border_pixels = 0,    /* menu border */
+    .separator_pixels = 3, /* space around separator */
+    .gap_pixels = 0,       /* gap between menus */
 
-	/* text alignment, set to LeftAlignment, CenterAlignment or RightAlignment */
-	.alignment = LeftAlignment,
+    /* text alignment, set to LeftAlignment, CenterAlignment or RightAlignment
+     */
+    .alignment = LeftAlignment,
 
-	/*
-	 * The variables below cannot be set by X resources.
-	 * Their values must be less than .height_pixels.
-	 */
+    /*
+     * The variables below cannot be set by X resources.
+     * Their values must be less than .height_pixels.
+     */
 
-	/* geometry of the right-pointing isoceles triangle for submenus */
-	.triangle_width = 3,
-	.triangle_height = 7,
+    /* geometry of the right-pointing isoceles triangle for submenus */
+    .triangle_width = 3,
+    .triangle_height = 7,
 
-	/* the icon size is equal to .height_pixels - .iconpadding * 2 */
-	.iconpadding = 2,
+    /* the icon size is equal to .height_pixels - .iconpadding * 2 */
+    .iconpadding = 2,
 
-	/* area around the icon, the triangle and the separator */
-	.horzpadding = 8,
+    /* area around the icon, the triangle and the separator */
+    .horzpadding = 8,
 };
 
 /*
@@ -53,9 +54,9 @@ static struct Config config = {
  * If you do not want to set a key binding, keep it with the value of
  * XK_VoidSymbol
  */
-#define KSYMFIRST   XK_VoidSymbol       /* select first item */
-#define KSYMLAST    XK_VoidSymbol       /* select last item */
-#define KSYMUP      XK_VoidSymbol       /* select previous item */
-#define KSYMDOWN    XK_VoidSymbol       /* select next item */
-#define KSYMLEFT    XK_VoidSymbol       /* close current menu */
-#define KSYMRIGHT   XK_VoidSymbol       /* enter selected item */
+#define KSYMFIRST XK_VoidSymbol /* select first item */
+#define KSYMLAST XK_VoidSymbol  /* select last item */
+#define KSYMUP XK_VoidSymbol    /* select previous item */
+#define KSYMDOWN XK_VoidSymbol  /* select next item */
+#define KSYMLEFT XK_VoidSymbol  /* close current menu */
+#define KSYMRIGHT XK_VoidSymbol /* enter selected item */
