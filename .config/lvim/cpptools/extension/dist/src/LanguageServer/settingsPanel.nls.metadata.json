@@ -1,9 +1,0 @@
-{
-	"messages": [
-		"C/C++ Configurations"
-	],
-	"keys": [
-		"c.cpp.configurations"
-	],
-	"filePath": "src\\LanguageServer\\settingsPanel"
-}

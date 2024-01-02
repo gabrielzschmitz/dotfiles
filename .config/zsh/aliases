@@ -6,178 +6,137 @@
 #  ,|                                                     
 #  `'                                                     
 # GITHUB:https://github.com/gabrielzschmitz               
-# INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
+# INSTAGRAM:https://www.instagram.com/gabrielzschmitz_/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 #----------------------------------------------------------------
 
-    alias zshrc='lvim $HOME/.config/zsh/.zshrc'                                   
-    alias zenv='lvim $HOME/.zshenv'
-    alias zhis='lvim $HOME/.config/zsh/.zhistory'
-    alias aliases='lvim $HOME/.config/zsh/aliases'
+    alias zshrc='nvim $HOME/.config/zsh/.zshrc'
+    alias zenv='nvim $HOME/.zshenv'
+    alias zhis='nvim $HOME/.config/zsh/.zhistory'
+    alias aliases='nvim $HOME/.config/zsh/aliases'
 
 #--------------------------- sys --------------------------------
-                                                          alias	\
-    ls='ls -A --color=always --group-directories-first'         \
-    l='ls -A --color=always --group-directories-first'          \
-    lb='ls -Ahs --color=always --group-directories-first'       \
-    diff='diff --color'			                        \
-    cnt='ls -A | wc -l'			                        \
-    cl='clear'                  			        \
-    pk='pkill'							\
-    lv='lvim'							\
-    nv='lvim'							\
-    vi='lvim'							\
-    cf='cfiles'                                                 \
-    mkins='make install'				        \
-    mkclins='make clean install'				\
-    sumkins='doas make install'				        \
-    sumkclins='doas make clean install'				\
-    patcha='patch -p1 <'					\
-    du='du --human-readable'					\
-    grep='grep --color=auto'					\
-    cmatrix='cmatrix -bC cyan'					\
-    bat='bat --theme=base16 -p'	                                \
-    cat='bat'							\
-    nvidia-settings='devour nvidia-settings                     \
-    --config="$XDG_CONFIG_HOME"/nvidia/settings'                \
-    nvs='devour nvidia-settings                                 \
-    --config="$XDG_CONFIG_HOME"/nvidia/settings'                \
-    webcam='v4l2-ctl --set-fmt-video=width=720 &&               \
-mpv av://v4l2:/dev/video0'                                      \
-    sshserver='ssh gabrielzschmitz@192.168.0.101'          	\
+
+    alias ls='ls -A --color=always --group-directories-first'
+    alias l='ls -A --color=always --group-directories-first'
+    alias lb='ls -Ahs --color=always --group-directories-first'
+    alias diff='diff --color'
+    alias cnt='ls -A | wc -l'
+    alias cl='clear'
+    alias pk='pkill'
+    alias lv='lvim'
+    alias nv='nvim'
+    alias vi='nvim'
+    alias cf='cfiles'
+    alias mkins='make install'
+    alias mkclins='make clean install'
+    alias sumkins='doas make install'
+    alias sumkclins='doas make clean install'
+    alias patcha='patch -p1 <'
+    alias du='du --human-readable'
+    alias grep='grep --color=auto'
+    alias cmatrix='cmatrix -bC cyan'
+    alias bat='bat --theme=base16 -p'
+    alias sshserver='ssh gabrielzschmitz@192.168.0.109'
 
 #--------------------------- cfg ------------------------------
-                                                          alias \
-    xresourcesconf='lvim $HOME/.config/X11/xresources'		\
-    xinitrc='lvim $HOME/.config/X11/xinitrc'			\
-    dunstrc='lvim $HOME/.config/dunst/dunstrc'			\
-    picomconf='lvim $HOME/.config/picom.conf'			\
-    mpdconf='lvim $HOME/.config/mpd/mpd.conf'			\
-    ncmpcppconf='lvim $HOME/.config/ncmpcpp/config'		\
-    musicconf='lvim $HOME/.config/ncmpcpp/config'		\
-    lvimconf='lvim $HOME/.config/lvim/'				\
-    zathurarc='lvim $HOME/.config/zathura/zathurarc'		\
-    yarn='yarn --use-yarnrc $XDG_CONFIG_HOME/yarn/config'       \
+
+    alias xresourcesconf='nvim $HOME/.config/X11/xresources'
+    alias xinitrc='nvim $HOME/.config/X11/xinitrc'
+    alias dunstrc='nvim $HOME/.config/dunst/dunstrc'
+    alias picomconf='nvim $HOME/.config/picom.conf'
+    alias mpdconf='nvim $HOME/.config/mpd/mpd.conf'
+    alias ncmpcppconf='nvim $HOME/.config/ncmpcpp/config'
+    alias musicconf='nvim $HOME/.config/ncmpcpp/config'
+    alias nvimconf='nvim $HOME/.config/nvim/'
+    alias zathurarc='nvim $HOME/.config/zathura/zathurarc'
+    alias yarn='yarn --use-yarnrc $XDG_CONFIG_HOME/yarn/config'
 
 #--------------------------- git --------------------------------
-                                                          alias \
-    alias dots='/usr/bin/git 					\
---git-dir=$HOME/doc/dotfiles --work-tree=$HOME'			\
-    alias notes='/usr/bin/git					\
---git-dir=$HOME/doc/notes --work-tree=$HOME'			\
-    								\
-    dotsp='dots push -u origin main'				\
-    dotsc='dots commit -m'					\
-    dotsa='dots add'						\
-    dotspl='dots pull'						\
-    gitpu='git push -u origin main'				\
-    gitc='git commit -m'					\
-    gita='git add'                                              \
-    gitp='git push'                                             \
-    gitpl='git pull'                                            \
-    giti='git init'                                             \
-    gits='git status'                                           \
-    gitcl='git clone'						\
-    gitd='git diff'						\
-    gitr='git reset'						\
+#
+    alias dots='/usr/bin/git --git-dir=$HOME/doc/dotfiles --work-tree=$HOME'
+    alias dotsp='dots push -u origin main'
+    alias dotsc='dots commit -m'
+    alias dotsa='dots add'
+    alias dotspl='dots pull'
+    alias gitpu='git push -u origin main'
+    alias gitc='git commit -m'
+    alias gita='git add'
+    alias gitp='git push'
+    alias gitpl='git pull'
+    alias giti='git init'
+    alias gits='git status'
+    alias gitcl='git clone'
+    alias gitd='git diff'
+    alias gitr='git reset'
                                   
 #-------------------------- dirs --------------------------------
-                                                          alias	\
-    doc='cd $HOME/doc'						\
-    down='cd $HOME/down'					\
-    pic='cd $HOME/pic'						\
-    wallpic='cd $HOME/pic/wall'					\
-    vid='cd $HOME/vid'						\
-    mus='cd $HOME/mus'						\
-    gg='cd $HOME/gg'						\
-    next='cd $HOME/next'					\
-    draw='cd $HOME/next/draw; clear && ls'	                \
-    dev='cd $HOME/next/dev; clear && ls'	                \
-    site='cd $HOME/next/site/blog; clear && ls'	        \
-    bin='cd $HOME/.local/bin; clear && ls'			\
-    src='cd $HOME/.local/src; clear && ls'			\
-    biblio='cd $HOME/next/work/UTFPR/biblio; clear && ls'  \
-    work='cd $HOME/next/work/UTFPR/work; clear && ls'      \
-    tc='cd $HOME/.local/src/typer.c ;clear; ls'                 \
-    tmt='cd $HOME/.local/src/Tomato.C && clear; ls'             \
-    dt='cd $HOME/.local/src/do-it && clear; ls'             \
-    zerocfetch='cd $HOME/.local/src/cfetch ;clear; ls'          \
-    zerocfiles='cd $HOME/.local/src/zerocfiles ;clear; ls'      \
-    zerodwm='cd $HOME/.local/src/zerodwm; clear && ls'		\
-    zerost='cd $HOME/.local/src/zerost; clear && ls'		\
-    zerodmenu='cd $HOME/.local/src/zerodmenu; clear && ls'	\
-    zeroslock='cd $HOME/.local/src/zeroslock; clear && ls'	\
-    zeroxmenu='cd $HOME/.local/src/zeroxmenu; clear && ls'	\
-    zeroherbe='cd $HOME/.local/src/zeroherbe; clear && ls'	\
-    zerosfm='cd $HOME/.local/src/zerosfm; clear && ls'	        \
-    zerobar='cd $HOME/.config/polybar; clear && ls'	        \
-    cdzerofetch='cd $HOME/.local/src/zerofetch; clear && ls'	\
 
-#-------------------------- pacman ------------------------------
-                                                          alias \
-    pacman='doas pacman --color=always'				\
-    pcm='pacman'						\
-    paru='paru --color always --skipreview'			\
-    u='doas pacman -Syu'                                 	\
-    p='doas pacman -S'                                   	\
-    a='paru -S'                                          	\
-    del='doas paru -Rs'		                               	\
-
-#--------------------------- memex ------------------------------
-                                                          alias \
-    memex='lvim ~/next/dev/startpage/memex/content/data.ndtl'   \
-    memexdir='devour pcmanfm ~/next/dev/startpage/memex/content/media'\
-    cdmemex='cd ~/next/dev/startpage/memex/'                    \
+    alias aoc='cd $HOME/doc/advent-of-code-2023/'
+    alias doc='cd $HOME/doc'
+    alias down='cd $HOME/down'
+    alias pic='cd $HOME/pic'
+    alias wallpic='cd $HOME/pic/wall'
+    alias vid='cd $HOME/vid'
+    alias mus='cd $HOME/mus'
+    alias gg='cd $HOME/gg'
+    alias next='cd $HOME/next'
+    alias draw='cd $HOME/next/draw; clear && ls'
+    alias dev='cd $HOME/next/dev; clear && ls'
+    alias site='cd $HOME/next/site/blog; clear && ls'
+    alias bin='cd $HOME/.local/bin; clear && ls'
+    alias src='cd $HOME/.local/src; clear && ls'
+    alias biblio='cd $HOME/next/work/UTFPR/biblio; clear && ls'
+    alias work='cd $HOME/next/work/UTFPR/work; clear && ls'
+    alias tc='cd $HOME/.local/src/typer.c ;clear; ls'
+    alias tmt='cd $HOME/.local/src/Tomato.C && clear; ls'
+    alias dt='cd $HOME/.local/src/do-it && clear; ls'
+    alias zerocfetch='cd $HOME/.local/src/cfetch ;clear; ls'
+    alias zerocfiles='cd $HOME/.local/src/zerocfiles ;clear; ls'
+    alias zerodwm='cd $HOME/.local/src/zerodwm; clear && ls'
+    alias zerost='cd $HOME/.local/src/zerost; clear && ls'
+    alias zerodmenu='cd $HOME/.local/src/zerodmenu; clear && ls'
+    alias zeroslock='cd $HOME/.local/src/zeroslock; clear && ls'
+    alias zeroxmenu='cd $HOME/.local/src/zeroxmenu; clear && ls'
+    alias zeroherbe='cd $HOME/.local/src/zeroherbe; clear && ls'
+    alias zerosfm='cd $HOME/.local/src/zerosfm; clear && ls'
+    alias zerobar='cd $HOME/.config/polybar; clear && ls'
+    alias cdzerofetch='cd $HOME/.local/src/zerofetch; clear && ls'
+    alias paru='paru --color always --skipreview'
 
 #-------------------------- misc --------------------------------
-                                                          alias \
-    fetch='cfetch'                                              \
-    hs='hugo server'                                            \
-    br='setxkbmap br'						\
-    us='setxkbmap us alt-intl'					\
-    colors='lvim $HOME/doc/zerocolors.vim'			\
-    gittokens='lvim $HOME/next/gittokens'			\
-    yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'	\
-    xresources='xrdb $HOME/.config/X11/xresources'		\
-    music='ncmpcpp'						\
-    sxiv='nsxiv -a'					        \
-    nsxiv='nsxiv -a'					        \
-    zathura='devour zathura'					\
-    clock='tty-clock -s -c -b -C 2'				\
-    picomd='picom -b'			                        \
-    nsxiva='devour nsxiv -a *'					\
-    pkpicom='pkill picom'					\
-    pksteam='pkill steam'					\
-    pknext='pkill nextcloud'					\
-    pkgsup='sysinfo-packagesupgrade'				\
-    battery='sysinfo-battery'					\
-    weather='sysinfo-weather'					\
-    weatherdown='curl -sf "wttr.in/Brasil+Parana+Cascavel" >    \
-    ~/.local/share/weatherreport && sysinfo-weather'	        \
-    scrk='screenkey -M -s small -p bottom --no-systray 		\
---font "CaskaydiaCove Nerd Font" --font-color #e5e5e5		\
---bg-color #080808 --opacity 0.8'				\
 
-#------------------------- youtube ------------------------------
-                                                          alias \
-    ym="youtube-dl --ignore-errors -f bestaudio  		\
-      --extract-audio --audio-format mp3         		\
-      --audio-quality 0 -o './%(title)s.%(ext)s'"		\
-    yv="youtube-dl --ignore-errors -o            		\
-      './%(title)s.%(ext)s'"					\
-    musdl='cd $HOME/mus/down; youtube-dl -x			\
---audio-quality 0 --audio-format mp3 --embed-thumbnail'		\
-    wavdl='cd $HOME/doc/mus; youtube-dl -x			\
---audio-quality 0 --audio-format wav'		\
+    alias fetch='cfetch'
+    alias hs='hugo server'
+    alias br='setxkbmap br'
+    alias us='setxkbmap us alt-intl'
+    alias colors='nvim $HOME/doc/zerocolors.vim'
+    alias gittokens='nvim $HOME/next/gittokens'
+    alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
+    alias xresources='xrdb $HOME/.config/X11/xresources'
+    alias music='ncmpcpp'
+    alias sxiv='nsxiv -a'
+    alias nsxiv='nsxiv -a'
+    alias zathura='devour zathura'
+    alias clock='tty-clock -s -c -b -C 2'
+    alias picomd='picom -b'
+    alias nsxiva='devour nsxiv -a *'
+    alias pkpicom='pkill picom'
+    alias pksteam='pkill steam'
+    alias pknext='pkill nextcloud'
+    alias pkgsup='sysinfo-packagesupgrade'
+    alias battery='sysinfo-battery'
+    alias weather='sysinfo-weather'
+    alias weatherdown='curl -sf "wttr.in/Brasil+Parana+Cascavel" > ~/.local/share/weatherreport && sysinfo-weather'
+
 #-------------------------- games -------------------------------
-    #mine='prime-run devour java -jar $HOME/next/gg/MINE/TLauncher.jar && exit'  \
-                                                          alias \
-    mineserver="cd $HOME/next/gg/MINE/server && java -Xmx4G -Xms4G -jar server.jar nogui" \
-    fabricmineserver="cd $HOME/next/gg/MINE/server && java -Xmx4G -Xms4G -jar fabric-server-launch.jar nogui" \
-    ngrokmine="ngrok tcp 25565" \
-    bkpmine="sudo cp -r ~/.minecraft/saves/My\ World ~/next/gg/MINE"\
-    mine='devour java -jar $HOME/next/gg/MINE/TLauncher.jar && exit'  \
-    mcasel='cd $HOME/next/gg/MINE/mcaselector/zulu17.30.15-ca-fx-jre17.0.1-linux_x64/bin; ./java -jar $HOME/next/gg/MINE/mcaselector/mcaselector.jar'\
-    nvidiaon="sudo ln -s '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf.disabled' '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf'"\
-    nvidiaoff="sudo rm '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf'"
+
+    alias mineserver="cd $HOME/next/gg/MINE/server && java -Xmx3G -Xms3G -jar server.jar nogui"
+    alias fabricmineserver="cd $HOME/next/gg/MINE/server && java -Xmx4G -Xms4G -jar fabric-server-launch.jar nogui"
+    alias ngrokmine="ngrok tcp 25565"
+    alias bkpmine="sudo cp -r ~/.minecraft/saves/My\ World ~/next/gg/MINE"
+    alias mine='devour java -jar $HOME/next/gg/MINE/TLauncher.jar && exit'
+    alias mcasel='cd $HOME/next/gg/MINE/mcaselector/zulu17.30.15-ca-fx-jre17.0.1-linux_x64/bin; ./java -jar $HOME/next/gg/MINE/mcaselector/mcaselector.jar'
+    alias nvidiaon="sudo ln -s '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf.disabled' '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf'"
+    alias nvidiaoff="sudo rm '/etc/X11/xorg.conf.d/999-zzz_custom_nv_multiscreen.conf'"
 

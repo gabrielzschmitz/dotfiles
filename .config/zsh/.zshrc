@@ -12,8 +12,8 @@
 
 # Preferred editor and visual
 autoload -U colors && colors
-export EDITOR='nvim'
-export VISUAL='nvim'
+export EDITOR='lvim'
+export VISUAL='lvim'
 
 # Vi mode
 source $ZDOTDIR/zsh-vi-mode/zsh-vi-mode.plugin.zsh
@@ -25,7 +25,7 @@ bindkey '^?' backward-delete-char
 autoload edit-command-line; zle -N edit-command-line # Use v-v to edit the command line in nvim
 
 # Prompt
-#cfetch
+cfetch
 source $ZDOTDIR/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 PROMPT_EOL_MARK=''
 setopt prompt_subst
@@ -34,22 +34,22 @@ function zvm_after_select_vi_mode() {
   case $ZVM_MODE in
     $ZVM_MODE_NORMAL)
       VICOLORS="white"
-      VIMODE="⤖➛ "
+      VIMODE="➛ "
       ;;
     $ZVM_MODE_INSERT)
       VICOLORS="white"
-      VIMODE="⤖➙ "
+      VIMODE="➙ "
       ;;
     $ZVM_MODE_VISUAL)
       VICOLORS="white"
-      VIMODE="⤖➻ "
+      VIMODE="➻ "
       ;;
     $ZVM_MODE_VISUAL_LINE)
       VICOLORS="white"
-      VIMODE="⤖➻ "
+      VIMODE="➻ "
       ;;
   esac
-  PROMPT='%F{$VICOLORS}$VIMODE%f'
+  PROMPT='%F{$VICOLORS} $VIMODE %f'
 }
 
 # Aliases
@@ -94,3 +94,4 @@ autoload -Uz compinit
 compinit
 _comp_options+=(globdots)
 
+#. /home/gabrielzschmitz/promptless.sh
