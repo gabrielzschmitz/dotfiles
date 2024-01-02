@@ -17,7 +17,7 @@ status=$?
 
 if [ $status = 1 ]
 then
-    picom -b --experimental-backends &
+    picom -b &
 else
     pkill picom
 fi

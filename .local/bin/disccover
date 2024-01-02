@@ -47,7 +47,9 @@ case $1 in
     "notify")
         cover
         # Using dunst
-        pkill dunst && dunstify -i $cover_path -t 2750 "$(mpc --format '%title%\n%artist%' current)" 
+        pkill dunst
+        dunst &
+        dunstify -i $cover_path -t 2750 "$(mpc --format '%title%\n%artist%' current)" 
 
         ## Using herbe
         #pkill herbe

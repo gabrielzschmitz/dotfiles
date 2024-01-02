@@ -10,7 +10,8 @@
 # INSTAGRAM:https://www.instagram.com/gabrielz.schmitz/   
 # DOTFILES:https://github.com/gabrielzschmitz/dotfiles/   
 
-#mv -f ~/.icons/default .local/share/icons || rm -rf .local/share/icons/default && mv -f ~/.icons/default .local/share/icons ; rm -rf ~/.icons
-#mkdir ~/.config/gtk-2.0 ; mv ~/.gtkrc-2.0 ~/.config/gtk-2.0/gtkrc-2.0 ; mv ~/.gtk-bookmarks ~/.config/gtk-2.0/bookmarks
+mv -f /home/gabrielzschmitz/.icons/default .local/share/icons && rm -rf /home/gabrielzschmitz/.icons
+mkdir /home/gabrielzschmitz/.config/gtk-2.0 ; mv /home/gabrielzschmitz/.gtkrc-2.0 /home/gabrielzschmitz/.config/gtk-2.0/gtkrc-2.0 ; mv /home/gabrielzschmitz/.gtk-bookmarks /home/gabrielzschmitz/.config/gtk-2.0/bookmarks
 cp -rf /home/gabrielzschmitz/.local/share/themes /usr/share/ && cp -rf /home/gabrielzschmitz/.local/share/icons /usr/share/
+cp -rf /home/gabrielzschmitz/.local/share/fonts /usr/share/
 

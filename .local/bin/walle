@@ -14,7 +14,7 @@
 # using nsxiv and xwallpaper gabrielzschmitz
 
 # Directory of the wallpapers
-WALL_PATH=$HOME/pic/wall/zeromono
+WALL_PATH=$HOME/pic/wall/catppuccin
 SUNDIAL_DIR=$HOME/pic/wall/sundial
 WALL_DIR=${WALL_PATH##*/}
 DFLT_WALL=$HOME/.local/bin/dfltwall

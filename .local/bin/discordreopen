@@ -1,0 +1,6 @@
+#!/bin/sh
+
+pkill Discord
+pkill Discord
+sleep 2 && discord &
+

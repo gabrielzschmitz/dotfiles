@@ -1,0 +1,39 @@
+#!/bin/bash
+# Script: randomwall
+# Description: Selects a random wallpaper from a specified folder and sets it
+# using xwallpaper.
+# Usage: ./randomwall
+# Dependencies: xwallpaper
+
+# Check if a folder path is provided as a command-line argument
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <folder_path>"
+    exit 1
+fi
+
+# Folder containing wallpapers
+folder="$1"
+
+# Check if the specified folder exists
+if [ ! -d "$folder" ]; then
+    echo "Error: Folder does not exist: $folder"
+    exit 1
+fi
+
+# Retrieve list of files in the folder using globbing
+files=("$folder"/*)
+
+# Check if the folder is empty
+if [ ${#files[@]} -eq 0 ]; then
+    echo "No files found in $folder"
+    exit 1
+fi
+
+# Generate a random index within the range of files
+random=$((RANDOM % ${#files[@]}))
+
+# Print the selected wallpaper's filename
+echo "Selected Wallpaper: ${files[$random]}"
+
+# Set the wallpaper using xwallpaper with zoom option
+xwallpaper --zoom "${files[$random]}"

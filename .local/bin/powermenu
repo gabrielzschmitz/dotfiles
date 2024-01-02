@@ -27,22 +27,22 @@ chosen="$(printf "$options" | dmenucenter -l 5)"
 case $chosen in
     "$shutdown")
 		notify-send "⏻ Turning off the machine..." &
-                #sleep 1 && rm /tmp/sundial.pid && loginctl poweroff
-                sleep 1 && loginctl poweroff
+                #sleep 1 && rm /tmp/sundial.pid && systemctl poweroff
+                sleep 1 && systemctl poweroff
         ;;
     "$reboot")
 		notify-send " Restarting the machine..." &
-                #sleep 1 && rm /tmp/sundial.pid && loginctl reboot
-                sleep 1 && loginctl reboot
+                #sleep 1 && rm /tmp/sundial.pid && systemctl reboot
+                sleep 1 && systemctl reboot
 	;;
     "$logout")
 		notify-send " Login out of the system..." &
-                #sleep 1 && rm /tmp/sundial.pid && loginctl terminate-session $XDG_SESSION_ID
+                #sleep 1 && rm /tmp/sundial.pid && systemctl terminate-session $XDG_SESSION_ID
                 sleep 1 && loginctl terminate-session $XDG_SESSION_ID
 	;;
     "$suspend")
 		notify-send "⏾ Putting the system to sleep..." &
-                sleep 1 && loginctl suspend
+                sleep 1 && systemctl suspend
         ;;
     "$lock")
 		notify-send -t 1500 " Locking the system..." &
