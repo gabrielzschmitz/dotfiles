@@ -61,6 +61,16 @@ in
     "${lyTtyPalette}"
   ];
 
-  # Make DWM the default graphical session
-  services.displayManager.defaultSession = "none+dwm";
+  # Use xinitrc session so .xinitrc is executed
+  services.xserver.displayManager.session = [
+    {
+      manage = "desktop";
+      name = "xinitrc";
+      start = ''
+        ${pkgs.xorg.xinit}/bin/startx "$HOME/.xinitrc" &
+        waitPID=$!
+      '';
+    }
+  ];
+  services.displayManager.defaultSession = "xinitrc";
 }
