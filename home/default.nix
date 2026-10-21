@@ -12,6 +12,8 @@
     ./packages/formatters.nix
     ./services.nix
     ./ssh.nix
+    ./xdg.nix
+    ./xsession.nix
   ];
 
   home.username = "gabrielzschmitz";

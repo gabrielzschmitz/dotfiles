@@ -163,7 +163,9 @@ to rebuild from `~/.dotfiles`.
 │   ├── ssh.nix                   # SSH and ssh-agent
 │   ├── nvim.nix                  # Neovim
 │   ├── fastfetch.nix             # Fastfetch
-│   └── services.nix              # User services (SPICE clipboard)
+│   ├── services.nix              # User services (SPICE clipboard)
+│   ├── xdg.nix                   # XDG user directories
+│   └── xsession.nix              # X11 init (xrandr, xwallpaper, dwm)
 ├── pkgs/                         # Custom packages, exposed via an overlay
 │   ├── default.nix               # Overlay (dwm-custom, st, sfmono-nerd-font)
 │   ├── dwm/{default.nix, config.h}
