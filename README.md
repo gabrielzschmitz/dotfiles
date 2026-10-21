@@ -177,7 +177,8 @@ to rebuild from `~/.dotfiles`.
 ├── configs/                      # Raw configuration files
 │   ├── nvim/init.lua             # Neovim configuration
 │   ├── fish/prompt.fish          # Shared fish prompt
-│   └── picom/picom.conf          # Picom compositor configuration
+│   ├── picom/picom.conf          # Picom compositor configuration
+│   └── Xresources                # X resources (fonts, colors, st)
 └── .gitignore
 ```
 

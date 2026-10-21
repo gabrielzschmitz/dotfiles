@@ -67,10 +67,11 @@ in
       manage = "window";
       name = "xsession";
       start = ''
+        ${pkgs.xorg.xrdb}/bin/xrdb -merge "$HOME/.config/X11/Xresources"
         ${pkgs.xrandr}/bin/xrandr --output Virtual-1 --primary --mode 1920x1080
         ${pkgs.xwallpaper}/bin/xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg"
         ${pkgs.picom}/bin/picom -b --config "$HOME/.config/picom/picom.conf"
-        exec ${pkgs.dwm-custom}/bin/dwm
+        exec ${pkgs.dwm-custom}/bin/dwm 2> "$HOME/.local/state/xsession-errors"
       '';
     }
   ];

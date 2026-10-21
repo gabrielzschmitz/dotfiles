@@ -25,6 +25,22 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
+
+    # Go
+    GOPATH = "$HOME/.local/share/go";
+    GOBIN = "$HOME/.local/bin";
+
+    # npm
+    npm_config_cache = "$HOME/.cache/npm";
+    NPM_CONFIG_CACHE = "$HOME/.cache/npm";
+
+    # Yarn
+    YARN_CACHE_FOLDER = "$HOME/.cache/yarn";
+    YARN_GLOBAL_FOLDER = "$HOME/.local/share/yarn";
+
+    # X11 auth
+    XAUTHORITY = "$HOME/.local/state/xauth/xauthority";
+    ICEAUTHORITY = "$HOME/.cache/ICEauthority";
   };
 
   # Home Manager
