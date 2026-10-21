@@ -23,6 +23,7 @@
 
     defaultCacheTtl = 3600;
     maxCacheTtl = 7200;
+    enableSshSupport = true;
   };
 
   # Ensure the relocated keyring directory has strict permissions.

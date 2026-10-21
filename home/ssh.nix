@@ -1,8 +1,4 @@
 {
-  services.ssh-agent = {
-    enable = true;
-  };
-
   programs.ssh = {
     enable = true;
 
@@ -14,7 +10,6 @@
         User = "git";
         IdentityFile = "~/.ssh/github_ed25519";
         IdentitiesOnly = true;
-        AddKeysToAgent = "yes";
       };
     };
   };
