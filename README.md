@@ -162,10 +162,11 @@ to rebuild from `~/.dotfiles`.
 │   ├── gpg.nix                   # GPG and gpg-agent
 │   ├── ssh.nix                   # SSH and ssh-agent
 │   ├── nvim.nix                  # Neovim
+│   ├── picom.nix                 # Picom compositor
 │   ├── fastfetch.nix             # Fastfetch
 │   ├── services.nix              # User services (SPICE clipboard)
 │   ├── xdg.nix                   # XDG user directories
-│   └── xsession.nix              # X11 init (xrandr, xwallpaper, dwm)
+│   └── xsession.nix              # X11 init (xrandr, xwallpaper, picom, dwm)
 ├── pkgs/                         # Custom packages, exposed via an overlay
 │   ├── default.nix               # Overlay (dwm-custom, st, sfmono-nerd-font)
 │   ├── dwm/{default.nix, config.h}
@@ -175,7 +176,8 @@ to rebuild from `~/.dotfiles`.
 │   └── tomato-c.nix              # Development shell
 ├── configs/                      # Raw configuration files
 │   ├── nvim/init.lua             # Neovim configuration
-│   └── fish/prompt.fish          # Shared fish prompt
+│   ├── fish/prompt.fish          # Shared fish prompt
+│   └── picom/picom.conf          # Picom compositor configuration
 └── .gitignore
 ```
 

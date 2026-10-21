@@ -6,6 +6,7 @@
     ./git.nix
     ./gpg.nix
     ./nvim.nix
+    ./picom.nix
     ./packages/cli.nix
     ./packages/desktop.nix
     ./packages/dev.nix
