@@ -22,12 +22,16 @@
       ".." = "cd ..";
       rebuild = "sudo nixos-rebuild build --flake '#nixos'";
       reswitch = "sudo nixos-rebuild switch --flake '#nixos'";
+      reupdate = "sudo nixos-rebuild switch --upgrade --flake '#nixos'";
       reclean = "sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +1 && sudo nix-collect-garbage -d";
     };
 
     interactiveShellInit = ''
       if test -z "$SSH_AUTH_SOCK"; and test -S "/run/user/"(id -u)"/ssh-agent"
         set -gx SSH_AUTH_SOCK "/run/user/"(id -u)"/ssh-agent"
+      end
+      if command -q gpgconf
+        set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
       end
 
       set -gx EDITOR nvim
