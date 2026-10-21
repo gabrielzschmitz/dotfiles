@@ -1,0 +1,47 @@
+Xft.antialias:	1
+Xft.hinting:	1
+Xft.autohint:	0
+Xft.hintstyle:	hintslight
+Xft.rgba:       rgb
+Xft.lcdfilter:	lcddefault
+
+st.font:        JetBrainsMono Nerd Font:style:regular:pixelsize=13
+st.borderpx:    15
+st.alpha:       1.0
+
+! OneDark Colorscheme for Isabel Rice
+
+*background: #14171c
+*foreground: #abb2bf
+
+! Black + DarkGrey
+*color0:  #181b21
+*color8:  #5c6370
+
+! DarkRed + Red
+*color1:  #be5046
+*color9:  #e06c75
+
+! DarkGreen + Green
+*color2:  #81ae5f
+*color10: #98c379
+
+! DarkYellow + Yellow
+*color3:  #d19a66
+*color11: #e5c07b
+
+! DarkBlue + Blue
+*color4:  #4889be
+*color12: #61afef
+
+! DarkMagenta + Magenta
+*color5:  #7560d3
+*color13: #8677cf
+
+! DarkCyan + Cyan
+*color6:  #49919a
+*color14: #56b6c2
+
+! LightGrey + White
+*color7:  #abb2bf
+*color15: #b8bfe5

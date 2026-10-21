@@ -1,6 +1,5 @@
 {
   stdenv,
-  fetchFromGitHub,
   pkg-config,
   ncurses,
   fontconfig,
@@ -17,12 +16,7 @@ stdenv.mkDerivation {
   pname = "st";
   version = "0.9.3";
 
-  src = fetchFromGitHub {
-    owner = "gh0stzk";
-    repo = "st-terminal";
-    rev = "2f0b43721cf726c1fd20dc6246549814b10ec39e";
-    hash = "sha256-f4zkwdqi2c960uq4Kls/pUxaDpUeD5keRGfWCuTKagE=";
-  };
+  src = ./src;
 
   nativeBuildInputs = [
     pkg-config
@@ -39,10 +33,6 @@ stdenv.mkDerivation {
     libXrender
     libXft
   ];
-
-  postPatch = ''
-    cp ${./config.h} config.h
-  '';
 
   installPhase = ''
     runHook preInstall
