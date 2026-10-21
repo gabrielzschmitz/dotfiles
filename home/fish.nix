@@ -20,8 +20,8 @@
     shellAliases = {
       ll = "ls -lah";
       ".." = "cd ..";
-      rebuild = "sudo nixos-rebuild build --flake '.dotfiles#nixos'";
-      reswitch = "sudo nixos-rebuild switch --flake '.dotfiles#nixos'";
+      rebuild = "sudo nixos-rebuild build --flake '#nixos'";
+      reswitch = "sudo nixos-rebuild switch --flake '#nixos'";
       reclean = "sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +1 && sudo nix-collect-garbage -d";
     };
 
