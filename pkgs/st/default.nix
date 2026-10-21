@@ -1,22 +1,35 @@
-{ pkgs }:
+{
+  stdenv,
+  fetchFromGitHub,
+  pkg-config,
+  ncurses,
+  fontconfig,
+  freetype,
+  harfbuzz,
+  imlib2,
+  libX11,
+  libXext,
+  libXrender,
+  libXft,
+}:
 
-pkgs.stdenv.mkDerivation {
+stdenv.mkDerivation {
   pname = "st";
   version = "0.9.3";
 
-  src = pkgs.fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "gh0stzk";
     repo = "st-terminal";
     rev = "2f0b43721cf726c1fd20dc6246549814b10ec39e";
     hash = "sha256-f4zkwdqi2c960uq4Kls/pUxaDpUeD5keRGfWCuTKagE=";
   };
 
-  nativeBuildInputs = with pkgs; [
+  nativeBuildInputs = [
     pkg-config
     ncurses
   ];
 
-  buildInputs = with pkgs; [
+  buildInputs = [
     fontconfig
     freetype
     harfbuzz
@@ -28,7 +41,7 @@ pkgs.stdenv.mkDerivation {
   ];
 
   postPatch = ''
-    cp ${./st/config.h} config.h
+    cp ${./config.h} config.h
   '';
 
   installPhase = ''

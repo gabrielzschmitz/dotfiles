@@ -50,16 +50,16 @@ nix-shell -p git
 
 ### 3. Configure the hardware
 
-The repository's `hardware-configuration.nix` may not match the target machine.
+The repository's `hosts/nixos/hardware-configuration.nix` may not match the target machine.
 Generate a hardware configuration for the current installation:
 
 ```sh
 sudo nixos-generate-config
-cp /etc/nixos/hardware-configuration.nix ~/.dotfiles/hardware-configuration.nix
+cp /etc/nixos/hardware-configuration.nix ~/.dotfiles/hosts/nixos/hardware-configuration.nix
 ```
 
-Review `configuration.nix` and `flake.nix` to ensure the hostname and hardware
-configuration are correct.
+Review `hosts/nixos/default.nix` and `flake.nix` to ensure the hostname and
+hardware configuration are correct.
 
 ### 4. Build and activate
 
@@ -131,20 +131,49 @@ to rebuild from `~/.dotfiles`.
 
 ```text
 .dotfiles/
-├── configuration.nix          # NixOS system configuration
-├── hardware-configuration.nix # Machine-specific hardware settings
-├── flake.nix                  # Flake inputs and system outputs
-├── flake.lock                 # Pinned dependency revisions
-├── home.nix                   # Home Manager configuration
-├── dwm.nix                    # dwm package configuration
-├── dwm/
-│   └── config.h               # dwm source configuration
-├── st.nix                     # st package configuration
-├── st/
-│   └── config.h               # st source configuration
-├── nvim/
-│   └── init.lua               # Neovim configuration
-├── fonts/                     # Custom fonts
+├── flake.nix                     # Flake inputs and system outputs
+├── flake.lock                    # Pinned dependency revisions
+├── hosts/
+│   └── nixos/
+│       ├── default.nix           # Host-specific settings and module imports
+│       └── hardware-configuration.nix
+├── system/                       # NixOS modules, one domain per file
+│   ├── default.nix               # Imports every system module
+│   ├── boot.nix                  # Limine bootloader
+│   ├── display.nix               # X11, dwm, Ly and TTY palette
+│   ├── audio.nix                 # PipeWire
+│   ├── network.nix               # NetworkManager
+│   ├── locale.nix                # Timezone and locale
+│   ├── virtualisation.nix        # QEMU guest and SPICE agent
+│   ├── users.nix                 # User account and shell
+│   ├── nix.nix                   # Flakes, unfree packages, binsh
+│   ├── packages.nix              # System packages and printing
+│   └── root-nvim.nix             # Root Neovim activation script
+├── home/                         # Home Manager modules
+│   ├── default.nix               # User identity and module imports
+│   ├── packages/
+│   │   ├── dev.nix               # Languages, editors and development tools
+│   │   ├── formatters.nix        # Formatters and linters
+│   │   ├── cli.nix               # Command-line utilities
+│   │   └── desktop.nix           # Browser, terminal, documents, GUI apps
+│   ├── fonts.nix                 # Custom font and fontconfig defaults
+│   ├── fish.nix                  # Fish shell configuration
+│   ├── git.nix                   # Git
+│   ├── gpg.nix                   # GPG and gpg-agent
+│   ├── ssh.nix                   # SSH and ssh-agent
+│   ├── nvim.nix                  # Neovim
+│   ├── fastfetch.nix             # Fastfetch
+│   └── services.nix              # User services (SPICE clipboard)
+├── pkgs/                         # Custom packages, exposed via an overlay
+│   ├── default.nix               # Overlay (dwm-custom, st, sfmono-nerd-font)
+│   ├── dwm/{default.nix, config.h}
+│   ├── st/{default.nix, config.h}
+│   └── sfmono-nerd-font/{default.nix, fonts/*.otf}
+├── shells/
+│   └── tomato-c.nix              # Development shell
+├── configs/                      # Raw configuration files
+│   ├── nvim/init.lua             # Neovim configuration
+│   └── fish/prompt.fish          # Shared fish prompt
 └── .gitignore
 ```
 

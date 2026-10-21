@@ -1,0 +1,29 @@
+{
+  imports = [
+    ./fastfetch.nix
+    ./fish.nix
+    ./fonts.nix
+    ./git.nix
+    ./gpg.nix
+    ./nvim.nix
+    ./packages/cli.nix
+    ./packages/desktop.nix
+    ./packages/dev.nix
+    ./packages/formatters.nix
+    ./services.nix
+    ./ssh.nix
+  ];
+
+  home.username = "gabrielzschmitz";
+  home.homeDirectory = "/home/gabrielzschmitz";
+
+  home.stateVersion = "26.05";
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
+
+  # Home Manager
+  programs.home-manager.enable = true;
+}
