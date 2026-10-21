@@ -1,5 +1,6 @@
 {
   imports = [
+    ./dunst.nix
     ./fastfetch.nix
     ./fish.nix
     ./fonts.nix

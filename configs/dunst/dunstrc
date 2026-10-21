@@ -1,0 +1,170 @@
+# Dunst notification daemon configuration.
+# See dunst(5) for the full list of options.
+# Deployed read-only to ~/.config/dunst/dunstrc by home/dunst.nix.
+
+[global]
+    ### Display ###
+
+    # Monitor to display notifications on (-1 = all monitors).
+    monitor = 0
+
+    # Follow the focused window or the mouse pointer instead of a fixed monitor.
+    follow = none
+
+    ### Geometry ###
+
+    # Fixed width; height accepts a range (0, 300).
+    width = 300
+    height = (0, 300)
+
+    # Position in the top-right corner, offset from the screen edge.
+    origin = top-right
+    offset = (25, 50)
+
+    # Scale factor; 0 auto-detects from the monitor.
+    scale = 0
+
+    # Maximum number of notifications (0 = unlimited).
+    notification_limit = 0
+
+    ### Progress bar ###
+
+    # Shown for notifications with a progress hint, e.g. dunstify -h int:value:12.
+    progress_bar = true
+    progress_bar_height = 10
+    progress_bar_frame_width = 0
+    progress_bar_min_width = 150
+    progress_bar_max_width = 300
+
+    ### Appearance ###
+
+    # Show how many notifications are hidden by notification_limit.
+    indicate_hidden = no
+
+    # Window opacity in percent; requires a running compositor (picom).
+    transparency = 12
+
+    # Separator line and inner padding.
+    separator_height = 2
+    padding = 8
+    horizontal_padding = 8
+    text_icon_padding = 0
+
+    # Notification border.
+    frame_width = 3
+    frame_color = "#ABB2BF"
+
+    # Gap between notifications; requires a compositor. When set, it replaces
+    # the separator and draws a frame around each notification instead.
+    gap_size = 0
+
+    # Separator colour: auto, foreground, frame, or any X colour.
+    separator_color = frame
+
+    # Sort notifications by urgency.
+    sort = yes
+
+    # Keep notifications while the user is idle (0 disables).
+    # idle_threshold = 120
+
+    ### Text ###
+
+    font = SFMono Nerd Font 15
+    line_height = 0
+
+    # Allow a subset of HTML markup in notification bodies and format.
+    markup = full
+
+    # Available fields: %a app, %s summary, %b body, %i/%I icon,
+    # %p progress, %n progress number.
+    format = "<b>%s</b>\n%b"
+
+    alignment = left
+    vertical_alignment = center
+
+    # Show the message age once it exceeds this many seconds (-1 disables).
+    show_age_threshold = 60
+
+    # Truncate long lines in the middle.
+    ellipsize = middle
+
+    ignore_newline = no
+
+    # Merge identical notifications and hide the duplicate counter.
+    stack_duplicates = true
+    hide_duplicate_count = true
+
+    # Show URL (U) and action (A) indicators.
+    show_indicators = yes
+
+    ### Icons ###
+
+    enable_recursive_icon_lookup = true
+    icon_theme = Adwaita
+
+    icon_position = left
+    min_icon_size = 32
+    max_icon_size = 128
+
+    ### History ###
+
+    # Replayed notifications keep their normal timeout.
+    sticky_history = yes
+    history_length = 20
+
+    ### Behaviour ###
+
+    # Used for the context menu.
+    dmenu = dmenu -p dunst:
+    browser = xdg-open
+
+    # Run rule-defined scripts even for suppressed notifications.
+    always_run_script = true
+
+    # Window title and class.
+    title = Dunst
+    class = Dunst
+
+    # Rounded corners in pixels (0 disables).
+    corner_radius = 0
+
+    # Ignore closeNotification requests from applications.
+    ignore_dbusclose = false
+
+    ### Wayland ###
+
+    # X11 only; no effect with the current DWM session.
+    # layer = top
+    force_xwayland = false
+
+    # Legacy option for very old nVidia drivers.
+    force_xinerama = false
+
+    ### Mouse ###
+
+    mouse_left_click = close_current
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
+
+[experimental]
+    # Calculate DPI per monitor instead of using Xft.dpi.
+    per_monitor_dpi = false
+
+### Urgency levels ###
+
+[urgency_low]
+    background = "#1E222A"
+    foreground = "#ABB2BF"
+    timeout = 10
+
+[urgency_normal]
+    background = "#1E222A"
+    foreground = "#ABB2BF"
+    timeout = 10
+
+[urgency_critical]
+    background = "#1E222A"
+    foreground = "#ABB2BF"
+    frame_color = "#E06E6E"
+    # Critical notifications stay visible until dismissed.
+    timeout = 0

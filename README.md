@@ -126,6 +126,7 @@ to rebuild from `~/.dotfiles`.
 | Ly           | TTY display manager                              |
 | Limine       | Bootloader                                       |
 | Neovim       | Editor and plugin configuration                  |
+| Dunst        | Notification daemon                              |
 
 ### Project Structure
 
@@ -162,6 +163,7 @@ to rebuild from `~/.dotfiles`.
 │   ├── gpg.nix                   # GPG and gpg-agent
 │   ├── ssh.nix                   # SSH and ssh-agent
 │   ├── nvim.nix                  # Neovim
+│   ├── dunst.nix                 # Dunst notification daemon
 │   ├── picom.nix                 # Picom compositor
 │   ├── fastfetch.nix             # Fastfetch
 │   ├── services.nix              # User services (SPICE clipboard)
@@ -177,6 +179,7 @@ to rebuild from `~/.dotfiles`.
 ├── configs/                      # Raw configuration files
 │   ├── nvim/init.lua             # Neovim configuration
 │   ├── fish/prompt.fish          # Shared fish prompt
+│   ├── dunst/dunstrc             # Dunst notification configuration
 │   ├── picom/picom.conf          # Picom compositor configuration
 │   └── Xresources                # X resources (fonts, colors, st)
 └── .gitignore

@@ -24,6 +24,7 @@
     xrdb -merge "$HOME/.config/X11/Xresources"
     xrandr --output Virtual-1 --primary --mode 1920x1080
     xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg"
+    dunst &
     picom -b --config "$HOME/.config/picom/picom.conf"
     exec dwm 2> "$HOME/.cache/X11/xsession-errors"
   '';
