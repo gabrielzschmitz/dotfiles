@@ -186,8 +186,8 @@ in
     shellAliases = {
       ll = "ls -lah";
       ".." = "cd ..";
-      rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#nixos";
-      reswitch = "sudo nixos-rebuild switch --flake /etc/nixos#nixos";
+      rebuild = "sudo nixos-rebuild switch --flake '$HOME/.dotfiles#nixos'";
+      reswitch = "sudo nixos-rebuild switch --flake '$HOME/.dotfiles#nixos'";
       reclean = "sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +1 && sudo nix-collect-garbage -d";
     };
 
