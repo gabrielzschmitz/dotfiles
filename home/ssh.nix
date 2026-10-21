@@ -14,6 +14,7 @@
         User = "git";
         IdentityFile = "~/.ssh/github_ed25519";
         IdentitiesOnly = true;
+        AddKeysToAgent = "yes";
       };
     };
   };
