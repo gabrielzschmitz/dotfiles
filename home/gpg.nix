@@ -19,7 +19,7 @@
   services.gpg-agent = {
     enable = true;
 
-    pinentry.package = pkgs.pinentry-gnome3;
+    pinentry.package = pkgs.pinentry-dmenu;
 
     defaultCacheTtl = 3600;
     maxCacheTtl = 7200;

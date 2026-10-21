@@ -27,11 +27,12 @@
     };
 
     interactiveShellInit = ''
-      if test -z "$SSH_AUTH_SOCK"; and test -S "/run/user/"(id -u)"/ssh-agent"
-        set -gx SSH_AUTH_SOCK "/run/user/"(id -u)"/ssh-agent"
-      end
       if command -q gpgconf
         set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+      end
+      set -gx GPG_TTY (tty)
+      if command -q gpg-connect-agent
+        gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
       end
 
       set -gx EDITOR nvim
