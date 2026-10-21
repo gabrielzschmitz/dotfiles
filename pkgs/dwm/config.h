@@ -8,8 +8,8 @@ static const int topbar = 1;            /* 0 means bottom bar */
 static const char *fonts[] = {"SFMono Nerd Font:size=20"};
 static const char dmenufont[] = "SFMono Nerd Font:size=20";
 static const char col_gray1[] = "#1e222a";
-static const char col_gray2[] = "#abb2bf";
-static const char col_gray3[] = "#575e60";
+static const char col_gray2[] = "#575e60";
+static const char col_gray3[] = "#abb2bf";
 static const char col_gray4[] = "#1e222a";
 static const char col_cyan[] = "#67b0e8";
 static const char *colors[][3] = {
