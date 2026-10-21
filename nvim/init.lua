@@ -550,14 +550,19 @@ require("lazy").setup({
 			"MarkdownPreviewStop",
 		},
 
-		build = "cd app && yarn install --force",
+		build = "cd app && npx --yes yarn install --force",
 
 		init = function()
-			vim.g.mkdp_filetypes = {
-				"markdown",
-			}
+			vim.g.mkdp_filetypes = { "markdown" }
+			vim.g.mkdp_echo_preview_url = 1
 
-			vim.g.mkdp_browser = "zen"
+			vim.g.mkdp_browserfunc = "OpenMarkdownPreview"
+
+			vim.cmd([[
+        function! OpenMarkdownPreview(url)
+            call jobstart(["xdg-open", a:url], {"detach": v:true})
+        endfunction
+    ]])
 		end,
 
 		ft = {
