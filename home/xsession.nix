@@ -13,8 +13,8 @@
   home.file.".xinitrc".executable = true;
   home.file.".xinitrc".text = ''
     #!/bin/sh
-    xrandr --auto
-    wp="$(find "$HOME/pic/wall" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) 2>/dev/null | shuf -n 1)"; [ -n "$wp" ] && xwallpaper --stretch "$wp"
+    xrandr --output Virtual-1 --primary --mode 1920x1080
+    xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg"
     exec dwm
   '';
 }
