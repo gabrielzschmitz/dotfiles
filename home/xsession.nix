@@ -13,7 +13,7 @@
   '';
 
   home.activation.createStateDirs = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-    mkdir -p "$HOME/.local/state/xauth" "$HOME/.local/state"
+    mkdir -p "$HOME/.local/state/xauth" "$HOME/.local/state" "$HOME/.cache/X11"
   '';
 
   home.file.".config/X11/Xresources".source = ../configs/Xresources;
@@ -25,6 +25,6 @@
     xrandr --output Virtual-1 --primary --mode 1920x1080
     xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg"
     picom -b --config "$HOME/.config/picom/picom.conf"
-    exec dwm 2> "$HOME/.local/state/xsession-errors"
+    exec dwm 2> "$HOME/.cache/X11/xsession-errors"
   '';
 }

@@ -41,6 +41,10 @@
     # X11 auth
     XAUTHORITY = "$HOME/.local/state/xauth/xauthority";
     ICEAUTHORITY = "$HOME/.cache/ICEauthority";
+
+    # X11 compose
+    XCOMPOSEFILE = "$HOME/.config/X11/xcompose";
+    XCOMPOSECACHE = "$HOME/.cache/X11/xcompose";
   };
 
   # Home Manager

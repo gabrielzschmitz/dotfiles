@@ -7,6 +7,9 @@
     "flakes"
   ];
 
+  # Keep Nix user state under ~/.local/state instead of ~/.nix-*
+  nix.settings.use-xdg-base-directories = true;
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 

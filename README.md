@@ -146,7 +146,7 @@ to rebuild from `~/.dotfiles`.
 │   ├── locale.nix                # Timezone and locale
 │   ├── virtualisation.nix        # QEMU guest and SPICE agent
 │   ├── users.nix                 # User account and shell
-│   ├── nix.nix                   # Flakes, unfree packages, binsh
+│   ├── nix.nix                   # Flakes, unfree packages, binsh, XDG state
 │   ├── packages.nix              # System packages and printing
 │   └── root-nvim.nix             # Root Neovim activation script
 ├── home/                         # Home Manager modules
@@ -183,6 +183,78 @@ to rebuild from `~/.dotfiles`.
 ```
 
 The exact tree may change as the configuration evolves.
+
+---
+
+## Home Directory / XDG
+
+The home directory is kept XDG-compliant: base directories are set explicitly,
+and tools that default to clutter in `$HOME` are redirected through
+`home.sessionVariables` (written to `~/.config/environment.d/`).
+
+### XDG base directories
+
+Home Manager's `xdg` module sets these automatically:
+
+| Variable          | Value            |
+| ----------------- | ---------------- |
+| `XDG_CONFIG_HOME` | `~/.config`      |
+| `XDG_DATA_HOME`   | `~/.local/share` |
+| `XDG_CACHE_HOME`  | `~/.cache`       |
+| `XDG_STATE_HOME`  | `~/.local/state` |
+| `XDG_BIN_HOME`    | `~/.local/bin`   |
+
+### Relocated paths
+
+| Tool           | Variable                    | Location                           |
+| -------------- | --------------------------- | ---------------------------------- |
+| Go             | `GOPATH` / `GOBIN`          | `~/.local/share/go`, `~/.local/bin`|
+| npm            | `npm_config_cache`          | `~/.cache/npm`                     |
+| Yarn           | `YARN_CACHE_FOLDER`         | `~/.cache/yarn`                    |
+| Yarn           | `YARN_GLOBAL_FOLDER`        | `~/.local/share/yarn`              |
+| GPG            | `programs.gpg.homedir`      | `~/.local/share/gnupg`             |
+| xauth          | `XAUTHORITY`                | `~/.local/state/xauth/xauthority`  |
+| ICE            | `ICEAUTHORITY`              | `~/.cache/ICEauthority`            |
+| XCompose       | `XCOMPOSEFILE`              | `~/.config/X11/xcompose`           |
+| Compose cache  | `XCOMPOSECACHE`             | `~/.cache/X11/xcompose`            |
+| X resources    | `xrdb -merge` in session    | `~/.config/X11/Xresources`         |
+| X session logs | `dwm` stderr redirect       | `~/.cache/X11/xsession-errors`     |
+| Nix user state | `use-xdg-base-directories`  | `~/.local/state/nix`               |
+
+`ICEAUTHORITY` lives under `XDG_CACHE_HOME` (not `XDG_RUNTIME_DIR`, which is only
+available after login and would make display managers that start Xorg fail).
+
+### Exceptions
+
+The following intentionally remain in `$HOME`:
+
+- `.ssh` — OpenSSH has no clean XDG relocation; keys and `known_hosts`
+  are fixed relative to the home directory.
+- `.nix-profile` — back-compat symlink kept by Nix even with
+  `use-xdg-base-directories`.
+- `.manpath` — a Home Manager symlink that man-db does not merge, so it cannot
+  be relocated out of `$HOME`.
+- `.gnupg` — only if GPG keys have not yet been migrated (see below).
+
+### After switching
+
+Migrate the GPG keyring and remove stale locations once the new generation is
+active and you have logged in again:
+
+```sh
+# GPG keyring -> ~/.local/share/gnupg
+systemctl --user stop gpg-agent.socket gpg-agent.service
+mkdir -p ~/.local/share/gnupg
+mv ~/.gnupg/* ~/.local/share/gnupg/ 2>/dev/null
+rmdir ~/.gnupg 2>/dev/null
+
+# Stale home-directory files
+rm -f ~/.xsession-errors ~/.xsession-errors.old ~/.Xauthority ~/.ICEauthority
+rm -rf ~/go ~/.npm ~/.yarnrc ~/.Xresources ~/.compose-cache
+```
+
+`~/.nix-defexpr` disappears automatically once `use-xdg-base-directories` is
+active.
 
 ---
 
