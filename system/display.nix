@@ -61,16 +61,17 @@ in
     "${lyTtyPalette}"
   ];
 
-  # Use xinitrc session so .xinitrc is executed
+  # Custom X session for Ly
   services.xserver.displayManager.session = [
     {
-      manage = "desktop";
-      name = "xinitrc";
+      manage = "window";
+      name = "xsession";
       start = ''
-        ${pkgs.xorg.xinit}/bin/startx "$HOME/.xinitrc" &
-        waitPID=$!
+        ${pkgs.xrandr}/bin/xrandr --output Virtual-1 --primary --mode 1920x1080
+        ${pkgs.xwallpaper}/bin/xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg"
+        exec ${pkgs.dwm-custom}/bin/dwm
       '';
     }
   ];
-  services.displayManager.defaultSession = "xinitrc";
+  services.displayManager.defaultSession = "none+xsession";
 }

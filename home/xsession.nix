@@ -3,8 +3,8 @@
 {
   home.packages = with pkgs; [
     xwallpaper
-    xorg.xrandr
-    xorg.xinit
+    xrandr
+    xinit
   ];
 
   home.activation.createWallDir = config.lib.dag.entryAfter [ "writeBoundary" ] ''
