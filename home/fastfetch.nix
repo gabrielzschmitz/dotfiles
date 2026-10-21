@@ -4,7 +4,8 @@
 
     settings = {
       logo = {
-        type = "small";
+        type = "sixel";
+        source = "${../../configs/fastfetch/GZS.png}";
         padding = {
           top = 1;
         };
