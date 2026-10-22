@@ -16,30 +16,30 @@
 #include "hb.h"
 // clang-format on
 
-#define FEATURE(c1, c2, c3, c4)                                                \
-  {.tag = HB_TAG(c1, c2, c3, c4),                                              \
-   .value = 1,                                                                 \
-   .start = HB_FEATURE_GLOBAL_START,                                           \
+#define FEATURE(c1, c2, c3, c4)      \
+  {.tag = HB_TAG(c1, c2, c3, c4),    \
+   .value = 1,                       \
+   .start = HB_FEATURE_GLOBAL_START, \
    .end = HB_FEATURE_GLOBAL_END}
 #define BUFFER_STEP 256
 
-hb_font_t *hbfindfont(XftFont *match);
+hb_font_t* hbfindfont(XftFont* match);
 
 typedef struct {
-  XftFont *match;
-  hb_font_t *font;
+  XftFont* match;
+  hb_font_t* font;
 } HbFontMatch;
 
 typedef struct {
   size_t capacity;
-  HbFontMatch *fonts;
+  HbFontMatch* fonts;
 } HbFontCache;
 
 static HbFontCache hbfontcache = {0, NULL};
 
 typedef struct {
   size_t capacity;
-  Rune *runes;
+  Rune* runes;
 } RuneBuffer;
 
 static RuneBuffer hbrunebuffer = {0, NULL};
@@ -64,19 +64,17 @@ void hbunloadfonts() {
   hbfontcache.capacity = 0;
 }
 
-hb_font_t *hbfindfont(XftFont *match) {
+hb_font_t* hbfindfont(XftFont* match) {
   for (int i = 0; i < hbfontcache.capacity; i++) {
-    if (hbfontcache.fonts[i].match == match)
-      return hbfontcache.fonts[i].font;
+    if (hbfontcache.fonts[i].match == match) return hbfontcache.fonts[i].font;
   }
 
   /* Font not found in cache, caching it now. */
   hbfontcache.fonts = realloc(hbfontcache.fonts,
                               sizeof(HbFontMatch) * (hbfontcache.capacity + 1));
   FT_Face face = XftLockFace(match);
-  hb_font_t *font = hb_ft_font_create(face, NULL);
-  if (font == NULL)
-    die("Failed to load Harfbuzz font.");
+  hb_font_t* font = hb_ft_font_create(face, NULL);
+  if (font == NULL) die("Failed to load Harfbuzz font.");
 
   hbfontcache.fonts[hbfontcache.capacity].match = match;
   hbfontcache.fonts[hbfontcache.capacity].font = font;
@@ -85,17 +83,16 @@ hb_font_t *hbfindfont(XftFont *match) {
   return font;
 }
 
-void hbtransform(HbTransformData *data, XftFont *xfont, const Glyph *glyphs,
+void hbtransform(HbTransformData* data, XftFont* xfont, const Glyph* glyphs,
                  int start, int length) {
   ushort mode = USHRT_MAX;
   unsigned int glyph_count;
   int rune_idx, glyph_idx, end = start + length;
 
-  hb_font_t *font = hbfindfont(xfont);
-  if (font == NULL)
-    return;
+  hb_font_t* font = hbfindfont(xfont);
+  if (font == NULL) return;
 
-  hb_buffer_t *buffer = hb_buffer_create();
+  hb_buffer_t* buffer = hb_buffer_create();
   hb_buffer_set_direction(buffer, HB_DIRECTION_LTR);
   hb_buffer_set_cluster_level(buffer,
                               HB_BUFFER_CLUSTER_LEVEL_MONOTONE_CHARACTERS);
@@ -104,7 +101,7 @@ void hbtransform(HbTransformData *data, XftFont *xfont, const Glyph *glyphs,
   if (hbrunebuffer.capacity < length) {
     hbrunebuffer.capacity = (length / BUFFER_STEP + 1) * BUFFER_STEP;
     hbrunebuffer.runes =
-        realloc(hbrunebuffer.runes, hbrunebuffer.capacity * sizeof(Rune));
+      realloc(hbrunebuffer.runes, hbrunebuffer.capacity * sizeof(Rune));
   }
 
   /* Fill buffer with codepoints. */
@@ -112,11 +109,9 @@ void hbtransform(HbTransformData *data, XftFont *xfont, const Glyph *glyphs,
        glyph_idx++, rune_idx++) {
     hbrunebuffer.runes[rune_idx] = glyphs[glyph_idx].u;
     mode = glyphs[glyph_idx].mode;
-    if (mode & ATTR_WDUMMY)
-      hbrunebuffer.runes[rune_idx] = 0x0020;
+    if (mode & ATTR_WDUMMY) hbrunebuffer.runes[rune_idx] = 0x0020;
     /* Draw spaces for image placeholders. */
-    if (mode & ATTR_IMAGE)
-      hbrunebuffer.runes[rune_idx] = 0x0020;
+    if (mode & ATTR_IMAGE) hbrunebuffer.runes[rune_idx] = 0x0020;
   }
   hb_buffer_add_codepoints(buffer, hbrunebuffer.runes, length, 0, length);
 
@@ -124,9 +119,9 @@ void hbtransform(HbTransformData *data, XftFont *xfont, const Glyph *glyphs,
   hb_shape(font, buffer, features, sizeof(features) / sizeof(hb_feature_t));
 
   /* Get new glyph info. */
-  hb_glyph_info_t *info = hb_buffer_get_glyph_infos(buffer, &glyph_count);
-  hb_glyph_position_t *pos =
-      hb_buffer_get_glyph_positions(buffer, &glyph_count);
+  hb_glyph_info_t* info = hb_buffer_get_glyph_infos(buffer, &glyph_count);
+  hb_glyph_position_t* pos =
+    hb_buffer_get_glyph_positions(buffer, &glyph_count);
 
   /* Fill the output. */
   data->buffer = buffer;
@@ -135,7 +130,7 @@ void hbtransform(HbTransformData *data, XftFont *xfont, const Glyph *glyphs,
   data->count = glyph_count;
 }
 
-void hbcleanup(HbTransformData *data) {
+void hbcleanup(HbTransformData* data) {
   hb_buffer_destroy(data->buffer);
   memset(data, 0, sizeof(HbTransformData));
 }

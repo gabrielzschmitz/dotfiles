@@ -16,10 +16,10 @@
 #define DIVCEIL(n, d) (((n) + ((d) - 1)) / (d))
 #define DEFAULT(a, b) (a) = (a) ? (a) : (b)
 #define LIMIT(x, a, b) (x) = (x)<(a) ? (a) : (x)>(b) ? (b) : (x)
-#define ATTRCMP(a, b)                                                          \
-  (((a).mode & (~ATTR_WRAP)) != ((b).mode & (~ATTR_WRAP)) ||                   \
+#define ATTRCMP(a, b)                                        \
+  (((a).mode & (~ATTR_WRAP)) != ((b).mode & (~ATTR_WRAP)) || \
    (a).fg != (b).fg || (a).bg != (b).bg || (a).decor != (b).decor)
-#define TIMEDIFF(t1, t2)                                                       \
+#define TIMEDIFF(t1, t2) \
   ((t1.tv_sec - t2.tv_sec) * 1000 + (t1.tv_nsec - t2.tv_nsec) / 1E6)
 #define MODBIT(x, set, bit) ((set) ? ((x) |= (bit)) : ((x) &= ~(bit)))
 
@@ -31,10 +31,10 @@
 // not a 24-bit color because the 25-th bit is not set.
 #define DECOR_DEFAULT_COLOR 0x0ffffff
 
-#define HEX_TO_INT(c)                                                          \
-  ((c) >= '0' && (c) <= '9'   ? (c) - '0'                                      \
-   : (c) >= 'a' && (c) <= 'f' ? (c) - 'a' + 10                                 \
-   : (c) >= 'A' && (c) <= 'F' ? (c) - 'A' + 10                                 \
+#define HEX_TO_INT(c)                          \
+  ((c) >= '0' && (c) <= '9'   ? (c) - '0'      \
+   : (c) >= 'a' && (c) <= 'f' ? (c) - 'a' + 10 \
+   : (c) >= 'A' && (c) <= 'F' ? (c) - 'A' + 10 \
                               : -1)
 
 enum glyph_attribute {
@@ -91,24 +91,24 @@ typedef struct {
   uint32_t decor; /* decoration (like underline) */
 } Glyph;
 
-typedef Glyph *Line;
+typedef Glyph* Line;
 
 typedef union {
   int i;
   uint ui;
   float f;
-  const void *v;
-  const char *s;
+  const void* v;
+  const char* s;
 } Arg;
 
-void die(const char *, ...);
+void die(const char*, ...);
 void redraw(void);
 void draw(void);
 
-void printscreen(const Arg *);
-void printsel(const Arg *);
-void sendbreak(const Arg *);
-void toggleprinter(const Arg *);
+void printscreen(const Arg*);
+void printsel(const Arg*);
+void sendbreak(const Arg*);
+void toggleprinter(const Arg*);
 
 int tattrset(int);
 int tisaltscr(void);
@@ -116,10 +116,10 @@ void tnew(int, int);
 void tresize(int, int);
 void tsetdirtattr(int);
 void ttyhangup(void);
-int ttynew(const char *, char *, const char *, char **);
+int ttynew(const char*, char*, const char*, char**);
 size_t ttyread(void);
 void ttyresize(int, int);
-void ttywrite(const char *, size_t, int);
+void ttywrite(const char*, size_t, int);
 
 void resettitle(void);
 
@@ -128,34 +128,34 @@ void selinit(void);
 void selstart(int, int, int);
 void selextend(int, int, int, int);
 int selected(int, int);
-char *getsel(void);
+char* getsel(void);
 
 Glyph getglyphat(int, int);
 
-size_t utf8encode(Rune, char *);
+size_t utf8encode(Rune, char*);
 
-void *xmalloc(size_t);
-void *xrealloc(void *, size_t);
-char *xstrdup(const char *);
+void* xmalloc(size_t);
+void* xrealloc(void*, size_t);
+char* xstrdup(const char*);
 
 int isboxdraw(Rune);
-ushort boxdrawindex(const Glyph *);
+ushort boxdrawindex(const Glyph*);
 #ifdef XFT_VERSION
 /* only exposed to x.c, otherwise we'll need Xft.h for the types */
-void boxdraw_xinit(Display *, Colormap, XftDraw *, Visual *);
-void drawboxes(int, int, int, int, XftColor *, XftColor *,
-               const XftGlyphFontSpec *, int);
+void boxdraw_xinit(Display*, Colormap, XftDraw*, Visual*);
+void drawboxes(int, int, int, int, XftColor*, XftColor*,
+               const XftGlyphFontSpec*, int);
 #endif
 
 /* config.h globals */
-extern char *utmp;
-extern char *scroll;
-extern char *stty_args;
-extern char *vtiden;
-extern wchar_t *worddelimiters;
+extern char* utmp;
+extern char* scroll;
+extern char* stty_args;
+extern char* vtiden;
+extern wchar_t* worddelimiters;
 extern int allowaltscreen;
 extern int allowwindowops;
-extern char *termname;
+extern char* termname;
 extern unsigned int tabspaces;
 extern unsigned int defaultfg;
 extern unsigned int defaultbg;
@@ -164,14 +164,14 @@ extern const int boxdraw, boxdraw_bold, boxdraw_braille;
 
 // Accessors to decoration properties stored in `decor`.
 // The 25-th bit is used to indicate if it's a 24-bit color.
-static inline uint32_t tgetdecorcolor(Glyph *g) { return g->decor & 0x1ffffff; }
-static inline uint32_t tgetdecorstyle(Glyph *g) {
+static inline uint32_t tgetdecorcolor(Glyph* g) { return g->decor & 0x1ffffff; }
+static inline uint32_t tgetdecorstyle(Glyph* g) {
   return (g->decor >> 25) & 0x7;
 }
-static inline void tsetdecorcolor(Glyph *g, uint32_t color) {
+static inline void tsetdecorcolor(Glyph* g, uint32_t color) {
   g->decor = (g->decor & ~0x1ffffff) | (color & 0x1ffffff);
 }
-static inline void tsetdecorstyle(Glyph *g, uint32_t style) {
+static inline void tsetdecorstyle(Glyph* g, uint32_t style) {
   g->decor = (g->decor & ~(0x7 << 25)) | ((style & 0x7) << 25);
 }
 
@@ -182,55 +182,53 @@ static inline void tsetdecorstyle(Glyph *g, uint32_t style) {
 //   don't forget to subtract 1).
 // - the original number of diacritics (0, 1, 2, or 3) - 2 bits
 // - whether this is a classic (1) or Unicode (0) placeholder - 1 bit
-static inline uint32_t tgetimgrow(Glyph *g) { return g->u & 0x1ff; }
-static inline uint32_t tgetimgcol(Glyph *g) { return (g->u >> 9) & 0x1ff; }
-static inline uint32_t tgetimgid4thbyteplus1(Glyph *g) {
+static inline uint32_t tgetimgrow(Glyph* g) { return g->u & 0x1ff; }
+static inline uint32_t tgetimgcol(Glyph* g) { return (g->u >> 9) & 0x1ff; }
+static inline uint32_t tgetimgid4thbyteplus1(Glyph* g) {
   return (g->u >> 18) & 0x1ff;
 }
-static inline uint32_t tgetimgdiacriticcount(Glyph *g) {
+static inline uint32_t tgetimgdiacriticcount(Glyph* g) {
   return (g->u >> 27) & 0x3;
 }
-static inline uint32_t tgetisclassicplaceholder(Glyph *g) {
+static inline uint32_t tgetisclassicplaceholder(Glyph* g) {
   return (g->u >> 29) & 0x1;
 }
-static inline void tsetimgrow(Glyph *g, uint32_t row) {
+static inline void tsetimgrow(Glyph* g, uint32_t row) {
   g->u = (g->u & ~0x1ff) | (row & 0x1ff);
 }
-static inline void tsetimgcol(Glyph *g, uint32_t col) {
+static inline void tsetimgcol(Glyph* g, uint32_t col) {
   g->u = (g->u & ~(0x1ff << 9)) | ((col & 0x1ff) << 9);
 }
-static inline void tsetimg4thbyteplus1(Glyph *g, uint32_t byteplus1) {
+static inline void tsetimg4thbyteplus1(Glyph* g, uint32_t byteplus1) {
   g->u = (g->u & ~(0x1ff << 18)) | ((byteplus1 & 0x1ff) << 18);
 }
-static inline void tsetimgdiacriticcount(Glyph *g, uint32_t count) {
+static inline void tsetimgdiacriticcount(Glyph* g, uint32_t count) {
   g->u = (g->u & ~(0x3 << 27)) | ((count & 0x3) << 27);
 }
-static inline void tsetisclassicplaceholder(Glyph *g, uint32_t isclassic) {
+static inline void tsetisclassicplaceholder(Glyph* g, uint32_t isclassic) {
   g->u = (g->u & ~(0x1 << 29)) | ((isclassic & 0x1) << 29);
 }
 
 /// Returns the full image id. This is a naive implementation, if the most
 /// significant byte is not specified, it's assumed to be 0 instead of inferring
 /// it from the cells to the left.
-static inline uint32_t tgetimgid(Glyph *g) {
+static inline uint32_t tgetimgid(Glyph* g) {
   uint32_t msb = tgetimgid4thbyteplus1(g);
-  if (msb != 0)
-    --msb;
+  if (msb != 0) --msb;
   return (msb << 24) | (g->fg & 0xFFFFFF);
 }
 
 /// Sets the full image id.
-static inline void tsetimgid(Glyph *g, uint32_t id) {
+static inline void tsetimgid(Glyph* g, uint32_t id) {
   g->fg = (id & 0xFFFFFF) | (1 << 24);
   tsetimg4thbyteplus1(g, ((id >> 24) & 0xFF) + 1);
 }
 
-static inline uint32_t tgetimgplacementid(Glyph *g) {
-  if (tgetdecorcolor(g) == DECOR_DEFAULT_COLOR)
-    return 0;
+static inline uint32_t tgetimgplacementid(Glyph* g) {
+  if (tgetdecorcolor(g) == DECOR_DEFAULT_COLOR) return 0;
   return g->decor & 0xFFFFFF;
 }
 
-static inline void tsetimgplacementid(Glyph *g, uint32_t id) {
+static inline void tsetimgplacementid(Glyph* g, uint32_t id) {
   g->decor = (id & 0xFFFFFF) | (1 << 24);
 }
