@@ -9,11 +9,13 @@
         dmenu
         st
 
-        # Documents
-        zathura
-
-        # File manager
+        # File-related
         thunar
+        zathura
+        nsxiv
+
+        # Creative
+        inkscape
 
         # Cloud
         nextcloud-client
