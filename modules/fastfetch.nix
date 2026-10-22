@@ -7,7 +7,7 @@
 
       settings = {
         logo = {
-          type = "kitty";
+          type = "kitty-direct";
           source = "${../configs/fastfetch/GZS.png}";
           width = 22;
           height = 11;

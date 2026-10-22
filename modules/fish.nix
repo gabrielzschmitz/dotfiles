@@ -7,7 +7,22 @@
 
   flake.modules.homeManager.fish =
     { pkgs, ... }:
+    let
+      nixShellFish = pkgs.writeShellScript "nix-shell-fish" ''
+        if [ "''${1-}" = "--rcfile" ] && [ -n "''${2-}" ]; then
+          rcfile="$2"
+          exec ${pkgs.bashInteractive}/bin/bash --noprofile --norc -c '
+            source "$1"
+            export SHELL=${pkgs.fish}/bin/fish
+            exec ${pkgs.fish}/bin/fish
+          ' nix-shell "$rcfile"
+        fi
+        exec ${pkgs.bashInteractive}/bin/bash "$@"
+      '';
+    in
     {
+      home.sessionVariables.NIX_BUILD_SHELL = "${nixShellFish}";
+
       # Fish
       programs.fish = {
         enable = true;
@@ -34,6 +49,8 @@
         };
 
         interactiveShellInit = ''
+          set -gx NIX_BUILD_SHELL ${nixShellFish}
+
           if command -q gpgconf
             set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
           end

@@ -1,5 +1,12 @@
 # Shared prompt: vi mode indicator, working directory and prompt glyph.
-# Sourced by both the Home Manager fish config and the tomato-c devShell.
+# Sourced by the Home Manager fish config.
+
+function __dotfiles_prompt_env
+    if set -q IN_NIX_SHELL
+        set_color --bold white
+        echo -n '[DEVELOP] '
+    end
+end
 
 function __dotfiles_prompt_mode
     switch $fish_bind_mode
@@ -41,6 +48,7 @@ function fish_mode_prompt
 end
 
 function fish_prompt
+    __dotfiles_prompt_env
     __dotfiles_prompt_mode
     __dotfiles_prompt_body
 end
