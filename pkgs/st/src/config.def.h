@@ -144,32 +144,32 @@ char* xdndescchar = " !\"#$&'()*;<>?[\\]^`{|}~";
 /* Terminal colors (16 first used in escape sequence) */
 static const char* colorname[] = {
   /* 8 normal colors */
-  "black",
-  "red3",
-  "green3",
-  "yellow3",
-  "blue2",
-  "magenta3",
-  "cyan3",
-  "gray90",
+  "#181b21",
+  "#be5046",
+  "#81ae5f",
+  "#d19a66",
+  "#4889be",
+  "#7560d3",
+  "#49919a",
+  "#abb2bf",
 
   /* 8 bright colors */
-  "gray50",
-  "red",
-  "green",
-  "yellow",
-  "#5c5cff",
-  "magenta",
-  "cyan",
-  "white",
+  "#5c6370",
+  "#e06c75",
+  "#98c379",
+  "#e5c07b",
+  "#61afef",
+  "#8677cf",
+  "#56b6c2",
+  "#b8bfe5",
 
   [255] = 0,
 
   /* more colors can be added after 255 to use with DefaultXX */
   "#cccccc",
   "#555555",
-  "gray90", /* default foreground colour */
-  "black",  /* default background colour */
+  "#abb2bf", /* default foreground colour */
+  "#14171c", /* default background colour */
 };
 
 /*
