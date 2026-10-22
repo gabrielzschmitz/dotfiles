@@ -1,6 +1,9 @@
-/*
+/**
+ * @file arg.h
+ * @brief Argument parsing macros for command-line programs
+ * @author 20h
+ * 
  * Copy me if you can.
- * by 20h
  */
 
 #ifndef ARG_H__

@@ -1,3 +1,8 @@
+/**
+ * @file st.h
+ * @brief Main terminal emulator definitions and types
+ */
+
 /* See LICENSE for license details. */
 
 #include <stdint.h>

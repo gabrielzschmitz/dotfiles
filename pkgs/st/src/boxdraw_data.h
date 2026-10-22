@@ -1,3 +1,8 @@
+/**
+ * @file boxdraw_data.h
+ * @brief Box drawing character data tables
+ */
+
 /*
  * Copyright 2018 Avi Halachmi (:avih) avihpit@yahoo.com https://github.com/avih
  * MIT/X Consortium License

@@ -1,3 +1,8 @@
+/**
+ * @file x.c
+ * @brief X11 window management and drawing
+ */
+
 /* See LICENSE for license details. */
 #include <errno.h>
 #include <math.h>

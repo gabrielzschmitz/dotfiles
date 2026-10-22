@@ -1,3 +1,8 @@
+/**
+ * @file win.h
+ * @brief Window and rendering interface definitions
+ */
+
 /* See LICENSE for license details. */
 
 enum win_mode {

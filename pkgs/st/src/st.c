@@ -1,3 +1,8 @@
+/**
+ * @file st.c
+ * @brief Core terminal emulation logic
+ */
+
 /* See LICENSE for license details. */
 #include <ctype.h>
 #include <errno.h>

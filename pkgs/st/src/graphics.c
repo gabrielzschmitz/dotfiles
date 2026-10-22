@@ -1,3 +1,8 @@
+/**
+ * @file graphics.c
+ * @brief Sixel graphics protocol implementation
+ */
+
 /* The MIT License
 
    Copyright (c) 2021-2024 Sergei Grechanik <sergei.grechanik@gmail.com>

@@ -1,3 +1,8 @@
+/**
+ * @file config.def.h
+ * @brief Default configuration for st terminal
+ */
+
 /* See LICENSE file for copyright and license details. */
 
 /*

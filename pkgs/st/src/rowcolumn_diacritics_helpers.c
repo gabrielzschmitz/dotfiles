@@ -1,3 +1,8 @@
+/**
+ * @file rowcolumn_diacritics_helpers.c
+ * @brief Diacritic and row/column handling helpers
+ */
+
 #include <stdint.h>
 
 uint16_t diacritic_to_num(uint32_t code)

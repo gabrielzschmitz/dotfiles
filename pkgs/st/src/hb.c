@@ -1,3 +1,8 @@
+/**
+ * @file hb.c
+ * @brief HarfBuzz text shaping integration
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>

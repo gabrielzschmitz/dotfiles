@@ -1,3 +1,8 @@
+/**
+ * @file boxdraw.c
+ * @brief Box drawing glyph rendering
+ */
+
 /*
  * Copyright 2018 Avi Halachmi (:avih) avihpit@yahoo.com https://github.com/avih
  * MIT/X Consortium License

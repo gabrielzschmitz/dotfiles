@@ -1,3 +1,8 @@
+/**
+ * @file graphics.h
+ * @brief Sixel graphics and image rendering support
+ */
+
 
 #include <stdint.h>
 #include <sys/types.h>
