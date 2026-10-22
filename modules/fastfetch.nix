@@ -9,7 +9,7 @@
         logo = {
           type = "kitty";
           source = "${../configs/fastfetch/GZS.png}";
-          width = 21;
+          width = 22;
           height = 11;
           padding = {
             top = 0;
