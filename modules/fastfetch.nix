@@ -12,8 +12,8 @@
           width = 20;
           height = 10;
           padding = {
-            top = 2;
-            right = 1;
+            top = 1;
+            right = 0;
           };
         };
 
@@ -25,12 +25,6 @@
           {
             key = "┌───────────┐";
             type = "custom";
-          }
-
-          {
-            key = "│ {#31} user    {#keys}│";
-            type = "title";
-            format = "{user-name}";
           }
 
           {
@@ -50,11 +44,6 @@
           }
 
           {
-            key = "│ {#31} term    {#keys}│";
-            type = "terminal";
-          }
-
-          {
             key = "│ {#32} shell   {#keys}│";
             type = "shell";
           }
@@ -68,18 +57,21 @@
           {
             key = "│ {#34}󰉉 home    {#keys}│";
             type = "disk";
+            format = "{size-used}/{size-total} ({size-percentage}) - {filesystem}";
             folders = [ "/home" ];
           }
 
           {
             key = "│ {#31}󰉉 root    {#keys}│";
             type = "disk";
+            format = "{size-used}/{size-total} ({size-percentage}) - {filesystem}";
             folders = [ "/" ];
           }
 
           {
             key = "│ {#35} memory  {#keys}│";
             type = "memory";
+            format = "{used}/{total} ({percentage})";
           }
 
           {
