@@ -58,8 +58,8 @@ sudo nixos-generate-config
 cp /etc/nixos/hardware-configuration.nix ~/.dotfiles/hosts/nixos/hardware-configuration.nix
 ```
 
-Review `hosts/nixos/default.nix` and `flake.nix` to ensure the hostname and
-hardware configuration are correct.
+Review `modules/hosts.nix`, `modules/users.nix`, and `flake.nix` to ensure the
+hostname, user, and hardware configuration are correct.
 
 ### 4. Build and activate
 
@@ -120,6 +120,8 @@ to rebuild from `~/.dotfiles`.
 | ------------ | ------------------------------------------------ |
 | NixOS        | System configuration, services, and packages     |
 | Nix Flakes   | Reproducible configuration inputs and outputs    |
+| flake-parts  | Modular flake outputs and per-system settings    |
+| import-tree  | Automatic module discovery under `modules/`      |
 | Home Manager | User packages, programs, and shell configuration |
 | dwm          | Dynamic window manager                           |
 | st           | Simple terminal                                  |
@@ -127,55 +129,63 @@ to rebuild from `~/.dotfiles`.
 | Limine       | Bootloader                                       |
 | Neovim       | Editor and plugin configuration                  |
 | Dunst        | Notification daemon                              |
+| Zen Browser  | Browser with declarative profile, policies, and extensions |
+
+### Architecture
+
+The configuration follows the dendritic pattern. `flake.nix` delegates to
+`flake-parts` and `import-tree`, which imports every `.nix` file under
+`modules/`. Each module exposes one or more aspects through
+`flake.modules.nixos.*` or `flake.modules.homeManager.*`.
+
+Feature modules that touch both system and user configuration, such as
+`display.nix`, `fish.nix`, `nvim.nix`, and `users.nix`, define both aspects in
+one file. Host and user selection remain explicit in `modules/hosts.nix` and
+`modules/home-manager.nix`.
 
 ### Project Structure
 
 ```text
 .dotfiles/
-├── flake.nix                     # Flake inputs and system outputs
+├── flake.nix                     # Flake inputs and mkFlake entrypoint
 ├── flake.lock                    # Pinned dependency revisions
 ├── hosts/
 │   └── nixos/
-│       ├── default.nix           # Host-specific settings and module imports
 │       └── hardware-configuration.nix
-├── system/                       # NixOS modules, one domain per file
-│   ├── default.nix               # Imports every system module
-│   ├── boot.nix                  # Limine bootloader
-│   ├── display.nix               # X11, dwm, Ly and TTY palette
+├── modules/                      # Auto-imported dendritic modules
+│   ├── flake.nix                 # Systems and formatter
+│   ├── overlays.nix              # Custom package overlay
+│   ├── hosts.nix                 # Host composition and nixosConfigurations
+│   ├── home-manager.nix          # Home Manager integration and aspect selection
+│   ├── users.nix                 # System user and Home Manager identity
 │   ├── audio.nix                 # PipeWire
-│   ├── network.nix               # NetworkManager
+│   ├── boot.nix                  # Limine bootloader
+│   ├── display.nix               # X11, dwm, Ly, picom and TTY palette
 │   ├── locale.nix                # Timezone and locale
+│   ├── network.nix               # NetworkManager
 │   ├── virtualisation.nix        # QEMU guest and SPICE agent
-│   ├── users.nix                 # User account and shell
-│   ├── nix.nix                   # Flakes, unfree packages, binsh, XDG state
+│   ├── nix.nix                   # Flakes, unfree packages and binsh
 │   ├── packages.nix              # System packages and printing
-│   └── root-nvim.nix             # Root Neovim activation script
-├── home/                         # Home Manager modules
-│   ├── default.nix               # User identity and module imports
-│   ├── packages/
-│   │   ├── dev.nix               # Languages, editors and development tools
-│   │   ├── formatters.nix        # Formatters and linters
-│   │   ├── cli.nix               # Command-line utilities
-│   │   └── desktop.nix           # Browser, terminal, documents, GUI apps
+│   ├── fish.nix                  # System and user Fish configuration
+│   ├── nvim.nix                  # Root and user Neovim configuration
+│   ├── desktop.nix               # GUI and desktop packages
+│   ├── dev.nix                   # Languages, editors and development tools
+│   ├── formatters.nix            # Formatters and linters
+│   ├── cli.nix                   # Command-line utilities
 │   ├── fonts.nix                 # Custom font and fontconfig defaults
-│   ├── fish.nix                  # Fish shell configuration
 │   ├── git.nix                   # Git
 │   ├── gpg.nix                   # GPG and gpg-agent
 │   ├── ssh.nix                   # SSH and ssh-agent
-│   ├── nvim.nix                  # Neovim
 │   ├── dunst.nix                 # Dunst notification daemon
-│   ├── picom.nix                 # Picom compositor
 │   ├── fastfetch.nix             # Fastfetch
 │   ├── services.nix              # User services (SPICE clipboard)
 │   ├── xdg.nix                   # XDG user directories
-│   └── xsession.nix              # X11 init (xrandr, xwallpaper, picom, dwm)
+│   └── zen.nix                   # Zen Browser profile, policies and extensions
 ├── pkgs/                         # Custom packages, exposed via an overlay
 │   ├── default.nix               # Overlay (dwm-custom, st, sfmono-nerd-font)
 │   ├── dwm/{default.nix, config.h}
 │   ├── st/{default.nix, config.h}
 │   └── sfmono-nerd-font/{default.nix, fonts/*.otf}
-├── shells/
-│   └── tomato-c.nix              # Development shell
 ├── configs/                      # Raw configuration files
 │   ├── nvim/init.lua             # Neovim configuration
 │   ├── fish/prompt.fish          # Shared fish prompt
