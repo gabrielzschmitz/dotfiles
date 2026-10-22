@@ -40,10 +40,10 @@
           bigclock_12hr = false;
 
           # One Dark interface palette (decimal 0xSSRRGGBB)
-          bg = 2638900; # #282C34
+          bg = 1318684; # #14171C
           fg = 11252415; # #ABB2BF
           border_fg = 6402031; # #61AFEF
-          error_bg = 2638900; # #282C34
+          error_bg = 1318684; # #282C34
           error_fg = 31485045; # Bold #E06C75
 
           full_color = true;

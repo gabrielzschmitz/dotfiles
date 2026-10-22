@@ -16,7 +16,7 @@
           # Background
           # wallpapers = [ ../../wallpapers/limine-onedark.png ];
           wallpapers = [ ];
-          backdrop = "282C34";
+          backdrop = "14171C";
 
           # Menu interface
           interface = {
@@ -32,10 +32,10 @@
           graphicalTerminal = {
             background = "00282C34";
             foreground = "ABB2BF";
-            brightBackground = "282C34";
+            brightBackground = "14171C";
             brightForeground = "ABB2BF";
 
-            palette = "282C34;E06C75;98C379;E5C07B;61AFEF;C678DD;56B6C2;ABB2BF";
+            palette = "14171C;E06C75;98C379;E5C07B;61AFEF;C678DD;56B6C2;ABB2BF";
             brightPalette = "5C6370;E06C75;98C379;E5C07B;61AFEF;C678DD;56B6C2;FFFFFF";
 
             margin = 24;
