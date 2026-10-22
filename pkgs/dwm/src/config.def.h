@@ -54,8 +54,19 @@ static const char* fonts[] = {
   "Iosevka:style:medium:size=12",
   "JetBrainsMono Nerd Font Mono:style:medium:size=19"};
 
-// theme
-#include "themes/tundra.h"
+// One Dark theme
+static const char black[] = "#1e222a";
+static const char white[] = "#abb2bf";
+static const char gray2[] = "#2e323a";  // unfocused window border
+static const char gray3[] = "#545862";
+static const char gray4[] = "#6d8dad";
+static const char blue[] = "#61afef";  // focused window border
+static const char green[] = "#7EC7A2";
+static const char red[] = "#e06c75";
+static const char orange[] = "#caaa6a";
+static const char yellow[] = "#EBCB8B";
+static const char pink[] = "#c678dd";
+static const char col_borderbar[] = "#1e222a";  // inner border
 
 static const char* colors[][3] = {
   /*                     fg       bg      border */
@@ -250,10 +261,10 @@ static const Key keys[] = {
   {MODKEY | ShiftMask, XK_w, setborderpx, {.i = default_border}},
 
   // kill dwm
-  {MODKEY | ControlMask, XK_q, spawn, SHCMD("killall bar.sh chadwm")},
+  {MODKEY | ControlMask, XK_c, spawn, SHCMD("pkill bar.sh dwm")},
 
   // kill window
-  {MODKEY, XK_q, killclient, {0}},
+  {MODKEY, XK_c, killclient, {0}},
 
   // restart
   {MODKEY | ShiftMask, XK_r, restart, {0}},

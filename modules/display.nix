@@ -73,8 +73,12 @@
             ${pkgs.xrdb}/bin/xrdb -merge "$HOME/.config/X11/Xresources"
             ${pkgs.xrandr}/bin/xrandr --output Virtual-1 --primary --mode 1920x1080
             ${pkgs.xwallpaper}/bin/xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg"
+
             ${pkgs.dunst}/bin/dunst &
-            ${pkgs.picom}/bin/picom -b --config "$HOME/.config/picom/picom.conf"
+            ${pkgs.picom}/bin/picom -b --config "$HOME/.config/picom/picom.conf" &
+            ${pkgs.xset}/bin/xset r rate 300 50 &
+
+            ${pkgs.dwm-custom}/bin/dwm-bar &
             exec ${pkgs.dwm-custom}/bin/dwm 2> "$HOME/.cache/X11/xsession-errors"
           '';
         }
@@ -103,16 +107,5 @@
 
       home.file.".config/X11/Xresources".source = ../configs/Xresources;
       home.file.".config/picom/picom.conf".source = ../configs/picom/picom.conf;
-
-      home.file.".xinitrc".executable = true;
-      home.file.".xinitrc".text = ''
-        #!/bin/sh
-        xrdb -merge "$HOME/.config/X11/Xresources"
-        xrandr --output Virtual-1 --primary --mode 1920x1080
-        xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg"
-        dunst &
-        picom -b --config "$HOME/.config/picom/picom.conf"
-        exec dwm 2> "$HOME/.cache/X11/xsession-errors"
-      '';
     };
 }
