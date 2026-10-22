@@ -58,7 +58,5 @@
           }
         ];
       };
-
-      devShells.${system}.tomato-c = import ./shells/tomato-c.nix { inherit pkgs; };
     };
 }
