@@ -38,8 +38,6 @@ battery() {
     [[ "$status" == "Charging" ]] && printf '^c%s^ + ' "$green"
     return
   done
-
-  printf '^c%s^ BAT N/A ' "$white"
 }
 
 brightness() {
@@ -87,8 +85,27 @@ wlan() {
         ;;
     esac
   done
+}
 
-  printf '^c%s^ Wi-Fi N/A ' "$white"
+enp() {
+  local device state
+
+  for device in /sys/class/net/enp*; do
+    [[ -d "$device/" ]] || continue
+
+    state=$(cat "$device/operstate" 2>/dev/null || true)
+
+    case "$state" in
+      up)
+        printf '^c%s^ ^b%s^ 󰈁 ^d^%s' "$black" "$blue" '^c#7aa2f7^Connected'
+        return
+        ;;
+      down | dormant | lowerlayerdown | unknown)
+        printf '^c%s^ ^b%s^ 󰈂 ^d^%s' "$black" "$blue" '^c#7aa2f7^Disconnected'
+        return
+        ;;
+    esac
+  done
 }
 
 clock() {
