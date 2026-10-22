@@ -10,6 +10,7 @@ pkgs.mkShell {
     gcc
     bear
     clang-tools
+    fish
   ];
 
   buildInputs = with pkgs; [
@@ -26,9 +27,8 @@ pkgs.mkShell {
 
   shellHook = ''
     export ST_FISH_CONFIG="$TMPDIR/st-fish"
-
     cat > "$ST_FISH_CONFIG" <<'EOF2'
-    source ${builtins.toString ../../../../configs/fish/prompt.fish}
+    source ~/.dotfiles/configs/fish/prompt.fish
 
     function fish_prompt
         set_color --bold cyan
