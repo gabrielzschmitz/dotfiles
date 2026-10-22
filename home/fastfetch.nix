@@ -4,10 +4,13 @@
 
     settings = {
       logo = {
-        type = "sixel";
-        source = "${../../configs/fastfetch/GZS.png}";
+        type = "kitty";
+        source = "${../configs/fastfetch/GZS.png}";
+        width = 20;
+        height = 10;
         padding = {
-          top = 1;
+          top = 2;
+          right = 1;
         };
       };
 
@@ -17,7 +20,7 @@
 
       modules = [
         {
-          key = "╭───────────╮";
+          key = "┌───────────┐";
           type = "custom";
         }
 
@@ -41,11 +44,6 @@
         {
           key = "│ {#35} kernel  {#keys}│";
           type = "kernel";
-        }
-
-        {
-          key = "│ {#36}󰇄 desktop {#keys}│";
-          type = "de";
         }
 
         {
@@ -98,7 +96,7 @@
         }
 
         {
-          key = "╰───────────╯";
+          key = "└───────────┘";
           type = "custom";
         }
       ];
