@@ -9,10 +9,10 @@
         logo = {
           type = "kitty";
           source = "${../configs/fastfetch/GZS.png}";
-          width = 20;
-          height = 10;
+          width = 21;
+          height = 11;
           padding = {
-            top = 1;
+            top = 0;
             right = 0;
           };
         };
@@ -77,11 +77,6 @@
           {
             key = "│ {#36} battery {#keys}│";
             type = "battery";
-          }
-
-          {
-            key = "├───────────┤";
-            type = "custom";
           }
 
           {
