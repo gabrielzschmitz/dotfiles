@@ -134,7 +134,28 @@
         "import-tree": "import-tree",
         "nix-craftapps": "nix-craftapps",
         "nixpkgs": "nixpkgs",
+        "st": "st",
         "zen-browser": "zen-browser"
+      }
+    },
+    "st": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792701162,
+        "narHash": "sha256-DOfHB+WXsxgnHjekJJOuaWDzwMZe7w2P0GrzLv559tA=",
+        "owner": "gabrielzschmitz",
+        "repo": "st",
+        "rev": "856dceae1a4fdf4c9415d136861eb8aa8dd24d09",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gabrielzschmitz",
+        "repo": "st",
+        "type": "github"
       }
     },
     "zen-browser": {

@@ -26,6 +26,7 @@
       nvim
       overlays
       home-manager
+      st
     ];
   };
 }

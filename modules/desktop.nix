@@ -7,7 +7,6 @@
       home.packages = with pkgs; [
         # Window manager / terminal
         dmenu
-        st
 
         # File-related
         thunar
