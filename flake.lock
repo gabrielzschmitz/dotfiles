@@ -75,6 +75,26 @@
         "type": "github"
       }
     },
+    "nix-craftapps": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792680009,
+        "narHash": "sha256-Nk6CceiUGyv9qJFOcD7WnL0zow0ItJB5qYQZSSJgvgs=",
+        "owner": "olafkfreund",
+        "repo": "nix-craftapps",
+        "rev": "b62de8f4687ad497de16fd9bb9f64c8d5d0d9533",
+        "type": "github"
+      },
+      "original": {
+        "owner": "olafkfreund",
+        "repo": "nix-craftapps",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1788752844,
@@ -112,6 +132,7 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
+        "nix-craftapps": "nix-craftapps",
         "nixpkgs": "nixpkgs",
         "zen-browser": "zen-browser"
       }

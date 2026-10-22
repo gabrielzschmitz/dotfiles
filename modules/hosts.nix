@@ -20,6 +20,7 @@
       audio
       virtualisation
       packages
+      craftapps
       display
       fish
       nvim
