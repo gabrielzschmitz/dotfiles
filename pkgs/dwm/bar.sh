@@ -69,16 +69,16 @@ volume() {
     [[ "$output" =~ Volume:\ ([0-9.]+) ]] || return
     volume=$(awk -v v="${BASH_REMATCH[1]}" 'BEGIN { printf "%.0f", v * 100 }')
 
-    if (( volume == 0 )); then
+    if (( volume <= 33 )); then
       icon=""
-    elif (( volume < 50 )); then
+    elif (( volume <= 66 )); then
       icon=""
     else
       icon=""
     fi
   fi
 
-  printf '^c%s^^b%s^ %s ' "$black" "$green" "$icon"
+  printf '^c%s^^b%s^ %s  ' "$black" "$green" "$icon"
   printf '^c%s^^b%s^ %s%%^b%s^' "$green" "$black" "$volume" "$black"
 }
 
@@ -109,12 +109,12 @@ wlan() {
     case "$state" in
       up)
         printf '^c%s^^b%s^ 󰤨 ^d^%s' \
-          "$black" "$blue" '^c#7aa2f7^Connected'
+          "$black" "$blue" ' ^c#7aa2f7^Connected'
         return
         ;;
       down | dormant)
         printf '^c%s^^b%s^ 󰤭 ^d^%s' \
-          "$black" "$blue" '^c#7aa2f7^Disconnected'
+          "$black" "$blue" ' ^c#7aa2f7^Disconnected'
         return
         ;;
     esac
@@ -132,12 +132,12 @@ ethernet() {
     case "$state" in
       up)
         printf '^c%s^^b%s^ 󰈁 ^d^%s' \
-          "$black" "$blue" '^c#7aa2f7^Connected'
+          "$black" "$blue" ' ^c#7aa2f7^Connected'
         return
         ;;
       down | dormant | lowerlayerdown | unknown)
         printf '^c%s^^b%s^ 󰈂 ^d^%s' \
-          "$black" "$blue" '^c#7aa2f7^Disconnected'
+          "$black" "$blue" ' ^c#7aa2f7^Disconnected'
         return
         ;;
     esac
