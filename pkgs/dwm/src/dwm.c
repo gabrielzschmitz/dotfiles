@@ -106,6 +106,10 @@ enum {
   SchemeTag3,
   SchemeTag4,
   SchemeTag5,
+  SchemeTag6,
+  SchemeTag7,
+  SchemeTag8,
+  SchemeTag9,
   SchemeLayout,
   TabSel,
   TabNorm,
@@ -293,6 +297,7 @@ static Client* nexttiled(Client* c);
 static void placemouse(const Arg* arg);
 static void pop(Client* c);
 static void propertynotify(XEvent* e);
+static void quit(const Arg* arg);
 static void restart(const Arg* arg);
 static Client* recttoclient(int x, int y, int w, int h);
 static Monitor* recttomon(int x, int y, int w, int h);

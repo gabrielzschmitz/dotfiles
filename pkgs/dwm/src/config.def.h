@@ -37,22 +37,13 @@ static const int scalepreview = 4;
 static const int tag_preview = 0; /* 1 means enable, 0 is off */
 static const int colorfultag =
   1; /* 0 means use SchemeSel for selected non vacant tag */
-static const char* upvol[] = {"/usr/bin/pactl", "set-sink-volume", "0", "+5%",
-                              NULL};
-static const char* downvol[] = {"/usr/bin/pactl", "set-sink-volume", "0", "-5%",
-                                NULL};
-static const char* mutevol[] = {"/usr/bin/pactl", "set-sink-mute", "0",
-                                "toggle", NULL};
-static const char* light_up[] = {"/usr/bin/light", "-A", "5", NULL};
-static const char* light_down[] = {"/usr/bin/light", "-U", "5", NULL};
 static const int new_window_attach_on_end =
   0; /*  1 means the new window will attach on the end; 0 means the new window will attach on the front,default is front */
 #define ICONSIZE 19   /* icon size */
 #define ICONSPACING 8 /* space between icon and title */
 
-static const char* fonts[] = {
-  "Iosevka:style:medium:size=12",
-  "JetBrainsMono Nerd Font Mono:style:medium:size=19"};
+static const char* fonts[] = {"SFMono Nerd Font:size=18",
+                              "SFMono Nerd Font:size=20"};
 
 // One Dark theme
 static const char black[] = "#1e222a";
@@ -81,6 +72,10 @@ static const char* colors[][3] = {
   [SchemeTag3] = {orange, black, black},
   [SchemeTag4] = {green, black, black},
   [SchemeTag5] = {pink, black, black},
+  [SchemeTag6] = {yellow, black, black},
+  [SchemeTag7] = {blue, black, black},
+  [SchemeTag8] = {red, black, black},
+  [SchemeTag9] = {orange, black, black},
   [SchemeLayout] = {green, black, black},
   [SchemeBtnPrev] = {green, black, black},
   [SchemeBtnNext] = {yellow, black, black},
@@ -88,18 +83,19 @@ static const char* colors[][3] = {
 };
 
 /* tagging */
-static char* tags[] = {"", "", "", "", ""};
+static char* tags[] = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
 
-static const char* eww[] = {"eww",  "-c",  "/home/siduck/.config/chadwm/eww",
-                            "open", "eww", NULL};
+static const char* dmenu[] = {"dmenu_run", NULL};
 
 static const Launcher launchers[] = {
   /* command     name to display */
-  {eww, ""},
+  {dmenu, "󰀻"},
 };
 
-static const int tagschemes[] = {SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4,
-                                 SchemeTag5};
+static const int tagschemes[] = {
+  SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4, SchemeTag5,
+  SchemeTag6, SchemeTag7, SchemeTag8, SchemeTag9,
+};
 
 static const unsigned int ulinepad =
   5; /* horizontal padding between the underline and tag */
@@ -112,13 +108,11 @@ static const int ulineall =
 
 static const Rule rules[] = {
   /* xprop(1):
-     *	WM_CLASS(STRING) = instance, class
-     *	WM_NAME(STRING) = title
-     */
+    *	WM_CLASS(STRING) = instance, class
+    *	WM_NAME(STRING) = title
+    */
   /* class      instance    title       tags mask     iscentered   isfloating   monitor */
-  {"Gimp", NULL, NULL, 0, 0, 1, -1},
-  {"Firefox", NULL, NULL, 1 << 8, 0, 0, -1},
-  {"eww", NULL, NULL, 0, 0, 1, -1},
+  {"Tomato.C", NULL, NULL, 1 << 8, 1, 1, -1},
 };
 
 /* layout(s) */
@@ -172,11 +166,11 @@ static const Key keys[] = {
   /* modifier                         key         function        argument */
 
   // brightness and audio
-  {0, XF86XK_AudioLowerVolume, spawn, {.v = downvol}},
-  {0, XF86XK_AudioMute, spawn, {.v = mutevol}},
-  {0, XF86XK_AudioRaiseVolume, spawn, {.v = upvol}},
-  {0, XF86XK_MonBrightnessUp, spawn, {.v = light_up}},
-  {0, XF86XK_MonBrightnessDown, spawn, {.v = light_down}},
+  {0, XF86XK_AudioLowerVolume, spawn, SHCMD("pamixer --allow-boost -d 5")},
+  {0, XF86XK_AudioMute, spawn, SHCMD("pamixer -t")},
+  {0, XF86XK_AudioRaiseVolume, spawn, SHCMD("pamixer --allow-boost -i 5")},
+  {0, XF86XK_MonBrightnessUp, spawn, SHCMD("xbacklight -inc 10")},
+  {0, XF86XK_MonBrightnessDown, spawn, SHCMD("xbacklight -dec 10")},
 
   // screenshot fullscreen and cropped
   {MODKEY | ControlMask, XK_u, spawn,
@@ -184,12 +178,12 @@ static const Key keys[] = {
   {MODKEY, XK_u, spawn,
    SHCMD("maim --select | xclip -selection clipboard -t image/png")},
 
-  {MODKEY, XK_c, spawn, SHCMD("rofi -show drun")},
+  {MODKEY, XK_d, spawn, SHCMD("dmenu_run")},
   {MODKEY, XK_Return, spawn, SHCMD("st")},
 
   // toggle stuff
   {MODKEY, XK_b, togglebar, {0}},
-  {MODKEY | ControlMask, XK_t, togglegaps, {0}},
+  {MODKEY | Mod1Mask, XK_0, togglegaps, {0}},
   {MODKEY | ShiftMask, XK_space, togglefloating, {0}},
   {MODKEY, XK_f, togglefullscr, {0}},
 
@@ -213,55 +207,54 @@ static const Key keys[] = {
   {MODKEY | ShiftMask, XK_j, movestack, {.i = +1}},
   {MODKEY | ShiftMask, XK_k, movestack, {.i = -1}},
   {MODKEY | ShiftMask, XK_Return, zoom, {0}},
-  {MODKEY, XK_Tab, view, {0}},
 
   // overall gaps
-  {MODKEY | ControlMask, XK_i, incrgaps, {.i = +1}},
-  {MODKEY | ControlMask, XK_d, incrgaps, {.i = -1}},
+  {MODKEY | Mod1Mask, XK_u, incrgaps, {.i = +1}},
+  {MODKEY | Mod1Mask | ShiftMask, XK_u, incrgaps, {.i = -1}},
+  {MODKEY | Mod1Mask | ShiftMask, XK_0, defaultgaps, {0}},
 
   // inner gaps
-  {MODKEY | ShiftMask, XK_i, incrigaps, {.i = +1}},
-  {MODKEY | ControlMask | ShiftMask, XK_i, incrigaps, {.i = -1}},
+  {MODKEY | Mod1Mask, XK_i, incrigaps, {.i = +1}},
+  {MODKEY | Mod1Mask | ShiftMask, XK_i, incrigaps, {.i = -1}},
 
   // outer gaps
-  {MODKEY | ControlMask, XK_o, incrogaps, {.i = +1}},
-  {MODKEY | ControlMask | ShiftMask, XK_o, incrogaps, {.i = -1}},
+  {MODKEY | Mod1Mask, XK_o, incrogaps, {.i = +1}},
+  {MODKEY | Mod1Mask | ShiftMask, XK_o, incrogaps, {.i = -1}},
 
   // inner+outer hori, vert gaps
-  {MODKEY | ControlMask, XK_6, incrihgaps, {.i = +1}},
-  {MODKEY | ControlMask | ShiftMask, XK_6, incrihgaps, {.i = -1}},
-  {MODKEY | ControlMask, XK_7, incrivgaps, {.i = +1}},
-  {MODKEY | ControlMask | ShiftMask, XK_7, incrivgaps, {.i = -1}},
-  {MODKEY | ControlMask, XK_8, incrohgaps, {.i = +1}},
-  {MODKEY | ControlMask | ShiftMask, XK_8, incrohgaps, {.i = -1}},
-  {MODKEY | ControlMask, XK_9, incrovgaps, {.i = +1}},
-  {MODKEY | ControlMask | ShiftMask, XK_9, incrovgaps, {.i = -1}},
-
-  {MODKEY | ControlMask | ShiftMask, XK_d, defaultgaps, {0}},
+  {MODKEY | Mod1Mask, XK_6, incrihgaps, {.i = +1}},
+  {MODKEY | Mod1Mask | ShiftMask, XK_6, incrihgaps, {.i = -1}},
+  {MODKEY | Mod1Mask, XK_7, incrivgaps, {.i = +1}},
+  {MODKEY | Mod1Mask | ShiftMask, XK_7, incrivgaps, {.i = -1}},
+  {MODKEY | Mod1Mask, XK_8, incrohgaps, {.i = +1}},
+  {MODKEY | Mod1Mask | ShiftMask, XK_8, incrohgaps, {.i = -1}},
+  {MODKEY | Mod1Mask, XK_9, incrovgaps, {.i = +1}},
+  {MODKEY | Mod1Mask | ShiftMask, XK_9, incrovgaps, {.i = -1}},
 
   // layout
+  {MODKEY, XK_Tab, view, {0}},
+  {MODKEY, XK_0, view, {.ui = ~0}},
+  {MODKEY | Mod1Mask, XK_comma, cyclelayout, {.i = -1}},
+  {MODKEY | Mod1Mask, XK_period, cyclelayout, {.i = +1}},
   {MODKEY, XK_t, setlayout, {.v = &layouts[0]}},
   {MODKEY | ShiftMask, XK_f, setlayout, {.v = &layouts[1]}},
-  {MODKEY, XK_m, setlayout, {.v = &layouts[2]}},
-  {MODKEY | ControlMask, XK_g, setlayout, {.v = &layouts[10]}},
-  {MODKEY | ControlMask | ShiftMask, XK_t, setlayout, {.v = &layouts[13]}},
-  {MODKEY, XK_space, setlayout, {0}},
-  {MODKEY | ControlMask, XK_comma, cyclelayout, {.i = -1}},
-  {MODKEY | ControlMask, XK_period, cyclelayout, {.i = +1}},
-  {MODKEY, XK_0, view, {.ui = ~0}},
+  {MODKEY | ShiftMask, XK_t, setlayout, {.v = &layouts[11]}},
+  {MODKEY, XK_space, setlayout, {.v = &layouts[13]}},
   {MODKEY | ShiftMask, XK_0, tag, {.ui = ~0}},
+
+  // monitors
   {MODKEY, XK_comma, focusmon, {.i = -1}},
   {MODKEY, XK_period, focusmon, {.i = +1}},
   {MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
   {MODKEY | ShiftMask, XK_period, tagmon, {.i = +1}},
 
   // change border size
-  {MODKEY | ShiftMask, XK_minus, setborderpx, {.i = -1}},
-  {MODKEY | ShiftMask, XK_p, setborderpx, {.i = +1}},
-  {MODKEY | ShiftMask, XK_w, setborderpx, {.i = default_border}},
+  {MODKEY | Mod1Mask | ControlMask, XK_minus, setborderpx, {.i = -1}},
+  {MODKEY | Mod1Mask | ControlMask, XK_equal, setborderpx, {.i = +1}},
+  {MODKEY | Mod1Mask | ControlMask, XK_0, setborderpx, {.i = default_border}},
 
   // kill dwm
-  {MODKEY | ControlMask, XK_c, spawn, SHCMD("pkill bar.sh dwm")},
+  {MODKEY | ShiftMask, XK_c, spawn, SHCMD("pkill dwm")},
 
   // kill window
   {MODKEY, XK_c, killclient, {0}},
@@ -270,8 +263,8 @@ static const Key keys[] = {
   {MODKEY | ShiftMask, XK_r, restart, {0}},
 
   // hide & restore windows
-  {MODKEY, XK_e, hidewin, {0}},
-  {MODKEY | ShiftMask, XK_e, restorewin, {0}},
+  {MODKEY, XK_s, hidewin, {0}},
+  {MODKEY | ShiftMask, XK_s, restorewin, {0}},
 
   TAGKEYS(XK_1, 0) TAGKEYS(XK_2, 1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4, 3)
     TAGKEYS(XK_5, 4) TAGKEYS(XK_6, 5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8, 7)
