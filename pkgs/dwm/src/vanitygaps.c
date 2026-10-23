@@ -1,8 +1,21 @@
-/* Settings */
+/**
+ * @file vanitygaps.c
+ * @brief Gap-aware layouts and gap manipulation commands.
+ *
+ * This file is included by dwm.c and is not compiled on its own.
+ */
 #if !PERTAG_PATCH
 static int enablegaps = 1;
 #endif  // PERTAG_PATCH
 
+/**
+ * @brief Set all outer and inner gaps and re-arrange the selected monitor.
+ *
+ * @param oh         Outer horizontal gap.
+ * @param ov         Outer vertical gap.
+ * @param ih         Inner horizontal gap.
+ * @param iv         Inner vertical gap.
+ */
 void setgaps(int oh, int ov, int ih, int iv) {
   if (oh < 0) oh = 0;
   if (ov < 0) ov = 0;
@@ -16,6 +29,11 @@ void setgaps(int oh, int ov, int ih, int iv) {
   arrange(selmon);
 }
 
+/**
+ * @brief Toggle gaps for the selected monitor.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void togglegaps(const Arg* arg) {
 #if PERTAG_PATCH
   selmon->pertag->enablegaps[selmon->pertag->curtag] =
@@ -26,43 +44,93 @@ void togglegaps(const Arg* arg) {
   arrange(NULL);
 }
 
+/**
+ * @brief Restore the configured default gaps.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void defaultgaps(const Arg* arg) { setgaps(gappoh, gappov, gappih, gappiv); }
 
+/**
+ * @brief Adjust all inner and outer gaps by the same amount.
+ *
+ * @param arg        Gap delta.
+ */
 void incrgaps(const Arg* arg) {
   setgaps(selmon->gappoh + arg->i, selmon->gappov + arg->i,
           selmon->gappih + arg->i, selmon->gappiv + arg->i);
 }
 
+/**
+ * @brief Adjust all inner gaps by the given amount.
+ *
+ * @param arg        Gap delta.
+ */
 void incrigaps(const Arg* arg) {
   setgaps(selmon->gappoh, selmon->gappov, selmon->gappih + arg->i,
           selmon->gappiv + arg->i);
 }
 
+/**
+ * @brief Adjust all outer gaps by the given amount.
+ *
+ * @param arg        Gap delta.
+ */
 void incrogaps(const Arg* arg) {
   setgaps(selmon->gappoh + arg->i, selmon->gappov + arg->i, selmon->gappih,
           selmon->gappiv);
 }
 
+/**
+ * @brief Adjust the outer horizontal gap.
+ *
+ * @param arg        Gap delta.
+ */
 void incrohgaps(const Arg* arg) {
   setgaps(selmon->gappoh + arg->i, selmon->gappov, selmon->gappih,
           selmon->gappiv);
 }
 
+/**
+ * @brief Adjust the outer vertical gap.
+ *
+ * @param arg        Gap delta.
+ */
 void incrovgaps(const Arg* arg) {
   setgaps(selmon->gappoh, selmon->gappov + arg->i, selmon->gappih,
           selmon->gappiv);
 }
 
+/**
+ * @brief Adjust the inner horizontal gap.
+ *
+ * @param arg        Gap delta.
+ */
 void incrihgaps(const Arg* arg) {
   setgaps(selmon->gappoh, selmon->gappov, selmon->gappih + arg->i,
           selmon->gappiv);
 }
 
+/**
+ * @brief Adjust the inner vertical gap.
+ *
+ * @param arg        Gap delta.
+ */
 void incrivgaps(const Arg* arg) {
   setgaps(selmon->gappoh, selmon->gappov, selmon->gappih,
           selmon->gappiv + arg->i);
 }
 
+/**
+ * @brief Resolve the effective gaps and tiled client count for a monitor.
+ *
+ * @param m          Monitor to inspect.
+ * @param oh         Receives effective outer horizontal gap.
+ * @param ov         Receives effective outer vertical gap.
+ * @param ih         Receives effective inner horizontal gap.
+ * @param iv         Receives effective inner vertical gap.
+ * @param nc         Receives the number of tiled clients.
+ */
 void getgaps(Monitor* m, int* oh, int* ov, int* ih, int* iv, unsigned int* nc) {
   unsigned int n, oe, ie;
 #if PERTAG_PATCH
@@ -74,16 +142,27 @@ void getgaps(Monitor* m, int* oh, int* ov, int* ih, int* iv, unsigned int* nc) {
 
   for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
   if (smartgaps && n == 1) {
-    oe = 0;  // outer gaps disabled when only one client
+    oe = 0;
   }
 
-  *oh = m->gappoh * oe;  // outer horizontal gap
-  *ov = m->gappov * oe;  // outer vertical gap
-  *ih = m->gappih * ie;  // inner horizontal gap
-  *iv = m->gappiv * ie;  // inner vertical gap
-  *nc = n;               // number of clients
+  *oh = m->gappoh * oe;
+  *ov = m->gappov * oe;
+  *ih = m->gappih * ie;
+  *iv = m->gappiv * ie;
+  *nc = n;
 }
 
+/**
+ * @brief Compute the cfact totals and remainder pixels for both layout areas.
+ *
+ * @param m          Monitor to inspect.
+ * @param msize      Master area size in pixels.
+ * @param ssize      Stack area size in pixels.
+ * @param mf         Receives the total master cfact.
+ * @param sf         Receives the total stack cfact.
+ * @param mr         Receives the master pixel remainder.
+ * @param sr         Receives the stack pixel remainder.
+ */
 void getfacts(Monitor* m, int msize, int ssize, float* mf, float* sf, int* mr,
               int* sr) {
   unsigned int n;
@@ -103,21 +182,23 @@ void getfacts(Monitor* m, int msize, int ssize, float* mf, float* sf, int* mr,
     else
       stotal += ssize * (c->cfact / sfacts);
 
-  *mf = mfacts;  // total factor of master area
-  *sf = sfacts;  // total factor of stack area
-  *mr = msize -
-        mtotal;  // the remainder (rest) of pixels after a cfacts master split
-  *sr = ssize -
-        stotal;  // the remainder (rest) of pixels after a cfacts stack split
+  *mf = mfacts;
+  *sf = sfacts;
+  *mr = msize - mtotal;
+  *sr = ssize - stotal;
 }
 
-/***
- * Layouts
+/**
+ * @name Gap-aware layouts
+ * @{
  */
 
-/*
- * Bottomstack layout + gaps
- * https://dwm.suckless.org/patches/bottomstack/
+/**
+ * @brief Bottom-stack layout: master row above a stack row.
+ *
+ * @param m          Monitor to arrange.
+ *
+ * @see https://dwm.suckless.org/patches/bottomstack/
  */
 static void bstack(Monitor* m) {
   unsigned int i, n;
@@ -162,6 +243,11 @@ static void bstack(Monitor* m) {
   }
 }
 
+/**
+ * @brief Bottom-stack layout with a horizontally split stack.
+ *
+ * @param m          Monitor to arrange.
+ */
 static void bstackhoriz(Monitor* m) {
   unsigned int i, n;
   int oh, ov, ih, iv;
@@ -206,9 +292,12 @@ static void bstackhoriz(Monitor* m) {
   }
 }
 
-/*
- * Centred master layout + gaps
- * https://dwm.suckless.org/patches/centeredmaster/
+/**
+ * @brief Centered-master layout with stacks on both sides.
+ *
+ * @param m          Monitor to arrange.
+ *
+ * @see https://dwm.suckless.org/patches/centeredmaster/
  */
 void centeredmaster(Monitor* m) {
   unsigned int i, n;
@@ -258,9 +347,9 @@ void centeredmaster(Monitor* m) {
     if (!m->nmaster || n < m->nmaster)
       mfacts += c->cfact;
     else if ((n - m->nmaster) % 2)
-      lfacts += c->cfact;  // total factor of left hand stack area
+      lfacts += c->cfact;
     else
-      rfacts += c->cfact;  // total factor of right hand stack area
+      rfacts += c->cfact;
   }
 
   for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++)
@@ -300,6 +389,11 @@ void centeredmaster(Monitor* m) {
   }
 }
 
+/**
+ * @brief Centered floating-master layout with a surrounding stack.
+ *
+ * @param m          Monitor to arrange.
+ */
 void centeredfloatingmaster(Monitor* m) {
   unsigned int i, n;
   float mfacts, sfacts;
@@ -355,9 +449,12 @@ void centeredfloatingmaster(Monitor* m) {
     }
 }
 
-/*
- * Deck layout + gaps
- * https://dwm.suckless.org/patches/deck/
+/**
+ * @brief Deck layout: master clients stacked above the remaining clients.
+ *
+ * @param m          Monitor to arrange.
+ *
+ * @see https://dwm.suckless.org/patches/deck/
  */
 void deck(Monitor* m) {
   unsigned int i, n;
@@ -398,9 +495,13 @@ void deck(Monitor* m) {
     }
 }
 
-/*
- * Fibonacci layout + gaps
- * https://dwm.suckless.org/patches/fibonacci/
+/**
+ * @brief Fibonacci spiral layout shared by dwindle() and spiral().
+ *
+ * @param m          Monitor to arrange.
+ * @param s          Non-zero for dwindle, zero for spiral.
+ *
+ * @see https://dwm.suckless.org/patches/fibonacci/
  */
 void fibonacci(Monitor* m, int s) {
   unsigned int i, n;
@@ -480,17 +581,30 @@ void fibonacci(Monitor* m, int s) {
   }
 }
 
+/**
+ * @brief Dwindle layout: a clockwise Fibonacci spiral.
+ *
+ * @param m          Monitor to arrange.
+ */
 void dwindle(Monitor* m) { fibonacci(m, 1); }
 
+/**
+ * @brief Spiral layout: a counter-clockwise Fibonacci spiral.
+ *
+ * @param m          Monitor to arrange.
+ */
 void spiral(Monitor* m) { fibonacci(m, 0); }
 
-/*
- * Gappless grid layout + gaps (ironically)
- * https://dwm.suckless.org/patches/gaplessgrid/
+/**
+ * @brief Gapless grid layout.
+ *
+ * @param m          Monitor to arrange.
+ *
+ * @see https://dwm.suckless.org/patches/gaplessgrid/
  */
 void gaplessgrid(Monitor* m) {
   unsigned int i, n;
-  int x, y, cols, rows, ch, cw, cn, rn, rrest, crest;  // counters
+  int x, y, cols, rows, ch, cw, cn, rn, rrest, crest;
   int oh, ov, ih, iv;
   Client* c;
 
@@ -531,9 +645,12 @@ void gaplessgrid(Monitor* m) {
   }
 }
 
-/*
- * Gridmode layout + gaps
- * https://dwm.suckless.org/patches/gridmode/
+/**
+ * @brief Grid layout with gaps.
+ *
+ * @param m          Monitor to arrange.
+ *
+ * @see https://dwm.suckless.org/patches/gridmode/
  */
 void grid(Monitor* m) {
   unsigned int i, n;
@@ -563,9 +680,12 @@ void grid(Monitor* m) {
   }
 }
 
-/*
- * Horizontal grid layout + gaps
- * https://dwm.suckless.org/patches/horizgrid/
+/**
+ * @brief Horizontal grid layout with an upper and lower row.
+ *
+ * @param m          Monitor to arrange.
+ *
+ * @see https://dwm.suckless.org/patches/horizgrid/
  */
 void horizgrid(Monitor* m) {
   Client* c;
@@ -631,23 +751,23 @@ void horizgrid(Monitor* m) {
     }
 }
 
-/*
- * nrowgrid layout + gaps
- * https://dwm.suckless.org/patches/nrowgrid/
+/**
+ * @brief N-row grid layout derived from the master count.
+ *
+ * @param m          Monitor to arrange.
+ *
+ * @see https://dwm.suckless.org/patches/nrowgrid/
  */
 void nrowgrid(Monitor* m) {
   unsigned int n;
-  int ri = 0, ci = 0;                  /* counters */
-  int oh, ov, ih, iv;                  /* vanitygap settings */
-  unsigned int cx, cy, cw, ch;         /* client geometry */
-  unsigned int uw = 0, uh = 0, uc = 0; /* utilization trackers */
+  int ri = 0, ci = 0;
+  int oh, ov, ih, iv;
+  unsigned int cx, cy, cw, ch;
+  unsigned int uw = 0, uh = 0, uc = 0;
   unsigned int cols, rows = m->nmaster + 1;
   Client* c;
 
-  /* count clients */
   getgaps(m, &oh, &ov, &ih, &iv, &n);
-
-  /* nothing to do here */
   if (n == 0) return;
 
   /* force 2 clients to always split vertically */
@@ -684,8 +804,10 @@ void nrowgrid(Monitor* m) {
   }
 }
 
-/*
- * Default tile layout + gaps
+/**
+ * @brief Default tile layout with a master column and a stack column.
+ *
+ * @param m          Monitor to arrange.
  */
 static void tile(Monitor* m) {
   unsigned int i, n;
@@ -726,3 +848,4 @@ static void tile(Monitor* m) {
       sy += HEIGHT(c) + ih;
     }
 }
+/** @} */

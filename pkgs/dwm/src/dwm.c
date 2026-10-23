@@ -1,4 +1,6 @@
-/* See LICENSE file for copyright and license details.
+/**
+ * @file dwm.c
+ * @brief Dynamic window manager core.
  *
  * dynamic window manager is designed like any other X client as well. It is
  * driven through handling X events. In contrast to other X clients, a window
@@ -7,8 +9,8 @@
  * allowed to select for this event mask.
  *
  * The event handlers of dwm are organized in an array which is accessed
- * whenever a new event has been fetched. This allows event dispatching
- * in O(1) time.
+ * whenever a new event has been fetched. This allows event dispatching in O(1)
+ * time.
  *
  * Each child of the root window is called a client, except windows which have
  * set the override_redirect flag. Clients are organized in a linked client
@@ -88,6 +90,7 @@
 #define XEMBED_EMBEDDED_VERSION (VERSION_MAJOR << 16) | VERSION_MINOR
 
 /* enums */
+/** @brief Cursor shapes used by the window manager. */
 enum {
   CurNormal,
   CurResize,
@@ -95,7 +98,8 @@ enum {
   CurResizeHorzArrow,
   CurResizeVertArrow,
   CurLast
-}; /* cursor */
+};
+/** @brief Colour scheme slots used across the bar and tab bar. */
 enum {
   SchemeNorm,
   SchemeSel,
@@ -116,7 +120,8 @@ enum {
   SchemeBtnPrev,
   SchemeBtnNext,
   SchemeBtnClose
-}; /* color schemes */
+};
+/** @brief EWMH atoms advertised to clients. */
 enum {
   NetSupported,
   NetWMName,
@@ -138,15 +143,12 @@ enum {
   NetNumberOfDesktops,
   NetCurrentDesktop,
   NetLast
-}; /* EWMH atoms */
-enum { Manager, Xembed, XembedInfo, XLast }; /* Xembed atoms */
-enum {
-  WMProtocols,
-  WMDelete,
-  WMState,
-  WMTakeFocus,
-  WMLast
-}; /* default atoms */
+};
+/** @brief XEmbed atoms used by the system tray. */
+enum { Manager, Xembed, XembedInfo, XLast };
+/** @brief ICCCM atoms used by the window manager. */
+enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast };
+/** @brief Clickable bar and window regions. */
 enum {
   ClkTagBar,
   ClkTabBar,
@@ -159,83 +161,93 @@ enum {
   ClkClientWin,
   ClkRootWin,
   ClkLast
-}; /* clicks */
+};
 
+/** @brief Tab bar visibility modes. */
 enum showtab_modes {
   showtab_never,
   showtab_auto,
   showtab_nmodes,
   showtab_always
-}; /* tab modes */
+};
 
+/** @brief Generic argument passed to key and button handlers. */
 typedef union {
-  int i;
-  unsigned int ui;
-  float f;
-  const void* v;
+  int i;           /**< Signed integer argument. */
+  unsigned int ui; /**< Unsigned integer or tag mask argument. */
+  float f;         /**< Floating point argument. */
+  const void* v;   /**< Pointer argument. */
 } Arg;
 
+/** @brief A mouse button binding. */
 typedef struct {
-  unsigned int click;
-  unsigned int mask;
-  unsigned int button;
-  void (*func)(const Arg* arg);
-  const Arg arg;
+  unsigned int click;           /**< Region where the binding applies. */
+  unsigned int mask;            /**< Modifier mask. */
+  unsigned int button;          /**< Button number. */
+  void (*func)(const Arg* arg); /**< Handler to invoke. */
+  const Arg arg;                /**< Handler argument. */
 } Button;
 
 typedef struct Monitor Monitor;
 typedef struct Client Client;
+/** @brief A managed X window. */
 struct Client {
-  char name[256];
-  float mina, maxa;
-  float cfact;
-  int x, y, w, h;
-  int oldx, oldy, oldw, oldh;
+  char name[256];             /**< Window title. */
+  float mina, maxa;           /**< Minimum and maximum aspect ratio. */
+  float cfact;                /**< Client size factor within its area. */
+  int x, y, w, h;             /**< Current geometry. */
+  int oldx, oldy, oldw, oldh; /**< Geometry before the last change. */
+  /** Size hints and increments. */
   int basew, baseh, incw, inch, maxw, maxh, minw, minh, hintsvalid;
-  int bw, oldbw;
-  unsigned int tags;
+  int bw, oldbw;     /**< Current and original border width. */
+  unsigned int tags; /**< Tag mask of the client. */
   int isfixed, iscentered, isfloating, isurgent, neverfocus, oldstate,
-    isfullscreen;
-  unsigned int icw, ich;
-  Picture icon;
-  int beingmoved;
-  Client* next;
-  Client* snext;
-  Monitor* mon;
-  Window win;
+    isfullscreen;        /**< Client state flags. */
+  unsigned int icw, ich; /**< Scaled icon dimensions. */
+  Picture icon;          /**< Cached icon picture. */
+  int beingmoved;        /**< Non-zero while interactively moved. */
+  Client* next;          /**< Next client on the monitor. */
+  Client* snext;         /**< Next client in the focus stack. */
+  Monitor* mon;          /**< Monitor owning the client. */
+  Window win;            /**< X window handle. */
 };
 
+/** @brief A keyboard binding. */
 typedef struct {
-  unsigned int mod;
-  KeySym keysym;
-  void (*func)(const Arg*);
-  const Arg arg;
+  unsigned int mod;         /**< Modifier mask. */
+  KeySym keysym;            /**< Key symbol. */
+  void (*func)(const Arg*); /**< Handler to invoke. */
+  const Arg arg;            /**< Handler argument. */
 } Key;
 
+/** @brief A window layout. */
 typedef struct {
-  const char* symbol;
-  void (*arrange)(Monitor*);
+  const char* symbol;        /**< Short symbol shown in the bar. */
+  void (*arrange)(Monitor*); /**< Arrange function, or NULL for floating. */
 } Layout;
 
+/** @brief A client matching rule. */
 typedef struct {
-  const char* class;
-  const char* instance;
-  const char* title;
-  unsigned int tags;
-  int iscentered;
-  int isfloating;
-  int monitor;
+  const char* class;    /**< WM_CLASS to match, or NULL. */
+  const char* instance; /**< WM_CLASS instance to match, or NULL. */
+  const char* title;    /**< Window title substring to match, or NULL. */
+  unsigned int tags;    /**< Tags assigned on match. */
+  int iscentered;       /**< Non-zero to center the client. */
+  int isfloating;       /**< Non-zero to make the client floating. */
+  int monitor;          /**< Target monitor number, or -1. */
 } Rule;
 
 typedef struct Systray Systray;
+/** @brief The system tray window and its icons. */
 struct Systray {
-  Window win;
-  Client* icons;
+  Window win;    /**< Tray selection owner window. */
+  Client* icons; /**< Linked list of tray icons. */
 };
 
+/** @brief A bar launcher entry. */
 typedef struct {
-  const char** command;
-  const char* name;
+  const char** command; /**< NULL-terminated command vector. */
+  const char* name;     /**< Label displayed in the bar. */
 } Launcher;
 
 /* function declarations */
@@ -416,62 +428,68 @@ static Client* hiddenWinStack[hiddenWinStackMax];
 #include "config.h"
 
 typedef struct Pertag Pertag;
+/** @brief A monitor and its per-monitor layout state. */
 struct Monitor {
-  char ltsymbol[16];
-  float mfact;
-  int nmaster;
-  int num;
-  int by;             /* bar geometry */
-  int ty;             /* tab bar geometry */
-  int mx, my, mw, mh; /* screen size */
-  int wx, wy, ww, wh; /* window area  */
-  int gappih;         /* horizontal gap between windows */
-  int gappiv;         /* vertical gap between windows */
-  int gappoh;         /* horizontal outer gaps */
-  int gappov;         /* vertical outer gaps */
-  unsigned int borderpx;
-  unsigned int seltags;
-  unsigned int sellt;
-  unsigned int tagset[2];
-  unsigned int colorfultag;
-  int showbar, showtab;
-  int topbar, toptab;
-  Client* clients;
-  Client* sel;
-  Client* stack;
-  Monitor* next;
-  Window barwin;
-  Window tabwin;
-  Window tagwin;
-  Pixmap tagmap[LENGTH(tags)];
-  int previewshow;
-  int ntabs;
-  int tab_widths[MAXTABS];
-  int tab_btn_w[3];
-  const Layout* lt[2];
-  Pertag* pertag;
+  char ltsymbol[16];           /**< Layout symbol shown in the bar. */
+  float mfact;                 /**< Master area factor. */
+  int nmaster;                 /**< Number of clients in the master area. */
+  int num;                     /**< Monitor number. */
+  int by;                      /**< Bar geometry. */
+  int ty;                      /**< Tab bar geometry. */
+  int mx, my, mw, mh;          /**< Screen size. */
+  int wx, wy, ww, wh;          /**< Window area. */
+  int gappih;                  /**< Horizontal gap between windows. */
+  int gappiv;                  /**< Vertical gap between windows. */
+  int gappoh;                  /**< Horizontal outer gaps. */
+  int gappov;                  /**< Vertical outer gaps. */
+  unsigned int borderpx;       /**< Border width. */
+  unsigned int seltags;        /**< Selected tag set index. */
+  unsigned int sellt;          /**< Selected layout index. */
+  unsigned int tagset[2];      /**< Tag sets for the two views. */
+  unsigned int colorfultag;    /**< Non-zero to colour tag labels. */
+  int showbar, showtab;        /**< Whether the bar and tab bar are shown. */
+  int topbar, toptab;          /**< Whether the bar and tab bar are on top. */
+  Client* clients;             /**< Linked list of clients on the monitor. */
+  Client* sel;                 /**< Currently focused client. */
+  Client* stack;               /**< Focus stack. */
+  Monitor* next;               /**< Next monitor in the list. */
+  Window barwin;               /**< Bar window. */
+  Window tabwin;               /**< Tab bar window. */
+  Window tagwin;               /**< Tag preview window. */
+  Pixmap tagmap[LENGTH(tags)]; /**< Tag preview pixmaps. */
+  int previewshow;             /**< Non-zero when tag previews are shown. */
+  int ntabs;                   /**< Number of open tabs. */
+  int tab_widths[MAXTABS];     /**< Width of each tab. */
+  int tab_btn_w[3];            /**< Width of the tab buttons. */
+  const Layout* lt[2];         /**< Layouts for the two layout slots. */
+  Pertag* pertag;              /**< Per-tag state. */
 };
 
 #include "movestack.c"
 #include "shiftview.c"
 #include "vanitygaps.c"
 
+/** @brief Per-tag copies of the layout settings. */
 struct Pertag {
-  unsigned int curtag, prevtag;          /* current and previous tag */
-  int nmasters[LENGTH(tags) + 1];        /* number of windows in master area */
-  float mfacts[LENGTH(tags) + 1];        /* mfacts per tag */
-  unsigned int sellts[LENGTH(tags) + 1]; /* selected layouts */
-  const Layout* ltidxs[LENGTH(tags) + 1]
-                      [2];        /* matrix of tags and layouts indexes  */
-  int showbars[LENGTH(tags) + 1]; /* display bar for the current tag */
+  unsigned int curtag, prevtag;              /**< Current and previous tag. */
+  int nmasters[LENGTH(tags) + 1];            /**< Master count per tag. */
+  float mfacts[LENGTH(tags) + 1];            /**< Master factor per tag. */
+  unsigned int sellts[LENGTH(tags) + 1];     /**< Selected layout per tag. */
+  const Layout* ltidxs[LENGTH(tags) + 1][2]; /**< Layouts per tag and slot. */
+  int showbars[LENGTH(tags) + 1];            /**< Bar visibility per tag. */
 };
 
-/* compile-time check if all tags fit into an unsigned int bit array. */
+/** @brief Compile-time check that all tags fit into an unsigned int. */
 struct NumTags {
   char limitexceeded[LENGTH(tags) > 31 ? -1 : 1];
 };
 
 /* function implementations */
+/**
+ * @brief Apply the tag and state rules from config.h to a client.
+ *
+ * @param c          Client to configure.
+ */
 void applyrules(Client* c) {
   const char* class, *instance;
   unsigned int i;
@@ -479,7 +497,6 @@ void applyrules(Client* c) {
   Monitor* m;
   XClassHint ch = {NULL, NULL};
 
-  /* rule matching */
   c->iscentered = 0;
   c->isfloating = 0;
   c->tags = 0;
@@ -505,11 +522,21 @@ void applyrules(Client* c) {
     c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
 }
 
+/**
+ * @brief Clamp a proposed geometry to the size hints advertised by a client.
+ *
+ * @param c          Client whose hints are applied.
+ * @param x          Proposed x coordinate.
+ * @param y          Proposed y coordinate.
+ * @param w          Proposed width.
+ * @param h          Proposed height.
+ * @param interact   Non-zero for interactive resizing.
+ * @return Non-zero when the geometry was changed.
+ */
 int applysizehints(Client* c, int* x, int* y, int* w, int* h, int interact) {
   int baseismin;
   Monitor* m = c->mon;
 
-  /* set minimum possible */
   *w = MAX(1, *w);
   *h = MAX(1, *h);
   if (interact) {
@@ -556,6 +583,11 @@ int applysizehints(Client* c, int* x, int* y, int* w, int* h, int interact) {
   return *x != c->x || *y != c->y || *w != c->w || *h != c->h;
 }
 
+/**
+ * @brief Show, arrange and restack clients on a monitor.
+ *
+ * @param m          Monitor to arrange, or NULL for every monitor.
+ */
 void arrange(Monitor* m) {
   if (m)
     showhide(m->stack);
@@ -568,6 +600,11 @@ void arrange(Monitor* m) {
     for (m = mons; m; m = m->next) arrangemon(m);
 }
 
+/**
+ * @brief Update a monitor's auxiliary windows and run its layout function.
+ *
+ * @param m          Monitor to arrange.
+ */
 void arrangemon(Monitor* m) {
   updatebarpos(m);
   updatesystray();
@@ -580,6 +617,11 @@ void arrangemon(Monitor* m) {
   if (m->lt[m->sellt]->arrange) m->lt[m->sellt]->arrange(m);
 }
 
+/**
+ * @brief Insert a client into its monitor's client list.
+ *
+ * @param c          Client to attach.
+ */
 void attach(Client* c) {
   if (new_window_attach_on_end) {
     Client** tmp = &c->mon->clients;
@@ -591,11 +633,21 @@ void attach(Client* c) {
   }
 }
 
+/**
+ * @brief Push a client onto its monitor's focus stack.
+ *
+ * @param c          Client to attach.
+ */
 void attachstack(Client* c) {
   c->snext = c->mon->stack;
   c->mon->stack = c;
 }
 
+/**
+ * @brief Dispatch a pointer button press to the configured handler.
+ *
+ * @param e          X button press event.
+ */
 void buttonpress(XEvent* e) {
   unsigned int i, x, click;
   int loop;
@@ -689,6 +741,9 @@ execute_handler:
           : &buttons[i].arg);
 }
 
+/**
+ * @brief Check that no other window manager already selected the root window.
+ */
 void checkotherwm(void) {
   xerrorxlib = XSetErrorHandler(xerrorstart);
   /* this causes an error if some other window manager is running */
@@ -698,6 +753,9 @@ void checkotherwm(void) {
   XSync(dpy, False);
 }
 
+/**
+ * @brief Release all window manager resources before exiting.
+ */
 void cleanup(void) {
   Arg a = {.ui = ~0};
   Layout foo = {"", NULL};
@@ -725,6 +783,11 @@ void cleanup(void) {
   XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
 }
 
+/**
+ * @brief Unlink and free a monitor and its windows.
+ *
+ * @param mon        Monitor to destroy.
+ */
 void cleanupmon(Monitor* mon) {
   Monitor* m;
   size_t i;
@@ -747,6 +810,11 @@ void cleanupmon(Monitor* mon) {
   free(mon);
 }
 
+/**
+ * @brief Handle EWMH and XEmbed client messages, including systray docking.
+ *
+ * @param e          X client message event.
+ */
 void clientmessage(XEvent* e) {
   XWindowAttributes wa;
   XSetWindowAttributes swa;
@@ -755,7 +823,6 @@ void clientmessage(XEvent* e) {
 
   if (showsystray && cme->window == systray->win &&
       cme->message_type == netatom[NetSystemTrayOP]) {
-    /* add systray icons */
     if (cme->data.l[1] == SYSTEM_TRAY_REQUEST_DOCK) {
       if (!(c = (Client*)calloc(1, sizeof(Client))))
         die("fatal: could not malloc() %u bytes\n", sizeof(Client));
@@ -767,7 +834,6 @@ void clientmessage(XEvent* e) {
       c->next = systray->icons;
       systray->icons = c;
       if (!XGetWindowAttributes(dpy, c->win, &wa)) {
-        /* use sane defaults */
         wa.width = bh;
         wa.height = bh;
         wa.border_width = 0;
@@ -778,7 +844,6 @@ void clientmessage(XEvent* e) {
       c->oldbw = wa.border_width;
       c->bw = 0;
       c->isfloating = True;
-      /* reuse tags field as mapped status */
       c->tags = 1;
       updatesizehints(c);
       updatesystrayicongeom(c, wa.width, wa.height);
@@ -822,6 +887,11 @@ void clientmessage(XEvent* e) {
   }
 }
 
+/**
+ * @brief Send a synthetic ConfigureNotify event describing the client geometry.
+ *
+ * @param c          Client to notify.
+ */
 void configure(Client* c) {
   XConfigureEvent ce;
 
@@ -839,6 +909,11 @@ void configure(Client* c) {
   XSendEvent(dpy, c->win, False, StructureNotifyMask, (XEvent*)&ce);
 }
 
+/**
+ * @brief React to root window size changes by updating monitors and bars.
+ *
+ * @param e          X configure notify event.
+ */
 void configurenotify(XEvent* e) {
   Monitor* m;
   Client* c;
@@ -864,6 +939,11 @@ void configurenotify(XEvent* e) {
   }
 }
 
+/**
+ * @brief Honour a client's configure request where the layout permits it.
+ *
+ * @param e          X configure request event.
+ */
 void configurerequest(XEvent* e) {
   Client* c;
   Monitor* m;
@@ -892,9 +972,9 @@ void configurerequest(XEvent* e) {
         c->h = ev->height;
       }
       if ((c->x + c->w) > m->mx + m->mw && c->isfloating)
-        c->x = m->mx + (m->mw / 2 - WIDTH(c) / 2); /* center in x direction */
+        c->x = m->mx + (m->mw / 2 - WIDTH(c) / 2);
       if ((c->y + c->h) > m->my + m->mh && c->isfloating)
-        c->y = m->my + (m->mh / 2 - HEIGHT(c) / 2); /* center in y direction */
+        c->y = m->my + (m->mh / 2 - HEIGHT(c) / 2);
       if ((ev->value_mask & (CWX | CWY)) &&
           !(ev->value_mask & (CWWidth | CWHeight)))
         configure(c);
@@ -914,6 +994,10 @@ void configurerequest(XEvent* e) {
   XSync(dpy, False);
 }
 
+/**
+ * @brief Allocate and initialize a monitor using the configured defaults.
+ * @return Newly created monitor.
+ */
 Monitor* createmon(void) {
   Monitor* m;
   size_t i;
@@ -955,6 +1039,11 @@ Monitor* createmon(void) {
   return m;
 }
 
+/**
+ * @brief Switch to the next or previous layout in the layout list.
+ *
+ * @param arg        Positive for next, negative for previous.
+ */
 void cyclelayout(const Arg* arg) {
   Layout* l;
   for (l = (Layout*)layouts; l != selmon->lt[selmon->sellt]; l++);
@@ -971,6 +1060,11 @@ void cyclelayout(const Arg* arg) {
   }
 }
 
+/**
+ * @brief Handle destruction of a managed client or systray icon.
+ *
+ * @param e          X destroy notify event.
+ */
 void destroynotify(XEvent* e) {
   Client* c;
   XDestroyWindowEvent* ev = &e->xdestroywindow;
@@ -984,6 +1078,11 @@ void destroynotify(XEvent* e) {
   }
 }
 
+/**
+ * @brief Remove a client from its monitor's client list.
+ *
+ * @param c          Client to detach.
+ */
 void detach(Client* c) {
   Client** tc;
 
@@ -991,6 +1090,11 @@ void detach(Client* c) {
   *tc = c->next;
 }
 
+/**
+ * @brief Remove a client from its monitor's focus stack.
+ *
+ * @param c          Client to detach.
+ */
 void detachstack(Client* c) {
   Client **tc, *t;
 
@@ -1003,6 +1107,12 @@ void detachstack(Client* c) {
   }
 }
 
+/**
+ * @brief Return the monitor adjacent to the selected one in a direction.
+ *
+ * @param dir        Positive for next, negative for previous.
+ * @return Adjacent monitor, wrapping around the monitor list.
+ */
 Monitor* dirtomon(int dir) {
   Monitor* m = NULL;
 
@@ -1015,6 +1125,14 @@ Monitor* dirtomon(int dir) {
   return m;
 }
 
+/**
+ * @brief Render the status text, including the built-in colour markup.
+ *
+ * @param m          Monitor whose bar is drawn.
+ * @param bh         Bar height.
+ * @param stext      Status string to render.
+ * @return Left edge of the drawn status area.
+ */
 int drawstatusbar(Monitor* m, int bh, char* stext) {
   int ret, i, w, x, len;
   short isCode = 0;
@@ -1127,6 +1245,11 @@ int drawstatusbar(Monitor* m, int bh, char* stext) {
   return ret;
 }
 
+/**
+ * @brief Interactively adjust the selected client's cfact with the pointer.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void dragcfact(const Arg* arg) {
   int prev_x, prev_y, dist_x, dist_y;
   float fact;
@@ -1197,6 +1320,11 @@ void dragcfact(const Arg* arg) {
   while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
 }
 
+/**
+ * @brief Interactively adjust the selected monitor's mfact with the pointer.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void dragmfact(const Arg* arg) {
   unsigned int n;
   int py, px;          // pointer coordinates
@@ -1416,6 +1544,11 @@ void dragmfact(const Arg* arg) {
   while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
 }
 
+/**
+ * @brief Draw the tag, title, status and systray areas of a monitor's bar.
+ *
+ * @param m          Monitor whose bar is drawn.
+ */
 void drawbar(Monitor* m) {
   int x, y = borderpx, w, sw = 0, stw = 0;
   int bh_n = bh - borderpx * 2;
@@ -1459,16 +1592,9 @@ void drawbar(Monitor* m) {
       drw, scheme[occ & 1 << i ? (m->colorfultag ? tagschemes[i] : SchemeSel)
                                : SchemeTag]);
     drw_text(drw, x, y, w, bh_n, lrpad / 2, tags[i], urg & 1 << i);
-    if (ulineall ||
-        m->tagset[m->seltags] &
-          1 << i) /* if there are conflicts, just move these lines directly
-                       underneath both 'drw_setscheme' and 'drw_text' :) */
+    if (ulineall || m->tagset[m->seltags] & 1 << i)
       drw_rect(drw, x + ulinepad, bh_n - ulinestroke - ulinevoffset,
                w - (ulinepad * 2), ulinestroke, 1, 0);
-    /*if (occ & 1 << i)
-      drw_rect(drw, x + boxs, y + boxs, boxw, boxw,
-               m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
-               urg & 1 << i); */
     x += w;
   }
   w = TEXTW(m->ltsymbol);
@@ -1505,6 +1631,12 @@ void drawbar(Monitor* m) {
   drw_map(drw, m->barwin, 0, 0, m->ww - stw, bh);
 }
 
+/**
+ * @brief Premultiply the colour channels of an ARGB pixel by its alpha value.
+ *
+ * @param p          ARGB pixel value.
+ * @return Premultiplied ARGB pixel value.
+ */
 static uint32_t prealpha(uint32_t p) {
   uint8_t a = p >> 24u;
   uint32_t rb = (a * (p & 0xFF00FFu)) >> 8u;
@@ -1512,6 +1644,14 @@ static uint32_t prealpha(uint32_t p) {
   return (rb & 0xFF00FFu) | (g & 0x00FF00u) | (a << 24u);
 }
 
+/**
+ * @brief Read, scale and premultiply a window's _NET_WM_ICON property.
+ *
+ * @param win        Window whose icon is loaded.
+ * @param picw       Receives icon width.
+ * @param pich       Receives icon height.
+ * @return Icon picture, or None when no usable icon exists.
+ */
 Picture geticonprop(Window win, unsigned int* picw, unsigned int* pich) {
   int format;
   unsigned long n, extra, *p = NULL;
@@ -1589,18 +1729,31 @@ Picture geticonprop(Window win, unsigned int* picw, unsigned int* pich) {
   return ret;
 }
 
+/**
+ * @brief Draw the bar of every monitor.
+ */
 void drawbars(void) {
   Monitor* m;
 
   for (m = mons; m; m = m->next) drawbar(m);
 }
 
+/**
+ * @brief Draw the tab bar of every monitor.
+ */
 void drawtabs(void) {
   Monitor* m;
 
   for (m = mons; m; m = m->next) drawtab(m);
 }
 
+/**
+ * @brief Comparison function used to sort integer widths with qsort(3).
+ *
+ * @param p1         First integer.
+ * @param p2         Second integer.
+ * @return Non-zero when the first value is greater than the second.
+ */
 static int cmpint(const void* p1, const void* p2) {
   /* The actual arguments to this function are "pointers to
      pointers to char", but strcmp(3) arguments are "pointers
@@ -1608,6 +1761,11 @@ static int cmpint(const void* p1, const void* p2) {
   return *((int*)p1) > *(int*)p2;
 }
 
+/**
+ * @brief Draw the tab bar listing visible clients on a monitor.
+ *
+ * @param m          Monitor whose tab bar is drawn.
+ */
 void drawtab(Monitor* m) {
   Client* c;
   int i;
@@ -1692,6 +1850,11 @@ void drawtab(Monitor* m) {
   drw_map(drw, m->tabwin, 0, 0, m->ww, th);
 }
 
+/**
+ * @brief Handle the pointer entering a window and update focus accordingly.
+ *
+ * @param e          X crossing event.
+ */
 void enternotify(XEvent* e) {
   Client* c;
   Monitor* m;
@@ -1710,6 +1873,11 @@ void enternotify(XEvent* e) {
   focus(c);
 }
 
+/**
+ * @brief Redraw the bar and systray after an expose event.
+ *
+ * @param e          X expose event.
+ */
 void expose(XEvent* e) {
   Monitor* m;
   XExposeEvent* ev = &e->xexpose;
@@ -1720,6 +1888,11 @@ void expose(XEvent* e) {
   }
 }
 
+/**
+ * @brief Focus a client, or the most recently focused visible client.
+ *
+ * @param c          Client to focus, or NULL to choose one.
+ */
 void focus(Client* c) {
   if (!c || (!ISVISIBLE(c) || HIDDEN(c)))
     for (c = selmon->stack; c && (!ISVISIBLE(c) || HIDDEN(c)); c = c->snext);
@@ -1741,13 +1914,25 @@ void focus(Client* c) {
   drawtabs();
 }
 
-/* there are some broken focus acquiring clients needing extra handling */
+/**
+ * @brief Restore focus when a client acquires it unexpectedly.
+ *
+ * @param e          X focus change event.
+ *
+ * @note Some broken clients acquire focus on their own; this handler forces
+ *       focus back to the selected client.
+ */
 void focusin(XEvent* e) {
   XFocusChangeEvent* ev = &e->xfocus;
 
   if (selmon->sel && ev->window != selmon->sel->win) setfocus(selmon->sel);
 }
 
+/**
+ * @brief Focus the monitor adjacent to the selected one.
+ *
+ * @param arg        Positive for next, negative for previous.
+ */
 void focusmon(const Arg* arg) {
   Monitor* m;
 
@@ -1758,6 +1943,11 @@ void focusmon(const Arg* arg) {
   focus(NULL);
 }
 
+/**
+ * @brief Focus the next or previous visible client in the stack.
+ *
+ * @param arg        Positive for next, negative for previous.
+ */
 void focusstack(const Arg* arg) {
   Client *c = NULL, *i;
 
@@ -1779,6 +1969,11 @@ void focusstack(const Arg* arg) {
   }
 }
 
+/**
+ * @brief Focus the visible client at the given index.
+ *
+ * @param arg        Zero-based index among visible clients.
+ */
 void focuswin(const Arg* arg) {
   int iwin = arg->i;
   Client* c = NULL;
@@ -1791,6 +1986,13 @@ void focuswin(const Arg* arg) {
   }
 }
 
+/**
+ * @brief Read an atom-valued property from a client window.
+ *
+ * @param c          Client whose property is read.
+ * @param prop       Property atom.
+ * @return Property value, or None when unavailable.
+ */
 Atom getatomprop(Client* c, Atom prop) {
   int di;
   unsigned long dl;
@@ -1811,6 +2013,13 @@ Atom getatomprop(Client* c, Atom prop) {
   return atom;
 }
 
+/**
+ * @brief Query the current pointer position relative to the root window.
+ *
+ * @param x          Receives the pointer x coordinate.
+ * @param y          Receives the pointer y coordinate.
+ * @return Non-zero on success.
+ */
 int getrootptr(int* x, int* y) {
   int di;
   unsigned int dui;
@@ -1819,6 +2028,12 @@ int getrootptr(int* x, int* y) {
   return XQueryPointer(dpy, root, &dummy, &dummy, x, y, &di, &di, &dui);
 }
 
+/**
+ * @brief Read the ICCCM WM_STATE property of a window.
+ *
+ * @param w          Window to inspect.
+ * @return WM_STATE value, or -1 when the property is absent.
+ */
 long getstate(Window w) {
   int format;
   long result = -1;
@@ -1835,6 +2050,10 @@ long getstate(Window w) {
   return result;
 }
 
+/**
+ * @brief Calculate the width occupied by the systray and its icons.
+ * @return Width in pixels, or 1 when the systray is empty.
+ */
 unsigned int getsystraywidth() {
   unsigned int w = 0;
   Client* i;
@@ -1843,6 +2062,15 @@ unsigned int getsystraywidth() {
   return w ? w + systrayspacing : 1;
 }
 
+/**
+ * @brief Read a text property into a NUL-terminated buffer.
+ *
+ * @param w          Window whose property is read.
+ * @param atom       Property atom.
+ * @param text       Destination buffer.
+ * @param size       Size of the destination buffer.
+ * @return Non-zero when a value was read.
+ */
 int gettextprop(Window w, Atom atom, char* text, unsigned int size) {
   char** list = NULL;
   int n;
@@ -1863,6 +2091,12 @@ int gettextprop(Window w, Atom atom, char* text, unsigned int size) {
   return 1;
 }
 
+/**
+ * @brief Grab the configured mouse buttons on a client window.
+ *
+ * @param c          Client whose buttons are grabbed.
+ * @param focused    Non-zero for the focused button set.
+ */
 void grabbuttons(Client* c, int focused) {
   updatenumlockmask();
   {
@@ -1882,6 +2116,9 @@ void grabbuttons(Client* c, int focused) {
   }
 }
 
+/**
+ * @brief Grab all configured key bindings on the root window.
+ */
 void grabkeys(void) {
   updatenumlockmask();
   {
@@ -1905,6 +2142,11 @@ void grabkeys(void) {
   }
 }
 
+/**
+ * @brief Release a client's cached icon picture.
+ *
+ * @param c          Client whose icon is freed.
+ */
 void freeicon(Client* c) {
   if (c->icon) {
     XRenderFreePicture(dpy, c->icon);
@@ -1912,6 +2154,11 @@ void freeicon(Client* c) {
   }
 }
 
+/**
+ * @brief Unmap a client without unmanaging it.
+ *
+ * @param c          Client to hide.
+ */
 void hide(Client* c) {
   if (!c || HIDDEN(c)) return;
 
@@ -1935,6 +2182,11 @@ void hide(Client* c) {
   arrange(c->mon);
 }
 
+/**
+ * @brief Increase or decrease the number of clients in the master area.
+ *
+ * @param arg        Amount to add to nmaster.
+ */
 void incnmaster(const Arg* arg) {
   selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] =
     MAX(selmon->nmaster + arg->i, 0);
@@ -1942,6 +2194,14 @@ void incnmaster(const Arg* arg) {
 }
 
 #ifdef XINERAMA
+/**
+ * @brief Check whether an Xinerama geometry is not already present in a list.
+ *
+ * @param unique     Array of accepted geometries.
+ * @param n          Number of entries.
+ * @param info       Candidate geometry.
+ * @return Non-zero when the geometry is unique.
+ */
 static int isuniquegeom(XineramaScreenInfo* unique, size_t n,
                         XineramaScreenInfo* info) {
   while (n--)
@@ -1952,6 +2212,11 @@ static int isuniquegeom(XineramaScreenInfo* unique, size_t n,
 }
 #endif /* XINERAMA */
 
+/**
+ * @brief Look up and execute the key binding for a key press.
+ *
+ * @param e          X key press event.
+ */
 void keypress(XEvent* e) {
   unsigned int i;
   KeySym keysym;
@@ -1965,6 +2230,11 @@ void keypress(XEvent* e) {
       keys[i].func(&(keys[i].arg));
 }
 
+/**
+ * @brief Ask the selected client to close, killing it as a fallback.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void killclient(const Arg* arg) {
   if (!selmon->sel) return;
   if (!sendevent(selmon->sel->win, wmatom[WMDelete], NoEventMask,
@@ -1979,6 +2249,12 @@ void killclient(const Arg* arg) {
   }
 }
 
+/**
+ * @brief Adopt an existing X window as a managed client.
+ *
+ * @param w          Window to manage.
+ * @param wa         Attributes of the window.
+ */
 void manage(Window w, XWindowAttributes* wa) {
   Client *c, *t = NULL;
   Window trans = None;
@@ -1986,7 +2262,6 @@ void manage(Window w, XWindowAttributes* wa) {
 
   c = ecalloc(1, sizeof(Client));
   c->win = w;
-  /* geometry */
   c->x = c->oldx = wa->x;
   c->y = c->oldy = wa->y;
   c->w = c->oldw = wa->width;
@@ -2064,6 +2339,11 @@ void manage(Window w, XWindowAttributes* wa) {
   focus(NULL);
 }
 
+/**
+ * @brief Refresh the keyboard mapping and re-grab key bindings.
+ *
+ * @param e          X mapping event.
+ */
 void mappingnotify(XEvent* e) {
   XMappingEvent* ev = &e->xmapping;
 
@@ -2071,6 +2351,11 @@ void mappingnotify(XEvent* e) {
   if (ev->request == MappingKeyboard) grabkeys();
 }
 
+/**
+ * @brief Manage a window that requests to be mapped.
+ *
+ * @param e          X map request event.
+ */
 void maprequest(XEvent* e) {
   static XWindowAttributes wa;
   XMapRequestEvent* ev = &e->xmaprequest;
@@ -2087,6 +2372,11 @@ void maprequest(XEvent* e) {
   if (!wintoclient(ev->window)) manage(ev->window, &wa);
 }
 
+/**
+ * @brief Arrange every visible client full-size in the monitor's area.
+ *
+ * @param m          Monitor to arrange.
+ */
 void monocle(Monitor* m) {
   unsigned int n = 0;
 
@@ -2116,6 +2406,11 @@ void monocle(Monitor* m) {
   }
 }
 
+/**
+ * @brief Handle pointer motion for tag previews and monitor focus.
+ *
+ * @param e          X motion event.
+ */
 void motionnotify(XEvent* e) {
   unsigned int i, x;
   static Monitor* mon = NULL;
@@ -2153,11 +2448,21 @@ void motionnotify(XEvent* e) {
   mon = m;
 }
 
+/**
+ * @brief Reload a client's icon from its _NET_WM_ICON property.
+ *
+ * @param c          Client whose icon is updated.
+ */
 void updateicon(Client* c) {
   freeicon(c);
   c->icon = geticonprop(c->win, &c->icw, &c->ich);
 }
 
+/**
+ * @brief Move floating clients and place tiled clients with the pointer.
+ *
+ * @param arg        Placement mode passed to placemouse().
+ */
 void moveorplace(const Arg* arg) {
   if ((!selmon->lt[selmon->sellt]->arrange ||
        (selmon->sel && selmon->sel->isfloating)))
@@ -2166,6 +2471,11 @@ void moveorplace(const Arg* arg) {
     placemouse(arg);
 }
 
+/**
+ * @brief Interactively move the selected client with the pointer.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void movemouse(const Arg* arg) {
   int x, y, ocx, ocy, nx, ny;
   Client* c;
@@ -2221,11 +2531,22 @@ void movemouse(const Arg* arg) {
   }
 }
 
+/**
+ * @brief Return the next visible, non-floating client in a list.
+ *
+ * @param c          Start of the search.
+ * @return Next tiled client, or NULL if none exists.
+ */
 Client* nexttiled(Client* c) {
   for (; c && (c->isfloating || (!ISVISIBLE(c) || HIDDEN(c))); c = c->next);
   return c;
 }
 
+/**
+ * @brief Interactively place the selected client into a tiled position.
+ *
+ * @param arg        Placement mode: 0, 1 or 2.
+ */
 void placemouse(const Arg* arg) {
   int x, y, px, py, ocx, ocy, nx = -9999, ny = -9999, freemove = 0;
   Client *c, *r = NULL, *at, *prevr;
@@ -2356,6 +2677,11 @@ void placemouse(const Arg* arg) {
   arrangemon(c->mon);
 }
 
+/**
+ * @brief Move a client to the head of the client list and focus it.
+ *
+ * @param c          Client to promote.
+ */
 void pop(Client* c) {
   detach(c);
   attach(c);
@@ -2363,6 +2689,12 @@ void pop(Client* c) {
   arrange(c->mon);
 }
 
+/**
+ * @brief React to property changes on clients, the root window and systray
+ *        icons.
+ *
+ * @param e          X property event.
+ */
 void propertynotify(XEvent* e) {
   Client* c;
   Window trans;
@@ -2380,7 +2712,7 @@ void propertynotify(XEvent* e) {
   if ((ev->window == root) && (ev->atom == XA_WM_NAME))
     updatestatus();
   else if (ev->state == PropertyDelete)
-    return; /* ignore */
+    return;
   else if ((c = wintoclient(ev->window))) {
     switch (ev->atom) {
       default:
@@ -2414,8 +2746,22 @@ void propertynotify(XEvent* e) {
   }
 }
 
+/**
+ * @brief Leave the event loop so the window manager can be restarted.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void restart(const Arg* arg) { running = 0; }
 
+/**
+ * @brief Find the tiled client that intersects a rectangle the most.
+ *
+ * @param x          Rectangle x coordinate.
+ * @param y          Rectangle y coordinate.
+ * @param w          Rectangle width.
+ * @param h          Rectangle height.
+ * @return Best matching client, or NULL if nothing intersects.
+ */
 Client* recttoclient(int x, int y, int w, int h) {
   Client *c, *r = NULL;
   int a, area = 0;
@@ -2429,6 +2775,15 @@ Client* recttoclient(int x, int y, int w, int h) {
   return r;
 }
 
+/**
+ * @brief Find the monitor that intersects a rectangle the most.
+ *
+ * @param x          Rectangle x coordinate.
+ * @param y          Rectangle y coordinate.
+ * @param w          Rectangle width.
+ * @param h          Rectangle height.
+ * @return Best matching monitor, defaulting to the selected monitor.
+ */
 Monitor* recttomon(int x, int y, int w, int h) {
   Monitor *m, *r = selmon;
   int a, area = 0;
@@ -2441,6 +2796,11 @@ Monitor* recttomon(int x, int y, int w, int h) {
   return r;
 }
 
+/**
+ * @brief Remove an icon from the systray icon list and free it.
+ *
+ * @param i          Systray icon to remove.
+ */
 void removesystrayicon(Client* i) {
   Client** ii;
 
@@ -2450,10 +2810,25 @@ void removesystrayicon(Client* i) {
   free(i);
 }
 
+/**
+ * @brief Resize a client after applying its size hints.
+ *
+ * @param c          Client to resize.
+ * @param x          New x coordinate.
+ * @param y          New y coordinate.
+ * @param w          New width.
+ * @param h          New height.
+ * @param interact   Non-zero for interactive resizing.
+ */
 void resize(Client* c, int x, int y, int w, int h, int interact) {
   if (applysizehints(c, &x, &y, &w, &h, interact)) resizeclient(c, x, y, w, h);
 }
 
+/**
+ * @brief Position and size a monitor's bar window.
+ *
+ * @param m          Monitor whose bar is resized.
+ */
 void resizebarwin(Monitor* m) {
   unsigned int w = floatbar ? m->ww - 2 * m->gappov : m->ww;
   if (showsystray && m == systraytomon(m)) w -= getsystraywidth();
@@ -2464,6 +2839,15 @@ void resizebarwin(Monitor* m) {
   }
 }
 
+/**
+ * @brief Apply a geometry to a client window and notify it.
+ *
+ * @param c          Client to configure.
+ * @param x          New x coordinate.
+ * @param y          New y coordinate.
+ * @param w          New width.
+ * @param h          New height.
+ */
 void resizeclient(Client* c, int x, int y, int w, int h) {
   XWindowChanges wc;
 
@@ -2485,6 +2869,11 @@ void resizeclient(Client* c, int x, int y, int w, int h) {
   XSync(dpy, False);
 }
 
+/**
+ * @brief Interactively resize the selected client with the pointer.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void resizemouse(const Arg* arg) {
   int ocx, ocy, nw, nh;
   Client* c;
@@ -2541,6 +2930,11 @@ void resizemouse(const Arg* arg) {
   }
 }
 
+/**
+ * @brief Handle resize requests from systray icons.
+ *
+ * @param e          X resize request event.
+ */
 void resizerequest(XEvent* e) {
   XResizeRequestEvent* ev = &e->xresizerequest;
   Client* i;
@@ -2552,6 +2946,11 @@ void resizerequest(XEvent* e) {
   }
 }
 
+/**
+ * @brief Redraw bars and order client windows below them.
+ *
+ * @param m          Monitor whose windows are restacked.
+ */
 void restack(Monitor* m) {
   Client* c;
   XEvent ev;
@@ -2575,14 +2974,19 @@ void restack(Monitor* m) {
   while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
 }
 
+/**
+ * @brief Run the main X event loop until the window manager exits.
+ */
 void run(void) {
   XEvent ev;
-  /* main event loop */
   XSync(dpy, False);
   while (running && !XNextEvent(dpy, &ev))
-    if (handler[ev.type]) handler[ev.type](&ev); /* call handler */
+    if (handler[ev.type]) handler[ev.type](&ev);
 }
 
+/**
+ * @brief Manage windows that already exist when the window manager starts.
+ */
 void scan(void) {
   unsigned int i, num;
   Window d1, d2, *wins = NULL;
@@ -2606,13 +3010,19 @@ void scan(void) {
   }
 }
 
+/**
+ * @brief Move a client to another monitor.
+ *
+ * @param c          Client to move.
+ * @param m          Destination monitor.
+ */
 void sendmon(Client* c, Monitor* m) {
   if (c->mon == m) return;
   unfocus(c, 1);
   detach(c);
   detachstack(c);
   c->mon = m;
-  c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
+  c->tags = m->tagset[m->seltags];
   attach(c);
   attachstack(c);
   setclienttagprop(c);
@@ -2620,6 +3030,11 @@ void sendmon(Client* c, Monitor* m) {
   arrange(NULL);
 }
 
+/**
+ * @brief Change the border width of the selected monitor and its clients.
+ *
+ * @param arg        Border delta, or 0 to restore the configured width.
+ */
 void setborderpx(const Arg* arg) {
   Client* c;
   int prev_borderpx = selmon->borderpx;
@@ -2652,6 +3067,12 @@ void setborderpx(const Arg* arg) {
   arrange(selmon);
 }
 
+/**
+ * @brief Write the ICCCM WM_STATE property for a client.
+ *
+ * @param c          Client to update.
+ * @param state      New WM_STATE value.
+ */
 void setclientstate(Client* c, long state) {
   long data[] = {state, None};
 
@@ -2659,17 +3080,36 @@ void setclientstate(Client* c, long state) {
                   PropModeReplace, (unsigned char*)data, 2);
 }
 
+/**
+ * @brief Publish the currently selected tag as _NET_CURRENT_DESKTOP.
+ */
 void setcurrentdesktop(void) {
   long data[] = {0};
   XChangeProperty(dpy, root, netatom[NetCurrentDesktop], XA_CARDINAL, 32,
                   PropModeReplace, (unsigned char*)data, 1);
 }
+/**
+ * @brief Publish the tag names as _NET_DESKTOP_NAMES.
+ */
 void setdesktopnames(void) {
   XTextProperty text;
   Xutf8TextListToTextProperty(dpy, tags, TAGSLENGTH, XUTF8StringStyle, &text);
   XSetTextProperty(dpy, root, &text, netatom[NetDesktopNames]);
 }
 
+/**
+ * @brief Send an ICCCM or EWMH client message to a window.
+ *
+ * @param w          Destination window.
+ * @param proto      Protocol or message atom.
+ * @param mask       Event mask for XSendEvent().
+ * @param d0         First data value.
+ * @param d1         Second data value.
+ * @param d2         Third data value.
+ * @param d3         Fourth data value.
+ * @param d4         Fifth data value.
+ * @return Non-zero when the message was supported and sent.
+ */
 int sendevent(Window w, Atom proto, int mask, long d0, long d1, long d2,
               long d3, long d4) {
   int n;
@@ -2702,12 +3142,20 @@ int sendevent(Window w, Atom proto, int mask, long d0, long d1, long d2,
   return exists;
 }
 
+/**
+ * @brief Publish the number of tags as _NET_NUMBER_OF_DESKTOPS.
+ */
 void setnumdesktops(void) {
   long data[] = {TAGSLENGTH};
   XChangeProperty(dpy, root, netatom[NetNumberOfDesktops], XA_CARDINAL, 32,
                   PropModeReplace, (unsigned char*)data, 1);
 }
 
+/**
+ * @brief Give input focus to a client and notify it.
+ *
+ * @param c          Client to focus.
+ */
 void setfocus(Client* c) {
   if (!c->neverfocus) {
     XSetInputFocus(dpy, c->win, RevertToPointerRoot, CurrentTime);
@@ -2718,6 +3166,12 @@ void setfocus(Client* c) {
             CurrentTime, 0, 0, 0);
 }
 
+/**
+ * @brief Enter or leave fullscreen mode for a client.
+ *
+ * @param c          Client to update.
+ * @param fullscreen Non-zero to enable fullscreen.
+ */
 void setfullscreen(Client* c, int fullscreen) {
   if (fullscreen && !c->isfullscreen) {
     XChangeProperty(dpy, c->win, netatom[NetWMState], XA_ATOM, 32,
@@ -2745,6 +3199,11 @@ void setfullscreen(Client* c, int fullscreen) {
   }
 }
 
+/**
+ * @brief Select a layout for the current tag.
+ *
+ * @param arg        Layout to select, or NULL to toggle layouts.
+ */
 void setlayout(const Arg* arg) {
   if (!arg || !arg->v || arg->v != selmon->lt[selmon->sellt])
     selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag] ^= 1;
@@ -2760,6 +3219,11 @@ void setlayout(const Arg* arg) {
     drawbar(selmon);
 }
 
+/**
+ * @brief Set or adjust the selected client's cfact.
+ *
+ * @param arg        Delta, or an absolute value encoded above 4.0.
+ */
 void setcfact(const Arg* arg) {
   float f;
   Client* c;
@@ -2781,7 +3245,11 @@ void setcfact(const Arg* arg) {
   arrange(selmon);
 }
 
-/* arg > 1.0 will set mfact absolutely */
+/**
+ * @brief Set or adjust the selected monitor's mfact.
+ *
+ * @param arg        Delta, or an absolute value encoded above 1.0.
+ */
 void setmfact(const Arg* arg) {
   float f;
 
@@ -2792,6 +3260,9 @@ void setmfact(const Arg* arg) {
   arrange(selmon);
 }
 
+/**
+ * @brief Initialize the display, atoms, cursors, colours, bars and system tray.
+ */
 void setup(void) {
   int i;
   XSetWindowAttributes wa;
@@ -2817,7 +3288,6 @@ void setup(void) {
   lrpad = drw->fonts->h;
   bh = drw->fonts->h + 2 + vertpadbar + borderpx * 2;
   th = vertpadtab;
-  // bh_n = vertpadtab;
   updategeom();
   /* init atoms */
   utf8string = XInternAtom(dpy, "UTF8_STRING", False);
@@ -2899,12 +3369,21 @@ void setup(void) {
   grabkeys();
   focus(NULL);
 }
+/**
+ * @brief Publish the desktop viewport as _NET_DESKTOP_VIEWPORT.
+ */
 void setviewport(void) {
   long data[] = {0, 0};
   XChangeProperty(dpy, root, netatom[NetDesktopViewport], XA_CARDINAL, 32,
                   PropModeReplace, (unsigned char*)data, 2);
 }
 
+/**
+ * @brief Set or clear a client's urgency hint.
+ *
+ * @param c          Client to update.
+ * @param urg        Non-zero to mark the client urgent.
+ */
 void seturgent(Client* c, int urg) {
   XWMHints* wmh;
 
@@ -2915,6 +3394,11 @@ void seturgent(Client* c, int urg) {
   XFree(wmh);
 }
 
+/**
+ * @brief Map a previously hidden client.
+ *
+ * @param c          Client to show.
+ */
 void show(Client* c) {
   if (!c || !HIDDEN(c)) return;
 
@@ -2923,6 +3407,11 @@ void show(Client* c) {
   arrange(c->mon);
 }
 
+/**
+ * @brief Recursively show or hide clients according to tag visibility.
+ *
+ * @param c          Start of the focus stack.
+ */
 void showhide(Client* c) {
   if (!c) return;
   if (ISVISIBLE(c)) {
@@ -2939,6 +3428,11 @@ void showhide(Client* c) {
   }
 }
 
+/**
+ * @brief Show the preview image for a tag, or unmap the preview window.
+ *
+ * @param tag        Tag index to preview.
+ */
 void showtagpreview(int tag) {
   if (!selmon->previewshow || !tag_preview) {
     XUnmapWindow(dpy, selmon->tagwin);
@@ -2955,6 +3449,11 @@ void showtagpreview(int tag) {
     XUnmapWindow(dpy, selmon->tagwin);
 }
 
+/**
+ * @brief Fork and execute a command from a key binding.
+ *
+ * @param arg        Argument vector to execute.
+ */
 void spawn(const Arg* arg) {
   struct sigaction sa;
   if (fork() == 0) {
@@ -2969,12 +3468,20 @@ void spawn(const Arg* arg) {
   }
 }
 
+/**
+ * @brief Publish a client's tags and monitor as _NET_CLIENT_INFO.
+ *
+ * @param c          Client to update.
+ */
 void setclienttagprop(Client* c) {
   long data[] = {(long)c->tags, (long)c->mon->num};
   XChangeProperty(dpy, c->win, netatom[NetClientInfo], XA_CARDINAL, 32,
                   PropModeReplace, (unsigned char*)data, 2);
 }
 
+/**
+ * @brief Capture preview images for the tags of the new view.
+ */
 void switchtag(void) {
   int i;
   unsigned int occ = 0;
@@ -3009,6 +3516,11 @@ void switchtag(void) {
   }
 }
 
+/**
+ * @brief Change the tab bar visibility mode.
+ *
+ * @param arg        Mode to select, or negative to cycle.
+ */
 void tabmode(const Arg* arg) {
   if (arg && arg->i >= 0)
     selmon->showtab = arg->ui % showtab_nmodes;
@@ -3017,6 +3529,11 @@ void tabmode(const Arg* arg) {
   arrange(selmon);
 }
 
+/**
+ * @brief Move the selected client to the given tags.
+ *
+ * @param arg        Tag mask to assign.
+ */
 void tag(const Arg* arg) {
   Client* c;
   if (selmon->sel && arg->ui & TAGMASK) {
@@ -3028,11 +3545,21 @@ void tag(const Arg* arg) {
   }
 }
 
+/**
+ * @brief Move the selected client to an adjacent monitor.
+ *
+ * @param arg        Positive for next, negative for previous.
+ */
 void tagmon(const Arg* arg) {
   if (!selmon->sel || !mons->next) return;
   sendmon(selmon->sel, dirtomon(arg->i));
 }
 
+/**
+ * @brief Toggle bar visibility for the current tag.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void togglebar(const Arg* arg) {
   selmon->showbar = selmon->pertag->showbars[selmon->pertag->curtag] =
     !selmon->showbar;
@@ -3051,6 +3578,11 @@ void togglebar(const Arg* arg) {
   arrange(selmon);
 }
 
+/**
+ * @brief Toggle the selected client between tiled and floating state.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void togglefloating(const Arg* arg) {
   if (!selmon->sel) return;
   if (selmon->sel->isfullscreen) /* no support for fullscreen windows */
@@ -3062,10 +3594,20 @@ void togglefloating(const Arg* arg) {
   arrange(selmon);
 }
 
+/**
+ * @brief Toggle fullscreen mode for the selected client.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void togglefullscr(const Arg* arg) {
   if (selmon->sel) setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
 }
 
+/**
+ * @brief Toggle the selected client's membership in the given tags.
+ *
+ * @param arg        Tag mask to toggle.
+ */
 void toggletag(const Arg* arg) {
   unsigned int newtags;
 
@@ -3080,6 +3622,11 @@ void toggletag(const Arg* arg) {
   updatecurrentdesktop();
 }
 
+/**
+ * @brief Toggle the set of tags currently viewed on the selected monitor.
+ *
+ * @param arg        Tag mask to toggle.
+ */
 void toggleview(const Arg* arg) {
   unsigned int newtagset =
     selmon->tagset[selmon->seltags] ^ (arg->ui & TAGMASK);
@@ -3119,6 +3666,11 @@ void toggleview(const Arg* arg) {
   updatecurrentdesktop();
 }
 
+/**
+ * @brief Hide the selected window and remember it for later restore.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void hidewin(const Arg* arg) {
   if (!selmon->sel) return;
   Client* c = (Client*)selmon->sel;
@@ -3126,6 +3678,11 @@ void hidewin(const Arg* arg) {
   hiddenWinStack[++hiddenWinStackTop] = c;
 }
 
+/**
+ * @brief Restore the most recently hidden window on the current tag.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void restorewin(const Arg* arg) {
   int i = hiddenWinStackTop;
   while (i > -1) {
@@ -3144,6 +3701,12 @@ void restorewin(const Arg* arg) {
   }
 }
 
+/**
+ * @brief Remove focus styling and button grabs from a client.
+ *
+ * @param c          Client to unfocus.
+ * @param setfocus   Non-zero to move input focus back to the root window.
+ */
 void unfocus(Client* c, int setfocus) {
   if (!c) return;
   grabbuttons(c, 0);
@@ -3154,6 +3717,12 @@ void unfocus(Client* c, int setfocus) {
   }
 }
 
+/**
+ * @brief Stop managing a client and release its resources.
+ *
+ * @param c          Client to unmanage.
+ * @param destroyed  Non-zero when the X window was already destroyed.
+ */
 void unmanage(Client* c, int destroyed) {
   Monitor* m = c->mon;
   XWindowChanges wc;
@@ -3180,6 +3749,11 @@ void unmanage(Client* c, int destroyed) {
   arrange(m);
 }
 
+/**
+ * @brief Handle an unmapped client window or systray icon.
+ *
+ * @param e          X unmap event.
+ */
 void unmapnotify(XEvent* e) {
   Client* c;
   XUnmapEvent* ev = &e->xunmap;
@@ -3197,6 +3771,9 @@ void unmapnotify(XEvent* e) {
   }
 }
 
+/**
+ * @brief Create the bar and tab windows for every monitor.
+ */
 void updatebars(void) {
   unsigned int w;
   Monitor* m;
@@ -3227,6 +3804,9 @@ void updatebars(void) {
   }
 }
 
+/**
+ * @brief Create the tag preview windows for every monitor.
+ */
 void updatepreview(void) {
   Monitor* m;
 
@@ -3244,6 +3824,11 @@ void updatepreview(void) {
   }
 }
 
+/**
+ * @brief Compute the bar and tab geometry and the usable window area.
+ *
+ * @param m          Monitor to update.
+ */
 void updatebarpos(Monitor* m) {
   Client* c;
   int nvis = 0;
@@ -3284,6 +3869,9 @@ void updatebarpos(Monitor* m) {
     m->by = -bh - m->gappoh;
 }
 
+/**
+ * @brief Publish the list of managed clients as _NET_CLIENT_LIST.
+ */
 void updateclientlist() {
   Client* c;
   Monitor* m;
@@ -3295,6 +3883,9 @@ void updateclientlist() {
                       PropModeAppend, (unsigned char*)&(c->win), 1);
 }
 
+/**
+ * @brief Publish the selected tag index as _NET_CURRENT_DESKTOP.
+ */
 void updatecurrentdesktop(void) {
   long rawdata[] = {selmon->tagset[selmon->seltags]};
   int i = 0;
@@ -3306,6 +3897,10 @@ void updatecurrentdesktop(void) {
                   PropModeReplace, (unsigned char*)data, 1);
 }
 
+/**
+ * @brief Synchronize the monitor list with the current screen geometry.
+ * @return Non-zero when the geometry changed.
+ */
 int updategeom(void) {
   int dirty = 0;
 
@@ -3377,6 +3972,9 @@ int updategeom(void) {
   return dirty;
 }
 
+/**
+ * @brief Determine the modifier mask currently assigned to Num Lock.
+ */
 void updatenumlockmask(void) {
   unsigned int i, j;
   XModifierKeymap* modmap;
@@ -3391,6 +3989,11 @@ void updatenumlockmask(void) {
   XFreeModifiermap(modmap);
 }
 
+/**
+ * @brief Cache the size hints advertised by a client.
+ *
+ * @param c          Client whose hints are read.
+ */
 void updatesizehints(Client* c) {
   long msize;
   XSizeHints size;
@@ -3433,6 +4036,9 @@ void updatesizehints(Client* c) {
   c->hintsvalid = 1;
 }
 
+/**
+ * @brief Read the root window name and redraw the status area.
+ */
 void updatestatus(void) {
   if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
     strcpy(stext, "dwm-" VERSION);
@@ -3440,6 +4046,13 @@ void updatestatus(void) {
   updatesystray();
 }
 
+/**
+ * @brief Apply the systray icon size policy to an icon.
+ *
+ * @param i          Systray icon.
+ * @param w          Requested width.
+ * @param h          Requested height.
+ */
 void updatesystrayicongeom(Client* i, int w, int h) {
   int rh = bh - vertpadbar;
 
@@ -3459,6 +4072,12 @@ void updatesystrayicongeom(Client* i, int w, int h) {
   }
 }
 
+/**
+ * @brief React to XEmbed state changes of a systray icon.
+ *
+ * @param i          Systray icon.
+ * @param ev         Property event that changed.
+ */
 void updatesystrayiconstate(Client* i, XPropertyEvent* ev) {
   long flags;
   int code = 0;
@@ -3483,6 +4102,9 @@ void updatesystrayiconstate(Client* i, XPropertyEvent* ev) {
             systray->win, XEMBED_EMBEDDED_VERSION);
 }
 
+/**
+ * @brief Create, size and restack the systray and its icons.
+ */
 void updatesystray(void) {
   XSetWindowAttributes wa;
   XWindowChanges wc;
@@ -3549,12 +4171,16 @@ void updatesystray(void) {
                    &wc);
   XMapWindow(dpy, systray->win);
   XMapSubwindows(dpy, systray->win);
-  /* redraw background */
   XSetForeground(dpy, drw->gc, scheme[SchemeNorm][ColBg].pixel);
   XFillRectangle(dpy, systray->win, drw->gc, 0, 0, w, bh);
   XSync(dpy, False);
 }
 
+/**
+ * @brief Read and cache a client's window title.
+ *
+ * @param c          Client whose title is updated.
+ */
 void updatetitle(Client* c) {
   if (!gettextprop(c->win, netatom[NetWMName], c->name, sizeof c->name))
     gettextprop(c->win, XA_WM_NAME, c->name, sizeof c->name);
@@ -3562,6 +4188,11 @@ void updatetitle(Client* c) {
     strcpy(c->name, broken);
 }
 
+/**
+ * @brief Apply fullscreen and dialog hints from a client's window type.
+ *
+ * @param c          Client to update.
+ */
 void updatewindowtype(Client* c) {
   Atom state = getatomprop(c, netatom[NetWMState]);
   Atom wtype = getatomprop(c, netatom[NetWMWindowType]);
@@ -3573,6 +4204,11 @@ void updatewindowtype(Client* c) {
   }
 }
 
+/**
+ * @brief Read urgency and input hints from a client's WM_HINTS property.
+ *
+ * @param c          Client to update.
+ */
 void updatewmhints(Client* c) {
   XWMHints* wmh;
 
@@ -3590,13 +4226,18 @@ void updatewmhints(Client* c) {
   }
 }
 
+/**
+ * @brief Switch the selected monitor to the given tags.
+ *
+ * @param arg        Tag mask to view.
+ */
 void view(const Arg* arg) {
   int i;
   unsigned int tmptag;
 
   if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags]) return;
   switchtag();
-  selmon->seltags ^= 1; /* toggle sel tagset */
+  selmon->seltags ^= 1;
   if (arg->ui & TAGMASK) {
     selmon->pertag->prevtag = selmon->pertag->curtag;
     selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
@@ -3628,6 +4269,12 @@ void view(const Arg* arg) {
   updatecurrentdesktop();
 }
 
+/**
+ * @brief Find a managed client by its X window.
+ *
+ * @param w          Window to look up.
+ * @return Matching client, or NULL if the window is not managed.
+ */
 Client* wintoclient(Window w) {
   Client* c;
   Monitor* m;
@@ -3638,6 +4285,12 @@ Client* wintoclient(Window w) {
   return NULL;
 }
 
+/**
+ * @brief Find a systray icon by its X window.
+ *
+ * @param w          Window to look up.
+ * @return Matching icon, or NULL if the window is not an icon.
+ */
 Client* wintosystrayicon(Window w) {
   Client* i = NULL;
 
@@ -3646,6 +4299,12 @@ Client* wintosystrayicon(Window w) {
   return i;
 }
 
+/**
+ * @brief Find the monitor that owns a window.
+ *
+ * @param w          Window to look up.
+ * @return Owning monitor, defaulting to the selected monitor.
+ */
 Monitor* wintomon(Window w) {
   int x, y;
   Client* c;
@@ -3661,6 +4320,13 @@ Monitor* wintomon(Window w) {
 /* There's no way to check accesses to destroyed windows, thus those cases are
  * ignored (especially on UnmapNotify's). Other types of errors call Xlibs
  * default error handler, which may call exit. */
+/**
+ * @brief Tolerate expected X errors and forward fatal ones to Xlib.
+ *
+ * @param dpy        Display connection.
+ * @param ee         X error event.
+ * @return Zero for ignored errors; otherwise the original handler's result.
+ */
 int xerror(Display* dpy, XErrorEvent* ee) {
   if (ee->error_code == BadWindow ||
       (ee->request_code == X_SetInputFocus && ee->error_code == BadMatch) ||
@@ -3678,15 +4344,35 @@ int xerror(Display* dpy, XErrorEvent* ee) {
   return xerrorxlib(dpy, ee); /* may call exit */
 }
 
+/**
+ * @brief Ignore an X error while performing an operation known to race.
+ *
+ * @param dpy        Display connection.
+ * @param ee         Ignored X error event.
+ * @return Always zero.
+ */
 int xerrordummy(Display* dpy, XErrorEvent* ee) { return 0; }
 
 /* Startup Error handler to check if another window manager
  * is already running. */
+/**
+ * @brief Startup error handler used to detect another running window manager.
+ *
+ * @param dpy        Display connection.
+ * @param ee         X error event.
+ * @return Never returns.
+ */
 int xerrorstart(Display* dpy, XErrorEvent* ee) {
   die("dwm: another window manager is already running");
   return -1;
 }
 
+/**
+ * @brief Determine which monitor hosts the systray.
+ *
+ * @param m          Monitor to test, or NULL for the default selection.
+ * @return Host monitor, or NULL when the systray is not shown there.
+ */
 Monitor* systraytomon(Monitor* m) {
   Monitor* t;
   int i, n;
@@ -3700,6 +4386,11 @@ Monitor* systraytomon(Monitor* m) {
   return t;
 }
 
+/**
+ * @brief Promote the selected client to the master area.
+ *
+ * @param arg        Unused key binding argument.
+ */
 void zoom(const Arg* arg) {
   Client* c = selmon->sel;
 
@@ -3708,6 +4399,13 @@ void zoom(const Arg* arg) {
   pop(c);
 }
 
+/**
+ * @brief Program entry point: parse arguments and start the window manager.
+ *
+ * @param argc       Argument count.
+ * @param argv       Argument vector.
+ * @return EXIT_SUCCESS on a clean shutdown.
+ */
 int main(int argc, char* argv[]) {
   if (argc == 2 && !strcmp("-v", argv[1]))
     die("dwm-" VERSION);

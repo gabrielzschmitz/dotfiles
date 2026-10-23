@@ -1,3 +1,15 @@
+/**
+ * @file movestack.c
+ * @brief Client reordering command.
+ *
+ * This file is included by dwm.c and is not compiled on its own.
+ */
+
+/**
+ * @brief Move the selected client forward or backward in the client list.
+ *
+ * @param arg        Positive for forward, negative for backward.
+ */
 void movestack(const Arg* arg) {
   Client *c = NULL, *p = NULL, *pc = NULL, *i;
 

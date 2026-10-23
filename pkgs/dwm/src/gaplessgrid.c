@@ -1,3 +1,13 @@
+/**
+ * @file gaplessgrid.c
+ * @brief Gapless grid layout.
+ */
+
+/**
+ * @brief Arrange clients in a grid without inner gaps.
+ *
+ * @param m          Monitor to arrange.
+ */
 void gaplessgrid(Monitor* m) {
   unsigned int n, cols, rows, cn, rn, i, cx, cy, cw, ch;
   Client* c;

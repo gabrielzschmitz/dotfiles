@@ -1,10 +1,21 @@
 /* cc transient.c -o transient -lX11 */
+/**
+ * @file transient.c
+ * @brief Test client for transient window handling.
+ *
+ * Creates a floating window and, after a short delay, a transient child so
+ * that the window manager's transient handling can be exercised manually.
+ */
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <stdlib.h>
 #include <unistd.h>
 
+/**
+ * @brief Demo program that creates a transient window after a short delay.
+ * @return EXIT_SUCCESS.
+ */
 int main(void) {
   Display* d;
   Window r, f, t = None;

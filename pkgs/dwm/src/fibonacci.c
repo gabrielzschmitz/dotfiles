@@ -1,3 +1,14 @@
+/**
+ * @file fibonacci.c
+ * @brief Fibonacci spiral layouts.
+ */
+
+/**
+ * @brief Arrange clients in a Fibonacci spiral.
+ *
+ * @param mon        Monitor to arrange.
+ * @param s          Non-zero for dwindle, zero for spiral.
+ */
 void fibonacci(Monitor* mon, int s) {
   unsigned int i, n, nx, ny, nw, nh;
   Client* c;
@@ -48,6 +59,16 @@ void fibonacci(Monitor* mon, int s) {
   }
 }
 
+/**
+ * @brief Arrange clients in a clockwise Fibonacci spiral.
+ *
+ * @param mon        Monitor to arrange.
+ */
 void dwindle(Monitor* mon) { fibonacci(mon, 1); }
 
+/**
+ * @brief Arrange clients in a counter-clockwise Fibonacci spiral.
+ *
+ * @param mon        Monitor to arrange.
+ */
 void spiral(Monitor* mon) { fibonacci(mon, 0); }

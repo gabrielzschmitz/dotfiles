@@ -1,4 +1,11 @@
-/* See LICENSE file for copyright and license details. */
+/**
+ * @file config.def.h
+ * @brief Default dwm configuration.
+ *
+ * Copy this file to config.h and adjust the appearance, tag, layout, key and
+ * button definitions to match your setup. The first layout in layouts[] is the
+ * default, and the first colour in each scheme is the foreground.
+ */
 
 #include <X11/XF86keysym.h>
 
@@ -280,9 +287,6 @@ static const Button buttons[] = {
   {ClkLtSymbol, 0, Button3, setlayout, {.v = &layouts[2]}},
   {ClkWinTitle, 0, Button2, zoom, {0}},
   {ClkStatusText, 0, Button2, spawn, SHCMD("st")},
-
-  /* Keep movemouse? */
-  /* { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} }, */
 
   /* placemouse options, choose which feels more natural:
     *    0 - tiled position is relative to mouse cursor
