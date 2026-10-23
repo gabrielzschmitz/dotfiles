@@ -8,11 +8,14 @@ set -u
 
 # One Dark colors
 black='#1e222a'
-green='#7eca9c'
 white='#abb2bf'
 grey='#282c34'
 blue='#7aa2f7'
+green='#7eca9c'
 red='#d47d85'
+orange = '#caaa6a';
+yellow = '#EBCB8B';
+pink = '#c678dd';
 darkblue='#668ee3'
 
 cpu() {
@@ -21,24 +24,6 @@ cpu() {
 
   printf '^c%s^^b%s^ CPU ' "$black" "$green"
   printf '^c%s^^b%s^ %s^b%s^' "$white" "$grey" "$load" "$black"
-}
-
-battery() {
-  local battery_dir capacity status
-
-  for battery_dir in /sys/class/power_supply/BAT*; do
-    [[ -d "$battery_dir" ]] || continue
-
-    capacity=$(cat "$battery_dir/capacity" 2>/dev/null) || continue
-    status=$(cat "$battery_dir/status" 2>/dev/null || true)
-
-    printf '^c%s^^b%s^ BAT' "$black" "$red"
-    printf '^c%s^^b%s^ %s%%' "$white" "$grey" "$capacity"
-
-    [[ "$status" == "Charging" ]] && printf '^c%s^+' "$green"
-    printf '^b%s^' "$black"
-    return
-  done
 }
 
 brightness() {
@@ -55,6 +40,22 @@ brightness() {
     printf '^c%s^  %s%%' "$red" "$percentage"
     return
   done
+}
+
+mem() {
+  local used
+
+  used=$(awk '
+  /^MemTotal:/ { total = $2 }
+  /^MemAvailable:/ { available = $2 }
+  END {
+    if (total > 0)
+      printf "%.1fG", (total - available) / 1048576
+  }
+  ' /proc/meminfo)
+
+  printf '^c%s^^b%s^   ' "$pink" "$black"
+  printf '^c%s^%s' "$pink" "${used:-N/A}"
 }
 
 volume() {
@@ -78,24 +79,26 @@ volume() {
     fi
   fi
 
-  printf '^c%s^^b%s^ %s  ' "$black" "$green" "$icon"
-  printf '^c%s^^b%s^ %s%%^b%s^' "$green" "$black" "$volume" "$black"
+  printf '^c%s^^b%s^ %s  ' "$black" "$orange" "$icon"
+  printf '^c%s^^b%s^ %s%%^b%s^' "$orange" "$black" "$volume" "$black"
 }
 
-mem() {
-  local used
+battery() {
+  local battery_dir capacity status
 
-  used=$(awk '
-  /^MemTotal:/ { total = $2 }
-  /^MemAvailable:/ { available = $2 }
-END {
-  if (total > 0)
-    printf "%.1fG", (total - available) / 1048576
-}
-' /proc/meminfo)
+  for battery_dir in /sys/class/power_supply/BAT*; do
+    [[ -d "$battery_dir" ]] || continue
 
-printf '^c%s^^b%s^   ' "$red" "$black"
-printf '^c%s^%s' "$red" "${used:-N/A}"
+    capacity=$(cat "$battery_dir/capacity" 2>/dev/null) || continue
+    status=$(cat "$battery_dir/status" 2>/dev/null || true)
+
+    printf '^c%s^^b%s^ BAT' "$black" "$red"
+    printf '^c%s^^b%s^ %s%%' "$white" "$grey" "$capacity"
+
+    [[ "$status" == "Charging" ]] && printf '^c%s^+' "$green"
+    printf '^b%s^' "$black"
+    return
+  done
 }
 
 wlan() {
@@ -152,7 +155,7 @@ clock() {
 while true; do
   status=""
 
-  for module in cpu battery brightness volume mem ethernet wlan clock; do
+  for module in cpu brightness mem volume battery ethernet wlan clock; do
     output=$("$module")
 
     if [[ -n "$output" ]]; then
