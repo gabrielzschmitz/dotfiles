@@ -5,8 +5,12 @@
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
-        # Window manager / terminal
+        # System
         dmenu
+        pamixer
+        pwvucontrol
+        xbacklight
+        maim
 
         # File-related
         thunar
@@ -16,7 +20,8 @@
         # Creative
         inkscape
 
-        # Cloud
+        # General
+        discord-canary
         nextcloud-client
 
         # LaTeX
