@@ -19,7 +19,7 @@ cpu() {
   local load
   load=$(awk '{ print $1 }' /proc/loadavg)
 
-  printf '^c%s^^b%s^ CPU' "$black" "$green"
+  printf '^c%s^^b%s^ CPU ' "$black" "$green"
   printf '^c%s^^b%s^ %s^b%s^' "$white" "$grey" "$load" "$black"
 }
 
@@ -78,7 +78,7 @@ volume() {
     fi
   fi
 
-  printf '^c%s^^b%s^ %s' "$black" "$green" "$icon"
+  printf '^c%s^^b%s^ %s ' "$black" "$green" "$icon"
   printf '^c%s^^b%s^ %s%%^b%s^' "$green" "$black" "$volume" "$black"
 }
 
@@ -94,7 +94,7 @@ END {
 }
 ' /proc/meminfo)
 
-printf '^c%s^^b%s^  ' "$red" "$black"
+printf '^c%s^^b%s^   ' "$red" "$black"
 printf '^c%s^%s' "$red" "${used:-N/A}"
 }
 
