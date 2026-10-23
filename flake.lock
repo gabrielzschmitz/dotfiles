@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "dwm": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792778731,
+        "narHash": "sha256-qmUVtciWJ5CLoo4+6CYunKu4FyNMdlQ06FKeLuhX5qg=",
+        "owner": "gabrielzschmitz",
+        "repo": "dwm",
+        "rev": "b90e1ad5f7e1ab504eff939d9e49eb7646ab2019",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gabrielzschmitz",
+        "repo": "dwm",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -128,6 +148,7 @@
     },
     "root": {
       "inputs": {
+        "dwm": "dwm",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",

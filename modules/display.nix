@@ -1,9 +1,10 @@
-{ ... }:
+{ inputs, ... }:
 
 {
   flake.modules.nixos.display =
     { pkgs, ... }:
     let
+      dwm = inputs.dwm.packages.${pkgs.stdenv.hostPlatform.system}.default;
       lyTtyPalette = pkgs.writeShellScript "ly-tty-palette" ''
         # Reset the console, then set its default background and foreground.
         printf '\033c\033]P014171C\033]P7ABB2BF' > /dev/tty1
@@ -16,7 +17,7 @@
 
         windowManager.dwm = {
           enable = true;
-          package = pkgs.dwm-custom;
+          package = dwm;
         };
       };
 
@@ -78,8 +79,8 @@
             ${pkgs.picom}/bin/picom -b --config "$HOME/.config/picom/picom.conf" &
             ${pkgs.xset}/bin/xset r rate 300 50 &
 
-            ${pkgs.dwm-custom}/bin/dwm-bar &
-            while ${pkgs.dwm-custom}/bin/dwm 2>> "$HOME/.cache/X11/xsession-errors"; do
+            ${dwm}/bin/dwm-bar &
+            while ${dwm}/bin/dwm 2>> "$HOME/.cache/X11/xsession-errors"; do
               continue
             done
           '';
