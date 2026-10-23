@@ -13,9 +13,9 @@ grey='#282c34'
 blue='#7aa2f7'
 green='#7eca9c'
 red='#d47d85'
-orange = '#caaa6a';
-yellow = '#EBCB8B';
-pink = '#c678dd';
+orange='#caaa6a'
+yellow='#EBCB8B'
+pink='#c678dd'
 darkblue='#668ee3'
 
 cpu() {
