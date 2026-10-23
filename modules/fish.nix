@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   flake.modules.nixos.fish = {
@@ -19,6 +19,9 @@
         fi
         exec ${pkgs.bashInteractive}/bin/bash "$@"
       '';
+      flakeDir = "/home/gabrielzschmitz/.dotfiles";
+      host = "nixos";
+      flake = "${flakeDir}#${host}";
     in
     {
       home.sessionVariables.NIX_BUILD_SHELL = "${nixShellFish}";
@@ -42,9 +45,10 @@
         shellAliases = {
           ll = "ls -lah";
           ".." = "cd ..";
-          rebuild = "sudo nixos-rebuild build --flake '#nixos'";
-          reswitch = "sudo nixos-rebuild switch --flake '#nixos'";
-          reupdate = "sudo nixos-rebuild switch --upgrade --flake '#nixos'";
+
+          rebuild = "sudo nixos-rebuild build --flake ${flake}";
+          reswitch = "sudo nixos-rebuild switch --flake ${flake}";
+          reupdate = "nix flake update --flake ${flakeDir} && sudo nixos-rebuild switch --flake ${flake}";
           reclean = "sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +1 && sudo nix-collect-garbage -d";
         };
 
