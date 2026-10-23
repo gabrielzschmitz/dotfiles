@@ -79,7 +79,9 @@
             ${pkgs.xset}/bin/xset r rate 300 50 &
 
             ${pkgs.dwm-custom}/bin/dwm-bar &
-            exec ${pkgs.dwm-custom}/bin/dwm 2> "$HOME/.cache/X11/xsession-errors"
+            while ${pkgs.dwm-custom}/bin/dwm 2>> "$HOME/.cache/X11/xsession-errors"; do
+              continue
+            done
           '';
         }
       ];
