@@ -1481,7 +1481,7 @@ void drawbar(Monitor* m) {
     x += w;
   }
 
-  w = mw - sw - stw - x;
+  w = sw + borderpx - stw - x;
   if (w > bh_n) {
     if (m->sel) {
       drw_setscheme(drw, scheme[m == selmon ? SchemeTitle : SchemeNorm]);
