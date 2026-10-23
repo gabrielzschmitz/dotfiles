@@ -34,7 +34,7 @@ static const int vertpadtab = 35;
 static const int horizpadtabi = 15;
 static const int horizpadtabo = 15;
 static const int scalepreview = 4;
-static const int tag_preview = 0; /* 1 means enable, 0 is off */
+static const int tag_preview = 1; /* 1 means enable, 0 is off */
 static const int colorfultag =
   1; /* 0 means use SchemeSel for selected non vacant tag */
 static const int new_window_attach_on_end =
@@ -42,8 +42,8 @@ static const int new_window_attach_on_end =
 #define ICONSIZE 19   /* icon size */
 #define ICONSPACING 8 /* space between icon and title */
 
-static const char* fonts[] = {"SFMono Nerd Font:size=18",
-                              "SFMono Nerd Font:size=20"};
+static const char* fonts[] = {"SFMono Nerd Font:size=12",
+                              "SFMono Nerd Font:size=14"};
 
 // One Dark theme
 static const char black[] = "#1e222a";
@@ -190,8 +190,8 @@ static const Key keys[] = {
   {MODKEY | ControlMask, XK_w, tabmode, {-1}},
   {MODKEY, XK_j, focusstack, {.i = +1}},
   {MODKEY, XK_k, focusstack, {.i = -1}},
-  {MODKEY, XK_i, incnmaster, {.i = +1}},
-  {MODKEY, XK_d, incnmaster, {.i = -1}},
+  {MODKEY, XK_equal, incnmaster, {.i = +1}},
+  {MODKEY, XK_minus, incnmaster, {.i = -1}},
 
   // shift view
   {MODKEY, XK_Left, shiftview, {.i = -1}},
