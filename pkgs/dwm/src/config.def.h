@@ -48,7 +48,7 @@ static const char* fonts[] = {"SFMono Nerd Font:size=12",
 // One Dark theme
 static const char black[] = "#1e222a";
 static const char white[] = "#abb2bf";
-static const char gray2[] = "#2e323a";  // unfocused window border
+static const char gray2[] = "#282c34";  // unfocused window border
 static const char gray3[] = "#545862";
 static const char gray4[] = "#6d8dad";
 static const char blue[] = "#61afef";  // focused window border
@@ -63,7 +63,7 @@ static const char* colors[][3] = {
   /*                     fg       bg      border */
   [SchemeNorm] = {gray3, black, gray2},
   [SchemeSel] = {gray4, blue, gray3},
-  [SchemeTitle] = {white, black, black},  // active window title
+  [SchemeTitle] = {white, gray2, black},  // active window title
   [TabSel] = {blue, gray2, black},
   [TabNorm] = {gray3, black, black},
   [SchemeTag] = {gray3, black, black},
