@@ -38,7 +38,7 @@ static const int tag_preview = 1; /* 1 means enable, 0 is off */
 static const int colorfultag =
   1; /* 0 means use SchemeSel for selected non vacant tag */
 static const int new_window_attach_on_end =
-  0; /*  1 means the new window will attach on the end; 0 means the new window will attach on the front,default is front */
+  1; /*  1 means the new window will attach on the end; 0 means the new window will attach on the front,default is front */
 #define ICONSIZE 19   /* icon size */
 #define ICONSPACING 8 /* space between icon and title */
 
@@ -173,15 +173,17 @@ static const Key keys[] = {
   {0, XF86XK_MonBrightnessDown, spawn, SHCMD("xbacklight -dec 10")},
 
   // screenshot fullscreen and cropped
-  {MODKEY | ControlMask, XK_u, spawn,
+  {MODKEY | ControlMask, XK_p, spawn,
    SHCMD("maim | xclip -selection clipboard -t image/png")},
-  {MODKEY, XK_u, spawn,
+  {MODKEY | ShiftMask, XK_p, spawn,
    SHCMD("maim --select | xclip -selection clipboard -t image/png")},
 
   {MODKEY, XK_d, spawn, SHCMD("dmenu_run")},
   {MODKEY, XK_Return, spawn, SHCMD("st")},
 
   // toggle stuff
+  {MODKEY, XK_p, spawn,
+   SHCMD("pgrep -x picom >/dev/null && pkill -x picom || picom -b")},
   {MODKEY, XK_b, togglebar, {0}},
   {MODKEY | Mod1Mask, XK_0, togglegaps, {0}},
   {MODKEY | ShiftMask, XK_space, togglefloating, {0}},
