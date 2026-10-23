@@ -1444,7 +1444,7 @@ void drawbar(Monitor* m) {
 
   /* draw status first so it can be overdrawn by tags later */
   if (m == selmon) { /* status is only drawn on selected monitor */
-    sw = mw - drawstatusbar(m, bh_n, stext);
+    sw = drawstatusbar(m, bh_n, stext);
   }
 
   resizebarwin(m);
@@ -1481,7 +1481,7 @@ void drawbar(Monitor* m) {
     x += w;
   }
 
-  w = floatbar ? mw + m->gappov * 2 - sw - stw - x : mw - sw - stw - x;
+  w = mw - sw - stw - x;
   if (w > bh_n) {
     if (m->sel) {
       drw_setscheme(drw, scheme[m == selmon ? SchemeTitle : SchemeNorm]);
