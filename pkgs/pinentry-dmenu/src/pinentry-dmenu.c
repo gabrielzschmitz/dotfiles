@@ -1,4 +1,7 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/Xatom.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
 #include <ctype.h>
 #include <libconfig.h>
 #include <locale.h>
@@ -10,25 +13,20 @@
 #include <strings.h>
 #include <time.h>
 #include <unistd.h>
-
-#include <X11/Xatom.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
 #ifdef XINERAMA
 #include <X11/extensions/Xinerama.h>
 #endif
 #include <X11/Xft/Xft.h>
 
 #include "drw.h"
-#include "util.h"
-
 #include "pinentry/memory.h"
 #include "pinentry/pinentry.h"
+#include "util.h"
 
 #define CONFIG_DIR "/.gnupg"
 #define CONFIG_FILE "/pinentry-dmenu.conf"
-#define INTERSECT(x, y, w, h, r)                                               \
-  (MAX(0, MIN((x) + (w), (r).x_org + (r).width) - MAX((x), (r).x_org)) &&      \
+#define INTERSECT(x, y, w, h, r)                                          \
+  (MAX(0, MIN((x) + (w), (r).x_org + (r).width) - MAX((x), (r).x_org)) && \
    MAX(0, MIN((y) + (h), (r).y_org + (r).height) - MAX((y), (r).y_org)))
 #define LENGTH(X) (sizeof(X) / sizeof(X[0]))
 #define TEXTW(X) (drw_fontset_getwidth(drw, (X)) + lrpad)
@@ -47,19 +45,19 @@ static int lrpad;
 static size_t cursor;
 static int screen;
 
-static char *pin;
+static char* pin;
 static int pin_len;
-static char *pin_repeat;
+static char* pin_repeat;
 static int pin_repeat_len;
 static int repeat;
 
 static Atom clip, utf8;
-static Display *dpy;
+static Display* dpy;
 static Window root, parentwin, win;
 static XIC xic;
 
-static Drw *drw;
-static Clr *scheme[SchemeLast];
+static Drw* drw;
+static Clr* scheme[SchemeLast];
 
 static int timed_out;
 static int winmode;
@@ -67,7 +65,7 @@ pinentry_t pinentry_info;
 
 #include "config.h"
 
-static int drawitem(const char *text, Bool sel, int x, int y, int w) {
+static int drawitem(const char* text, Bool sel, int x, int y, int w) {
   unsigned int i = (sel) ? SchemeSelect : SchemeNormal;
 
   drw_setscheme(drw, scheme[i]);
@@ -115,13 +113,12 @@ static size_t nextrune(int cursor, int inc) {
   ssize_t n;
 
   /* Return location of next utf8 rune in the given direction (+1 or -1) */
-  for (n = cursor + inc; n + inc >= 0 && (pin[n] & 0xc0) == 0x80; n += inc)
-    ;
+  for (n = cursor + inc; n + inc >= 0 && (pin[n] & 0xc0) == 0x80; n += inc);
 
   return n;
 }
 
-static void setup_pin(char *pin_ptr, int len, int reset) {
+static void setup_pin(char* pin_ptr, int len, int reset) {
   pin = pin_ptr;
   pin_len = len;
 
@@ -135,7 +132,7 @@ static void setup_pin(char *pin_ptr, int len, int reset) {
   }
 }
 
-static void insert(const char *str, ssize_t n) {
+static void insert(const char* str, ssize_t n) {
   size_t len = strlen(pin);
 
   // FIXME: Pinentry crashes when increasing the pin buffer the second time.
@@ -178,10 +175,10 @@ static void drawwin(void) {
   size_t asterlen = strlen(asterisk);
   size_t pdesclen;
   int leftinput;
-  char *censort;
+  char* censort;
 
-  char *pprompt =
-      (repeat) ? pinentry_info->repeat_passphrase : pinentry_info->prompt;
+  char* pprompt =
+    (repeat) ? pinentry_info->repeat_passphrase : pinentry_info->prompt;
   int ppromptw = (pprompt) ? TEXTW(pprompt) : 0;
 
   unsigned int censortl = minpwlen * TEXTW(asterisk) / strlen(asterisk);
@@ -267,7 +264,7 @@ static void setup(void) {
   Window w, dw, *dws;
   XWindowAttributes wa;
 #ifdef XINERAMA
-  XineramaScreenInfo *info;
+  XineramaScreenInfo* info;
   Window pw;
   int a, j, di, n, area = 0;
 #endif
@@ -377,61 +374,61 @@ static void cleanup(void) {
   XCloseDisplay(dpy);
 }
 
-static int keypress_confirm(XKeyEvent *ev, KeySym ksym) {
+static int keypress_confirm(XKeyEvent* ev, KeySym ksym) {
   if (ev->state & ControlMask) {
     switch (ksym) {
-    case XK_c:
-      pinentry_info->canceled = 1;
-      sel = No;
-      return 1;
-    default:
-      return 1;
+      case XK_c:
+        pinentry_info->canceled = 1;
+        sel = No;
+        return 1;
+      default:
+        return 1;
     }
   }
 
   switch (ksym) {
-  case XK_KP_Enter:
-  case XK_Return:
-    if (sel != Nothing) {
+    case XK_KP_Enter:
+    case XK_Return:
+      if (sel != Nothing) {
+        return 1;
+      }
+      break;
+    case XK_y:
+    case XK_Y:
+      sel = Yes;
       return 1;
-    }
-    break;
-  case XK_y:
-  case XK_Y:
-    sel = Yes;
-    return 1;
-  case XK_n:
-  case XK_N:
-    sel = No;
-    return 1;
-  case XK_g:
-  case XK_G:
-  case XK_Escape:
-    pinentry_info->canceled = 1;
-    sel = No;
-    return 1;
-  case XK_h:
-  case XK_j:
-  case XK_Home:
-  case XK_Left:
-  case XK_Prior:
-  case XK_Up:
-    sel = No;
-    break;
-  case XK_k:
-  case XK_l:
-  case XK_Down:
-  case XK_End:
-  case XK_Next:
-  case XK_Right:
-    sel = Yes;
-    break;
+    case XK_n:
+    case XK_N:
+      sel = No;
+      return 1;
+    case XK_g:
+    case XK_G:
+    case XK_Escape:
+      pinentry_info->canceled = 1;
+      sel = No;
+      return 1;
+    case XK_h:
+    case XK_j:
+    case XK_Home:
+    case XK_Left:
+    case XK_Prior:
+    case XK_Up:
+      sel = No;
+      break;
+    case XK_k:
+    case XK_l:
+    case XK_Down:
+    case XK_End:
+    case XK_Next:
+    case XK_Right:
+      sel = Yes;
+      break;
   }
 
   return 0;
 }
 
-static int keypress_pin(XKeyEvent *ev, KeySym ksym, char *buf, int len) {
+static int keypress_pin(XKeyEvent* ev, KeySym ksym, char* buf, int len) {
   int old;
 
   if ((ev->state & ShiftMask) && (ksym == XK_v || ksym == XK_V)) {
@@ -441,95 +438,95 @@ static int keypress_pin(XKeyEvent *ev, KeySym ksym, char *buf, int len) {
 
   if (ev->state & ControlMask) {
     switch (ksym) {
-    case XK_a:
-      ksym = XK_Home;
-      break;
-    case XK_b:
-      ksym = XK_Left;
-      break;
-    case XK_c:
-      ksym = XK_Escape;
-      break;
-    case XK_d:
-      ksym = XK_Delete;
-      break;
-    case XK_e:
-      ksym = XK_End;
-      break;
-    case XK_f:
-      ksym = XK_Right;
-      break;
-    case XK_g:
-      ksym = XK_Escape;
-      break;
-    case XK_h:
-      ksym = XK_BackSpace;
-      break;
-    case XK_k:
-      old = cursor;
-      cursor = strlen(pin);
-      insert(NULL, old - cursor);
-      break;
-    case XK_u:
-      insert(NULL, -cursor);
-      break;
-    case XK_Return:
-    case XK_KP_Enter:
-      break;
-    case XK_bracketleft:
-      pinentry_info->canceled = 1;
-      return 1;
-    default:
-      return 0;
+      case XK_a:
+        ksym = XK_Home;
+        break;
+      case XK_b:
+        ksym = XK_Left;
+        break;
+      case XK_c:
+        ksym = XK_Escape;
+        break;
+      case XK_d:
+        ksym = XK_Delete;
+        break;
+      case XK_e:
+        ksym = XK_End;
+        break;
+      case XK_f:
+        ksym = XK_Right;
+        break;
+      case XK_g:
+        ksym = XK_Escape;
+        break;
+      case XK_h:
+        ksym = XK_BackSpace;
+        break;
+      case XK_k:
+        old = cursor;
+        cursor = strlen(pin);
+        insert(NULL, old - cursor);
+        break;
+      case XK_u:
+        insert(NULL, -cursor);
+        break;
+      case XK_Return:
+      case XK_KP_Enter:
+        break;
+      case XK_bracketleft:
+        pinentry_info->canceled = 1;
+        return 1;
+      default:
+        return 0;
     }
   }
 
   switch (ksym) {
-  case XK_Delete:
-    if (pin[cursor] == '\0') {
-      return 0;
-    }
-    cursor = nextrune(cursor, +1);
-    /* Fallthrough */
-  case XK_BackSpace:
-    if (cursor == 0) {
-      return 0;
-    }
-    insert(NULL, nextrune(cursor, -1) - cursor);
-    break;
-  case XK_Escape:
-    pinentry_info->canceled = 1;
-    return 1;
-  case XK_Left:
-    if (cursor > 0) {
-      cursor = nextrune(cursor, -1);
-    }
-    break;
-  case XK_Right:
-    if (pin[cursor] != '\0') {
+    case XK_Delete:
+      if (pin[cursor] == '\0') {
+        return 0;
+      }
       cursor = nextrune(cursor, +1);
-    }
-    break;
-  case XK_Home:
-    cursor = 0;
-    break;
-  case XK_End:
-    cursor = strlen(pin);
-    break;
-  case XK_Return:
-  case XK_KP_Enter:
-    return 1;
-    break;
-  default:
-    if (!iscntrl(*buf)) {
-      insert(buf, len);
-    }
+      /* Fallthrough */
+    case XK_BackSpace:
+      if (cursor == 0) {
+        return 0;
+      }
+      insert(NULL, nextrune(cursor, -1) - cursor);
+      break;
+    case XK_Escape:
+      pinentry_info->canceled = 1;
+      return 1;
+    case XK_Left:
+      if (cursor > 0) {
+        cursor = nextrune(cursor, -1);
+      }
+      break;
+    case XK_Right:
+      if (pin[cursor] != '\0') {
+        cursor = nextrune(cursor, +1);
+      }
+      break;
+    case XK_Home:
+      cursor = 0;
+      break;
+    case XK_End:
+      cursor = strlen(pin);
+      break;
+    case XK_Return:
+    case XK_KP_Enter:
+      return 1;
+      break;
+    default:
+      if (!iscntrl(*buf)) {
+        insert(buf, len);
+      }
   }
 
   return 0;
 }
 
-static int keypress(XKeyEvent *ev) {
+static int keypress(XKeyEvent* ev) {
   char buf[32];
   int len;
   int ret = 1;
@@ -561,7 +558,7 @@ static void paste(void) {
 
   /* We have been given the current selection, now insert it into input */
   XGetWindowProperty(dpy, win, utf8, 0, pin_len / 4, False, utf8, &da, &di, &dl,
-                     &dl, (unsigned char **)&p);
+                     &dl, (unsigned char**)&p);
   insert(p, (q = strchr(p, '\n')) ? q - p : (ssize_t)strlen(p));
   XFree(p);
   drawwin();
@@ -577,26 +574,26 @@ void run(void) {
       continue;
     }
     switch (ev.type) {
-    case Expose:
-      if (ev.xexpose.count == 0) {
-        drw_map(drw, win, 0, 0, mw, mh);
-      }
-      break;
-    case KeyPress:
-      if (keypress(&ev.xkey)) {
-        return;
-      }
-      break;
-    case SelectionNotify:
-      if (ev.xselection.property == utf8) {
-        paste();
-      }
-      break;
-    case VisibilityNotify:
-      if (ev.xvisibility.state != VisibilityUnobscured) {
-        XRaiseWindow(dpy, win);
-      }
-      break;
+      case Expose:
+        if (ev.xexpose.count == 0) {
+          drw_map(drw, win, 0, 0, mw, mh);
+        }
+        break;
+      case KeyPress:
+        if (keypress(&ev.xkey)) {
+          return;
+        }
+        break;
+      case SelectionNotify:
+        if (ev.xselection.property == utf8) {
+          paste();
+        }
+        break;
+      case VisibilityNotify:
+        if (ev.xvisibility.state != VisibilityUnobscured) {
+          XRaiseWindow(dpy, win);
+        }
+        break;
     }
   }
 }
@@ -621,7 +618,7 @@ static void password(void) {
     run();
 
     pinentry_info->repeat_okay =
-        (strcmp(pinentry_info->pin, pin_repeat) == 0) ? 1 : 0;
+      (strcmp(pinentry_info->pin, pin_repeat) == 0) ? 1 : 0;
     secmem_free(pin_repeat);
 
     if (!pinentry_info->repeat_okay) {
@@ -697,15 +694,15 @@ static int cmdhandler(pinentry_t received_pinentry) {
 
 pinentry_cmd_handler_t pinentry_cmd_handler = cmdhandler;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   Bool bval;
   int i, val;
-  const char *str;
-  struct passwd *pw;
+  const char* str;
+  struct passwd* pw;
   char path[PATH_MAX];
-  char *sudo_uid = getenv("SUDO_UID");
-  char *home = getenv("HOME");
-  char *gnupghome = getenv("GNUPGHOME");
+  char* sudo_uid = getenv("SUDO_UID");
+  char* home = getenv("HOME");
+  char* gnupghome = getenv("GNUPGHOME");
   config_t cfg;
 
   if (gnupghome) {
