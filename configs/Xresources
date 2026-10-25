@@ -1,13 +1,30 @@
-Xft.antialias:	1
-Xft.hinting:	1
-Xft.autohint:	0
-Xft.hintstyle:	hintslight
-Xft.rgba:       rgb
-Xft.lcdfilter:	lcddefault
+Xft.antialias: 1
+Xft.hinting:	 1
+Xft.autohint:	 0
+Xft.hintstyle: hintslight
+Xft.rgba:      rgb
+Xft.lcdfilter: lcddefault
 
-st.font:        SFMono Nerd Font:antialias=true:autohint=true:pixelsize=20
-st.borderpx:    0
-st.alpha:       1.0
+! st
+st.font:     SFMono Nerd Font:antialias=true:autohint=true:pixelsize=20
+st.borderpx: 0
+st.alpha:    1.0
+
+! dmenu
+dmenu.font:          SFMono Nerd Font:antialias=true:autohint=true:pixelsize=20
+! dmenu.prompt:        PROMPT
+dmenu.topbar:        1
+dmenu.lines:         8
+dmenu.background:    #14171c
+dmenu.foreground:    #abb2bf
+dmenu.backgroundSel: #61afef
+dmenu.foregroundSel: #14171c
+dmenu.backgroundOut: #56b6c2
+dmenu.foregroundOut: #181b21
+dmenu.backgroundNormHighlight: #14171c
+dmenu.foregroundNormHighlight: #d19a66
+dmenu.backgroundSelHighlight:  #61afef
+dmenu.foregroundSelHighlight:  #d19a66
 
 ! OneDark Colorscheme
 *background: #14171c
