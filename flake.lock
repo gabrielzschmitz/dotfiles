@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792906500,
-        "narHash": "sha256-hcHXylqpeAvKV/pxmqdQExqejGexojRIOsQPLesAgl4=",
+        "lastModified": 1792908309,
+        "narHash": "sha256-p1tCPNjc3RmM4zDYNFXF6e9xvHyrHGUFk5LtW3kQ/QI=",
         "owner": "gabrielzschmitz",
         "repo": "dmenu",
-        "rev": "e1010959e136c4f732dbc8081ff41476a1bedb42",
+        "rev": "7c9a481daf9b42cb7b83da54ef631f369a873cee",
         "type": "github"
       },
       "original": {
