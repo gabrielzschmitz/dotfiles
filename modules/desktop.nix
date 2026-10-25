@@ -6,7 +6,6 @@
     {
       home.packages = with pkgs; [
         # System
-        dmenu
         pamixer
         pwvucontrol
         xbacklight

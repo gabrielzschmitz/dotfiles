@@ -27,6 +27,7 @@
       overlays
       home-manager
       st
+      dmenu
     ];
   };
 }

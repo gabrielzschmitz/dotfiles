@@ -12,13 +12,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    dwm = {
+      url = "github:gabrielzschmitz/dwm";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     st = {
       url = "github:gabrielzschmitz/st";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    dwm = {
-      url = "github:gabrielzschmitz/dwm";
+    dmenu = {
+      url = "github:gabrielzschmitz/dmenu";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

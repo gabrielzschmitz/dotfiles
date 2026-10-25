@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "dmenu": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792906500,
+        "narHash": "sha256-hcHXylqpeAvKV/pxmqdQExqejGexojRIOsQPLesAgl4=",
+        "owner": "gabrielzschmitz",
+        "repo": "dmenu",
+        "rev": "e1010959e136c4f732dbc8081ff41476a1bedb42",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gabrielzschmitz",
+        "repo": "dmenu",
+        "type": "github"
+      }
+    },
     "dwm": {
       "inputs": {
         "nixpkgs": [
@@ -148,6 +168,7 @@
     },
     "root": {
       "inputs": {
+        "dmenu": "dmenu",
         "dwm": "dwm",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",
