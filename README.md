@@ -116,20 +116,21 @@ to rebuild from `~/.dotfiles`.
 
 ## Configuration
 
-| Component    | Purpose                                          |
-| ------------ | ------------------------------------------------ |
-| NixOS        | System configuration, services, and packages     |
-| Nix Flakes   | Reproducible configuration inputs and outputs    |
-| flake-parts  | Modular flake outputs and per-system settings    |
-| import-tree  | Automatic module discovery under `modules/`      |
-| Home Manager | User packages, programs, and shell configuration |
-| dwm          | Dynamic window manager                           |
-| st           | Simple terminal                                  |
-| Ly           | TTY display manager                              |
-| Limine       | Bootloader                                       |
-| Neovim       | Editor and plugin configuration                  |
-| Dunst        | Notification daemon                              |
-| Zen Browser  | Browser with declarative profile, policies, and extensions |
+| Component                                         | Purpose                                                    |
+| ------------------------------------------------- | ---------------------------------------------------------- |
+| NixOS                                             | System configuration, services, and packages               |
+| Nix Flakes                                        | Reproducible configuration inputs and outputs              |
+| flake-parts                                       | Modular flake outputs and per-system settings              |
+| import-tree                                       | Automatic module discovery under `modules/`                |
+| Home Manager                                      | User packages, programs, and shell configuration           |
+| [dwm](https://github.com/gabrielzschmitz/dwm)     | Dynamic window manager                                     |
+| [st](https://github.com/gabrielzschmitz/st)       | Simple terminal                                            |
+| [dmenu](https://github.com/gabrielzschmitz/dmenu) | Dynamic menu                                               |
+| Ly                                                | TTY display manager                                        |
+| Limine                                            | Bootloader                                                 |
+| Neovim                                            | Editor and plugin configuration                            |
+| Dunst                                             | Notification daemon                                        |
+| Zen Browser                                       | Browser with declarative profile, policies, and extensions |
 
 ### Architecture
 
@@ -139,9 +140,9 @@ The configuration follows the dendritic pattern. `flake.nix` delegates to
 `flake.modules.nixos.*` or `flake.modules.homeManager.*`.
 
 Feature modules that touch both system and user configuration, such as
-`display.nix`, `fish.nix`, `nvim.nix`, and `users.nix`, define both aspects in
-one file. Host and user selection remain explicit in `modules/hosts.nix` and
-`modules/home-manager.nix`.
+`display.nix`, `dwm.nix`, `st.nix`, `fish.nix`, `nvim.nix`, and `users.nix`,
+define both aspects in one file when appropriate. Host and user selection
+remain explicit in `modules/hosts.nix` and `modules/home-manager.nix`.
 
 ### Project Structure
 
@@ -160,7 +161,10 @@ one file. Host and user selection remain explicit in `modules/hosts.nix` and
 │   ├── users.nix                 # System user and Home Manager identity
 │   ├── audio.nix                 # PipeWire
 │   ├── boot.nix                  # Limine bootloader
-│   ├── display.nix               # X11, dwm, Ly, picom and TTY palette
+│   ├── display.nix               # X11, Ly, picom and TTY palette
+│   ├── dwm.nix                   # dwm window manager
+│   ├── st.nix                    # st terminal
+│   ├── dmenu.nix                 # dmenu
 │   ├── locale.nix                # Timezone and locale
 │   ├── network.nix               # NetworkManager
 │   ├── virtualisation.nix        # QEMU guest and SPICE agent
@@ -180,11 +184,10 @@ one file. Host and user selection remain explicit in `modules/hosts.nix` and
 │   ├── fastfetch.nix             # Fastfetch
 │   ├── services.nix              # User services (SPICE clipboard)
 │   ├── xdg.nix                   # XDG user directories
-│   └── zen.nix                   # Zen Browser profile, policies and extensions
+│   ├── zen.nix                   # Zen Browser profile, policies and extensions
+│   └── craftapps.nix             # Craft apps configuration
 ├── pkgs/                         # Custom packages, exposed via an overlay
-│   ├── default.nix               # Overlay (dwm-custom, st, sfmono-nerd-font)
-│   ├── dwm/{default.nix, config.h}
-│   ├── st/{default.nix, config.h}
+│   ├── default.nix               # Overlay (sfmono-nerd-font)
 │   └── sfmono-nerd-font/{default.nix, fonts/*.otf}
 ├── configs/                      # Raw configuration files
 │   ├── nvim/init.lua             # Neovim configuration
