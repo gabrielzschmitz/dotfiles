@@ -241,7 +241,10 @@ require("lazy").setup({
 
 						options = {
 							nixos = {
-								expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.nixos.options",
+								expr = string.format(
+									"(builtins.getFlake (toString ./.)).nixosConfigurations.%s.options",
+									vim.fn.hostname()
+								),
 							},
 
 							home_manager = {

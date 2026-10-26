@@ -6,7 +6,7 @@
   };
 
   flake.modules.homeManager.fish =
-    { pkgs, ... }:
+    { osConfig, pkgs, ... }:
     let
       nixShellFish = pkgs.writeShellScript "nix-shell-fish" ''
         if [ "''${1-}" = "--rcfile" ] && [ -n "''${2-}" ]; then
@@ -20,7 +20,7 @@
         exec ${pkgs.bashInteractive}/bin/bash "$@"
       '';
       flakeDir = "/home/gabrielzschmitz/.dotfiles";
-      host = "nixos";
+      host = osConfig.networking.hostName;
       flake = "${flakeDir}#${host}";
     in
     {
