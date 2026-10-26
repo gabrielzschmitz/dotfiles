@@ -72,5 +72,6 @@ in
   flake.nixosConfigurations.machine = mkHost self.modules.nixos.machine [
     self.modules.nixos.nvidia
     self.modules.nixos.steam
+    self.modules.nixos.damx
   ];
 }
