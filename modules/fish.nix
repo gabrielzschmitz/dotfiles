@@ -6,7 +6,7 @@
   };
 
   flake.modules.homeManager.fish =
-    { osConfig, pkgs, ... }:
+    { pkgs, ... }:
     let
       nixShellFish = pkgs.writeShellScript "nix-shell-fish" ''
         if [ "''${1-}" = "--rcfile" ] && [ -n "''${2-}" ]; then
@@ -20,8 +20,10 @@
         exec ${pkgs.bashInteractive}/bin/bash "$@"
       '';
       flakeDir = "/home/gabrielzschmitz/.dotfiles";
-      host = osConfig.networking.hostName;
-      flake = "${flakeDir}#${host}";
+
+      # Resolve the hostname when an alias runs, not when Home Manager builds
+      # this configuration, so the target always follows the running system.
+      flake = "${flakeDir}#(uname -n)";
     in
     {
       home.sessionVariables.NIX_BUILD_SHELL = "${nixShellFish}";
@@ -49,7 +51,7 @@
           rebuild = "sudo nixos-rebuild build --flake ${flake}";
           reswitch = "sudo nixos-rebuild switch --flake ${flake}";
           reupdate = "nix flake update --flake ${flakeDir} && sudo nixos-rebuild switch --flake ${flake}";
-          reclean = "sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +1 && sudo nix-collect-garbage -d";
+          reclean = "sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +1 && sudo nix-collect-garbage -d && sudo nixos-rebuild switch --flake ${flake}";
         };
 
         interactiveShellInit = ''
