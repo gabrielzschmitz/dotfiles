@@ -38,7 +38,11 @@ in
     boot.kernelParams = [ "video=Virtual-1:1920x1080@60" ];
 
     my.display = {
-      picom.enable = false;
+      picom = {
+        enable = false;
+        backend = "xrender";
+      };
+
       primaryOutput = "Virtual-1";
     };
   };
@@ -51,7 +55,11 @@ in
     system.stateVersion = "26.05";
 
     my.display = {
-      picom.enable = true;
+      picom = {
+        enable = true;
+        backend = "glx";
+      };
+
       primaryOutput = null;
     };
   };

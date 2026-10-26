@@ -31,6 +31,15 @@
           description = "Whether to start the picom compositor in the X session.";
         };
 
+        picom.backend = lib.mkOption {
+          type = lib.types.enum [
+            "xrender"
+            "glx"
+          ];
+          default = "xrender";
+          description = "Rendering backend used by picom.";
+        };
+
         primaryOutput = lib.mkOption {
           type = lib.types.nullOr lib.types.str;
           default = null;
@@ -125,7 +134,20 @@
     };
 
   flake.modules.homeManager.display =
-    { config, pkgs, ... }:
+    {
+      config,
+      lib,
+      osConfig,
+      pkgs,
+      ...
+    }:
+    let
+      picomConfig =
+        lib.replaceStrings
+          [ ''backend = "xrender";'' ]
+          [ ''backend = "${osConfig.my.display.picom.backend}";'' ]
+          (builtins.readFile ../configs/picom/picom.conf);
+    in
     {
       home.packages = with pkgs; [
         xwallpaper
@@ -144,6 +166,6 @@
       '';
 
       home.file.".config/X11/Xresources".source = ../configs/Xresources;
-      home.file.".config/picom/picom.conf".source = ../configs/picom/picom.conf;
+      home.file.".config/picom/picom.conf".text = picomConfig;
     };
 }
