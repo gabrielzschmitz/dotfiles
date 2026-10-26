@@ -1,0 +1,1 @@
+pyinstaller --onefile --distpath /home/div/Projects/Div-Acer-Manager-Max/Publish/DaemonPublish/ --clean DAMX-Daemon.py

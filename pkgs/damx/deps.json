@@ -1,0 +1,212 @@
+[
+  {
+    "pname": "Avalonia",
+    "version": "12.0.3",
+    "hash": "sha256-HQKjBAcw3oX+CrUIdoWGw8YP5WqSogH9n7tWXo+VchI="
+  },
+  {
+    "pname": "Avalonia.Angle.Windows.Natives",
+    "version": "2.1.25547.20250602",
+    "hash": "sha256-LE/lENAHptmz6t3T/AoJwnhpda+xs7PqriNGzdcfg8M="
+  },
+  {
+    "pname": "Avalonia.BuildServices",
+    "version": "11.3.2",
+    "hash": "sha256-6wx06tjSKWQOlX2czdp6Wh0nuwVapx5qf/s8Qj5we40="
+  },
+  {
+    "pname": "Avalonia.Controls.ColorPicker",
+    "version": "12.0.3",
+    "hash": "sha256-GZZtI32xq50TeG69nZm8PpXudMsA5qzrY8aPZN2MYyI="
+  },
+  {
+    "pname": "Avalonia.Desktop",
+    "version": "12.0.3",
+    "hash": "sha256-0I/A58Xp/qPNhM2VkbprWCDBltFf4unz+hFtQTmlacg="
+  },
+  {
+    "pname": "Avalonia.Diagnostics",
+    "version": "11.3.15",
+    "hash": "sha256-7kjJ6Oajamsrdbzpp4sHVEEWlO9utrjSb5LFtNfdGnA="
+  },
+  {
+    "pname": "Avalonia.Fonts.Inter",
+    "version": "12.0.3",
+    "hash": "sha256-tw9WtZ2Gwlw2O0Hi6RbwjQZ8Eocnpi+rbyY7wd/KKu4="
+  },
+  {
+    "pname": "Avalonia.FreeDesktop",
+    "version": "12.0.3",
+    "hash": "sha256-9zy+u7Qcnoy0u8cBT+NJYRSJWotcxoP2P+LVm4MimEY="
+  },
+  {
+    "pname": "Avalonia.FreeDesktop.AtSpi",
+    "version": "12.0.3",
+    "hash": "sha256-571IeyjElPPJjiIimYRYON3OZt2qLSsWRcfP+sZ1wt8="
+  },
+  {
+    "pname": "Avalonia.HarfBuzz",
+    "version": "12.0.3",
+    "hash": "sha256-vKx8B90ltSMw0zRFuAmYYRPac/aoEAuUMFNLKpnz4KA="
+  },
+  {
+    "pname": "Avalonia.Native",
+    "version": "12.0.3",
+    "hash": "sha256-bcSVuvKi9w4u/nJsfTM8GcJIUj5KOXB8AmROhL1zizA="
+  },
+  {
+    "pname": "Avalonia.Remote.Protocol",
+    "version": "12.0.3",
+    "hash": "sha256-7fn2zQ0E80ZGsyIh9uUzW8Fvv2ONEeVSXoQ4RV3fpwE="
+  },
+  {
+    "pname": "Avalonia.Skia",
+    "version": "12.0.0",
+    "hash": "sha256-w8i8lTkf3yp78rPxg7LlcsrKF/K3J7ATOTy3D/Bt6CA="
+  },
+  {
+    "pname": "Avalonia.Skia",
+    "version": "12.0.3",
+    "hash": "sha256-CwF96IP6Mqeiu0GQV7AstoAsx6UI90/vZvlGozeF520="
+  },
+  {
+    "pname": "Avalonia.Themes.Fluent",
+    "version": "12.0.3",
+    "hash": "sha256-ThL5jlSavQ+i03UBh24K7azKLExX2oRQNIadtTXPuEM="
+  },
+  {
+    "pname": "Avalonia.Themes.Simple",
+    "version": "11.3.15",
+    "hash": "sha256-D+x2e2hmP5gO4ch8LdahT/ehNB7lGmd7JJnMqyRY+9s="
+  },
+  {
+    "pname": "Avalonia.Win32",
+    "version": "12.0.3",
+    "hash": "sha256-HSBGkH3gOhNk9msnXycElwr5KljASMVNA8hs0gMHMYE="
+  },
+  {
+    "pname": "Avalonia.X11",
+    "version": "12.0.3",
+    "hash": "sha256-iw21g4HzFE74o8HcqAXOCWbqxjCTxAwwsZPiU7ymB2c="
+  },
+  {
+    "pname": "DialogHost.Avalonia",
+    "version": "0.12.1-nightly.0.1",
+    "hash": "sha256-r8x9w7tVG8junO1SueE1Il49xClwJE1W9YrcG3TneZA="
+  },
+  {
+    "pname": "HarfBuzzSharp",
+    "version": "7.3.0.3",
+    "hash": "sha256-1vDIcG1aVwVABOfzV09eAAbZLFJqibip9LaIx5k+JxM="
+  },
+  {
+    "pname": "HarfBuzzSharp",
+    "version": "8.3.1.3",
+    "hash": "sha256-/+ZEhjpOs8B4tMPw3vDyuQqGGZHJEWvy3WaKMaDwmrU="
+  },
+  {
+    "pname": "HarfBuzzSharp.NativeAssets.Linux",
+    "version": "8.3.1.3",
+    "hash": "sha256-feWOna/8ncvmrq7CxnDczv1facV2poZV5R+OyCtocpU="
+  },
+  {
+    "pname": "HarfBuzzSharp.NativeAssets.macOS",
+    "version": "8.3.1.3",
+    "hash": "sha256-6WKsJ/jF9pHnaWcQvaezc5AV6flu3XsOxQs7i4BGYJs="
+  },
+  {
+    "pname": "HarfBuzzSharp.NativeAssets.WebAssembly",
+    "version": "8.3.1.3",
+    "hash": "sha256-arBiI82fXPjAqftqnG7Wc3BRzZ6+vKd7b58vQSWJVk0="
+  },
+  {
+    "pname": "HarfBuzzSharp.NativeAssets.Win32",
+    "version": "8.3.1.3",
+    "hash": "sha256-WNUQmLWVFSwBKT9x7UdhSz9T2FA7wibvwjuPew/3yUM="
+  },
+  {
+    "pname": "LiveChartsCore",
+    "version": "2.1.0-dev-570",
+    "hash": "sha256-0jx6Vi3v8rMOJ51hqhHytueZsap1ODH4dsGjFmtzaVA="
+  },
+  {
+    "pname": "LiveChartsCore.SkiaSharpView",
+    "version": "2.1.0-dev-570",
+    "hash": "sha256-jvdfE6QEt/HaTZOssHOcDI/1wqCpXp3FCOu4wsTGTV0="
+  },
+  {
+    "pname": "LiveChartsCore.SkiaSharpView.Avalonia",
+    "version": "2.1.0-dev-570",
+    "hash": "sha256-s+gh4sUF2OGpLmgZqRaqd5nbY4Bv2W9O6W5v0DqR4yM="
+  },
+  {
+    "pname": "Material.Icons",
+    "version": "3.0.2",
+    "hash": "sha256-BP1fQLsidpNpiyG87V6oNnuO8CKo8hcf6405AScb2Cs="
+  },
+  {
+    "pname": "Material.Icons.Avalonia",
+    "version": "3.0.2",
+    "hash": "sha256-1FHaifgw3P/holj2QcXH+1U4Mrga5qKsUrYgkYNuXXU="
+  },
+  {
+    "pname": "MaterialDesign.Icons",
+    "version": "1.1.0",
+    "hash": "sha256-5nnjBchEViIM2zrjv/C619/nMwnuv5hX0hoIhJCL6Y8="
+  },
+  {
+    "pname": "MessageBox.Avalonia",
+    "version": "12.0.0",
+    "hash": "sha256-brukscwL0OCWGYBs4v1wuQMqvjI9VeTdNn1IkYtp21A="
+  },
+  {
+    "pname": "MicroCom.Runtime",
+    "version": "0.11.4",
+    "hash": "sha256-hd13T4Z9DsF1Sb56bS+SDpWjksJVzb4m/Kp37jaUhkU="
+  },
+  {
+    "pname": "SkiaSharp",
+    "version": "2.88.9",
+    "hash": "sha256-jZ/4nVXYJtrz9SBf6sYc/s0FxS7ReIYM4kMkrhZS+24="
+  },
+  {
+    "pname": "SkiaSharp",
+    "version": "3.119.4-preview.1.1",
+    "hash": "sha256-yUHsoau6WVQkzYV5UVnKcgpABiapa9aoTDd1pw/J5r8="
+  },
+  {
+    "pname": "SkiaSharp.HarfBuzz",
+    "version": "2.88.9",
+    "hash": "sha256-JH8Jr25eftPfq0BztamvxfDcAZtnx/jLRj5DGCS5/G8="
+  },
+  {
+    "pname": "SkiaSharp.NativeAssets.Linux",
+    "version": "3.119.4-preview.1.1",
+    "hash": "sha256-jcf0FhUgOzxpJ4ENn1q5uPe8dT+kXl0/yUWJs+hDYNA="
+  },
+  {
+    "pname": "SkiaSharp.NativeAssets.macOS",
+    "version": "3.119.4-preview.1.1",
+    "hash": "sha256-olbqFOHmkiCdlnXHU4l1lTb04yAPn21CvLNMP4AGncs="
+  },
+  {
+    "pname": "SkiaSharp.NativeAssets.WebAssembly",
+    "version": "3.119.4-preview.1.1",
+    "hash": "sha256-R+67ADA6luDa9b7xvsE4PSL6GWwQTaNYzw2WYou/ofQ="
+  },
+  {
+    "pname": "SkiaSharp.NativeAssets.Win32",
+    "version": "3.119.4-preview.1.1",
+    "hash": "sha256-Sd+KnMezIKbc4OLklHsfeM7EVZERtmawWuSCoaySteM="
+  },
+  {
+    "pname": "System.IO.Pipelines",
+    "version": "8.0.0",
+    "hash": "sha256-LdpB1s4vQzsOODaxiKstLks57X9DTD5D6cPx8DE1wwE="
+  },
+  {
+    "pname": "Tmds.DBus.Protocol",
+    "version": "0.92.0",
+    "hash": "sha256-WZSB9eqSOIzsBfnpOJDIIopIhNxAH+UcZuD6W94PIN4="
+  }
+]

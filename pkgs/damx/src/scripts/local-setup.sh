@@ -1,0 +1,747 @@
+#!/bin/bash
+
+# DAMX Installer Script
+# This script installs, uninstalls, or updates the DAMX Suite for Acer laptops on Linux
+# Components: Linuwu-Sense (drivers), DAMX-Daemon, and DAMX-GUI
+
+# Constants
+SCRIPT_VERSION="0.9.0"
+INSTALL_DIR="/opt/damx"
+BIN_DIR="/usr/local/bin"
+SYSTEMD_DIR="/etc/systemd/system"
+DAEMON_SERVICE_NAME="damx-daemon.service"
+DESKTOP_FILE_DIR="/usr/share/applications"
+ICON_DIR="/usr/share/icons/hicolor/256x256/apps"
+
+# Legacy paths for cleanup (uppercase naming convention)
+LEGACY_INSTALL_DIR="/opt/DAMX"
+LEGACY_DAEMON_SERVICE_NAME="DAMX-Daemon.service"
+
+# Colors for terminal output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Function to pause script execution
+pause() {
+  echo -e "${BLUE}Press any key to continue...${NC}"
+  read -n 1 -s -r
+}
+
+# Function to check and elevate privileges
+check_root() {
+  if [ "$EUID" -ne 0 ]; then
+    echo -e "${YELLOW}This script requires root privileges.${NC}"
+
+    # Check if sudo is available
+    if command -v sudo &> /dev/null; then
+      echo -e "${BLUE}Attempting to run with sudo...${NC}"
+      exec sudo "$0" "$@"
+      exit $?
+    else
+      echo -e "${RED}Error: sudo not found. Please run this script as root.${NC}"
+      pause
+      exit 1
+    fi
+  fi
+}
+
+print_banner() {
+  clear
+  echo -e "${BLUE}==========================================${NC}"
+  echo -e "${BLUE}       DAMX Suite Installer v${SCRIPT_VERSION}        ${NC}"
+  echo -e "${BLUE}    Acer Laptop WMI Controls for Linux  ${NC}"
+  echo -e "${BLUE}==========================================${NC}"
+  echo ""
+}
+
+# Function to detect and clean up legacy installations
+cleanup_legacy_installation() {
+  echo -e "${YELLOW}Checking for legacy installations...${NC}"
+  local cleanup_performed=false
+
+  # Check for legacy service file (uppercase naming)
+  if [ -f "${SYSTEMD_DIR}/${LEGACY_DAEMON_SERVICE_NAME}" ]; then
+    echo -e "${BLUE}Found legacy service file: ${LEGACY_DAEMON_SERVICE_NAME}${NC}"
+
+    # Stop the legacy service if it's running
+    if systemctl is-active --quiet ${LEGACY_DAEMON_SERVICE_NAME} 2>/dev/null; then
+      echo "Stopping legacy service..."
+      systemctl stop ${LEGACY_DAEMON_SERVICE_NAME}
+    fi
+
+    # Disable the legacy service if it's enabled
+    if systemctl is-enabled --quiet ${LEGACY_DAEMON_SERVICE_NAME} 2>/dev/null; then
+      echo "Disabling legacy service..."
+      systemctl disable ${LEGACY_DAEMON_SERVICE_NAME}
+    fi
+
+    # Remove the legacy service file
+    echo "Removing legacy service file..."
+    rm -f "${SYSTEMD_DIR}/${LEGACY_DAEMON_SERVICE_NAME}"
+    cleanup_performed=true
+  fi
+
+  # Check for legacy installation directory (uppercase naming)
+  if [ -d "${LEGACY_INSTALL_DIR}" ]; then
+    echo -e "${BLUE}Found legacy installation directory: ${LEGACY_INSTALL_DIR}${NC}"
+    echo "Removing legacy installation directory..."
+    rm -rf "${LEGACY_INSTALL_DIR}"
+    cleanup_performed=true
+  fi
+
+  # Check for other potential legacy artifacts
+  local legacy_artifacts=(
+    "/usr/local/bin/DAMX-Daemon"
+    "/usr/share/applications/DAMX.desktop"
+    "/usr/share/icons/hicolor/256x256/apps/DAMX.png"
+  )
+
+  for artifact in "${legacy_artifacts[@]}"; do
+    if [ -f "$artifact" ] || [ -d "$artifact" ]; then
+      echo "Removing legacy artifact: $artifact"
+      rm -rf "$artifact"
+      cleanup_performed=true
+    fi
+  done
+
+  # Reload systemd daemon if any service changes were made
+  if [ "$cleanup_performed" = true ]; then
+    echo "Reloading systemd daemon configuration..."
+    systemctl daemon-reload
+    echo -e "${GREEN}Legacy installation cleanup completed.${NC}"
+  else
+    echo -e "${GREEN}No legacy installations found.${NC}"
+  fi
+
+  return 0
+}
+
+# Function to perform comprehensive cleanup for uninstall/reinstall
+comprehensive_cleanup() {
+  echo -e "${YELLOW}Performing comprehensive cleanup...${NC}"
+
+  # Stop and disable current daemon service
+  if systemctl is-active --quiet ${DAEMON_SERVICE_NAME} 2>/dev/null; then
+    echo "Stopping current DAMX-Daemon service..."
+    systemctl stop ${DAEMON_SERVICE_NAME}
+  fi
+
+  if systemctl is-enabled --quiet ${DAEMON_SERVICE_NAME} 2>/dev/null; then
+    echo "Disabling current DAMX-Daemon service..."
+    systemctl disable ${DAEMON_SERVICE_NAME}
+  fi
+
+  # Remove current service file
+  if [ -f "${SYSTEMD_DIR}/${DAEMON_SERVICE_NAME}" ]; then
+    echo "Removing current service file..."
+    rm -f "${SYSTEMD_DIR}/${DAEMON_SERVICE_NAME}"
+  fi
+
+  # Clean up nitro key detection service
+  cleanup_nitro_service
+
+  # Clean up legacy installations
+  cleanup_legacy_installation
+
+  # Remove current installed files
+  echo "Removing current installation files..."
+  rm -rf ${INSTALL_DIR}
+  rm -f ${BIN_DIR}/DAMX
+  rm -f ${DESKTOP_FILE_DIR}/damx.desktop
+  rm -f ${ICON_DIR}/damx.png
+
+  # Uninstall drivers if Linuwu-Sense folder exists
+  if [ -d "Linuwu-Sense" ]; then
+    echo "Uninstalling drivers..."
+    cd Linuwu-Sense
+    if [ -f "Makefile" ]; then
+      make uninstall 2>/dev/null || true
+    fi
+    cd ..
+  fi
+
+  # Remove nitro key configuration
+  rm -rf /etc/damx
+
+  # Final systemd daemon reload
+  systemctl daemon-reload
+
+  echo -e "${GREEN}Comprehensive cleanup completed.${NC}"
+  return 0
+}
+
+# Function to clean up nitro key detection service
+cleanup_nitro_service() {
+  echo -e "${YELLOW}Cleaning up Nitro Key Detection Service...${NC}"
+  
+  NITRO_SERVICE_NAME="nitro-key-detection.service"
+  
+  # Stop the service if it's running
+  if systemctl is-active --quiet ${NITRO_SERVICE_NAME} 2>/dev/null; then
+    echo "Stopping ${NITRO_SERVICE_NAME}..."
+    systemctl stop ${NITRO_SERVICE_NAME}
+  fi
+  
+  # Disable the service if it's enabled
+  if systemctl is-enabled --quiet ${NITRO_SERVICE_NAME} 2>/dev/null; then
+    echo "Disabling ${NITRO_SERVICE_NAME}..."
+    systemctl disable ${NITRO_SERVICE_NAME}
+  fi
+  
+  # Remove the service file
+  if [ -f "${SYSTEMD_DIR}/${NITRO_SERVICE_NAME}" ]; then
+    echo "Removing ${NITRO_SERVICE_NAME} file..."
+    rm -f "${SYSTEMD_DIR}/${NITRO_SERVICE_NAME}"
+  fi
+  
+  # Remove the nitro key detection script
+  if [ -f "/usr/local/bin/nitro-key-detection.sh" ]; then
+    echo "Removing nitro-key-detection.sh script..."
+    rm -f "/usr/local/bin/nitro-key-detection.sh"
+  fi
+  
+  # Remove nitro key configuration
+  if [ -f "/etc/damx/nitro_key.conf" ]; then
+    echo "Removing nitro_key.conf configuration..."
+    rm -f "/etc/damx/nitro_key.conf"
+  fi
+  
+  echo -e "${GREEN}Nitro Key Detection Service cleanup completed.${NC}"
+}
+
+# Detect the compiler used to build the running kernel.
+is_llvm_kernel() {
+  local kernel_release
+  local kernel_build
+  local config_file
+
+  kernel_release=$(uname -r)
+  kernel_build="/lib/modules/${kernel_release}/build"
+
+  for config_file in "/boot/config-${kernel_release}" "${kernel_build}/.config"; do
+    if [ -r "$config_file" ] && grep -q '^CONFIG_CC_IS_CLANG=y' "$config_file"; then
+      return 0
+    fi
+  done
+
+  if command -v zgrep &> /dev/null &&
+     [ -r /proc/config.gz ] &&
+     zgrep -q '^CONFIG_CC_IS_CLANG=y' /proc/config.gz; then
+    return 0
+  fi
+
+  if grep -qsiE 'clang|llvm' /proc/version 2>/dev/null; then
+    return 0
+  fi
+
+  if [ -r "${kernel_build}/include/generated/compile.h" ] &&
+     grep -qsiE 'clang|llvm' "${kernel_build}/include/generated/compile.h"; then
+    return 0
+  fi
+
+  # CachyOS kernels are LLVM-built by default. Keep this fallback for
+  # installations where the running kernel does not expose its build config.
+  if [ -r /etc/os-release ] && grep -qi 'cachyos' /etc/os-release; then
+    return 0
+  fi
+
+  return 1
+}
+
+# Install build dependencies based on distribution
+install_build_deps() {
+  if command -v pacman &> /dev/null; then
+    # Arch-based (including CachyOS, Manjaro, EndeavourOS)
+    pacman -S --needed --noconfirm base-devel
+    if is_llvm_kernel; then
+      pacman -S --needed --noconfirm clang llvm lld
+    fi
+  elif command -v apt-get &> /dev/null; then
+    apt-get update && apt-get install -y build-essential
+  elif command -v dnf &> /dev/null; then
+    dnf install -y gcc make kernel-devel
+  elif command -v zypper &> /dev/null; then
+    zypper install -y gcc make kernel-devel
+  fi
+}
+
+install_drivers() {
+  local build_args=()
+
+  echo -e "${YELLOW}Installing Linuwu-Sense drivers...${NC}"
+
+  if [ ! -d "Linuwu-Sense" ]; then
+    echo -e "${RED}Error: Linuwu-Sense directory not found!${NC}"
+    echo "Please make sure the script is run from the same directory containing Linuwu-Sense folder."
+    pause
+    return 1
+  fi
+
+  cd Linuwu-Sense
+
+  # Install required build dependencies
+  if ! command -v make &> /dev/null; then
+    echo -e "${YELLOW}Installing build tools...${NC}"
+    install_build_deps || {
+      cd ..
+      return 1
+    }
+  fi
+
+  # Build driver with appropriate compiler flags
+  if is_llvm_kernel; then
+    echo -e "${YELLOW}Detected LLVM-compiled kernel, using Clang...${NC}"
+    if ! command -v clang &> /dev/null; then
+      install_build_deps || {
+        cd ..
+        return 1
+      }
+    fi
+    build_args=(LLVM=1 CC=clang)
+  fi
+
+  if ! make clean "${build_args[@]}" || ! make "${build_args[@]}"; then
+    echo -e "${RED}Error: Failed to build Linuwu-Sense drivers${NC}"
+    cd ..
+    pause
+    return 1
+  fi
+
+  if ! make install "${build_args[@]}"; then
+    echo -e "${RED}Error: Failed to install Linuwu-Sense drivers${NC}"
+    cd ..
+    pause
+    return 1
+  fi
+
+  echo -e "${GREEN}Linuwu-Sense drivers installed successfully!${NC}"
+  cd ..
+  return 0
+}
+
+install_daemon() {
+  echo -e "${YELLOW}Installing DAMX-Daemon...${NC}"
+
+  if [ ! -d "DAMX-Daemon" ]; then
+    echo -e "${RED}Error: DAMX-Daemon directory not found!${NC}"
+    echo "Please make sure the script is run from the same directory containing DAMX-Daemon folder."
+    pause
+    return 1
+  fi
+
+  # Create installation directory
+  mkdir -p ${INSTALL_DIR}/daemon
+
+  # Copy daemon binary
+  cp -f DAMX-Daemon/DAMX-Daemon ${INSTALL_DIR}/daemon/
+  chmod +x ${INSTALL_DIR}/daemon/DAMX-Daemon
+
+  # Create systemd service file with improved configuration
+  cat > ${SYSTEMD_DIR}/${DAEMON_SERVICE_NAME} << EOL
+[Unit]
+Description=DAMX Daemon for Acer laptops
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=${INSTALL_DIR}/daemon/DAMX-Daemon
+Restart=on-failure
+RestartSec=5
+User=root
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+EOL
+
+  # Enable and start the service
+  systemctl daemon-reload
+  systemctl enable ${DAEMON_SERVICE_NAME}
+  systemctl start ${DAEMON_SERVICE_NAME}
+
+  # Verify service is running
+  if systemctl is-active --quiet ${DAEMON_SERVICE_NAME}; then
+    echo -e "${GREEN}DAMX-Daemon installed and service started successfully!${NC}"
+    return 0
+  else
+    echo -e "${RED}Warning: DAMX-Daemon service may not have started correctly. Check with 'systemctl status ${DAEMON_SERVICE_NAME}'${NC}"
+    return 1
+  fi
+}
+
+install_gui() {
+  echo -e "${YELLOW}Installing DAMX-GUI...${NC}"
+
+  if [ ! -d "DAMX-GUI" ]; then
+    echo -e "${RED}Error: DAMX-GUI directory not found!${NC}"
+    echo "Please make sure the script is run from the same directory containing DAMX-GUI folder."
+    pause
+    return 1
+  fi
+
+  # Create installation directory
+  mkdir -p ${INSTALL_DIR}/gui
+
+  # Copy GUI files
+  cp -rf DAMX-GUI/* ${INSTALL_DIR}/gui/
+  chmod +x ${INSTALL_DIR}/gui/DivAcerManagerMax
+
+  # Create icon directory if it doesn't exist
+  mkdir -p ${ICON_DIR}
+
+  # Copy icon
+  cp -f DAMX-GUI/icon.png ${ICON_DIR}/damx.png
+
+  # Create desktop entry
+  cat > ${DESKTOP_FILE_DIR}/damx.desktop << EOL
+[Desktop Entry]
+Name=DAMX
+Comment=Div Acer Manager Max
+Exec=${INSTALL_DIR}/gui/DivAcerManagerMax
+Icon=damx
+Terminal=false
+Type=Application
+Categories=Utility;System;
+Keywords=acer;laptop;system;
+EOL
+
+  # Create command shortcut
+  cat > ${BIN_DIR}/DAMX << EOL
+#!/bin/bash
+${INSTALL_DIR}/gui/DivAcerManagerMax "\$@"
+EOL
+  chmod +x ${BIN_DIR}/DAMX
+
+  echo -e "${GREEN}DAMX-GUI installed successfully!${NC}"
+  return 0
+}
+
+configure_nitro_button() {
+  echo -e "${YELLOW}Configuring Nitro/PredatorSense Button Hardware Code...${NC}"
+
+  # Ask user if they want to setup the key with 10 second timeout.
+  # Default to No so installs/updates do not silently add a keyboard hook service.
+  # Predator machines have the same dedicated button (the PredatorSense key) —
+  # it even sends the same code as the Nitro key on the models tested so far.
+  echo -e "${YELLOW}Do you want to setup your Nitro/PredatorSense Key? (y/N) - Waiting 10 seconds...${NC}"
+  read -t 10 -n 1 -r response
+  
+  # Default to No if timeout or empty response
+  if [[ $? -ne 0 ]] || [[ -z "$response" ]]; then
+    echo -e "\n${BLUE}No response detected. Skipping Nitro button setup.${NC}"
+    response="N"
+  fi
+
+  # Check if user wants to skip
+  if [[ ! "$response" =~ ^[Yy]$ ]]; then
+    echo -e "${BLUE}Skipping button configuration. You can run setup again later to enable it.${NC}"
+    return 0
+  fi
+
+  if ! command -v evtest &> /dev/null; then
+    echo -e "${BLUE}Installing evtest for hardware detection...${NC}"
+    if command -v apt-get &> /dev/null; then
+      apt-get update && apt-get install -y evtest
+    elif command -v dnf &> /dev/null; then
+      dnf install -y evtest
+    elif command -v pacman &> /dev/null; then
+      pacman -S --noconfirm --needed evtest
+    else
+      echo -e "${RED}Could not install evtest automatically. Install it with your package manager and re-run setup.${NC}"
+      return 1
+    fi
+  fi
+
+  DEVICE=$(grep -A 5 -B 5 "AT Translated Set 2 keyboard" /proc/bus/input/devices | grep -m 1 "event" | sed 's/.*event\([0-9]\+\).*/\/dev\/input\/event\1/')
+  
+  mkdir -p /etc/damx
+
+  if [ -z "$DEVICE" ]; then
+    echo -e "${RED}Error: Keyboard hardware not found! Using default Nitro code (425).${NC}"
+    echo "NITRO_KEY=425" > /etc/damx/nitro_key.conf
+    return 1
+  fi
+
+  echo -e "${GREEN}Keyboard detected at: $DEVICE${NC}"
+  echo -e "${YELLOW}>>> PLEASE PRESS YOUR NITRO / PREDATORSENSE BUTTON NOW (Waiting 30 seconds)... <<<${NC}"
+
+  # On both Nitro and Predator EC keyboards the button arrives as scancode
+  # 0xf5, which the kernel maps to keycode 425 unless an hwdb quirk remaps
+  # it (some models get prog1/148). Capturing beats hardcoding either one.
+  CAPTURED_CODE=$(timeout 30 evtest "$DEVICE" | grep -m 1 "type 1 (EV_KEY).*value 1" | sed -n 's/.*code \([0-9]*\).*/\1/p')
+
+  if [ -n "$CAPTURED_CODE" ]; then
+    echo -e "${GREEN}Success! Button code captured: ${CAPTURED_CODE}${NC}"
+    echo "NITRO_KEY=$CAPTURED_CODE" > /etc/damx/nitro_key.conf
+  else
+    echo -e "${RED}Timeout or no key detected. Falling back to default code (425).${NC}"
+    echo -e "${YELLOW}If you DID press the button: key remappers like keyd or kmonad grab the${NC}"
+    echo -e "${YELLOW}keyboard exclusively, so this capture (and the detection service) never${NC}"
+    echo -e "${YELLOW}sees the key. Stop the remapper and re-run setup, or bind the key in the${NC}"
+    echo -e "${YELLOW}remapper's own config instead.${NC}"
+    echo "NITRO_KEY=425" > /etc/damx/nitro_key.conf
+  fi
+  
+  # Install NitroKeyDetection.sh as a service
+  install_nitro_service
+}
+
+detect_desktop_user() {
+  if [ -n "${SUDO_USER:-}" ] && [ "$SUDO_USER" != "root" ] && id -u "$SUDO_USER" >/dev/null 2>&1; then
+    echo "$SUDO_USER"
+    return 0
+  fi
+
+  if command -v loginctl >/dev/null 2>&1; then
+    local session_user
+    session_user=$(loginctl list-sessions --no-legend 2>/dev/null | awk '$3 != "root" && $3 != "gdm" { print $3; exit }')
+    if [ -n "$session_user" ] && id -u "$session_user" >/dev/null 2>&1; then
+      echo "$session_user"
+      return 0
+    fi
+  fi
+
+  awk -F: '$3 >= 1000 && $3 < 60000 && $1 != "nobody" { print $1; exit }' /etc/passwd
+}
+
+install_nitro_service() {
+  echo -e "${YELLOW}Installing Nitro Key Detection Service...${NC}"
+  
+    # First, remove any existing installation
+  # cleanup_nitro_service
+  
+  # Get the directory where the main script is located
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  NITRO_SCRIPT="$SCRIPT_DIR/nitro-key-detection.sh"
+  TARGET_USER=$(detect_desktop_user)
+
+  if [ -z "$TARGET_USER" ] || ! id -u "$TARGET_USER" >/dev/null 2>&1; then
+    echo -e "${RED}Error: Could not determine desktop user for Nitro key launcher.${NC}"
+    return 1
+  fi
+
+  echo -e "${BLUE}The button will launch DAMX for user: ${TARGET_USER}${NC}"
+  
+  # Check if NitroKeyDetection.sh exists
+  if [ ! -f "$NITRO_SCRIPT" ]; then
+    echo -e "${RED}Error: NitroKeyDetection.sh not found in $SCRIPT_DIR${NC}"
+    return 1
+  fi
+  
+  # Make the script executable
+  chmod +x "$NITRO_SCRIPT"
+  
+  # Copy script to /usr/local/bin
+  cp "$NITRO_SCRIPT" /usr/local/bin/
+  chmod +x "/usr/local/bin/nitro-key-detection.sh"
+  
+  # Create systemd service file
+  cat > /etc/systemd/system/nitro-key-detection.service << EOF
+[Unit]
+Description=Nitro/PredatorSense Key Detection Service
+After=multi-user.target
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/nitro-key-detection.sh
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+User=root
+Environment=DAMX_TARGET_USER=${TARGET_USER}
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+  # Reload systemd, enable and start the service
+  systemctl daemon-reload
+  systemctl enable nitro-key-detection.service
+  systemctl start nitro-key-detection.service
+  
+  # Check if service is running
+  if systemctl is-active --quiet nitro-key-detection.service; then
+    echo -e "${GREEN}✓ Nitro Key Detection Service installed and running successfully!${NC}"
+    echo -e "${GREEN}Service status: $(systemctl status nitro-key-detection.service --no-pager | grep Active)${NC}"
+  else
+    echo -e "${RED}✗ Service installation failed. Checking logs...${NC}"
+    journalctl -u nitro-key-detection.service -n 10 --no-pager
+    return 1
+  fi
+  
+  echo -e "${BLUE}Service commands:${NC}"
+  echo -e "  Start: systemctl start nitro-key-detection.service"
+  echo -e "  Stop:  systemctl stop nitro-key-detection.service"
+  echo -e "  Status: systemctl status nitro-key-detection.service"
+  echo -e "  Logs:  journalctl -u nitro-key-detection.service -f"
+}
+
+# Example of how to call it from your main script
+# configure_nitro_button
+
+perform_install() {
+  local skip_drivers=$1
+  local is_update=$2
+
+  # If this is an update/reinstall, perform cleanup first
+  if [ "$is_update" = true ]; then
+    echo -e "${BLUE}Performing cleanup before installation...${NC}"
+    comprehensive_cleanup
+    echo ""
+  else
+    # For fresh installs, still check for legacy installations
+    cleanup_legacy_installation
+    echo ""
+  fi
+
+  # Create main installation directory
+  mkdir -p ${INSTALL_DIR}
+
+  # Install components
+  if [ "$skip_drivers" = false ]; then
+    install_drivers
+    DRIVER_RESULT=$?
+    if [ $DRIVER_RESULT -ne 0 ]; then
+      echo -e "${RED}Driver installation failed; daemon and GUI installation were not attempted.${NC}"
+      return $DRIVER_RESULT
+    fi
+  else
+    echo -e "${YELLOW}Skipping driver installation as requested.${NC}"
+    DRIVER_RESULT=0
+  fi
+
+  install_daemon
+  DAEMON_RESULT=$?
+
+  install_gui
+  GUI_RESULT=$?
+
+  #Setup NitroButton shortcut
+  configure_nitro_button
+
+  # Check if all installations were successful
+  if [ $DRIVER_RESULT -eq 0 ] && [ $DAEMON_RESULT -eq 0 ] && [ $GUI_RESULT -eq 0 ]; then
+    echo -e "${GREEN}DAMX Suite installation completed successfully!${NC}"
+    echo -e "You can now run the GUI using the ${BLUE}DAMX${NC} command or from your application launcher."
+
+    # Show service status
+    echo ""
+    echo -e "${BLUE}Service Status:${NC}"
+    systemctl status ${DAEMON_SERVICE_NAME} --no-pager -l
+    pause
+    return 0
+  else
+    echo -e "${RED}Some components failed to install. Please check the errors above.${NC}"
+    pause
+    return 1
+  fi
+}
+
+uninstall() {
+  echo -e "${YELLOW}Uninstalling DAMX Suite...${NC}"
+  comprehensive_cleanup
+  echo -e "${GREEN}DAMX Suite uninstalled successfully!${NC}"
+  pause
+  return 0
+}
+
+# Function to check system compatibility
+check_system() {
+  echo -e "${BLUE}Checking system compatibility...${NC}"
+
+  # Check if systemd is available
+  if ! command -v systemctl &> /dev/null; then
+    echo -e "${RED}Error: systemd is required but not found on this system.${NC}"
+    return 1
+  fi
+
+  # Check if we're on a supported distribution
+  if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    echo "Detected OS: $PRETTY_NAME"
+  fi
+
+  echo -e "${GREEN}System compatibility check passed.${NC}"
+  return 0
+}
+
+main_menu() {
+  # Perform initial system check
+  if ! check_system; then
+    echo -e "${RED}System compatibility check failed. Exiting.${NC}"
+    pause
+    exit 1
+  fi
+
+  while true; do
+    print_banner
+
+    echo -e "Please select an option:"
+    echo -e "  ${GREEN}1${NC}) Install DAMX Suite (complete)"
+    echo -e "  ${GREEN}2${NC}) Install DAMX Suite (without drivers)"
+    echo -e "  ${GREEN}3${NC}) Uninstall DAMX Suite"
+    echo -e "  ${GREEN}4${NC}) Reinstall/Update DAMX Suite (recommended for upgrades)"
+    echo -e "  ${GREEN}5${NC}) Check service status"
+    echo -e "  ${GREEN}q${NC}) Quit"
+    echo ""
+
+    read -p "Enter your choice [1-5 or q]: " choice
+
+    case $choice in
+      1)
+        print_banner
+        echo -e "${BLUE}Starting complete installation...${NC}"
+        perform_install false false
+        ;;
+      2)
+        print_banner
+        echo -e "${BLUE}Starting installation without drivers...${NC}"
+        perform_install true false
+        ;;
+      3)
+        print_banner
+        echo -e "${BLUE}Starting uninstallation...${NC}"
+        uninstall
+        ;;
+      4)
+        print_banner
+        echo -e "${BLUE}Starting reinstallation/update...${NC}"
+        echo -e "${YELLOW}This will completely remove the existing installation before installing the new version.${NC}"
+        perform_install false true
+        ;;
+      5)
+        print_banner
+        echo -e "${BLUE}Checking DAMX service status...${NC}"
+        echo ""
+        if systemctl list-unit-files | grep -q ${DAEMON_SERVICE_NAME}; then
+          systemctl status ${DAEMON_SERVICE_NAME} --no-pager -l
+        else
+          echo -e "${YELLOW}DAMX service not found. The suite may not be installed.${NC}"
+        fi
+        echo ""
+        pause
+        ;;
+      q|Q)
+        echo -e "${BLUE}Exiting installer. Goodbye!${NC}"
+        exit 0
+        ;;
+      *)
+        echo -e "${RED}Invalid option. Please try again.${NC}"
+        sleep 2
+        ;;
+    esac
+  done
+}
+
+# Check and elevate privileges if needed
+check_root "$@"
+
+# Start the installer
+main_menu
+exit 0

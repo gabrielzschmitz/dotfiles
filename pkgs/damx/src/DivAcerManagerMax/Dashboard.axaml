@@ -1,0 +1,221 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="DivAcerManagerMax.Dashboard"
+             xmlns:material="using:Material.Icons.Avalonia"
+             xmlns:divAcerManagerMax="clr-namespace:DivAcerManagerMax"
+             xmlns:avalonia="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
+             x:DataType="divAcerManagerMax:Dashboard">
+
+    <UserControl.Styles>
+        <Style Selector="material|MaterialIcon.FanIcon">
+            <Style.Animations>
+                <Animation Duration="0:0:2" IterationCount="Infinite">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="RotateTransform.Angle" Value="0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="RotateTransform.Angle" Value="360" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer>
+        <Grid Margin="20" RowDefinitions="Auto,*" ColumnDefinitions="*,*,*">
+            <!-- Row 1: CPU, GPU, Fan Control -->
+
+            <!-- CPU Card -->
+            <Border Classes="Card" Grid.Row="0" Grid.Column="0" Margin="0,0,10,10">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock x:Name="CpuTitle" Grid.Column="0" Text="CPU" Classes="SubHeader" />
+                        <material:MaterialIcon Grid.Column="1" Kind="Cpu64Bit" Width="24" Height="24"
+                                               HorizontalAlignment="Right" />
+                    </Grid>
+
+                    <StackPanel Margin="0,2">
+                        <TextBlock DockPanel.Dock="Left" Text="Model:" Opacity="0.7" Width="90"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <TextBlock x:Name="CpuModel" Text="{Binding CpuName}" FontWeight="SemiBold"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <DockPanel LastChildFill="True" Margin="0,7,0,0" VerticalAlignment="Center">
+                        <TextBlock DockPanel.Dock="Left" Text="Temperature:" Opacity="0.7" Width="90"
+                                   VerticalAlignment="Center" />
+                        <StackPanel DockPanel.Dock="Right">
+                            <TextBlock x:Name="CpuTemperature" Text="{Binding CpuTemp, StringFormat='{}{0}°C'}"
+                                       FontWeight="SemiBold" Width="50" VerticalAlignment="Center" />
+                            <ProgressBar x:Name="CpuTemperatureBar" Value="{Binding CpuTemp}" Maximum="110"
+                                         MinWidth="10" MaxWidth="Infinity" Margin="0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DockPanel>
+
+                    <DockPanel LastChildFill="True" Margin="0,7,0,0" VerticalAlignment="Center">
+                        <TextBlock DockPanel.Dock="Left" Text="Usage:" Opacity="0.7" Width="90"
+                                   VerticalAlignment="Center" />
+                        <StackPanel DockPanel.Dock="Right">
+                            <TextBlock Text="{Binding CpuUsage, StringFormat='{}{0}%'}" FontWeight="SemiBold"
+                                       Width="50" VerticalAlignment="Center" />
+                            <ProgressBar Value="{Binding CpuUsage}" Maximum="100" MinWidth="10" MaxWidth="Infinity"
+                                         Margin="0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- GPU Card -->
+            <Border Classes="Card" Grid.Row="0" Grid.Column="1" Margin="5,0,5,10">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock x:Name="GpuTitle" Grid.Column="0" Text="GPU" Classes="SubHeader" />
+                        <material:MaterialIcon Grid.Column="1" Kind="Gpu" Width="24" Height="24"
+                                               HorizontalAlignment="Right" />
+                    </Grid>
+
+                    <StackPanel Margin="0,2" VerticalAlignment="Center">
+                        <TextBlock DockPanel.Dock="Left" Text="Model:" Opacity="0.7" Width="90"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        <TextBlock x:Name="GpuModel" Text="{Binding GpuName}" FontWeight="SemiBold"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <DockPanel LastChildFill="True" Margin="0,2" VerticalAlignment="Center">
+                        <TextBlock DockPanel.Dock="Left" Text="Temperature:" Opacity="0.7" Width="90"
+                                   VerticalAlignment="Center" />
+                        <StackPanel DockPanel.Dock="Right">
+                            <TextBlock x:Name="GpuTemperature" Text="{Binding GpuTemp, StringFormat='{}{0}°C'}"
+                                       FontWeight="SemiBold" Width="50" VerticalAlignment="Center" />
+                            <ProgressBar x:Name="GpuTemperatureBar" Value="{Binding GpuTemp}" Maximum="110"
+                                         MinWidth="10" MaxWidth="Infinity" Margin="0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DockPanel>
+
+                    <DockPanel LastChildFill="True" Margin="0,2" VerticalAlignment="Center">
+                        <TextBlock DockPanel.Dock="Left" Text="Usage:" Opacity="0.7" Width="90"
+                                   VerticalAlignment="Center" />
+                        <StackPanel DockPanel.Dock="Right">
+                            <TextBlock Text="{Binding GpuUsage, StringFormat='{}{0}%'}" FontWeight="SemiBold"
+                                       Width="50" VerticalAlignment="Center" />
+                            <ProgressBar Value="{Binding GpuUsage}" Maximum="100" MinWidth="10" MaxWidth="Infinity"
+                                         Margin="0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DockPanel>
+
+
+                    <DockPanel LastChildFill="True" Margin="0,2" VerticalAlignment="Center">
+                        <TextBlock DockPanel.Dock="Left" Text="Driver:" Opacity="0.7" Width="90"
+                                   VerticalAlignment="Center" />
+                        <TextBlock x:Name="GpuDriver" Text="UNKNOWN" FontWeight="SemiBold" VerticalAlignment="Center" />
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Fan Control Card -->
+            <Border Classes="Card" Grid.Row="0" Grid.Column="2" Margin="10,0,0,10">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock x:Name="FanControlTitle" Grid.Column="0" Text="Fan Control" Classes="SubHeader" />
+                        <material:MaterialIcon Grid.Column="1" Kind="Fan" Width="24" Height="24"
+                                               HorizontalAlignment="Right" />
+                    </Grid>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20" Margin="10">
+                        <StackPanel HorizontalAlignment="Center">
+                            <TextBlock Text="CPU Fan:" Opacity="0.7" Width="90" VerticalAlignment="Center" />
+                            <TextBlock x:Name="CpuFanSpeed" Text="2400 RPM" FontWeight="SemiBold"
+                                       VerticalAlignment="Center" />
+                            <!-- CPU Fan Animation -->
+                            <material:MaterialIcon x:Name="CpuFanIcon" Classes="FanIcon" Kind="Fan" Width="64"
+                                                   Height="64"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Text="GPU Fan:" Opacity="0.7" Width="90" VerticalAlignment="Center" />
+                            <TextBlock x:Name="GpuFanSpeed" Text="3100 RPM" FontWeight="SemiBold"
+                                       VerticalAlignment="Center" />
+                            <material:MaterialIcon x:Name="GpuFanIcon" Classes="FanIcon" Kind="Fan" Width="64"
+                                                   Height="64"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <DockPanel LastChildFill="False" Margin="0,2" VerticalAlignment="Center" IsVisible="False">
+                        <TextBlock DockPanel.Dock="Left" Text="Fan Mode:" Opacity="0.7" Width="90"
+                                   VerticalAlignment="Center" />
+                        <ComboBox x:Name="FanModeSelector" DockPanel.Dock="Right" SelectedIndex="0" Width="120">
+                            <ComboBoxItem>Auto</ComboBoxItem>
+                            <ComboBoxItem>Performance</ComboBoxItem>
+                            <ComboBoxItem>Silent</ComboBoxItem>
+                        </ComboBox>
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Row 2: Temperature Monitor (expanded) -->
+            <Border Classes="Card" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,5,10">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock x:Name="TemperatureMonitorTitle" Grid.Column="0" Text="Temperature Monitor"
+                                   Classes="SubHeader" />
+                        <material:MaterialIcon Grid.Column="1" Kind="Thermometer" Width="24" Height="24"
+                                               HorizontalAlignment="Right" />
+                    </Grid>
+
+                    <avalonia:CartesianChart x:Name="TemperatureChart" VerticalAlignment="Stretch" MinHeight="250" />
+
+                </StackPanel>
+            </Border>
+
+            <!-- Battery Card -->
+            <Border Classes="Card" Grid.Row="1" Grid.Column="2" Margin="10,0,0,10" IsVisible="{Binding HasBattery}">
+                <StackPanel>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock x:Name="BatteryTitle" Grid.Column="0" Text="Battery" Classes="SubHeader" />
+                        <material:MaterialIcon Grid.Column="1" Kind="Battery70" Width="24" Height="24"
+                                               HorizontalAlignment="Right" />
+                    </Grid>
+
+                    <StackPanel Margin="0,20,0,0" HorizontalAlignment="Center">
+                        <ProgressBar x:Name="BatteryLevelBar" Value="70" Maximum="100" Width="180" Height="16" />
+                        <TextBlock x:Name="BatteryPercentage"
+                                   Text="{Binding BatteryPercentageInt , StringFormat='{}{0}%'}"
+                                   FontFamily="{StaticResource OxaniumBoldFont}" FontStretch="ExtraExpanded"
+                                   FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,0" />
+                    </StackPanel>
+
+                    <DockPanel LastChildFill="True" Margin="0,20,0,10" VerticalAlignment="Center">
+                        <TextBlock DockPanel.Dock="Left" Text="Battery Status:" Opacity="0.7" Width="110"
+                                   VerticalAlignment="Center" />
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                            <material:MaterialIcon Kind="PowerPlugOutline" Width="16" Height="16" Margin="0,0,5,0" />
+                            <TextBlock x:Name="PowerSource" Text="{Binding BatteryStatus}" FontWeight="SemiBold" />
+                        </StackPanel>
+                    </DockPanel>
+
+                    <DockPanel LastChildFill="True" Margin="0,0,0,10" VerticalAlignment="Center">
+                        <TextBlock DockPanel.Dock="Left" Text="Remaining:" Opacity="0.7" Width="110"
+                                   VerticalAlignment="Center" />
+                        <TextBlock x:Name="BatteryTimeRemaining"
+                                   Text="{Binding BatteryTimeRemainingString , StringFormat='{}{0}%'}"
+                                   FontWeight="SemiBold" VerticalAlignment="Center" />
+                    </DockPanel>
+
+                    <DockPanel LastChildFill="True" Margin="0,0,0,10" VerticalAlignment="Center" IsVisible="False">
+                        <TextBlock DockPanel.Dock="Left" Text="Power Mode:" Opacity="0.7" Width="110"
+                                   VerticalAlignment="Center" />
+                        <ComboBox x:Name="PowerModeSelector" DockPanel.Dock="Right" SelectedIndex="1" Width="120">
+                            <ComboBoxItem>Battery Saver</ComboBoxItem>
+                            <ComboBoxItem>Balanced</ComboBoxItem>
+                            <ComboBoxItem>Performance</ComboBoxItem>
+                        </ComboBox>
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
