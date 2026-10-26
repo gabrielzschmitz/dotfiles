@@ -7,6 +7,8 @@
     networking.hostName = "nixos";
 
     system.stateVersion = "26.05";
+
+    my.display.primaryOutput = "Virtual-1";
   };
 
   flake.nixosConfigurations.nixos = inputs.nixpkgs.lib.nixosSystem {

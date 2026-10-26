@@ -2,91 +2,126 @@
 
 {
   flake.modules.nixos.display =
-    { pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       dwm = inputs.dwm.packages.${pkgs.stdenv.hostPlatform.system}.default;
       lyTtyPalette = pkgs.writeShellScript "ly-tty-palette" ''
         # Reset the console, then set its default background and foreground.
         printf '\033c\033]P014171C\033]P7ABB2BF' > /dev/tty1
       '';
+
+      xrandrPrimary = lib.optionalString (config.my.display.primaryOutput != null) ''
+        ${pkgs.xrandr}/bin/xrandr --output ${config.my.display.primaryOutput} --primary --mode ${config.my.display.primaryMode}
+      '';
+
+      startPicom = lib.optionalString config.my.display.picom.enable ''
+        ${pkgs.picom}/bin/picom -b --config "$HOME/.config/picom/picom.conf" &
+      '';
     in
     {
-      # X11 and DWM
-      services.xserver = {
-        enable = true;
+      options.my.display = {
+        picom.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "Whether to start the picom compositor in the X session.";
+        };
 
-        windowManager.dwm = {
+        primaryOutput = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "X RandR output to configure as primary, or null to leave outputs untouched.";
+        };
+
+        primaryMode = lib.mkOption {
+          type = lib.types.str;
+          default = "1920x1080";
+          description = "Mode used when configuring the primary X RandR output.";
+        };
+      };
+
+      config = {
+        # X11 and DWM
+        services.xserver = {
           enable = true;
-          package = dwm;
+
+          windowManager.dwm = {
+            enable = true;
+            package = dwm;
+          };
         };
-      };
 
-      # Display manager
-      services.displayManager.ly = {
-        enable = true;
+        # Display manager
+        services.displayManager.ly = {
+          enable = true;
 
-        settings = {
-          # Appearance
-          animation = "none";
-          hide_borders = true;
-          hide_version_string = true;
-          hide_key_hints = true;
-          text_in_center = true;
-          box_title = "LOGIN";
+          settings = {
+            # Appearance
+            animation = "none";
+            hide_borders = true;
+            hide_version_string = true;
+            hide_key_hints = true;
+            text_in_center = true;
+            box_title = "LOGIN";
 
-          # Clock
-          clock = "%A, %d %B  %H:%M";
-          bigclock = "en";
-          bigclock_seconds = false;
-          bigclock_12hr = false;
+            # Clock
+            clock = "%A, %d %B  %H:%M";
+            bigclock = "en";
+            bigclock_seconds = false;
+            bigclock_12hr = false;
 
-          # One Dark interface palette (decimal 0xSSRRGGBB)
-          bg = 1318684; # #14171C
-          fg = 11252415; # #ABB2BF
-          border_fg = 6402031; # #61AFEF
-          error_bg = 1318684; # #14171C
-          error_fg = 31485045; # Bold #E06C75
+            # One Dark interface palette (decimal 0xSSRRGGBB)
+            bg = 1318684; # #14171C
+            fg = 11252415; # #ABB2BF
+            border_fg = 6402031; # #61AFEF
+            error_bg = 1318684; # #14171C
+            error_fg = 31485045; # Bold #E06C75
 
-          full_color = true;
-          blank_box = true;
+            full_color = true;
+            blank_box = true;
 
-          # Keyboard and password
-          numlock = true;
-          clear_password = true;
-          asterisk = "*";
+            # Keyboard and password
+            numlock = true;
+            clear_password = true;
+            asterisk = "*";
 
-          # Reapply the TTY palette when Ly resets the terminal.
-          term_reset_cmd = "${lyTtyPalette}";
+            # Reapply the TTY palette when Ly resets the terminal.
+            term_reset_cmd = "${lyTtyPalette}";
+          };
         };
+
+        # Set the palette before Ly starts.
+        systemd.services.display-manager.serviceConfig.ExecStartPre = [
+          "${lyTtyPalette}"
+        ];
+
+        # Custom X session for Ly
+        services.xserver.displayManager.session = [
+          {
+            manage = "window";
+            name = "xsession";
+            start = ''
+              ${pkgs.xrdb}/bin/xrdb -merge "$HOME/.config/X11/Xresources"
+              ${xrandrPrimary}
+              ${pkgs.xwallpaper}/bin/xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg"
+
+              ${pkgs.dunst}/bin/dunst &
+              ${startPicom}
+              ${pkgs.xset}/bin/xset r rate 300 50 &
+
+              ${dwm}/bin/dwm-bar &
+              while ${dwm}/bin/dwm 2>> "$HOME/.cache/X11/xsession-errors"; do
+                continue
+              done
+            '';
+          }
+        ];
+        services.displayManager.defaultSession = "none+xsession";
       };
-
-      # Set the palette before Ly starts.
-      systemd.services.display-manager.serviceConfig.ExecStartPre = [
-        "${lyTtyPalette}"
-      ];
-
-      # Custom X session for Ly
-      services.xserver.displayManager.session = [
-        {
-          manage = "window";
-          name = "xsession";
-          start = ''
-            ${pkgs.xrdb}/bin/xrdb -merge "$HOME/.config/X11/Xresources"
-            ${pkgs.xrandr}/bin/xrandr --output Virtual-1 --primary --mode 1920x1080
-            ${pkgs.xwallpaper}/bin/xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg"
-
-            ${pkgs.dunst}/bin/dunst &
-            ${pkgs.picom}/bin/picom -b --config "$HOME/.config/picom/picom.conf" &
-            ${pkgs.xset}/bin/xset r rate 300 50 &
-
-            ${dwm}/bin/dwm-bar &
-            while ${dwm}/bin/dwm 2>> "$HOME/.cache/X11/xsession-errors"; do
-              continue
-            done
-          '';
-        }
-      ];
-      services.displayManager.defaultSession = "none+xsession";
     };
 
   flake.modules.homeManager.display =
