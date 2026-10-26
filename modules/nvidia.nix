@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 {
   flake.modules.nixos.nvidia = {
@@ -26,5 +26,21 @@
     };
 
     services.xserver.videoDrivers = [ "nvidia" ];
+
+    # Alternate boot entry for using the discrete GPU as the only X11 device.
+    # Limine lists it under every generation, so each rebuild updates it too.
+    # The laptop MUX must be set to the discrete GPU (or the panel must be
+    # wired to it) for this mode to produce an image.
+    specialisation."nvidia-only".configuration = {
+      hardware.nvidia.prime = {
+        offload = {
+          enable = lib.mkForce false;
+          enableOffloadCmd = lib.mkForce false;
+        };
+
+        intelBusId = lib.mkForce "";
+        nvidiaBusId = lib.mkForce "";
+      };
+    };
   };
 }
