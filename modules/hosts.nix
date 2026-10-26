@@ -61,5 +61,7 @@ in
     self.modules.nixos.home-manager-vm
   ];
 
-  flake.nixosConfigurations.machine = mkHost self.modules.nixos.machine [ ];
+  flake.nixosConfigurations.machine = mkHost self.modules.nixos.machine [
+    self.modules.nixos.nvidia
+  ];
 }
