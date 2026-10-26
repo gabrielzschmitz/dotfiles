@@ -1,35 +1,65 @@
 { inputs, self, ... }:
 
-{
-  flake.modules.nixos.host = {
-    imports = [ ../hosts/nixos/hardware-configuration.nix ];
+let
+  lib = inputs.nixpkgs.lib;
 
-    networking.hostName = "nixos";
+  sharedModules = with self.modules.nixos; [
+    user
+    nix
+    boot
+    locale
+    network
+    audio
+    packages
+    craftapps
+    display
+    fish
+    nvim
+    overlays
+    home-manager
+    st
+    dmenu
+  ];
+
+  mkHost =
+    hostModule: extraModules:
+    lib.nixosSystem {
+      modules = [ hostModule ] ++ sharedModules ++ extraModules;
+    };
+in
+{
+  flake.modules.nixos.vm = {
+    imports = [ ../hosts/vm/hardware-configuration.nix ];
+
+    networking.hostName = "vm";
 
     system.stateVersion = "26.05";
 
-    my.display.primaryOutput = "Virtual-1";
+    boot.kernelParams = [ "video=Virtual-1:1920x1080@60" ];
+
+    my.display = {
+      picom.enable = false;
+      primaryOutput = "Virtual-1";
+    };
   };
 
-  flake.nixosConfigurations.nixos = inputs.nixpkgs.lib.nixosSystem {
-    modules = with self.modules.nixos; [
-      host
-      user
-      nix
-      boot
-      locale
-      network
-      audio
-      virtualisation
-      packages
-      craftapps
-      display
-      fish
-      nvim
-      overlays
-      home-manager
-      st
-      dmenu
-    ];
+  flake.modules.nixos.machine = {
+    imports = [ ../hosts/machine/hardware-configuration.nix ];
+
+    networking.hostName = "machine";
+
+    system.stateVersion = "26.05";
+
+    my.display = {
+      picom.enable = true;
+      primaryOutput = null;
+    };
   };
+
+  flake.nixosConfigurations.vm = mkHost self.modules.nixos.vm [
+    self.modules.nixos.virtualisation
+    self.modules.nixos.home-manager-vm
+  ];
+
+  flake.nixosConfigurations.machine = mkHost self.modules.nixos.machine [ ];
 }

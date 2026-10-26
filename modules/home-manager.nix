@@ -25,10 +25,15 @@
         git
         gpg
         nvim
-        services
         ssh
         xdg
       ];
     };
+  };
+
+  flake.modules.nixos.home-manager-vm = {
+    home-manager.users.gabrielzschmitz.imports = with self.modules.homeManager; [
+      services
+    ];
   };
 }

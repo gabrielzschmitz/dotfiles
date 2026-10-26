@@ -26,9 +26,6 @@ in
     # Match the Limine palette on all virtual consoles.
     console.colors = palette;
 
-    # Force the QXL connector used by the guest to 1080p for fbcon and Ly.
-    boot.kernelParams = [ "video=Virtual-1:1920x1080@60" ];
-
     # Bootloader
     boot.loader = {
       systemd-boot.enable = false;
