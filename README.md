@@ -124,8 +124,10 @@ git fetch
 git diff HEAD..@{upstream}
 ```
 
-The `rebuild` and `reswitch` shell aliases are also configured in Home Manager
-to rebuild from `~/.dotfiles`.
+The `rebuild`, `reswitch`, `reupdate`, and `reclean` shell aliases are also
+configured in Home Manager. They resolve the running hostname when invoked, so
+they target `#vm` or `#machine` automatically. `reclean` removes old system
+generations, collects garbage, then switches the current host.
 
 ---
 
