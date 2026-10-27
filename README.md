@@ -56,9 +56,9 @@ nix-shell -p git
 
 The repository defines two hosts with separate hardware configurations:
 
-| Host      | Hardware                                                                                 |
-| --------- | ---------------------------------------------------------------------------------------- |
-| `vm`      | Current virtual machine (QEMU guest, SPICE, `Virtual-1`)                                 |
+| Host      | Hardware                                                                                  |
+| --------- | ----------------------------------------------------------------------------------------- |
+| `vm`      | Current virtual machine (QEMU guest, SPICE, `Virtual-1`)                                  |
 | `machine` | Acer Predator Helios Neo 16S AI (PHN16S-71), Intel Core Ultra 9 275HX, RTX 5070 Ti Mobile |
 
 `hosts/vm/hardware-configuration.nix` is committed for the VM.
@@ -134,26 +134,27 @@ generations, collects garbage, then switches the current host.
 
 ## Configuration
 
-| Component                                         | Purpose                                                          |
-| ------------------------------------------------- | ---------------------------------------------------------------- |
-| NixOS                                             | System configuration, services, and packages                     |
-| Nix Flakes                                        | Reproducible configuration inputs and outputs                    |
-| flake-parts                                       | Modular flake outputs and per-system settings                    |
-| import-tree                                       | Automatic module discovery under `modules/`                      |
-| Home Manager                                      | User packages, programs, and shell configuration                 |
-| `vm` host                                         | QEMU guest with SPICE agents; picom disabled by default         |
-| `machine` host                                    | Acer PHN16S-71 with PRIME offload, Steam, and DAMX               |
-| [dwm](https://github.com/gabrielzschmitz/dwm)     | Dynamic window manager                                           |
-| [st](https://github.com/gabrielzschmitz/st)       | Simple terminal                                                  |
-| [dmenu](https://github.com/gabrielzschmitz/dmenu) | Dynamic menu                                                     |
-| Ly                                                | TTY display manager                                              |
-| Limine                                            | Bootloader                                                       |
-| NVIDIA                                            | Open kernel modules, modesetting, and PRIME offload              |
-| Steam / Proton GE                                 | Games with `proton-ge-bin` and PRIME offload                     |
-| DAMX / Linuwu-Sense                               | Acer fan, thermal, battery, and keyboard controls (`machine`)    |
-| Neovim                                            | Editor and plugin configuration                                  |
-| Dunst                                             | Notification daemon                                              |
-| Zen Browser                                       | Browser with declarative profile, policies, and extensions       |
+| Component                                         | Purpose                                                       |
+| ------------------------------------------------- | ------------------------------------------------------------- |
+| NixOS                                             | System configuration, services, and packages                  |
+| Nix Flakes                                        | Reproducible configuration inputs and outputs                 |
+| flake-parts                                       | Modular flake outputs and per-system settings                 |
+| import-tree                                       | Automatic module discovery under `modules/`                   |
+| Home Manager                                      | User packages, programs, and shell configuration              |
+| `vm` host                                         | QEMU guest with SPICE agents; picom disabled by default       |
+| `machine` host                                    | Acer PHN16S-71 with PRIME offload, Steam, and DAMX            |
+| [dwm](https://github.com/gabrielzschmitz/dwm)     | Dynamic window manager                                        |
+| [st](https://github.com/gabrielzschmitz/st)       | Simple terminal                                               |
+| [dmenu](https://github.com/gabrielzschmitz/dmenu) | Dynamic menu                                                  |
+| nnn                                               | Nnn's Not Noice: Terminal file manager                        |
+| Ly                                                | TTY display manager                                           |
+| Limine                                            | Bootloader                                                    |
+| NVIDIA                                            | Open kernel modules, modesetting, and PRIME offload           |
+| Steam / Proton GE                                 | Games with `proton-ge-bin` and PRIME offload                  |
+| DAMX / Linuwu-Sense                               | Acer fan, thermal, battery, and keyboard controls (`machine`) |
+| Neovim                                            | Editor and plugin configuration                               |
+| Dunst                                             | Notification daemon                                           |
+| Zen Browser                                       | Browser with declarative profile, policies, and extensions    |
 
 ### Architecture
 
@@ -193,10 +194,10 @@ repository:
 
 The vendored sources are:
 
-| Component          | Version / revision     | Location                 |
-| ------------------ | ---------------------- | ------------------------ |
-| DAMX               | `1.0.2-h1`, `1f88341`  | `pkgs/damx/src`          |
-| Linuwu-Sense fork  | `d8ea437`              | `pkgs/linuwu-sense/src`  |
+| Component         | Version / revision    | Location                |
+| ----------------- | --------------------- | ----------------------- |
+| DAMX              | `1.0.2-h1`, `1f88341` | `pkgs/damx/src`         |
+| Linuwu-Sense fork | `d8ea437`             | `pkgs/linuwu-sense/src` |
 
 The driver source includes local DMI entries for `Predator PHN16S-71` and
 `Predator PHIN16S-71`, with the Predator v4/four-zone-keyboard quirk. Verify
