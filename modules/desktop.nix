@@ -15,6 +15,7 @@
         thunar
         zathura
         nsxiv
+        mpv
 
         # Creative
         inkscape

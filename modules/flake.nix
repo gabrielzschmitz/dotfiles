@@ -9,6 +9,8 @@
     formatter = pkgs.nixfmt;
 
     packages = {
+      advcpmv = pkgs.callPackage ../pkgs/advcpmv { };
+
       damx = pkgs.callPackage ../pkgs/damx { };
 
       damx-daemon = pkgs.callPackage ../pkgs/damx/daemon.nix { };

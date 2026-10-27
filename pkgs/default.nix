@@ -7,4 +7,6 @@ final: prev: {
   damx = final.callPackage ./damx { };
 
   damx-daemon = final.callPackage ./damx/daemon.nix { };
+
+  advcpmv = final.callPackage ./advcpmv { };
 }

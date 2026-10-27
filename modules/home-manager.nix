@@ -25,6 +25,7 @@
         git
         gpg
         nvim
+        nnn
         ssh
         xdg
       ];

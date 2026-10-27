@@ -1,0 +1,68 @@
+diff --git a/src/nnn.c b/src/nnn.c
+index e5315c1..a3a78f1 100644
+--- a/src/nnn.c
++++ b/src/nnn.c
+@@ -5057,6 +5057,21 @@ static void setcfg(settings newcfg)
+ 	filterfn = cfg.regex ? &visible_re : (cfg.fuzzy ? &visible_fuzzy : &visible_str);
+ }
+ 
++/* Fixed roots for contexts 6-8, configured through the environment. */
++static const char *fixed_ctx_path(int ctx)
++{
++	switch (ctx) {
++	case 5:
++		return getenv("NNN_CTX6");
++	case 6:
++		return getenv("NNN_CTX7");
++	case 7:
++		return getenv("NNN_CTX8");
++	default:
++		return NULL;
++	}
++}
++
+ static void savecurctx(char *path, char *curname, int nextctx)
+ {
+ 	settings tmpcfg = cfg;
+@@ -9038,11 +9053,31 @@ nochange:
+ 		case SEL_CTX5:
+ 		case SEL_CTX6:
+ 		case SEL_CTX7:
+-		case SEL_CTX8:
++		case SEL_CTX8: {
++			const char *fixed = NULL;
++
++			if (sel >= SEL_CTX6)
++				fixed = fixed_ctx_path(sel - SEL_CTX1);
++
+ 			r = handle_context_switch(sel);
++			if (r < 0 && fixed && *fixed)
++				r = sel - SEL_CTX1; /* Re-enter a fixed context at its root */
+ 			if (r < 0)
+ 				continue;
+-			savecurctx(path, ndents ? pdents[cur].name : NULL, r);
++
++			if (fixed && *fixed) {
++				if (r == cfg.curctx) {
++					/* Re-enter the current fixed context at its root. */
++					xstrsncpy(g_ctx[r].c_path, fixed, PATH_MAX);
++					g_ctx[r].c_last[0] = g_ctx[r].c_name[0] = '\0';
++					g_ctx[r].c_fltr[0] = g_ctx[r].c_fltr[1] = '\0';
++					g_ctx[r].c_cfg.ctxactive = 1;
++				} else {
++					g_ctx[r].c_cfg.ctxactive = 0; /* Rebuild from the fixed root */
++					savecurctx((char *)fixed, NULL, r);
++				}
++			} else
++				savecurctx(path, ndents ? pdents[cur].name : NULL, r);
+ 
+ 			/* Reset the pointers */
+ 			path = g_ctx[r].c_path;
+@@ -9056,6 +9091,7 @@ nochange:
+ 				watch = TRUE;
+ 
+ 			goto begin;
++		}
+ 		case SEL_MARK:
+ 			free(mark);
+ 			mark = xstrdup(path);
