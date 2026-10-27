@@ -54,7 +54,7 @@
           reclean = "sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +1 && sudo nix-collect-garbage -d && sudo nixos-rebuild switch --flake ${flake}";
         };
 
-        interactiveShellInit = ''
+        interactiveShellInit = /* bash */ ''
           set -gx NIX_BUILD_SHELL ${nixShellFish}
 
           if command -q gpgconf
