@@ -1,0 +1,71 @@
+--- a/plugins/preview-tui
++++ b/plugins/preview-tui
+@@ -146,6 +146,17 @@
+     return 1
+ }
+ 
++# Keep the FIFO reader responsive: preview generation runs in a detached job
++# and a newer selection cancels the old one instead of blocking nnn's FIFO.
++PREVIEWJOB=""
++kill_preview_job() {
++    if [ -n "${PREVIEWJOB:-}" ]; then
++        pkill -TERM -P "$PREVIEWJOB" 2>/dev/null
++        kill "$PREVIEWJOB" >/dev/null 2>&1
++        PREVIEWJOB=""
++    fi
++}
++
+ start_preview() {
+     if [ -e "${TMUX%%,*}" ] && tmux -V | grep -q '[ -][3456789]\.'; then
+         NNN_TERMINAL=tmux
+@@ -292,7 +303,7 @@
+         image/jpeg) image_preview "$cols" "$lines" "$1" ;;
+         image/gif) generate_preview "$cols" "$lines" "$1" "gif" ;;
+         image/vnd.djvu) generate_preview "$cols" "$lines" "$1" "djvu" ;;
+-        image/*) generate_preview "$cols" "$lines" "$1" "image" ;;
++        image/*) image_preview "$cols" "$lines" "$1" ;;
+         video/*) generate_preview "$cols" "$lines" "$1" "video" ;;
+         audio/*) generate_preview "$cols" "$lines" "$1" "audio" ;;
+         application/font*|application/*opentype|font/*) generate_preview "$cols" "$lines" "$1" "font" ;;
+@@ -504,24 +515,29 @@
+ winch_handler() {
+     clear
+     pidkill "$PREVIEWPID"
++    kill_preview_job
+     if [ -p "$FIFO_UEBERZUG" ]; then
+         pkill -f "tail --follow $FIFO_UEBERZUG"
+         tail --follow "$FIFO_UEBERZUG" | ueberzug layer --silent --parser json &
+     fi
+-    preview_file "$(cat "$CURSEL")"
++    preview_file "$(cat "$CURSEL")" &
++    PREVIEWJOB=$!
+ }
+ 
+ preview_fifo() {
+     while read -r selection; do
+         if [ -n "$selection" ]; then
+             pidkill "$PREVIEWPID"
++            kill_preview_job
+             [ -p "$FIFO_UEBERZUG" ] && ueberzug_remove
+             [ -n "$KITTY_LISTEN_ON" ] && kitty +kitten icat --clear --stdin=no >/dev/tty 2>/dev/null
+             [ "$selection" = "close" ] && break
+-            preview_file "$selection"
++            preview_file "$selection" &
++            PREVIEWJOB=$!
+             printf "%s" "$selection" > "$CURSEL"
+         fi
+     done < "$NNN_FIFO"
++    kill_preview_job
+     sleep 0.1 # make sure potential preview by winch_handler is killed
+     pkill -P "$$"
+ }
+@@ -532,7 +548,8 @@
+         tail --follow "$FIFO_UEBERZUG" | ueberzug layer --silent --parser json &
+     fi
+ 
+-    preview_file "$PWD/$1"
++    preview_file "$PWD/$1" &
++    PREVIEWJOB=$!
+     preview_fifo & WAITPID=$!
+     printf "%s" "$!" > "$FIFOPID"
+     printf "%s" "$PWD/$1" > "$CURSEL"

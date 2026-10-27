@@ -21,13 +21,17 @@
         # .iconlookup emits an invalid SGR parameter (;10m) for regular files
         # and executables, which makes st print a stream of erresc errors in
         # the preview pane.  Use the intended bold attribute instead.
-        postPatch = (old.postPatch or "") + ''
+        postPatch = (old.postPatch or "") + /* bash */ ''
           substituteInPlace plugins/.iconlookup \
             --replace-fail 'ent, "10")' 'ent, "1")'
+
+          # Keep the preview FIFO reader responsive and route all regular
+          # images through the capped previewer below.
+          patch -p1 < ${../pkgs/nnn-preview-tui-async.patch}
         '';
       });
 
-      tmuxConf = pkgs.writeText "nnn-tmux.conf" ''
+      tmuxConf = pkgs.writeText "nnn-tmux.conf" /* bash */ ''
         set-option -g allow-passthrough on
         set-option -g default-terminal "tmux-256color"
         set-option -g escape-time 10
@@ -76,6 +80,8 @@
           -e "NNN_CTX7=''${NNN_CTX7-}" \
           -e "NNN_CTX8=''${NNN_CTX8-}" \
           -e "NNN_PREVIEWDIR=''${NNN_PREVIEWDIR-}" \
+          -e "NNN_PREVIEWWIDTH=''${NNN_PREVIEWWIDTH-}" \
+          -e "NNN_PREVIEWHEIGHT=''${NNN_PREVIEWHEIGHT-}" \
           -e "NNN_PREVIEWIMGPROG=''${NNN_PREVIEWIMGPROG-}" \
           -e "NNN_PREVIEWVIDEO=''${NNN_PREVIEWVIDEO-}" \
           -e "NNN_SPLITSIZE=''${NNN_SPLITSIZE-}" \
@@ -98,6 +104,78 @@
         # transient line so returning from fm leaves a clean shell prompt.
         printf '\033[1A\033[2K\r' >/dev/tty || true
         exit "$status"
+      '';
+
+      # chafa otherwise decodes the full source image on every cursor move.
+      # Downscale to a screen-sized thumbnail and cache it so very large
+      # images cannot stall the preview pane.
+      #
+      # Use character-cell output instead of the kitty graphics protocol for
+      # live previews.  Kitty graphics transport a full RGBA bitmap (roughly
+      # 2 MB for a 70x40 pane) through tmux for every hovered image, which
+      # makes cursor movement feel laggy even when the thumbnail is cached.
+      # Colored block output is only a few KB and renders immediately; `i`
+      # still opens the full image in nsxiv.
+      nnnImagePreview = pkgs.writeShellScript "nnn-preview-img" ''
+        set -u
+
+        src=$1
+        width="''${NNN_PREVIEWWIDTH:-1600}"
+        height="''${NNN_PREVIEWHEIGHT:-1000}"
+        case "$width" in
+          ""|*[!0-9]*) width=1600 ;;
+        esac
+        case "$height" in
+          ""|*[!0-9]*) height=1000 ;;
+        esac
+
+        cache="''${XDG_CACHE_HOME:-$HOME/.cache}/nnn/image-preview"
+        mkdir -p "$cache"
+
+        stamp=$(${pkgs.coreutils}/bin/stat -c '%Y:%s' -- "$src" 2>/dev/null || printf '0:0')
+        key=$(printf '%s\n%s\n%s\n%s\n' "$src" "$stamp" "$width" "$height" |
+          ${pkgs.coreutils}/bin/sha256sum |
+          ${pkgs.coreutils}/bin/cut -d' ' -f1)
+        thumb="$cache/$key.png"
+
+        if [ ! -s "$thumb" ] || [ "$src" -nt "$thumb" ]; then
+          tmp="$cache/.$key.$$.png"
+          # libvips can use JPEG shrink-on-load, which is much faster than a
+          # full decode for large photos.  Fall back to ImageMagick for
+          # formats libvips cannot read.
+          if ${pkgs.vips}/bin/vipsthumbnail "$src" \
+            --size "''${width}x''${height}" --output "$tmp" \
+            --vips-concurrency=1 2>/dev/null &&
+            [ -s "$tmp" ]; then
+            mv -f "$tmp" "$thumb"
+          elif ${pkgs.imagemagick}/bin/magick "$src[0]" -auto-orient \
+            -thumbnail "''${width}x''${height}>" -strip "png:$tmp" 2>/dev/null &&
+            [ -s "$tmp" ]; then
+            mv -f "$tmp" "$thumb"
+          else
+            rm -f "$tmp"
+          fi
+        fi
+
+        if [ -s "$thumb" ]; then
+          target=$thumb
+        else
+          target=$src
+        fi
+
+        cols=$(${pkgs.ncurses}/bin/tput cols 2>/dev/null || printf '100')
+        lines=$(${pkgs.ncurses}/bin/tput lines 2>/dev/null || printf '30')
+        case "$cols" in ""|*[!0-9]*) cols=100 ;; esac
+        case "$lines" in ""|*[!0-9]*) lines=30 ;; esac
+
+        exec ${pkgs.chafa}/bin/chafa \
+          --format=symbols \
+          --colors=full \
+          --symbols=block \
+          --probe=off \
+          --size="''${cols}x''${lines}" \
+          --scale=max \
+          -- "$target"
       '';
 
       nnnPackage = pkgs.stdenv.mkDerivation {
@@ -201,13 +279,15 @@
         NNN_CTX8 = "${home}/.dotfiles";
 
         # preview-tui uses a tmux split inside nnn's st window.
-        # Disable chafa's terminal capability probe: tmux/st never answers it,
-        # so every image/PDF preview would otherwise wait for a 5s timeout.
-        NNN_PREVIEWIMGPROG = "chafa --format=kitty --passthrough=tmux --animate=off --probe=off --";
+        # The wrapper caps and caches a screen-sized thumbnail before chafa,
+        # so huge source images do not stall preview generation.
+        NNN_PREVIEWIMGPROG = "${nnnImagePreview}";
+        NNN_PREVIEWWIDTH = "1600";
+        NNN_PREVIEWHEIGHT = "1000";
         # kitty graphics from mpv can't be wrapped for tmux passthrough, so
         # use mpv's true-color terminal output for video inside the split.
         NNN_PREVIEWVIDEO = "tct";
-        NNN_SPLITSIZE = "40";
+        NNN_SPLITSIZE = "45";
         NNN_PREVIEWDIR = "${config.xdg.cacheHome}/nnn/previews";
         NNN_ICONLOOKUP = "1";
 
