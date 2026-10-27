@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792971506,
-        "narHash": "sha256-fHffqxih2iqJYFyj0fZV+GgD7k5W6bGST6Wx4X7Uwdg=",
+        "lastModified": 1793071568,
+        "narHash": "sha256-3sXlfUKXGpwCaaYynxTJoBSZlJ5O1MPsD86WF9Kj5rA=",
         "owner": "gabrielzschmitz",
         "repo": "dmenu",
-        "rev": "d794d8d6e04e0c9d93fc015d570442e3aeb6c5b7",
+        "rev": "07a7ba93b0a31c12ab1fb16ba5e2d1e4dc0cad3e",
         "type": "github"
       },
       "original": {
@@ -27,11 +27,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792987134,
-        "narHash": "sha256-XLc9AsigLd3o0XEXl2qyI1D7xL6lumfJ62vp8xVDP9o=",
+        "lastModified": 1793071507,
+        "narHash": "sha256-0cQoUf3rAEUXtGjOz3i6IJx0Cn5tiTpx6UpcGrsWWHA=",
         "owner": "gabrielzschmitz",
         "repo": "dwm",
-        "rev": "092acb484c3438b42eb47c66e8ba101f8a0352d3",
+        "rev": "905c935e4564b6ea48d1f2e3a6994d02f62d7e90",
         "type": "github"
       },
       "original": {
@@ -48,11 +48,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1792945979,
-        "narHash": "sha256-tcqsR1GxSr7Ge3ZrQ0DFoSkCGt1FbUMwoFcN9DpmRL4=",
+        "lastModified": 1793073767,
+        "narHash": "sha256-zL/9I57Uk9YZ3cRK7wqesMQ5DqzGAg+Flqc32XrSh4A=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "90468e8bfea09d8b7f5184a410dfcb209ccf6bec",
+        "rev": "4e23b00003acb1e90bec84998185cd73e4d7487b",
         "type": "gitlab"
       },
       "original": {
@@ -87,11 +87,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792896866,
-        "narHash": "sha256-/0tELNnhdSnP+bHSdWiEe6KpfSwi6WrTnT9cm/jNkjA=",
+        "lastModified": 1793033486,
+        "narHash": "sha256-fXVURa0+CSCgaxLt8tmPNJq2U+fGYOwbk5j2YUe7kSc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "c216bf5a1f173b0481bd5c8c489ebe5595ecc68c",
+        "rev": "7db163b2aee7e410e396b48aed02f646d742b9b8",
         "type": "github"
       },
       "original": {
@@ -122,11 +122,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792819661,
-        "narHash": "sha256-UVng2KQKCfAWmc01rq5jDJqJpmlxchdWzvWYYGMw8Wg=",
+        "lastModified": 1792992816,
+        "narHash": "sha256-5Qf+LQcXnKjywUS/yz25jbsjpXPT8Xhr40Nr6r9XTHI=",
         "owner": "olafkfreund",
         "repo": "nix-craftapps",
-        "rev": "569a0557d66ba480bfe8959650825b41edfa0983",
+        "rev": "09dae1c49ecc8d99c5740a42c07fd26239de2173",
         "type": "github"
       },
       "original": {
@@ -187,11 +187,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792742985,
-        "narHash": "sha256-9PwXtpcqxwJfKdkPGoBuvCihnC7EZXHaeb+Jp5iNjno=",
+        "lastModified": 1793071611,
+        "narHash": "sha256-XF1SEeF24ebloe4KmUffqJAfms0JFOpsCQrQrL6UTeQ=",
         "owner": "gabrielzschmitz",
         "repo": "st",
-        "rev": "2b82dae5649721125a44bb6572e4e029a42aafbe",
+        "rev": "3676726f154176b0f67e0261cc3498b6737ff31d",
         "type": "github"
       },
       "original": {
@@ -210,11 +210,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792963762,
-        "narHash": "sha256-ThRNX0+T2Gb3ZD0Xf+/R3wJdL93/mW80ubMnLjZelTY=",
+        "lastModified": 1793063583,
+        "narHash": "sha256-avFKNlbqAAdwJtmB5gbB5W/1fQz0ftIH4ET6FQcpXu0=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "ed68d814d6cf2e221ba43d84f1e32429f5e2786f",
+        "rev": "cfb35e5835c4ca6faa811ba38a94f755ecfcb393",
         "type": "github"
       },
       "original": {
