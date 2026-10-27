@@ -28,6 +28,7 @@
         nnn
         ssh
         xdg
+        gui-theme
       ];
     };
   };

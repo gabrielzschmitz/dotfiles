@@ -12,7 +12,7 @@
         maim
 
         # File-related
-        thunar
+        pcmanfm
         zathura
         nsxiv
         mpv
