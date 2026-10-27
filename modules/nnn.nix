@@ -37,6 +37,11 @@
         set-option -g escape-time 10
         set-option -g remain-on-exit off
         set-option -g status off
+
+        set-option -g pane-border-lines single
+        set-option -g pane-border-style "fg=#61afef"
+        set-option -g pane-active-border-style "fg=#61afef"
+        set-option -g pane-border-status off
       '';
 
       # Run nnn inside a private tmux session so preview-tui can use a tmux
@@ -163,17 +168,15 @@
           target=$src
         fi
 
-        cols=$(${pkgs.ncurses}/bin/tput cols 2>/dev/null || printf '100')
-        lines=$(${pkgs.ncurses}/bin/tput lines 2>/dev/null || printf '30')
-        case "$cols" in ""|*[!0-9]*) cols=100 ;; esac
-        case "$lines" in ""|*[!0-9]*) lines=30 ;; esac
-
         exec ${pkgs.chafa}/bin/chafa \
           --format=symbols \
           --colors=full \
-          --symbols=block \
           --probe=off \
-          --size="''${cols}x''${lines}" \
+          --animate=on \
+          --dither=bayer \
+          --dither-grain=4 \
+          --dither-intensity=0.5 \
+          -p on \
           --scale=max \
           -- "$target"
       '';
@@ -266,7 +269,7 @@
       };
 
       home.sessionVariables = {
-        # OneDark ANSI palette (the st/Xresources colors are OneDark).
+        # OneDark palette.
         NNN_FCOLORS = "0b0b0c0a000d0e0809030d09";
         NNN_COLORS = "42356174";
 
@@ -287,14 +290,14 @@
         # kitty graphics from mpv can't be wrapped for tmux passthrough, so
         # use mpv's true-color terminal output for video inside the split.
         NNN_PREVIEWVIDEO = "tct";
-        NNN_SPLITSIZE = "45";
+        NNN_SPLITSIZE = "50";
         NNN_PREVIEWDIR = "${config.xdg.cacheHome}/nnn/previews";
         NNN_ICONLOOKUP = "1";
 
         # Keep bat/pager output in the terminal's OneDark ANSI palette.
-        NNN_BATTHEME = "ansi";
+        NNN_BATTHEME = "base16";
         NNN_BATSTYLE = "numbers,header,changes";
-        BAT_THEME = "ansi";
+        BAT_THEME = "base16";
         BAT_STYLE = "numbers,header,changes";
       };
 
