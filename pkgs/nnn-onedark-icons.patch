@@ -1,0 +1,51 @@
+--- a/src/icons.h	2026-10-27 01:27:46.358444858 -0300
++++ b/src/icons.h	2026-10-27 01:27:46.376842727 -0300
+@@ -135,27 +135,27 @@
+  * Color names: https://www.ditig.com/256-colors-cheat-sheet
+  */
+ #define COLOR_LIST \
+-	COLOR_X(COLOR_VIDEO,         45)  /* Turquoise2 */ \
+-	COLOR_X(COLOR_VIDEO1,       226)  /* Yellow1 */ \
+-	COLOR_X(COLOR_AUDIO,        220)  /* Gold1 */ \
+-	COLOR_X(COLOR_AUDIO1,       205)  /* HotPink */ \
+-	COLOR_X(COLOR_IMAGE,         82)  /* Chartreuse2 */ \
+-	COLOR_X(COLOR_DOCS,         202)  /* OrangeRed1 */ \
+-	COLOR_X(COLOR_ARCHIVE,      209)  /* Salmon1 */ \
+-	COLOR_X(COLOR_C,             81)  /* SteelBlue1 */ \
+-	COLOR_X(COLOR_JAVA,          32)  /* DeepSkyBlue3 */ \
+-	COLOR_X(COLOR_JAVASCRIPT,    47)  /* SpringGreen2 */ \
+-	COLOR_X(COLOR_REACT,         39)  /* DeepSkyBlue1 */ \
+-	COLOR_X(COLOR_CSS,          199)  /* DeepPink1 */ \
+-	COLOR_X(COLOR_PYTHON,       227)  /* LightGoldenrod1 */ \
+-	COLOR_X(COLOR_LUA,           19)  /* Blue3 */ \
+-	COLOR_X(COLOR_DOCUMENT,      15)  /* White */ \
+-	COLOR_X(COLOR_FSHARP,        31)  /* DeepSkyBlue3 */ \
+-	COLOR_X(COLOR_RUBY,         160)  /* Red3 */ \
+-	COLOR_X(COLOR_SCALA,        196)  /* Red1 */ \
+-	COLOR_X(COLOR_SHELL,         47)  /* SpringGreen2 */ \
+-	COLOR_X(COLOR_VIM,           28)  /* Green4 */ \
+-	COLOR_X(COLOR_ELIXIR,       104)  /* MediumPurple */ \
++	COLOR_X(COLOR_VIDEO,         13)  /* OneDark magenta */ \
++	COLOR_X(COLOR_VIDEO1,       11)  /* OneDark yellow */ \
++	COLOR_X(COLOR_AUDIO,         3)  /* OneDark yellow */ \
++	COLOR_X(COLOR_AUDIO1,       13)  /* OneDark magenta */ \
++	COLOR_X(COLOR_IMAGE,        10)  /* OneDark green */ \
++	COLOR_X(COLOR_DOCS,          1)  /* OneDark red */ \
++	COLOR_X(COLOR_ARCHIVE,       3)  /* OneDark orange/yellow */ \
++	COLOR_X(COLOR_C,             6)  /* OneDark cyan */ \
++	COLOR_X(COLOR_JAVA,          1)  /* OneDark red */ \
++	COLOR_X(COLOR_JAVASCRIPT,    3)  /* OneDark yellow */ \
++	COLOR_X(COLOR_REACT,         6)  /* OneDark cyan */ \
++	COLOR_X(COLOR_CSS,           6)  /* OneDark cyan */ \
++	COLOR_X(COLOR_PYTHON,        4)  /* OneDark blue */ \
++	COLOR_X(COLOR_LUA,           4)  /* OneDark blue */ \
++	COLOR_X(COLOR_DOCUMENT,     15)  /* OneDark foreground */ \
++	COLOR_X(COLOR_FSHARP,       13)  /* OneDark magenta */ \
++	COLOR_X(COLOR_RUBY,          1)  /* OneDark red */ \
++	COLOR_X(COLOR_SCALA,         1)  /* OneDark red */ \
++	COLOR_X(COLOR_SHELL,         2)  /* OneDark green */ \
++	COLOR_X(COLOR_VIM,           2)  /* OneDark green */ \
++	COLOR_X(COLOR_ELIXIR,       13)  /* OneDark magenta */ \
+ 
+ /* X-Macro: https://en.wikipedia.org/wiki/X_Macro */
+ #define COLOR_X(N, V) N = (V),

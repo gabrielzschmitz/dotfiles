@@ -28,6 +28,14 @@
     {
       home.sessionVariables.NIX_BUILD_SHELL = "${nixShellFish}";
 
+      # Home Manager exports this guard from the shell that started the
+      # graphical session.  Child shells then skip the current generation's
+      # session variables and keep stale values after a rebuild.  Clear it
+      # before config.fish sources hm-session-vars.fish.
+      xdg.configFile."fish/conf.d/00-hm-session-vars.fish".text = ''
+        set -e __HM_SESS_VARS_SOURCED
+      '';
+
       # Fish
       programs.fish = {
         enable = true;
@@ -77,6 +85,9 @@
           set -g fish_cursor_insert line
           set -g fish_cursor_replace_one underscore
           set -g fish_cursor_visual block
+
+          # Do not pass Home Manager's session-vars guard to graphical apps.
+          set -e __HM_SESS_VARS_SOURCED
         '';
 
         functions = {

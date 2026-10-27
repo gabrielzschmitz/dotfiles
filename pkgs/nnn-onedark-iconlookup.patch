@@ -1,0 +1,55 @@
+--- a/plugins/.iconlookup	2026-10-27 01:26:36.036019362 -0300
++++ b/plugins/.iconlookup	2026-10-27 01:26:36.052946555 -0300
+@@ -19,29 +19,29 @@
+ awk 'BEGIN {
+ # Set your ANSI colorscheme below (https://en.wikipedia.org/wiki/ANSI_escape_code#Colors).
+ # Default uses standard nnn icon colors, 8 and 24-bit nord themes are commented out.
+-    colordepth=8      #colordepth=8        #colordepth=24
+-    color_dirtxt=39   #color_dirtxt=111    #color_dirtxt="129;161;193"
+-    color_filetxt=15  #color_filetxt=111   #color_filetxt="129;161;193"
+-    color_default=39  #color_default=111   #color_default="129;161;193"
+-    color_video=93    #color_video=110     #color_video="136;192;208"
+-    color_audio=220   #color_audio=150     #color_audio="163;190;140"
+-    color_image=82    #color_image=150     #color_image="163;190;140"
+-    color_docs=202    #color_docs=173      #color_docs="208;135;112"
+-    color_archive=209 #color_archive=179   #color_archive="235;203;139"
+-    color_c=81        #color_c=150         #color_c="163;190;140"
+-    color_elixir=104  #color_elixir=109    #color_elixir="143;188;187"
+-    color_java=32     #color_java=139      #color_java="180;142;173"
+-    color_js=47       #color_js=109        #color_js="143;188;187"
+-    color_react=39    #color_react=111     #color_react="129;161;193"
+-    color_css=199     #color_css=110       #color_css="136;192;208"
+-    color_python=227  #color_python=68     #color_python="94;129;172"
+-    color_lua=19      #color_lua=167       #color_lua="191;97;106"
+-    color_document=15 #color_document=173  #color_document="208;135;112"
+-    color_fsharp=31   #color_fsharp=179    #color_fsharp="180;142;173"
+-    color_ruby=160    #color_ruby=150      #color_ruby="163;190;140"
+-    color_scala=196   #color_scala=139     #color_scala="143;188;187"
+-    color_shell=47    #color_shell=109     #color_shell="143;188;187"
+-    color_vim=28      #color_vim=109       #color_vim="143;188;187"
++    colordepth=24
++    color_dirtxt="97;175;239"     # OneDark blue
++    color_filetxt="171;178;191"   # OneDark foreground
++    color_default="97;175;239"    # OneDark blue
++    color_video="198;120;221"     # OneDark magenta
++    color_audio="229;192;123"     # OneDark yellow
++    color_image="152;195;121"     # OneDark green
++    color_docs="209;154;102"      # OneDark orange
++    color_archive="209;154;102"   # OneDark orange
++    color_c="86;182;194"          # OneDark cyan
++    color_elixir="198;120;221"    # OneDark magenta
++    color_java="224;108;117"      # OneDark red
++    color_js="229;192;123"        # OneDark yellow
++    color_react="86;182;194"      # OneDark cyan
++    color_css="86;182;194"        # OneDark cyan
++    color_python="97;175;239"     # OneDark blue
++    color_lua="97;175;239"        # OneDark blue
++    color_document="171;178;191"  # OneDark foreground
++    color_fsharp="198;120;221"    # OneDark magenta
++    color_ruby="224;108;117"      # OneDark red
++    color_scala="224;108;117"     # OneDark red
++    color_shell="152;195;121"     # OneDark green
++    color_vim="152;195;121"       # OneDark green
+ 
+ # icons[][1] contains icon and icons[][2] contains color
+     icons["directory"][1] = ""; icons["directory"][2] = color_default
