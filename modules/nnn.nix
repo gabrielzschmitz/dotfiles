@@ -34,11 +34,13 @@
       tmuxConf = pkgs.writeText "nnn-tmux.conf" /* bash */ ''
         set-option -g allow-passthrough on
         set-option -g default-terminal "tmux-256color"
+        set-option -g mouse on
         set-option -g escape-time 10
         set-option -g remain-on-exit off
         set-option -g status off
+        set-option -g pane-scrollbars off
 
-        set-option -g pane-border-lines single
+        set-option -g pane-border-lines double
         set-option -g pane-border-style "fg=#61afef"
         set-option -g pane-active-border-style "fg=#61afef"
         set-option -g pane-border-status off
@@ -302,8 +304,8 @@
       };
 
       programs.fish.shellAliases = {
-        fm = "nnn -ex";
-        N = "sudo -E nnn -dH";
+        fm = "n -exdH";
+        N = "sudo -E n -dH";
       };
     };
 }
