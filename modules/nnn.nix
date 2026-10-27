@@ -31,6 +31,7 @@
         set-option -g allow-passthrough on
         set-option -g default-terminal "tmux-256color"
         set-option -g escape-time 10
+        set-option -g remain-on-exit off
         set-option -g status off
       '';
 
@@ -44,7 +45,8 @@
           exec ${baseNnn}/bin/nnn "$@"
         fi
 
-        exec ${pkgs.tmux}/bin/tmux \
+        status=0
+        ${pkgs.tmux}/bin/tmux \
           -L nnn \
           -f ${tmuxConf} \
           new-session \
@@ -76,12 +78,26 @@
           -e "NNN_PREVIEWDIR=''${NNN_PREVIEWDIR-}" \
           -e "NNN_PREVIEWIMGPROG=''${NNN_PREVIEWIMGPROG-}" \
           -e "NNN_PREVIEWVIDEO=''${NNN_PREVIEWVIDEO-}" \
+          -e "NNN_SPLITSIZE=''${NNN_SPLITSIZE-}" \
           -e "NNN_ICONLOOKUP=''${NNN_ICONLOOKUP-}" \
           -e "NNN_BATTHEME=''${NNN_BATTHEME-}" \
           -e "NNN_BATSTYLE=''${NNN_BATSTYLE-}" \
           -e "BAT_THEME=''${BAT_THEME-}" \
           -e "BAT_STYLE=''${BAT_STYLE-}" \
-          -- ${baseNnn}/bin/nnn "$@"
+          -- ${pkgs.bash}/bin/bash -c '
+            session=$(${pkgs.tmux}/bin/tmux display-message -p "#S")
+            cleanup() {
+              trap - EXIT
+              ${pkgs.tmux}/bin/tmux kill-session -t "$session" >/dev/null 2>&1 || true
+            }
+            trap cleanup EXIT
+            ${baseNnn}/bin/nnn "$@"
+          ' nnn "$@" || status=$?
+
+        # tmux prints "[exited]" after its last session ends.  Erase that
+        # transient line so returning from fm leaves a clean shell prompt.
+        printf '\033[1A\033[2K\r' >/dev/tty || true
+        exit "$status"
       '';
 
       nnnPackage = pkgs.stdenv.mkDerivation {
@@ -191,6 +207,7 @@
         # kitty graphics from mpv can't be wrapped for tmux passthrough, so
         # use mpv's true-color terminal output for video inside the split.
         NNN_PREVIEWVIDEO = "tct";
+        NNN_SPLITSIZE = "40";
         NNN_PREVIEWDIR = "${config.xdg.cacheHome}/nnn/previews";
         NNN_ICONLOOKUP = "1";
 
