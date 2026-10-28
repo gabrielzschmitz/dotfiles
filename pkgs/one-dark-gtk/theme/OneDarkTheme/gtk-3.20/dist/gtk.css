@@ -4446,7 +4446,7 @@ expander arrow {
   .image:hover {
     color: alpha(currentColor,0.9); }
   .image:selected, .image:selected:hover {
-    color: #1e222a; }
+    color: #6da4cd; }
 
 /****************
  ! Floating bar *
@@ -7069,7 +7069,7 @@ switch {
     switch:disabled slider {
       background-color: #1e222a; }
   list row:selected switch {
-    background-color: #1e222a;
+    background-color: #6da4cd;
     color: mix(#1e222a,#1e222a,0.5); }
     list row:selected switch slider {
       background-color: mix(mix(#1e222a,#1e222a,0.5),#1e222a,0.4); }
@@ -7725,7 +7725,7 @@ paned.titlebar {
   .nautilus-desktop:active, .nautilus-desktop:backdrop:active, .nautilus-desktop *:active, .nautilus-desktop *:backdrop:active {
     color: #b3b9b8; }
   .nautilus-desktop:selected, .nautilus-desktop:backdrop:selected, .nautilus-desktop *:selected, .nautilus-desktop *:backdrop:selected {
-    color: #1e222a; }
+    color: #6da4cd; }
   .nautilus-desktop:active, .nautilus-desktop:hover, .nautilus-desktop:selected, .nautilus-desktop:backdrop:active, .nautilus-desktop:backdrop:hover, .nautilus-desktop:backdrop:selected, .nautilus-desktop *:active, .nautilus-desktop *:hover, .nautilus-desktop *:selected, .nautilus-desktop *:backdrop:active, .nautilus-desktop *:backdrop:hover, .nautilus-desktop *:backdrop:selected {
     text-shadow: none; }
 
@@ -7785,7 +7785,7 @@ paned.titlebar {
   .nemo-desktop:active, .nemo-desktop:backdrop:active, .nemo-desktop *:active, .nemo-desktop *:backdrop:active {
     color: #b3b9b8; }
   .nemo-desktop:selected, .nemo-desktop:backdrop:selected, .nemo-desktop *:selected, .nemo-desktop *:backdrop:selected {
-    color: #1e222a; }
+    color: #6da4cd; }
   .nemo-desktop:active, .nemo-desktop:hover, .nemo-desktop:selected, .nemo-desktop:backdrop:active, .nemo-desktop:backdrop:hover, .nemo-desktop:backdrop:selected, .nemo-desktop *:active, .nemo-desktop *:hover, .nemo-desktop *:selected, .nemo-desktop *:backdrop:active, .nemo-desktop *:backdrop:hover, .nemo-desktop *:backdrop:selected {
     text-shadow: none; }
 
@@ -7859,8 +7859,8 @@ paned.titlebar {
       -NemoPlacesTreeView-disk-full-bottom-padding: 0;
       -NemoPlacesTreeView-disk-full-max-length: 75px; }
       .nemo-window .sidebar .nemo-places-sidebar .view:selected, .nemo-window .sidebar .nemo-places-sidebar iconview:selected {
-        -NemoPlacesTreeView-disk-full-bg-color: #1e222a;
-        -NemoPlacesTreeView-disk-full-fg-color: #9cc1dd; }
+        -NemoPlacesTreeView-disk-full-bg-color: #6da4cd;
+        -NemoPlacesTreeView-disk-full-fg-color: #1e222a; }
     .nemo-window .sidebar + separator + box .primary-toolbar {
       background-color: #1d2129;
       background-image: none;

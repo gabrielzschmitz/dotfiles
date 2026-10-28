@@ -2606,7 +2606,7 @@ GtkExpander {
   .image:hover {
     color: alpha(currentColor,0.9); }
   .image:selected, .image:selected:hover {
-    color: #1e222a; }
+    color: #6da4cd; }
 
 /****************
  ! Floating bar *
@@ -5481,7 +5481,7 @@ GtkTreeView {
     background-color: mix(#1e222a,#1e222a,0.5);
     border: 1px solid #181b22; }
     GtkTreeView .trough:selected:focus, GtkTreeView .trough:selected {
-      background-color: #1e222a;
+      background-color: #6da4cd;
       border: 1px solid mix(#6da4cd,#1e222a,0.3);
       color: #b3b9b8; }
     GtkTreeView .trough:insensitive:insensitive {
@@ -5771,7 +5771,7 @@ GeditFileBrowserWidget .toolbar {
   .nautilus-desktop.nautilus-canvas-item:active {
     color: #b3b9b8; }
   .nautilus-desktop.nautilus-canvas-item:selected {
-    color: #1e222a; }
+    color: #6da4cd; }
   .nautilus-desktop.nautilus-canvas-item:active, .nautilus-desktop.nautilus-canvas-item:hover, .nautilus-desktop.nautilus-canvas-item:selected {
     text-shadow: none; }
 
@@ -5823,7 +5823,7 @@ NautilusQueryEditor .toolbar {
   .nemo-desktop.nemo-canvas-item:active {
     color: #b3b9b8; }
   .nemo-desktop.nemo-canvas-item:selected {
-    color: #1e222a; }
+    color: #6da4cd; }
   .nemo-desktop.nemo-canvas-item:active, .nemo-desktop.nemo-canvas-item:hover, .nemo-desktop.nemo-canvas-item:selected {
     text-shadow: none; }
 
@@ -5930,8 +5930,8 @@ NemoPlacesTreeView {
   -NemoPlacesTreeView-disk-full-bottom-padding: 2px;
   -NemoPlacesTreeView-disk-full-max-length: 70px; }
   NemoPlacesTreeView:selected {
-    -NemoPlacesTreeView-disk-full-bg-color: #1e222a;
-    -NemoPlacesTreeView-disk-full-fg-color: #9cc1dd; }
+    -NemoPlacesTreeView-disk-full-bg-color: #6da4cd;
+    -NemoPlacesTreeView-disk-full-fg-color: #1e222a; }
 
 NemoWindow .nemo-inactive-pane .view, NemoWindow .nemo-inactive-pane GtkHTML, NemoWindow .nemo-inactive-pane iconview {
   background-color: mix(#1e222a,#b3b9b8,0.12);
