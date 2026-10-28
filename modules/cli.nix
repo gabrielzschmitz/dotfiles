@@ -16,6 +16,7 @@
         xdotool
         tree
         zip
+        entr
         unzip
         gnutar
         gzip
