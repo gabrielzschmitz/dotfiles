@@ -46,6 +46,17 @@
         set-option -g pane-border-status off
       '';
 
+      nnnEditor = pkgs.writeShellScript "nnn-editor" ''
+        set -euo pipefail
+
+        if [ -n "''${TMUX-}" ]; then
+          exec ${pkgs.tmux}/bin/tmux new-window -n editor \
+            ${pkgs.neovim}/bin/nvim "$@"
+        else
+          exec ${pkgs.neovim}/bin/nvim "$@"
+        fi
+      '';
+
       # Run nnn inside a private tmux session so preview-tui can use a tmux
       # split in the same st window instead of spawning a second terminal.
       nnnTuiScript = pkgs.writeShellScript "nnn-tmux" ''
@@ -53,7 +64,10 @@
 
         # Already in tmux, or not attached to a terminal: use nnn directly.
         if [ -n "''${TMUX-}" ] || [ ! -t 0 ] || [ ! -t 1 ]; then
-          exec ${baseNnn}/bin/nnn "$@"
+          exec env \
+            EDITOR=${nnnEditor} \
+            VISUAL=${nnnEditor} \
+            ${baseNnn}/bin/nnn "$@"
         fi
 
         status=0
@@ -86,6 +100,8 @@
           -e "NNN_CTX6=''${NNN_CTX6-}" \
           -e "NNN_CTX7=''${NNN_CTX7-}" \
           -e "NNN_CTX8=''${NNN_CTX8-}" \
+          -e "VISUAL=${nnnEditor}" \
+          -e "EDITOR=${nnnEditor}" \
           -e "NNN_PREVIEWDIR=''${NNN_PREVIEWDIR-}" \
           -e "NNN_PREVIEWWIDTH=''${NNN_PREVIEWWIDTH-}" \
           -e "NNN_PREVIEWHEIGHT=''${NNN_PREVIEWHEIGHT-}" \
