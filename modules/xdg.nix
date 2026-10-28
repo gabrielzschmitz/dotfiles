@@ -8,6 +8,7 @@
 
       xdg.mimeApps = {
         enable = true;
+
         defaultApplications = {
           "application/pdf" = "org.pwmt.zathura.desktop";
           "image/vnd.djvu" = "org.pwmt.zathura.desktop";
@@ -29,6 +30,14 @@
         };
       };
 
+      home.sessionVariables = {
+        XDG_DOCUMENTS_DIR = "$HOME/doc";
+        XDG_DOWNLOAD_DIR = "$HOME/down";
+        XDG_MUSIC_DIR = "$HOME/mus";
+        XDG_PICTURES_DIR = "$HOME/pic";
+        XDG_VIDEOS_DIR = "$HOME/vid";
+      };
+
       xdg.configFile."user-dirs.dirs" = {
         force = true;
         text = ''
@@ -46,6 +55,15 @@
 
       home.activation.createXdgDirs = config.lib.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p "$HOME/doc" "$HOME/down" "$HOME/mus" "$HOME/pic" "$HOME/vid"
+      '';
+
+      home.activation.installScripts = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p "$HOME/.local/src/bin"
+
+        for script in ${../scripts}/*; do
+          [ -f "$script" ] || continue
+          install -m 755 "$script" "$HOME/.local/src/bin/''${script##*/}"
+        done
       '';
     };
 }

@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# Opens idea.md in Neovim inside a terminal emulator.
+#
+# Environment:
+#   XDG_DOCUMENTS_DIR  Documents directory (default: "$HOME/Documents")
+#   TERMINAL           Terminal emulator (default: xterm)
+#
+# Usage:
+#   idea
+#
+# Examples:
+#   TERMINAL=st idea
+#   TERMINAL=xterm idea
+#   XDG_DOCUMENTS_DIR="$HOME/doc" idea
+#
+# Requirements:
+#   - a terminal emulator
+#   - nvim
+
+: "${XDG_DOCUMENTS_DIR:=$HOME/Documents}"
+: "${TERMINAL:=xterm}"
+
+file="$XDG_DOCUMENTS_DIR/idea.md"
+
+exec "$TERMINAL" -T "Idea Sandbox" -e nvim "$file"

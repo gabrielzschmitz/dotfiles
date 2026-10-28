@@ -73,6 +73,7 @@
             gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
           end
 
+          set -gx TERMINAL st
           set -gx EDITOR nvim
           set -gx VISUAL nvim
           set -gx MPD_HOST "$HOME/.config/mpd/socket"
