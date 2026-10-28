@@ -14,6 +14,7 @@ in
         extraGroups = [
           "wheel"
           "networkmanager"
+          "docker"
         ];
         shell = pkgs.fish;
       };

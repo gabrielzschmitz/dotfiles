@@ -29,6 +29,7 @@
         ssh
         xdg
         gui-theme
+        docker
       ];
     };
   };
