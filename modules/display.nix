@@ -121,6 +121,7 @@
               ${pkgs.dunst}/bin/dunst &
               ${pkgs.networkmanagerapplet}/bin/nm-applet &
               ${pkgs.blueman}/bin/blueman-applet &
+              ${pkgs.mpd}/bin/mpd &
               ${startPicom}
               ${pkgs.xset}/bin/xset r rate 300 50 &
 

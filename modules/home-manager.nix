@@ -30,6 +30,7 @@
         xdg
         gui-theme
         docker
+        music
       ];
     };
   };
