@@ -18,7 +18,7 @@
         tailscale
 
         # File-related
-        pcmanfm
+        thunar
         xarchiver
         zathura
         nsxiv
