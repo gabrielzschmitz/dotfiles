@@ -119,6 +119,7 @@
               ${pkgs.xwallpaper}/bin/xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg"
 
               ${pkgs.dunst}/bin/dunst &
+              ${pkgs.networkmanagerapplet}/bin/nm-applet &
               ${startPicom}
               ${pkgs.xset}/bin/xset r rate 300 50 &
 
