@@ -13,6 +13,7 @@ let
     audio
     packages
     craftapps
+    thunar
     display
     fish
     nvim

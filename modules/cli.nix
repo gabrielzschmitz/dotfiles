@@ -15,10 +15,13 @@
         xsetroot
         xdotool
         tree
-        unzip
         zip
-        rar
-        xar
+        unzip
+        gnutar
+        gzip
+        bzip2
+        xz
+        p7zip
         wget
         curl
         bat

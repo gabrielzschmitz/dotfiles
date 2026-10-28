@@ -31,6 +31,7 @@
         gui-theme
         docker
         music
+        thunar
       ];
     };
   };

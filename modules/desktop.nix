@@ -18,8 +18,6 @@
         tailscale
 
         # File-related
-        thunar
-        xarchiver
         zathura
         nsxiv
         mpv
