@@ -1,26 +1,43 @@
 #!/bin/sh
 #
-# Opens idea.md in Neovim inside a terminal emulator.
-#
-# Environment:
-#   XDG_DOCUMENTS_DIR  Documents directory (default: "$HOME/Documents")
-#   TERMINAL           Terminal emulator (default: xterm)
+# Opens a ideas scratchpad in Neovim.
 #
 # Usage:
 #   idea
+#   idea --file "$HOME/doc/other.md"
+#   idea "$HOME/doc/other.md"
 #
-# Examples:
-#   TERMINAL=st idea
-#   TERMINAL=xterm idea
-#   XDG_DOCUMENTS_DIR="$HOME/doc" idea
-#
-# Requirements:
-#   - a terminal emulator
-#   - nvim
+# Default file:
+#   $HOME/doc/idea.md
 
-: "${XDG_DOCUMENTS_DIR:=$HOME/Documents}"
-: "${TERMINAL:=xterm}"
+file="$HOME/doc/idea.md"
 
-file="$XDG_DOCUMENTS_DIR/idea.md"
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --file)
+      if [ "$#" -lt 2 ] || [ -z "$2" ]; then
+        printf 'Usage: idea [--file FILE]\n' >&2
+        exit 2
+      fi
+      file="$2"
+      shift 2
+      ;;
+    --)
+      shift
+      if [ "$#" -gt 0 ]; then
+        file="$1"
+      fi
+      break
+      ;;
+    -*)
+      printf 'Unknown option: %s\nUsage: idea [--file FILE]\n' "$1" >&2
+      exit 2
+      ;;
+    *)
+      file="$1"
+      shift
+      ;;
+  esac
+done
 
-exec "$TERMINAL" -T "Idea Sandbox" -e nvim "$file"
+exec nvim "$file"
