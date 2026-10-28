@@ -4,7 +4,7 @@
 (
  address: "127.0.0.1:6800",
  password: None,
- lyrics_dir: Some("~/Nextcloud/mus"),
+ lyrics_dir: Some("~/next/mus"),
  cache_dir: Some("/tmp/rmpc/cache"),
  theme: None,
  on_song_change: None,
