@@ -27,11 +27,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793218160,
-        "narHash": "sha256-0IqXHiUy00OOTI+6lTE388JXBeEMkX7Ptf16T2dY+5c=",
+        "lastModified": 1793218515,
+        "narHash": "sha256-sRPPj9qILwyMeF2NLXwICZfEurmfdiIHWJw9MprlUH0=",
         "owner": "gabrielzschmitz",
         "repo": "dwm",
-        "rev": "e9de5233d729b14f7d3acf7cfe2c6ee1a5669a3f",
+        "rev": "509bd64bdbd811655e7a07f0113841864d9d2674",
         "type": "github"
       },
       "original": {
