@@ -99,6 +99,14 @@
           emsdk = ''
             bass source /usr/lib/emsdk/emsdk_env.sh ';'
           '';
+
+          fish_title = ''
+            if set -q SPTERM
+                echo "Scratchpad Term"
+            else
+                # Keep your normal title behavior here.
+            end
+          '';
         };
       };
     };
