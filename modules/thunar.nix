@@ -97,5 +97,23 @@
 
       # Persist XFCE application preferences
       programs.xfconf.enable = true;
+
+      # Add svg preview
+      nixpkgs.overlays = [
+        (final: prev: {
+          tumbler = prev.tumbler.overrideAttrs (old: {
+            buildInputs = (old.buildInputs or [ ]) ++ [
+              prev.librsvg
+              prev.webp-pixbuf-loader
+              prev.libheif
+              prev.libjxl
+            ];
+          });
+
+          xfce = prev.xfce // {
+            tumbler = final.tumbler;
+          };
+        })
+      ];
     };
 }
