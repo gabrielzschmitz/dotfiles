@@ -122,7 +122,11 @@
               ${pkgs.networkmanagerapplet}/bin/nm-applet &
               ${pkgs.blueman}/bin/blueman-applet &
               ${pkgs.mpd}/bin/mpd &
-              ${pkgs.nextcloud-client}/bin/nextcloud &
+              ${pkgs.nextcloud-client}/bin/nextcloud \
+                --background \
+                --logfile "$HOME/.cache/X11/nextcloud.log" \
+                --logflush \
+                2>&1 &
               ${startPicom}
               ${pkgs.xset}/bin/xset r rate 300 50 &
 
