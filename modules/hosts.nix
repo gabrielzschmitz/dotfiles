@@ -9,6 +9,7 @@ let
     boot
     locale
     network
+    bluetooth
     audio
     packages
     craftapps
