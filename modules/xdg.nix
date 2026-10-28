@@ -58,11 +58,11 @@
       '';
 
       home.activation.installScripts = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p "$HOME/.local/src/bin"
+        mkdir -p "$HOME/.local/bin"
 
         for script in ${../scripts}/*; do
           [ -f "$script" ] || continue
-          install -m 755 "$script" "$HOME/.local/src/bin/''${script##*/}"
+          install -m 755 "$script" "$HOME/.local/bin/''${script##*/}"
         done
       '';
     };
