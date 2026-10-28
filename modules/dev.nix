@@ -8,6 +8,7 @@
         # Development
         neovim
         go
+        valgrind
         python3
         nodejs
         yarn
@@ -15,6 +16,8 @@
         gnumake
         bear
         git
+        git-lfs
+        github-cli
         gnupg
         pinentry-gnome3
         fd
@@ -22,10 +25,11 @@
         jq
         btop
         tree-sitter
+        doxygen
         lazygit
-
-        # AI
         opencode
+        pv
+        sloc
       ];
     };
 }

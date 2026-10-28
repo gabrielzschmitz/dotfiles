@@ -11,22 +11,31 @@
       home.packages = with pkgs; [
         # System
         pamixer
-        pwvucontrol
+        pavucontrol
         xbacklight
         maim
+        arandr
+        tailscale
 
         # File-related
         pcmanfm
+        xarchiver
         zathura
         nsxiv
         mpv
 
         # Creative
         inkscape
+        obs-studio
+        audacity
 
         # General
         discord-canary
+        signal-desktop
         nextcloud-client
+        qbittorrent
+        tor-browser
+        ungoogled-chromium
 
         # LaTeX
         (texliveSmall.withPackages (

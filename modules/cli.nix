@@ -9,9 +9,16 @@
         fastfetch
         imagemagick
         xclip
+        xcolor
+        xkill
+        xset
+        xsetroot
+        xdotool
         tree
         unzip
         zip
+        rar
+        xar
         wget
         curl
         bat
