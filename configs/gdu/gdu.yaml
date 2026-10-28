@@ -1,0 +1,14 @@
+style:
+  footer:
+    text-color: "#14171c"
+    background-color: "#61afef"
+    number-color: "#181b21"
+  selected-row:
+    text-color: "#14171c"
+    background-color: "#61afef"
+  result-row:
+    number-color: "#d19a66"
+    directory-color: "#61afef"
+  header:
+    text-color: "#14171c"
+    background-color: "#61afef"

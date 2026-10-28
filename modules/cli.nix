@@ -2,7 +2,7 @@
 
 {
   flake.modules.homeManager.cli =
-    { pkgs, ... }:
+    { configs, pkgs, ... }:
     {
       home.packages = with pkgs; [
         # Command-line utilities
@@ -23,6 +23,10 @@
         curl
         bat
         ripgrep
+        devour
+        gdu
       ];
+
+      xdg.configFile."gdu/gdu.yaml".source = ../configs/gdu/gdu.yaml;
     };
 }
