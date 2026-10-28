@@ -1,0 +1,9 @@
+<svg width="22" height="22" version="1" xmlns="http://www.w3.org/2000/svg">
+ <path d="m4 1.5c-0.554 0-1 0.446-1 1v18c0 0.554 0.446 1 1 1h14c0.554 0 1-0.446 1-1v-13l-5.5-0.5-0.5-5.5z" style="opacity:.2"/>
+ <path d="m4 1c-0.554 0-1 0.446-1 1v18c0 0.554 0.446 1 1 1h14c0.554 0 1-0.446 1-1v-13l-5.5-0.5-0.5-5.5z" style="fill:#7455d6"/>
+ <path d="m4 1c-0.554 0-1 0.446-1 1v0.5c0-0.554 0.446-1 1-1h9l5.5 5.5h0.5l-6-6z" fill="#ffffff" style="opacity:.1"/>
+ <path d="m13 1.5v5c0 0.5523 0.44772 1 1 1h5z" style="opacity:.2"/>
+ <path d="m13 1v5c0 0.5523 0.44772 1 1 1h5z" style="fill:#8f7aea"/>
+ <path d="m13 10v1h-1v1h1v2h-1v1h1v1h1v-1h1v1h1v-1h1v-1h-1v-2h1v-1h-1v-1h-1v1h-1v-1zm1 2h1v2h-1z" style="fill:#ffffff"/>
+ <path d="m10.250434 12v-1.178571s0-1.071429-2.2499997-1.071429c-2.2500001 0-2.2499991 2.142857-2.2500001 3.75 0 1.607143 0 3.75 2.2500001 3.75 2.2499997 0 2.2499997-1.071429 2.2499997-1.071429v-1.178571" style="fill:none;stroke-width:1.5;stroke:#ffffff"/>
+</svg>
