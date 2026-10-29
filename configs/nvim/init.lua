@@ -138,31 +138,81 @@ require("lazy").setup({
 	----------------------------------------------------------------------
 
 	{
-		"nvim-tree/nvim-tree.lua",
+		"luukvbaal/nnn.nvim",
 
-		lazy = false,
+		cmd = {
+			"NnnExplorer",
+			"NnnPicker",
+		},
 
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
+		mappings = {
+			{
+				"e",
+				function(files)
+					vim.cmd("edit " .. vim.fn.fnameescape(files[1]))
+				end,
+			},
 		},
 
 		config = function()
-			require("nvim-tree").setup({
-				sort = {
-					sorter = "case_sensitive",
+			local builtin = require("nnn").builtin
+
+			require("nnn").setup({
+				picker = {
+					cmd = "nnn",
+					session = "shared",
+					style = {
+						width = 0.9,
+						height = 0.8,
+						border = "double",
+					},
 				},
 
-				view = {
-					width = 30,
+				mappings = {
+					{
+						"e",
+						function(files)
+							if files and files[1] and vim.fn.isdirectory(files[1]) == 0 then
+								vim.cmd("edit " .. vim.fn.fnameescape(files[1]))
+							end
+						end,
+					},
+					{
+						"l",
+						function(files)
+							if files and files[1] and vim.fn.isdirectory(files[1]) == 0 then
+								vim.cmd("edit " .. vim.fn.fnameescape(files[1]))
+							end
+						end,
+					},
+					{
+						"<Right>",
+						function(files)
+							if files and files[1] and vim.fn.isdirectory(files[1]) == 0 then
+								vim.cmd("edit " .. vim.fn.fnameescape(files[1]))
+							end
+						end,
+					},
 				},
 
-				renderer = {
-					group_empty = true,
-				},
+				offset = true,
+				replace_netrw = "picker",
+			})
 
-				filters = {
-					dotfiles = false,
-				},
+			-- COLORS
+			vim.api.nvim_set_hl(0, "NnnNormal", {
+				fg = "#abb2bf",
+				bg = "#14171c",
+			})
+
+			vim.api.nvim_set_hl(0, "NnnNormalNC", {
+				fg = "#5c6370",
+				bg = "#1e222a",
+			})
+
+			vim.api.nvim_set_hl(0, "NnnBorder", {
+				fg = "#61afef",
+				bg = "#14171c",
 			})
 		end,
 	},
@@ -715,7 +765,7 @@ require("lazy").setup({
 		version = "*",
 
 		dependencies = {
-			"nvim-tree/nvim-web-devicons",
+			"nvim-mini/mini.icons",
 		},
 
 		event = "VeryLazy",
@@ -725,6 +775,47 @@ require("lazy").setup({
 				show_icons = true,
 
 				tabpage_section = "right",
+			})
+
+			-- COLORS
+
+			-- Selected buffer: bold white
+			vim.api.nvim_set_hl(0, "MiniTablineCurrent", {
+				fg = "#b8bfe5",
+				bg = "#5c6370",
+				bold = true,
+			})
+
+			-- Visible inactive buffers: light grey
+			vim.api.nvim_set_hl(0, "MiniTablineVisible", {
+				fg = "#abb2bf",
+				bg = "#393f4a",
+			})
+
+			-- Hidden buffers: dim grey
+			vim.api.nvim_set_hl(0, "MiniTablineHidden", {
+				fg = "#5c6370",
+				bg = "#393f4a",
+			})
+
+			-- Modified buffers: preserve the same color hierarchy
+			vim.api.nvim_set_hl(0, "MiniTablineModifiedCurrent", {
+				fg = "#b8bfe5",
+				bg = "#393f4a",
+				bold = true,
+				underline = true,
+			})
+
+			vim.api.nvim_set_hl(0, "MiniTablineModifiedVisible", {
+				fg = "#abb2bf",
+				bg = "#393f4a",
+				underline = true,
+			})
+
+			vim.api.nvim_set_hl(0, "MiniTablineModifiedHidden", {
+				fg = "#5c6370",
+				bg = "#393f4a",
+				underline = true,
 			})
 		end,
 	},
@@ -760,7 +851,7 @@ require("lazy").setup({
 		"nvim-lualine/lualine.nvim",
 
 		dependencies = {
-			"nvim-tree/nvim-web-devicons",
+			"nvim-mini/mini.icons",
 		},
 
 		event = "VeryLazy",
@@ -1066,10 +1157,10 @@ map("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>", {
 })
 
 ----------------------------------------------------------------------
--- NVIM-TREE KEYMAPS
+-- NNN KEYMAPS
 ----------------------------------------------------------------------
 
-map("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", {
+map("n", "<leader>e", "<cmd>NnnPicker<cr>", {
 	desc = "Toggle file explorer",
 })
 
