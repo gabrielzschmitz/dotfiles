@@ -8513,3 +8513,18 @@ terminal-window scrollbar.vertical slider {
 
 .raven-mpris {
   background-color: rgba(30, 34, 42, 0.7); }
+
+/* remove window title from Client-Side Decorations */
+.solid-csd headerbar .title {
+    font-size: 0;
+}
+
+/* hide extra window decorations/double border */
+window decoration {
+    margin: 0;
+    border: none;
+    padding: 0;
+}
+* {
+  text-shadow: none;
+}

@@ -6354,3 +6354,16 @@ TerminalNotebook.notebook {
     color: mix(#b3b9b8,#1e222a,0.15); }
   TerminalNotebook.notebook .active-page, TerminalNotebook.notebook .active-page GtkLabel {
     color: #b3b9b8; }
+/* remove window title from Client-Side Decorations */
+.solid-csd headerbar .title {
+    font-size: 0;
+}
+/* hide extra window decorations/double border */
+window decoration {
+    margin: 0;
+    border: none;
+    padding: 0;
+}
+* {
+  text-shadow: none;
+}
