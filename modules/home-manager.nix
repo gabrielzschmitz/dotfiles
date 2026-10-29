@@ -15,6 +15,7 @@
         display
         zen
         desktop
+        pdf
         craftapps
         cli
         dev

@@ -1,0 +1,42 @@
+# Behavior
+set adjust-open "best-fit"
+
+set scroll-page-aware "true"
+set scroll-full-overlap 0.01
+set scroll-step 100
+
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+
+map p print
+map i recolor
+set selection-clipboard clipboard
+
+# Font
+set font "SFMono Nerd Font:antialias=true:autohint=true:pixelsize=20"
+
+# OneDark colorscheme
+set recolor
+set recolor-lightcolor \#abb2bf
+set recolor-darkcolor \#181b21
+set recolor-keephue true
+set recolor-reverse-video true
+
+# Main background
+set default-bg \#14171c
+
+# Statusbar
+set statusbar-bg \#181b21
+set statusbar-fg \#abb2bf
+
+# Input bar
+set inputbar-bg \#181b21
+set inputbar-fg \#abb2bf
+
+# Notifications
+set notification-bg \#181b21
+set notification-fg \#abb2bf
+
+# Highlights
+set highlight-color "rgba(97, 175, 239, 0.30)"
+set highlight-active-color "rgba(97, 175, 239, 0.55)"
