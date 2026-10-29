@@ -29,7 +29,8 @@ vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 
 vim.opt.smartindent = true
-vim.opt.wrap = false
+vim.opt.wrap = true
+vim.opt.showmode = false
 
 vim.opt.termguicolors = true
 
