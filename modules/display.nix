@@ -129,6 +129,7 @@
                 2>&1 &
               ${startPicom}
               ${pkgs.xset}/bin/xset r rate 300 50 &
+              ${pkgs.xorg.setxkbmap}/bin/setxkbmap -model pc105 -layout us -variant alt-intl -option caps:escape &
 
               ${dwm}/bin/dwm-bar &
               while ${dwm}/bin/dwm 2>> "$HOME/.cache/X11/xsession-errors"; do
