@@ -104,7 +104,7 @@
             if set -q SPTERM
                 echo "Scratchpad Term"
             else
-                # Keep your normal title behavior here.
+                echo (prompt_pwd)
             end
           '';
         };
