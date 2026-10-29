@@ -17,8 +17,8 @@ set font "SFMono Nerd Font:antialias=true:autohint=true:pixelsize=20"
 
 # OneDark colorscheme
 set recolor
-set recolor-lightcolor \#abb2bf
-set recolor-darkcolor \#181b21
+set recolor-lightcolor \#00000
+set recolor-darkcolor \#ffffff
 set recolor-keephue true
 set recolor-reverse-video true
 
@@ -26,15 +26,15 @@ set recolor-reverse-video true
 set default-bg \#14171c
 
 # Statusbar
-set statusbar-bg \#181b21
+set statusbar-bg \#14171c
 set statusbar-fg \#abb2bf
 
 # Input bar
-set inputbar-bg \#181b21
+set inputbar-bg \#14171c
 set inputbar-fg \#abb2bf
 
 # Notifications
-set notification-bg \#181b21
+set notification-bg \#14171c
 set notification-fg \#abb2bf
 
 # Highlights
