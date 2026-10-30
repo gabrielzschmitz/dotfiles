@@ -310,45 +310,58 @@ configuration does not sign the module automatically.
 
 ### Firmware boot order (machine only)
 
-`nixos-rebuild` only updates **Limine**. The `machine` firmware rewrites the
-UEFI `BootOrder` on every boot and places the stale `Linux Boot Manager`
-(`systemd-boot`) entry before Limine. Changing the order with `efibootmgr -o`
-does not survive a reboot, because the firmware overwrites it again. If Limine
-is not booted, the new generation is never used, so the NVIDIA modules and the
-dconf D-Bus service appear to be missing even though they exist in the built
-generation.
+`nixos-rebuild` manages the Limine bootloader, while the UEFI firmware
+independently maintains the boot entries and their priority.
 
-The `machine` profile ships `limine-bootnext.service` for this. On every boot
-it looks up the Limine entry and sets it as a one-shot `BootNext`, which the
-firmware does respect. Check it with:
+The `machine` firmware previously placed the stale `Linux Boot Manager`
+(`systemd-boot`) entry before Limine. This could cause the machine to boot an
+outdated NixOS generation instead of the one managed by Limine.
+
+The stale systemd-boot entry has been removed, and Limine is configured as the
+first UEFI boot option.
+
+Inspect the firmware configuration with:
 
 ```sh
-systemctl status limine-bootnext
 sudo nix shell nixpkgs#efibootmgr -c efibootmgr
 ```
 
-`BootNext` should point at the Limine entry (`Boot0001`), and the machine
-should come back to Limine after a reboot even though `BootOrder` still lists
-`Linux Boot Manager` first. Keep `Boot0002` as a fallback.
+The expected configuration is:
 
-If the machine still boots the old generation, use the firmware menu:
-
-1. Reboot and press `F12` at power-on, then choose **Limine** from the firmware
-   boot menu.
-2. At the Limine menu choose the newest `Generation N → Default` entry. Do not
-   choose `nvidia-only` unless the laptop MUX is set to the discrete GPU.
-3. Once booted, queue Limine for the next boot:
-
-```sh
-sudo nix shell nixpkgs#efibootmgr -c efibootmgr -n 0001
+```text
+BootOrder: 0001,0000,2001,2002,2003
+Boot0000* HDD0: ...
+Boot0001* Limine ...
 ```
 
-If the Limine entry is missing entirely (for example after a firmware update),
-rebuild the bootloader and select Limine manually once:
+To restore this configuration manually:
+
+```sh
+# Remove the stale systemd-boot entry.
+sudo nix shell nixpkgs#efibootmgr -c efibootmgr -b 0002 -B
+
+# Make Limine the permanent first boot option.
+sudo nix shell nixpkgs#efibootmgr -c efibootmgr -o 0001,0000,2001,2002,2003
+
+# Verify the resulting configuration.
+sudo nix shell nixpkgs#efibootmgr -c efibootmgr
+```
+
+The Limine entry must remain first in `BootOrder`. Unlike `BootNext`, which
+only affects the next boot, `BootOrder` establishes the persistent boot
+priority.
+
+If the firmware recreates the systemd-boot entry or changes the boot order
+after a reboot, repeat the configuration and check the firmware settings.
+
+If Limine is missing entirely (for example, after a firmware update), rebuild
+the bootloader:
 
 ```sh
 sudo nixos-rebuild boot --flake ~/.dotfiles#machine
 ```
+
+Then select Limine manually from the firmware boot menu (F12) if necessary.
 
 ### Project Structure
 
