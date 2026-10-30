@@ -4,6 +4,10 @@ Xft.autohint:	 0
 Xft.hintstyle: hintslight
 Xft.rgba:      rgb
 Xft.lcdfilter: lcddefault
+! Xft.dpi is global to the X session and cannot be set per output. The
+! external monitor is a 1080p panel, so 96 is the correct value there; the
+! internal panel compensates with its own xrandr zoom (see modules/hosts.nix).
+Xft.dpi:       96
 
 ! st
 st.font:     SFMono Nerd Font:antialias=true:autohint=true:pixelsize=20

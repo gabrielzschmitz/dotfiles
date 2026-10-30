@@ -27,7 +27,7 @@
         audacity
 
         # General
-        discord-canary
+        discord
         signal-desktop
         nextcloud-client
         qbittorrent

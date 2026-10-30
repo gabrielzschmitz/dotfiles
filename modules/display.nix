@@ -15,8 +15,37 @@
         printf '\033c\033]P014171C\033]P7ABB2BF' > /dev/tty1
       '';
 
-      xrandrPrimary = lib.optionalString (config.my.display.primaryOutput != null) ''
-        ${pkgs.xrandr}/bin/xrandr --output ${config.my.display.primaryOutput} --primary --mode ${config.my.display.primaryMode}
+      xrandrArgs = lib.concatMap (
+        output:
+        [
+          "--output"
+          output.name
+        ]
+        ++ lib.optionals (output.mode != null) [
+          "--mode"
+          output.mode
+        ]
+        ++ lib.optionals (output.rate != null) [
+          "--rate"
+          output.rate
+        ]
+        ++ [
+          "--rotate"
+          output.rotation
+        ]
+        ++ lib.optionals (output.position != null) [
+          "--pos"
+          output.position
+        ]
+        ++ lib.optionals (output.scale != null) [
+          "--scale"
+          output.scale
+        ]
+        ++ lib.optionals output.primary [ "--primary" ]
+      ) config.my.display.outputs;
+
+      xrandrPrimary = lib.optionalString (config.my.display.outputs != [ ]) ''
+        ${pkgs.xrandr}/bin/xrandr ${lib.escapeShellArgs xrandrArgs}
       '';
 
       startPicom = lib.optionalString config.my.display.picom.enable ''
@@ -40,16 +69,60 @@
           description = "Rendering backend used by picom.";
         };
 
-        primaryOutput = lib.mkOption {
-          type = lib.types.nullOr lib.types.str;
-          default = null;
-          description = "X RandR output to configure as primary, or null to leave outputs untouched.";
-        };
+        outputs = lib.mkOption {
+          type = lib.types.listOf (
+            lib.types.submodule {
+              options = {
+                name = lib.mkOption {
+                  type = lib.types.str;
+                  description = "X RandR output name, such as HDMI-1-0 or eDP-1.";
+                };
 
-        primaryMode = lib.mkOption {
-          type = lib.types.str;
-          default = "1920x1080";
-          description = "Mode used when configuring the primary X RandR output.";
+                mode = lib.mkOption {
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                  description = "Mode passed to --mode, or null to leave it unchanged.";
+                };
+
+                rate = lib.mkOption {
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                  description = "Refresh rate passed to --rate, or null to leave it unchanged.";
+                };
+
+                rotation = lib.mkOption {
+                  type = lib.types.enum [
+                    "normal"
+                    "left"
+                    "right"
+                    "inverted"
+                  ];
+                  default = "normal";
+                  description = "Rotation passed to --rotate.";
+                };
+
+                position = lib.mkOption {
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                  description = "Absolute position passed to --pos, such as 0x0, or null to let X RandR place the output.";
+                };
+
+                scale = lib.mkOption {
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                  description = "Scale passed to --scale, such as 1.35x1.35, or null to keep the native scale.";
+                };
+
+                primary = lib.mkOption {
+                  type = lib.types.bool;
+                  default = false;
+                  description = "Whether to mark this output as the X RandR primary output.";
+                };
+              };
+            }
+          );
+          default = [ ];
+          description = "X RandR outputs configured, in order, when the X session starts.";
         };
       };
 
@@ -129,6 +202,7 @@
                 2>&1 &
               ${startPicom}
               ${pkgs.xset}/bin/xset r rate 300 50 &
+              ${pkgs.numlockx}/bin/numlockx &
               ${pkgs.setxkbmap}/bin/setxkbmap -model pc105 -layout us -variant alt-intl -option caps:escape &
 
               ${dwm}/bin/dwm-bar &

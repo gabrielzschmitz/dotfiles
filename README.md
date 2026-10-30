@@ -108,6 +108,87 @@ the new configuration.
 
 ---
 
+## Keys
+
+GPG and GitHub SSH keys are **not stored in this repository**. They are kept
+separately in the password store and must be manually restored when setting up
+a new installation.
+
+The Nix modules (`modules/gpg.nix` and `modules/ssh.nix`) configure the
+respective agents and reference the expected key locations. They do not manage
+or provision the keys themselves.
+
+### GPG
+
+GPG uses `~/.local/share/gnupg` as its home directory, configured through
+`programs.gpg.homedir`.
+
+Git uses OpenPGP for commit and tag signing. To restore signing functionality,
+import the public and private keys from the password store:
+
+```sh
+# Import the public key.
+gpg --batch --import /path/to/public-key.asc
+
+# Import the private key.
+gpg --batch --import /path/to/private-key.asc
+
+# Set the appropriate owner trust for the imported key.
+# Replace the placeholder with the key's full fingerprint.
+printf '<FINGERPRINT>:6:\n' | gpg --import-ownertrust
+
+# Verify the imported secret key.
+gpg --list-secret-keys --keyid-format=long
+```
+
+Verify that the secret key is available and that its associated identity has
+the expected trust level.
+
+The secret key is passphrase-protected. `gpg-agent` handles passphrase requests
+through `pinentry-dmenu`.
+
+### GitHub SSH
+
+`modules/ssh.nix` configures GitHub to use a dedicated Ed25519 identity with
+`IdentitiesOnly = yes`.
+
+Restore the key pair from the password store:
+
+```sh
+# Create the SSH directory with restricted permissions.
+install -d -m 700 ~/.ssh
+
+# Install the private and public keys.
+install -m 600 /path/to/private-key ~/.ssh/github_ed25519
+install -m 644 /path/to/public-key ~/.ssh/github_ed25519.pub
+
+# Verify the installed public key.
+ssh-keygen -lf ~/.ssh/github_ed25519.pub
+
+# Test authentication with GitHub.
+ssh -T git@github.com
+```
+
+The public key must be registered with the appropriate GitHub account before
+SSH authentication will succeed.
+
+To register or replace a key, retrieve its public counterpart from the password
+store and add it through:
+
+<https://github.com/settings/ssh/new>
+
+### Key Management
+
+- Never commit private keys, public keys, fingerprints, or other key-specific
+  identifiers to this repository.
+- Keep key material in the password store, which is synchronized separately.
+- Restore keys manually on new installations.
+- When rotating a key, generate a new pair, update the password store,
+  reinstall the key, and register the new public key with GitHub.
+- Keep file permissions restricted, especially for private keys.
+
+---
+
 ## Updating
 
 Pull the latest changes and rebuild:
@@ -227,6 +308,48 @@ If Secure Boot is enabled, the Nix-built `linuwu_sense.ko` must be signed with
 a key enrolled in the firmware, or Secure Boot must be disabled. This
 configuration does not sign the module automatically.
 
+### Firmware boot order (machine only)
+
+`nixos-rebuild` only updates **Limine**. The `machine` firmware rewrites the
+UEFI `BootOrder` on every boot and places the stale `Linux Boot Manager`
+(`systemd-boot`) entry before Limine. Changing the order with `efibootmgr -o`
+does not survive a reboot, because the firmware overwrites it again. If Limine
+is not booted, the new generation is never used, so the NVIDIA modules and the
+dconf D-Bus service appear to be missing even though they exist in the built
+generation.
+
+The `machine` profile ships `limine-bootnext.service` for this. On every boot
+it looks up the Limine entry and sets it as a one-shot `BootNext`, which the
+firmware does respect. Check it with:
+
+```sh
+systemctl status limine-bootnext
+sudo nix shell nixpkgs#efibootmgr -c efibootmgr
+```
+
+`BootNext` should point at the Limine entry (`Boot0001`), and the machine
+should come back to Limine after a reboot even though `BootOrder` still lists
+`Linux Boot Manager` first. Keep `Boot0002` as a fallback.
+
+If the machine still boots the old generation, use the firmware menu:
+
+1. Reboot and press `F12` at power-on, then choose **Limine** from the firmware
+   boot menu.
+2. At the Limine menu choose the newest `Generation N → Default` entry. Do not
+   choose `nvidia-only` unless the laptop MUX is set to the discrete GPU.
+3. Once booted, queue Limine for the next boot:
+
+```sh
+sudo nix shell nixpkgs#efibootmgr -c efibootmgr -n 0001
+```
+
+If the Limine entry is missing entirely (for example after a firmware update),
+rebuild the bootloader and select Limine manually once:
+
+```sh
+sudo nixos-rebuild boot --flake ~/.dotfiles#machine
+```
+
 ### Project Structure
 
 ```text
@@ -304,8 +427,27 @@ The exact tree may change as the configuration evolves.
   deploying. The machine file is a placeholder until generated on the laptop.
 - **Hostnames:** The flake exports `vm` and `machine`; use the matching suffix
   with `nixos-rebuild`.
+- **Keys:** GPG and GitHub SSH keys are not in the repository. Import them from
+  the password store on every new install; see [Keys](#keys).
 - **VM display:** Picom is disabled on `vm` and the guest forces the
   `Virtual-1` output to 1920x1080.
+- **Machine display:** The external `HDMI-1-0` output runs at 1920x1080@239.96,
+  rotated 180 degrees, primary, at `0x0`. The internal `eDP-1` panel runs at
+  2560x1600@240 and is zoomed with `--scale 0.675x0.675` to 1728x1080 at
+  `1920x0`, so the two screens share the same 1080 pixel height. Both are
+  configured through `my.display.outputs` in `modules/hosts.nix`.
+- **DPI scaling:** `Xft.dpi` is global to the session and cannot be set per
+  output, so mixed-DPI setups have to scale one screen to match the other with
+  `xrandr --scale`. Values above 1 shrink the content on that output and values
+  below 1 zoom in; the surrounding outputs' `position` must match the resulting
+  size. Do not scale the external display: it is wired to the NVIDIA GPU and
+  driven through reverse PRIME, where transforms are not applied to the shared
+  pixmap, so `--scale` only crops it to the top-left corner. Scale the internal
+  `eDP-1` panel instead, which is driven by the Intel iGPU.
+- **Boot order:** The machine firmware resets `BootOrder` on every boot, so
+  `limine-bootnext.service` sets `BootNext` to Limine. If the machine still
+  boots `systemd-boot` and the new generation is not used, see
+  [Firmware boot order](#firmware-boot-order-machine-only).
 - **Machine graphics:** The desktop runs on the Intel iGPU and games offload to
   the RTX 5070 Ti via PRIME. The bus IDs in `modules/nvidia.nix` match the
   laptop's `lspci` output.

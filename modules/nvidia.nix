@@ -1,7 +1,7 @@
-{ lib, pkgs, ... }:
+{ ... }:
 
 {
-  flake.modules.nixos.nvidia = {
+  flake.modules.nixos.nvidia = { lib, pkgs, ... }: {
     hardware.graphics.enable = true;
 
     hardware.nvidia = {
@@ -27,7 +27,10 @@
 
     services.xserver.videoDrivers = [ "nvidia" ];
 
-    environment.systemPackages = [ pkgs.nvtop ];
+    environment.systemPackages = [
+      pkgs.nvtopPackages.nvidia
+      pkgs.nvtopPackages.intel
+    ];
 
     # Alternate boot entry for using the discrete GPU as the only X11 device.
     # Limine lists it under every generation, so each rebuild updates it too.

@@ -33,6 +33,7 @@
         docker
         music
         thunar
+        services
       ];
     };
   };
@@ -41,9 +42,6 @@
     imports = [
       self.modules.nixos.desktop
     ];
-
-    home-manager.users.gabrielzschmitz.imports = with self.modules.homeManager; [
-      services
-    ];
   };
+
 }

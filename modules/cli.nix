@@ -14,6 +14,7 @@
         xset
         xsetroot
         xdotool
+        numlockx
         tree
         zip
         entr
