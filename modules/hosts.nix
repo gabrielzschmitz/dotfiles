@@ -67,7 +67,7 @@ in
       my.display = {
         picom = {
           enable = true;
-          backend = "glx";
+          backend = "egl";
         };
 
         # External monitor: 1920x1080@239.96, rotated 180 degrees, primary and

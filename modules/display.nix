@@ -64,6 +64,7 @@
           type = lib.types.enum [
             "xrender"
             "glx"
+            "egl"
           ];
           default = "xrender";
           description = "Rendering backend used by picom.";
