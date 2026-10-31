@@ -25,7 +25,10 @@
       };
     };
 
-    services.xserver.videoDrivers = [ "nvidia" ];
+    services.xserver.videoDrivers = [
+      "modesetting"
+      "nvidia"
+    ];
 
     environment.systemPackages = [
       pkgs.nvtopPackages.nvidia
@@ -37,15 +40,42 @@
     # The laptop MUX must be set to the discrete GPU (or the panel must be
     # wired to it) for this mode to produce an image.
     specialisation."nvidia-only".configuration = {
+      services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
+
       hardware.nvidia.prime = {
+        # Disable render offloading.
         offload = {
           enable = lib.mkForce false;
           enableOffloadCmd = lib.mkForce false;
         };
 
-        intelBusId = lib.mkForce "";
-        nvidiaBusId = lib.mkForce "";
+        # Use NVIDIA for all rendering, Intel for display output.
+        sync.enable = lib.mkForce true;
+
+        # IMPORTANT: Keep the actual GPU bus IDs.
+        # Do not clear these!
+        intelBusId = lib.mkForce "PCI:0@0:2:0";
+        nvidiaBusId = lib.mkForce "PCI:1@0:0:0";
       };
+
+      my.display.outputs = lib.mkForce [
+        {
+          name = "HDMI-0";
+          mode = "1920x1080";
+          rate = "239.96";
+          rotation = "inverted";
+          position = "0x0";
+          primary = true;
+        }
+        {
+          name = "eDP-1-1";
+          mode = "2560x1600";
+          rate = "240";
+          rotation = "normal";
+          position = "1920x0";
+          scale = "0.675x0.675";
+        }
+      ];
     };
   };
 }
