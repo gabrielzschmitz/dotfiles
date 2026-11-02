@@ -252,9 +252,10 @@ remain explicit in `modules/hosts.nix` and `modules/home-manager.nix`.
 `modules/hosts.nix` builds two `nixosConfigurations` from a shared module list.
 VM-only modules (`virtualisation`, `home-manager-vm`) are imported only by `vm`.
 The machine additionally imports `nvidia`, `steam`, and `damx`; DAMX is not
-part of the VM closure. The NVIDIA module also adds an `nvidia-only`
-specialisation, which Limine lists under every generation next to the default
-PRIME-offload entry.
+part of the VM closure. By default the NVIDIA module drives X11 with the
+discrete GPU through PRIME sync; it also adds an `nvidia-optimus` specialisation,
+which Limine lists under every generation next to the default entry, for running
+the desktop on the Intel iGPU with on-demand NVIDIA offload.
 
 ### Acer controls (machine only)
 
@@ -389,7 +390,7 @@ Then select Limine manually from the firmware boot menu (F12) if necessary.
 │   ├── locale.nix                # Timezone and locale
 │   ├── network.nix               # NetworkManager
 │   ├── virtualisation.nix        # QEMU guest and SPICE agent (vm only)
-│   ├── nvidia.nix                # NVIDIA driver, PRIME and nvidia-only entry
+│   ├── nvidia.nix                # NVIDIA driver, PRIME sync and nvidia-optimus entry
 │   ├── steam.nix                 # Steam, Proton GE and PRIME offload
 │   ├── damx.nix                  # DAMX/Linuwu-Sense integration (machine only)
 │   ├── nix.nix                   # Flakes, unfree packages and binsh
@@ -444,11 +445,14 @@ The exact tree may change as the configuration evolves.
   the password store on every new install; see [Keys](#keys).
 - **VM display:** Picom is disabled on `vm` and the guest forces the
   `Virtual-1` output to 1920x1080.
-- **Machine display:** The external `HDMI-1-0` output runs at 1920x1080@239.96,
-  rotated 180 degrees, primary, at `0x0`. The internal `eDP-1` panel runs at
-  2560x1600@240 and is zoomed with `--scale 0.675x0.675` to 1728x1080 at
-  `1920x0`, so the two screens share the same 1080 pixel height. Both are
-  configured through `my.display.outputs` in `modules/hosts.nix`.
+- **Machine display:** By default the external `HDMI-0` output runs at
+  1920x1080@239.96, rotated 180 degrees, primary, at `0x0`. The internal
+  `eDP-1-1` panel runs at 2560x1600@240 and is zoomed with `--scale 0.675x0.675`
+  to 1728x1080 at `1920x0`, so the two screens share the same 1080 pixel height.
+  Both are configured through `my.display.outputs` in `modules/hosts.nix`, and
+  `my.display.framebuffer` shrinks the framebuffer to 3648x1080. The
+  `nvidia-optimus` specialisation overrides this with the Intel-driven
+  `HDMI-1-0` and `eDP-1` outputs below.
 - **DPI scaling:** `Xft.dpi` is global to the session and cannot be set per
   output, so mixed-DPI setups have to scale one screen to match the other with
   `xrandr --scale`. Values above 1 shrink the content on that output and values
@@ -456,23 +460,25 @@ The exact tree may change as the configuration evolves.
   size. When `my.display.framebuffer` is set, the xsession runs the same
   `xrandr` command twice: X applies the transforms but keeps the previous,
   larger framebuffer on the first pass, so a second pass is required to shrink
-  it and remove the dead space around the outputs. Do not scale the external
-  display: it is wired to the NVIDIA GPU and
-  driven through reverse PRIME, where transforms are not applied to the shared
-  pixmap, so `--scale` only crops it to the top-left corner. Scale the internal
-  `eDP-1` panel instead, which is driven by the Intel iGPU.
+  it and remove the dead space around the outputs. In the `nvidia-optimus`
+  specialisation, do not scale the external display: it is wired to the NVIDIA
+  GPU and driven through reverse PRIME, where transforms are not applied to the
+  shared pixmap, so `--scale` only crops it to the top-left corner. Scale the
+  internal `eDP-1` panel instead, which is driven by the Intel iGPU.
 - **Boot order:** The machine firmware resets `BootOrder` on every boot, so
   `limine-bootnext.service` sets `BootNext` to Limine. If the machine still
   boots `systemd-boot` and the new generation is not used, see
   [Firmware boot order](#firmware-boot-order-machine-only).
-- **Machine graphics:** The desktop runs on the Intel iGPU and games offload to
-  the RTX 5070 Ti via PRIME. The bus IDs in `modules/nvidia.nix` match the
-  laptop's `lspci` output.
-- **NVIDIA-only boot entry:** Limine lists an `nvidia-only` specialisation under
-  every generation. Select it to boot the same configuration with the discrete
-  GPU as the only X11 device; the laptop MUX must be set accordingly.
-- **Steam:** Steam is enabled with `proton-ge-bin` and inherits the PRIME
-  offload environment, so Steam and its games render on the NVIDIA GPU.
+- **Machine graphics:** The default boot entry drives the desktop with the
+  RTX 5070 Ti through PRIME sync; the laptop MUX must be set to the discrete GPU
+  (or the panel wired to it) for this mode to produce an image. The bus IDs in
+  `modules/nvidia.nix` match the laptop's `lspci` output.
+- **NVIDIA Optimus boot entry:** Limine lists an `nvidia-optimus` specialisation
+  under every generation. Select it to run the desktop on the Intel iGPU and
+  offload rendering to the discrete GPU on demand.
+- **Steam:** Steam is enabled with `proton-ge-bin`. In the `nvidia-optimus`
+  specialisation it inherits the PRIME offload environment so games render on
+  the NVIDIA GPU; in the default mode it uses the primary GPU.
 - **Acer controls:** DAMX and Linuwu-Sense are installed only on `machine`.
   The kernel module is built against the configured kernel packages and is not
   managed by DKMS.

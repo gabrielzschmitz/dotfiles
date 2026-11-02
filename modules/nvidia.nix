@@ -11,46 +11,43 @@
       modesetting.enable = true;
       nvidiaSettings = true;
 
-      # Keep the desktop on the Intel iGPU and offload rendering to the
-      # discrete GPU on demand. Verify the bus IDs on the machine with:
-      #   lspci -nn | grep -E 'VGA|3D'
+      # Use the discrete GPU as the only X11 device. The laptop MUX must be
+      # set to the discrete GPU (or the panel must be wired to it) for this
+      # mode to produce an image.
       prime = {
-        offload = {
-          enable = true;
-          enableOffloadCmd = true;
-        };
+        sync.enable = true;
 
+        # IMPORTANT: Keep the actual GPU bus IDs.
+        # Do not clear these!
         intelBusId = "PCI:0@0:2:0";
         nvidiaBusId = "PCI:1@0:0:0";
       };
     };
 
-    services.xserver.videoDrivers = [
-      "modesetting"
-      "nvidia"
-    ];
+    services.xserver.videoDrivers = [ "nvidia" ];
 
     environment.systemPackages = [
       pkgs.nvtopPackages.nvidia
       pkgs.nvtopPackages.intel
     ];
 
-    # Alternate boot entry for using the discrete GPU as the only X11 device.
-    # Limine lists it under every generation, so each rebuild updates it too.
-    # The laptop MUX must be set to the discrete GPU (or the panel must be
-    # wired to it) for this mode to produce an image.
-    specialisation."nvidia-only".configuration = {
-      services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
+    # Alternate boot entry for keeping the desktop on the Intel iGPU and
+    # offloading rendering to the discrete GPU on demand. Limine lists it
+    # under every generation, so each rebuild updates it too.
+    specialisation."nvidia-optimus".configuration = {
+      services.xserver.videoDrivers = lib.mkForce [
+        "modesetting"
+        "nvidia"
+      ];
 
       hardware.nvidia.prime = {
-        # Disable render offloading.
         offload = {
-          enable = lib.mkForce false;
-          enableOffloadCmd = lib.mkForce false;
+          enable = lib.mkForce true;
+          enableOffloadCmd = lib.mkForce true;
         };
 
-        # Use NVIDIA for all rendering, Intel for display output.
-        sync.enable = lib.mkForce true;
+        # Disable display sync; rendering is offloaded on demand instead.
+        sync.enable = lib.mkForce false;
 
         # IMPORTANT: Keep the actual GPU bus IDs.
         # Do not clear these!
@@ -58,12 +55,15 @@
         nvidiaBusId = lib.mkForce "PCI:1@0:0:0";
       };
 
+      # In PRIME-offload mode the internal panel stays on the Intel iGPU and
+      # the external port is driven through reverse PRIME, so X exposes it
+      # under different output names than in the default discrete-GPU mode.
       my.display = {
-        framebuffer = lib.mkForce "3648x1080";
+        framebuffer = lib.mkForce null;
 
         outputs = lib.mkForce [
           {
-            name = "HDMI-0";
+            name = "HDMI-1-0";
             mode = "1920x1080";
             rate = "239.96";
             rotation = "inverted";
@@ -71,7 +71,7 @@
             primary = true;
           }
           {
-            name = "eDP-1-1";
+            name = "eDP-1";
             mode = "2560x1600";
             rate = "240";
             rotation = "normal";

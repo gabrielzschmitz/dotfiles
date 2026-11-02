@@ -70,16 +70,16 @@ in
           backend = "egl";
         };
 
-        # External monitor: 1920x1080@239.96, rotated 180 degrees, primary and
-        # left-aligned at the top. This port is wired to the NVIDIA GPU and is
-        # driven through reverse PRIME, where xrandr transforms are not applied
-        # (scaling it only shows the top-left corner of the desktop), so it
-        # always stays at its native size. The internal panel is zoomed instead:
-        # 2560x1600 scaled by 0.675 becomes 1728x1080, matching the external
-        # height while keeping the laptop's text at its former 144 dpi size.
+        # Default discrete-GPU mode: the external monitor is driven directly by
+        # the NVIDIA GPU at 1920x1080@239.96, rotated 180 degrees, primary and
+        # left-aligned at the top. The internal panel is zoomed so 2560x1600
+        # scaled by 0.675 becomes 1728x1080, matching the external height while
+        # keeping the laptop's text at its former 144 dpi size.
+        framebuffer = "3648x1080";
+
         outputs = [
           {
-            name = "HDMI-1-0";
+            name = "HDMI-0";
             mode = "1920x1080";
             rate = "239.96";
             rotation = "inverted";
@@ -87,7 +87,7 @@ in
             primary = true;
           }
           {
-            name = "eDP-1";
+            name = "eDP-1-1";
             mode = "2560x1600";
             rate = "240";
             rotation = "normal";
