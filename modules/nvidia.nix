@@ -35,10 +35,11 @@
     # offloading rendering to the discrete GPU on demand. Limine lists it
     # under every generation, so each rebuild updates it too.
     specialisation."nvidia-optimus".configuration = {
-      services.xserver.videoDrivers = lib.mkForce [
-        "modesetting"
-        "nvidia"
-      ];
+      # The NVIDIA module adds the Intel iGPU modesetting device automatically
+      # whenever PRIME offload is enabled. Listing "modesetting" here as well
+      # creates a duplicate modesetting screen and makes Xorg fail with
+      # "modeset(G0): Failed to create pixmap".
+      services.xserver.videoDrivers = lib.mkForce [ "nvidia" ];
 
       hardware.nvidia.prime = {
         offload = {
