@@ -1,0 +1,8 @@
+# Dead-key compose table for XIM-based clients (st, xterm, ...).
+#
+# XCOMPOSEFILE is set to this file in modules/users.nix. libX11 does not
+# fall back to its built-in table when XCOMPOSEFILE is set, so without an
+# "include" all dead keys (dead_acute, dead_cedilla, dead_tilde, ...) stop
+# composing. Pull in the system table and add custom sequences below if
+# needed.
+include "%L"

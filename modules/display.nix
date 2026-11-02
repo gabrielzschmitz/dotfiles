@@ -270,6 +270,7 @@
       '';
 
       home.file.".config/X11/Xresources".source = ../configs/Xresources;
+      home.file.".config/X11/xcompose".source = ../configs/X11/xcompose;
       home.file.".config/picom/picom.conf".text = picomConfig;
     };
 }
