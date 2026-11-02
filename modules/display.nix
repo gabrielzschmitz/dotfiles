@@ -33,19 +33,23 @@
           "--rotate"
           output.rotation
         ]
-        ++ lib.optionals (output.position != null) [
-          "--pos"
-          output.position
-        ]
         ++ lib.optionals (output.scale != null) [
           "--scale"
           output.scale
+        ]
+        ++ lib.optionals (output.position != null) [
+          "--pos"
+          output.position
         ]
         ++ lib.optionals output.primary [ "--primary" ]
       ) config.my.display.outputs;
 
       xrandrPrimary = lib.optionalString (config.my.display.outputs != [ ]) ''
-        ${pkgs.xrandr}/bin/xrandr ${lib.escapeShellArgs xrandrArgs}
+        ${pkgs.xrandr}/bin/xrandr \
+          ${lib.escapeShellArgs xrandrArgs} \
+          ${lib.optionalString (config.my.display.framebuffer != null) (
+            "--fb " + lib.escapeShellArg config.my.display.framebuffer
+          )}
       '';
 
       startPicom = lib.optionalString config.my.display.picom.enable ''
@@ -68,6 +72,12 @@
           ];
           default = "xrender";
           description = "Rendering backend used by picom.";
+        };
+
+        framebuffer = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "Explicit X11 framebuffer size, such as 3648x1080.";
         };
 
         outputs = lib.mkOption {
@@ -189,8 +199,10 @@
             name = "xsession";
             start = ''
               ${pkgs.xrdb}/bin/xrdb -merge "$HOME/.config/X11/Xresources"
-              ${xrandrPrimary}
-              ${pkgs.xwallpaper}/bin/xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg"
+
+              ${pkgs.xset}/bin/xset r rate 300 50 &
+              ${pkgs.numlockx}/bin/numlockx &
+              ${pkgs.setxkbmap}/bin/setxkbmap -model pc105 -layout us -variant alt-intl -option caps:escape &
 
               ${pkgs.dunst}/bin/dunst &
               ${pkgs.networkmanagerapplet}/bin/nm-applet &
@@ -202,9 +214,9 @@
                 --logflush \
                 2>&1 &
               ${startPicom}
-              ${pkgs.xset}/bin/xset r rate 300 50 &
-              ${pkgs.numlockx}/bin/numlockx &
-              ${pkgs.setxkbmap}/bin/setxkbmap -model pc105 -layout us -variant alt-intl -option caps:escape &
+
+              ${xrandrPrimary}
+              ${pkgs.xwallpaper}/bin/xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg"
 
               ${dwm}/bin/dwm-bar &
               while ${dwm}/bin/dwm 2>> "$HOME/.cache/X11/xsession-errors"; do

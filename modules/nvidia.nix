@@ -58,24 +58,28 @@
         nvidiaBusId = lib.mkForce "PCI:1@0:0:0";
       };
 
-      my.display.outputs = lib.mkForce [
-        {
-          name = "HDMI-0";
-          mode = "1920x1080";
-          rate = "239.96";
-          rotation = "inverted";
-          position = "0x0";
-          primary = true;
-        }
-        {
-          name = "eDP-1-1";
-          mode = "2560x1600";
-          rate = "240";
-          rotation = "normal";
-          position = "1920x0";
-          scale = "0.675x0.675";
-        }
-      ];
+      my.display = {
+        framebuffer = lib.mkForce "3648x1080";
+
+        outputs = lib.mkForce [
+          {
+            name = "HDMI-0";
+            mode = "1920x1080";
+            rate = "239.96";
+            rotation = "inverted";
+            position = "0x0";
+            primary = true;
+          }
+          {
+            name = "eDP-1-1";
+            mode = "2560x1600";
+            rate = "240";
+            rotation = "normal";
+            position = "1920x0";
+            scale = "0.675x0.675";
+          }
+        ];
+      };
     };
   };
 }
