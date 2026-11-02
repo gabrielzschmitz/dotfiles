@@ -33,6 +33,7 @@
         qbittorrent
         tor-browser
         ungoogled-chromium
+        qalculate-gtk
       ];
     };
 }

@@ -17,13 +17,14 @@
         numlockx
         tree
         zip
-        entr
         unzip
         gnutar
         gzip
         bzip2
         xz
         p7zip
+        entr
+        bc
         wget
         curl
         bat
