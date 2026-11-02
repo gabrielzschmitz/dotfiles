@@ -44,13 +44,22 @@
         ++ lib.optionals output.primary [ "--primary" ]
       ) config.my.display.outputs;
 
-      xrandrPrimary = lib.optionalString (config.my.display.outputs != [ ]) ''
-        ${pkgs.xrandr}/bin/xrandr \
-          ${lib.escapeShellArgs xrandrArgs} \
-          ${lib.optionalString (config.my.display.framebuffer != null) (
-            "--fb " + lib.escapeShellArg config.my.display.framebuffer
-          )}
-      '';
+      xrandrCommand =
+        "${pkgs.xrandr}/bin/xrandr ${lib.escapeShellArgs xrandrArgs}"
+        + lib.optionalString (config.my.display.framebuffer != null) (
+          " --fb " + lib.escapeShellArg config.my.display.framebuffer
+        );
+
+      # X applies the output transforms but keeps the previous, larger
+      # framebuffer on the first invocation, leaving dead space around the
+      # outputs. A second identical invocation shrinks it to the requested --fb
+      # size, so only apply the command once when no framebuffer is requested.
+      xrandrPrimary = lib.optionalString (config.my.display.outputs != [ ]) (
+        lib.concatStringsSep "\n" (
+          [ xrandrCommand ]
+          ++ lib.optionals (config.my.display.framebuffer != null) [ xrandrCommand ]
+        )
+      );
 
       startPicom = lib.optionalString config.my.display.picom.enable ''
         ${pkgs.picom}/bin/picom -b --config "$HOME/.config/picom/picom.conf" &

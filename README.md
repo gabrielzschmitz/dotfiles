@@ -453,7 +453,11 @@ The exact tree may change as the configuration evolves.
   output, so mixed-DPI setups have to scale one screen to match the other with
   `xrandr --scale`. Values above 1 shrink the content on that output and values
   below 1 zoom in; the surrounding outputs' `position` must match the resulting
-  size. Do not scale the external display: it is wired to the NVIDIA GPU and
+  size. When `my.display.framebuffer` is set, the xsession runs the same
+  `xrandr` command twice: X applies the transforms but keeps the previous,
+  larger framebuffer on the first pass, so a second pass is required to shrink
+  it and remove the dead space around the outputs. Do not scale the external
+  display: it is wired to the NVIDIA GPU and
   driven through reverse PRIME, where transforms are not applied to the shared
   pixmap, so `--scale` only crops it to the top-left corner. Scale the internal
   `eDP-1` panel instead, which is driven by the Intel iGPU.
