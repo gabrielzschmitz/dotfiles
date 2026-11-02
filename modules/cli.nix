@@ -31,6 +31,7 @@
         ripgrep
         devour
         gdu
+        openvpn
       ];
 
       xdg.configFile."gdu/gdu.yaml".source = ../configs/gdu/gdu.yaml;

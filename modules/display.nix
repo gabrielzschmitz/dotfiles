@@ -56,8 +56,7 @@
       # size, so only apply the command once when no framebuffer is requested.
       xrandrPrimary = lib.optionalString (config.my.display.outputs != [ ]) (
         lib.concatStringsSep "\n" (
-          [ xrandrCommand ]
-          ++ lib.optionals (config.my.display.framebuffer != null) [ xrandrCommand ]
+          [ xrandrCommand ] ++ lib.optionals (config.my.display.framebuffer != null) [ xrandrCommand ]
         )
       );
 
@@ -211,7 +210,7 @@
 
               ${pkgs.xset}/bin/xset r rate 300 50 &
               ${pkgs.numlockx}/bin/numlockx &
-              ${pkgs.setxkbmap}/bin/setxkbmap -model pc105 -layout us -variant alt-intl -option caps:escape &
+              ${pkgs.setxkbmap}/bin/setxkbmap -model pc104 -layout us -variant alt-intl -option caps:escape &
 
               ${pkgs.dunst}/bin/dunst &
               ${pkgs.networkmanagerapplet}/bin/nm-applet &
@@ -225,7 +224,7 @@
               ${startPicom}
 
               ${xrandrPrimary}
-              ${pkgs.xwallpaper}/bin/xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg"
+              ${pkgs.xwallpaper}/bin/xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg" &
 
               ${dwm}/bin/dwm-bar &
               while ${dwm}/bin/dwm 2>> "$HOME/.cache/X11/xsession-errors"; do
