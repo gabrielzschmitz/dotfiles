@@ -10,7 +10,7 @@ Xft.lcdfilter: lcddefault
 Xft.dpi:       96
 
 ! st
-st.font:     SFMono Nerd Font:antialias=true:autohint=true:pixelsize=20
+st.font:     SFMono Nerd Font:antialias=true:autohint=true:pixelsize=16
 st.borderpx: 0
 st.alpha:    1.0
 
