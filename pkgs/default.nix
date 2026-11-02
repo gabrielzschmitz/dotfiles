@@ -7,7 +7,9 @@ final: prev: {
 
   one-dark-gtk = final.callPackage ./one-dark-gtk { };
 
-  # linuwu-sense = final.linuxPackages.callPackage ./linuwu-sense { };
-  # damx = final.callPackage ./damx { };
-  # damx-daemon = final.callPackage ./damx/daemon.nix { };
+  linuwu-sense = final.linuxPackages.callPackage ./linuwu-sense { };
+
+  damx = final.callPackage ./damx { };
+
+  damx-daemon = final.callPackage ./damx/daemon.nix { };
 }
