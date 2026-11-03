@@ -12,7 +12,7 @@
         # System
         pamixer
         pavucontrol
-        xbacklight
+        brightnessctl
         maim
         arandr
 
