@@ -1,0 +1,120 @@
+#!/bin/sh
+#
+# Displays a system power menu using dmenu.
+#
+# Usage:
+#   power-menu
+#   power-menu --help
+#
+# Available actions:
+#   Lock       Lock the current session.
+#   Logout     Log out of the current window manager session.
+#   Suspend    Suspend the system.
+#   Hibernate  Hibernate the system.
+#   Reboot     Reboot the system.
+#   Poweroff   Power off the system.
+#   Cancel     Exit without performing an action.
+#
+
+DMENU="${DMENU:-dmenu}"
+
+# Nerd Font icons.
+ICON_PROMPT='󰐦'
+ICON_LOCK='󰌾'
+ICON_LOGOUT='󰍃'
+ICON_SUSPEND='󰤄'
+ICON_HIBERNATE='󰒲'
+ICON_REBOOT='󰜉'
+ICON_POWEROFF='󰐥'
+ICON_CANCEL='󰜺'
+
+usage() {
+  printf 'Usage: powermenu [--help]\n'
+}
+
+# Parse arguments.
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    -*)
+      printf 'Unknown option: %s\n' "$1" >&2
+      usage >&2
+      exit 2
+      ;;
+    *)
+      printf 'Unexpected argument: %s\n' "$1" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+done
+
+# Display menu and capture selection.
+choice=$(
+  printf '%s\n' \
+    "$ICON_LOCK Lock" \
+    "$ICON_LOGOUT Logout" \
+    "$ICON_SUSPEND Suspend" \
+    "$ICON_HIBERNATE Hibernate" \
+    "$ICON_REBOOT Reboot" \
+    "$ICON_POWEROFF Poweroff" \
+    "$ICON_CANCEL Cancel" |
+    "$DMENU" -i -l 7 -p "$ICON_PROMPT "
+  ) || exit 0
+
+# Execute selected action.
+case "$choice" in
+  "$ICON_LOCK Lock")
+    if command -v slock >/dev/null 2>&1; then
+      exec slock
+    elif command -v betterlockscreen >/dev/null 2>&1; then
+      exec betterlockscreen -l
+    else
+      printf 'No supported screen locker found.\n' >&2
+      exit 1
+    fi
+    ;;
+
+  "$ICON_LOGOUT Logout")
+    # Terminate the current window manager session.
+    if [ -n "$DISPLAY" ]; then
+      if command -v dwm >/dev/null 2>&1; then
+        pkill -x dwm
+      else
+        printf 'No supported window manager found.\n' >&2
+        exit 1
+      fi
+    else
+      printf 'No graphical session detected.\n' >&2
+      exit 1
+    fi
+    ;;
+
+  "$ICON_SUSPEND Suspend")
+    exec systemctl suspend
+    ;;
+
+  "$ICON_HIBERNATE Hibernate")
+    exec systemctl hibernate
+    ;;
+
+  "$ICON_REBOOT Reboot")
+    exec systemctl reboot
+    ;;
+
+  "$ICON_POWEROFF Poweroff")
+    exec systemctl poweroff
+    ;;
+
+  "$ICON_CANCEL Cancel"|"")
+    exit 0
+    ;;
+
+  *)
+    printf 'Invalid selection: %s\n' "$choice" >&2
+    exit 1
+    ;;
+esac
