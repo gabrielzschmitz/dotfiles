@@ -17,6 +17,12 @@
         dotIcons.enable = false;
       };
 
+      # Set the default Xcursor theme and size.
+      xresources.properties = {
+        "Xcursor.theme" = "Simp1eDark";
+        "Xcursor.size" = 24;
+      };
+
       gtk = {
         enable = true;
 
