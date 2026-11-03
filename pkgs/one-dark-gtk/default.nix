@@ -19,6 +19,7 @@ stdenv.mkDerivation {
 
     cp -r OneDarkTheme "$out/share/themes/"
     cp -r OneDarkIcons "$out/share/icons/"
+    cp -r Simp1eDark "$out/share/icons/"
     cp -r qt/*.conf "$out/share/qt/"
 
     runHook postInstall

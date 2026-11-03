@@ -207,6 +207,7 @@
             name = "xsession";
             start = ''
               ${pkgs.xrdb}/bin/xrdb -merge "$HOME/.config/X11/Xresources"
+              ${pkgs.xsetroot}/bin/xsetroot -xcf "$HOME/.local/share/icons/Simp1eDark/cursors/left_ptr" 24
 
               ${pkgs.xset}/bin/xset r rate 300 50 &
               ${pkgs.numlockx}/bin/numlockx &

@@ -4,6 +4,19 @@
   flake.modules.homeManager.gui-theme =
     { config, pkgs, ... }:
     {
+      home.pointerCursor = {
+        enable = true;
+        name = "Simp1eDark";
+        package = pkgs.one-dark-gtk;
+        size = 24;
+
+        gtk.enable = true;
+        x11.enable = true;
+
+        # Disable legacy ~/.icons generation.
+        dotIcons.enable = false;
+      };
+
       gtk = {
         enable = true;
 
