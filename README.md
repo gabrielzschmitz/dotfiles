@@ -108,6 +108,41 @@ the new configuration.
 
 ---
 
+### 5. Authenticate Tailscale
+
+Tailscale is enabled declaratively through the NixOS module and starts
+automatically at boot. On the first setup, authenticate the machine with your
+Tailnet:
+
+```sh
+# Log in to your Tailscale account.
+sudo tailscale login
+
+# Connect the machine to your Tailnet.
+sudo tailscale up
+```
+
+Follow the authentication URL printed in the terminal and authorize the machine.
+
+Verify the connection:
+
+```sh
+# Display devices on your Tailnet.
+tailscale status
+
+# Display this machine's Tailscale IP addresses.
+tailscale ip
+```
+
+Authentication is persisted locally, so you do not need to log in again after
+rebooting. The `tailscaled` systemd service starts automatically and reconnects
+to your Tailnet.
+
+See the [Tailscale NixOS documentation](https://wiki.nixos.org/wiki/Tailscale)
+for additional configuration options.
+
+---
+
 ## Keys
 
 GPG and GitHub SSH keys are **not stored in this repository**. They are kept

@@ -15,7 +15,6 @@
         xbacklight
         maim
         arandr
-        tailscale
 
         # File-related
         nsxiv

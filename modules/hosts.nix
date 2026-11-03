@@ -14,6 +14,7 @@ let
     packages
     craftapps
     thunar
+    tailscale
     display
     fish
     nvim
