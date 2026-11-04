@@ -61,6 +61,10 @@ in
     {
       imports = [ ../hosts/machine/hardware-configuration.nix ];
 
+      services.udev.extraRules = builtins.readFile ../99-vial.rules;
+
+      environment.systemPackages = with pkgs; [ pipette ];
+
       networking.hostName = "machine";
 
       system.stateVersion = "26.05";

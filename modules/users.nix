@@ -15,6 +15,7 @@ in
           "wheel"
           "networkmanager"
           "docker"
+          "input"
         ];
         shell = pkgs.fish;
       };
