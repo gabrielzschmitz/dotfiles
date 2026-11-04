@@ -59,7 +59,7 @@ choice=$(
     "$ICON_SUSPEND  Suspend" \
     "$ICON_HIBERNATE  Hibernate" \
     "$ICON_REBOOT  Reboot" \
-    "$ICON_POWEROFF  Poweroff" \
+    "$ICON_POWEROFF  Poweroff" |
     "$DMENU" -i -l 7 -p "$ICON_PROMPT "
   ) || exit 0
 
