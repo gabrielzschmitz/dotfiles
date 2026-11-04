@@ -29,6 +29,10 @@
     environment.systemPackages = [
       pkgs.nvtopPackages.nvidia
       pkgs.nvtopPackages.intel
+      # OBS with NVIDIA CUDA/NVENC support.
+      (pkgs.obs-studio.override {
+        cudaSupport = true;
+      })
     ];
 
     # Alternate boot entry for keeping the desktop on the Intel iGPU and

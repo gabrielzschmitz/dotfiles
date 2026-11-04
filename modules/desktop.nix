@@ -22,7 +22,6 @@
 
         # Creative
         inkscape
-        obs-studio
         audacity
 
         # General
