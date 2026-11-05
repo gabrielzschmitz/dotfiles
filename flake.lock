@@ -218,6 +218,7 @@
         "nixpkgs": "nixpkgs",
         "pipette": "pipette",
         "st": "st",
+        "tomato-c": "tomato-c",
         "zen-browser": "zen-browser"
       }
     },
@@ -253,6 +254,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tomato-c": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793857514,
+        "narHash": "sha256-vBOUkCXx689yxlbR7GrNvlQeOyuFNGhivzGr1JVdnN8=",
+        "owner": "gabrielzschmitz",
+        "repo": "Tomato.C",
+        "rev": "d15ff82b0f79fc54304eba0804770fa9dc33bee0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gabrielzschmitz",
+        "repo": "Tomato.C",
         "type": "github"
       }
     },

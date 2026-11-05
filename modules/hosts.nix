@@ -22,6 +22,7 @@ let
     home-manager
     st
     dmenu
+    tomato-c
   ];
 
   mkHost =
