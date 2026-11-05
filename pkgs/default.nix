@@ -13,7 +13,13 @@ final: prev: {
 
   damx-daemon = final.callPackage ./damx/daemon.nix { };
 
-  pipette = final.callPackage ({ appimageTools, fetchurl, lib, makeWrapper }:
+  pipette = final.callPackage (
+    {
+      appimageTools,
+      fetchurl,
+      lib,
+      makeWrapper,
+    }:
     let
       app = appimageTools.wrapType2 rec {
         pname = "pipette";
@@ -22,10 +28,28 @@ final: prev: {
           url = "https://github.com/darakuneko/pipette-desktop/releases/download/v${version}/Pipette-linux-x86_64.AppImage";
           sha256 = "sha256-bcsp4l88J6J0BGBy9aVKrB52MR7LZY37leA8GQB44HY=";
         };
-        extraPkgs = pkgs: with pkgs; [
-          libgpg-error libgcrypt gpgme libsecret glib gtk3 webkitgtk_4_1 libsoup_3
-          libGL mesa vulkan-loader libxkbcommon wayland libx11 libxcursor libxrandr libxi libxext libxfixes
-        ];
+        extraPkgs =
+          pkgs: with pkgs; [
+            libgpg-error
+            libgcrypt
+            gpgme
+            libsecret
+            glib
+            gtk3
+            webkitgtk_4_1
+            libsoup_3
+            libGL
+            mesa
+            vulkan-loader
+            libxkbcommon
+            wayland
+            libx11
+            libxcursor
+            libxrandr
+            libxi
+            libxext
+            libxfixes
+          ];
       };
     in
     app.overrideAttrs (old: {
@@ -37,7 +61,7 @@ final: prev: {
           --set WEBKIT_DISABLE_COMPOSITING_MODE 1 \
           --set WEBKIT_DISABLE_DMABUF_RENDERER 1
       '';
-      nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ makeWrapper ];
+      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ makeWrapper ];
     })
   ) { };
 }
