@@ -27,11 +27,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793861807,
-        "narHash": "sha256-zFcpd24+3krA8mj5Ih6PSquCep6aL5zfqhXr+azbUgQ=",
+        "lastModified": 1793912097,
+        "narHash": "sha256-IkJzd3knZVSz34RT8P3bMC99Fktqjiz5zoUKpfNYYd4=",
         "owner": "gabrielzschmitz",
         "repo": "dwm",
-        "rev": "5ee92018c2a7634b310b615894bb6b5679cda23e",
+        "rev": "73d72b0d23bc449c8c228a3747d3b95afddff82a",
         "type": "github"
       },
       "original": {
@@ -264,11 +264,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793857514,
-        "narHash": "sha256-vBOUkCXx689yxlbR7GrNvlQeOyuFNGhivzGr1JVdnN8=",
+        "lastModified": 1793912627,
+        "narHash": "sha256-QdN6GEcpmgfy7si6+kc6dD27zBf5pm4CGizzOHgNMMc=",
         "owner": "gabrielzschmitz",
         "repo": "Tomato.C",
-        "rev": "d15ff82b0f79fc54304eba0804770fa9dc33bee0",
+        "rev": "3f20c716e33fc6bc4d5fe610d0457bc6eb503fbe",
         "type": "github"
       },
       "original": {
@@ -287,11 +287,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793848453,
-        "narHash": "sha256-AUrNeSSdecT4HGoMppft8WdkWkc7HmtXriQSTo+wlf0=",
+        "lastModified": 1793879729,
+        "narHash": "sha256-ZoqGR29kJSlqsgHyMKWjv3zEi6hrxDn+v5nwYntle+w=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "e7d6c199b7cb0e333abfb33b53125bdabd5ba14d",
+        "rev": "9107affa07d1213f0e733ba62235bf23453cfb98",
         "type": "github"
       },
       "original": {
