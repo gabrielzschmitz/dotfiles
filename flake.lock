@@ -264,11 +264,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793912627,
-        "narHash": "sha256-QdN6GEcpmgfy7si6+kc6dD27zBf5pm4CGizzOHgNMMc=",
+        "lastModified": 1793917606,
+        "narHash": "sha256-by6ed/lZ2XABCMxjWN/iTKIg3cUX5+B/3s2oe3tzo8I=",
         "owner": "gabrielzschmitz",
         "repo": "Tomato.C",
-        "rev": "3f20c716e33fc6bc4d5fe610d0457bc6eb503fbe",
+        "rev": "892c234a24c0bc2b10b6eab04851eda84c5a7cc8",
         "type": "github"
       },
       "original": {
