@@ -65,7 +65,7 @@ choice=$(
 
 # Execute selected action.
 case "$choice" in
-  "$ICON_LOCK Lock")
+  "$ICON_LOCK  Lock")
     if command -v slock >/dev/null 2>&1; then
       exec slock
     elif command -v betterlockscreen >/dev/null 2>&1; then
@@ -76,7 +76,7 @@ case "$choice" in
     fi
     ;;
 
-  "$ICON_LOGOUT Logout")
+  "$ICON_LOGOUT  Logout")
     # Terminate the current window manager session.
     if [ -n "$DISPLAY" ]; then
       if command -v dwm >/dev/null 2>&1; then
@@ -91,19 +91,19 @@ case "$choice" in
     fi
     ;;
 
-  "$ICON_SUSPEND Suspend")
+  "$ICON_SUSPEND  Suspend")
     exec systemctl suspend
     ;;
 
-  "$ICON_HIBERNATE Hibernate")
+  "$ICON_HIBERNATE  Hibernate")
     exec systemctl hibernate
     ;;
 
-  "$ICON_REBOOT Reboot")
+  "$ICON_REBOOT  Reboot")
     exec systemctl reboot
     ;;
 
-  "$ICON_POWEROFF Poweroff")
+  "$ICON_POWEROFF  Poweroff")
     exec systemctl poweroff
     ;;
 
