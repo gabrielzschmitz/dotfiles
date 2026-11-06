@@ -19,6 +19,7 @@
         craftapps
         cli
         dev
+        opencode
         formatters
         dunst
         fastfetch

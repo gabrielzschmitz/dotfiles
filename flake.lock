@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "caveman": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791914888,
+        "narHash": "sha256-2xZHdWkWJrPAJ8++qW0Xmb3eORZ41e+GsZjIphqTtlI=",
+        "owner": "JuliusBrussee",
+        "repo": "caveman",
+        "rev": "d262ab3882952a59312ff3537cd86d894523c5ab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "JuliusBrussee",
+        "ref": "v4.0.1",
+        "repo": "caveman",
+        "type": "github"
+      }
+    },
     "dmenu": {
       "inputs": {
         "nixpkgs": [
@@ -208,6 +225,7 @@
     },
     "root": {
       "inputs": {
+        "caveman": "caveman",
         "dmenu": "dmenu",
         "dwm": "dwm",
         "firefox-addons": "firefox-addons",

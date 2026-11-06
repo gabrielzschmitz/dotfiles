@@ -52,6 +52,11 @@
       url = "github:gabrielzschmitz/pipette-desktop/nixos-build";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    caveman = {
+      url = "github:JuliusBrussee/caveman/v4.0.1";
+      flake = false;
+    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);

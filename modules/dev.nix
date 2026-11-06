@@ -27,7 +27,6 @@
         tree-sitter
         doxygen
         lazygit
-        opencode
         pv
         sloc
       ];
