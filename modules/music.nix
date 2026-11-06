@@ -10,6 +10,7 @@
         mpc
         mpd
         mpd-mpris
+        playerctl
       ];
 
       xdg.configFile = {
