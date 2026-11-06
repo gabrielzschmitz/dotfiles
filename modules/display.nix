@@ -217,6 +217,7 @@
               ${pkgs.networkmanagerapplet}/bin/nm-applet &
               ${pkgs.blueman}/bin/blueman-applet &
               ${pkgs.mpd}/bin/mpd &
+              ${pkgs.mpd-mpris}/bin/mpd-mpris &
               ${pkgs.nextcloud-client}/bin/nextcloud \
                 --background \
                 --logfile "$HOME/.cache/X11/nextcloud.log" \
