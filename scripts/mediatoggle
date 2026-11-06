@@ -1,0 +1,56 @@
+#!/bin/sh
+#
+# Controls playback for the active media source.
+#
+# If another player (browser, mpv, etc.) is playing, the action goes to it.
+# If nothing else is playing and the last used non-MPD player is paused,
+# play-pause resumes that player. Otherwise the action goes to MPD.
+#
+# Usage:
+#   mediatoggle [play-pause|play|pause|next|previous|stop]
+#   mediatoggle --help
+#
+# Default action:
+#   play-pause
+#
+# State:
+#   $HOME/.cache/mediatoggle-last stores the last player controlled.
+
+usage() {
+  printf 'Usage: mediatoggle [play-pause|play|pause|next|previous|stop]\n'
+}
+
+case "$1" in
+  -h|--help)
+    usage
+    exit 0
+    ;;
+  -*)
+    printf 'Unknown option: %s\n' "$1" >&2
+    usage >&2
+    exit 2
+    ;;
+esac
+
+action="${1:-play-pause}"
+state="$HOME/.cache/mediatoggle-last"
+
+players=$(playerctl -a --format '{{playerName}} {{status}}' status 2>/dev/null \
+  | awk '$1 != "mpd"')
+
+playing=$(printf '%s\n' "$players" | awk '$2 == "Playing" {print $1; exit}')
+last=$(cat "$state" 2>/dev/null || echo mpd)
+
+if [ -n "$playing" ]; then
+  target="$playing"
+elif [ "$action" = "play-pause" ] && [ "$last" != "mpd" ] \
+  && printf '%s\n' "$players" | grep -q "^$last Paused"; then
+  target="$last"
+  action="play"
+else
+  target=mpd
+fi
+
+mkdir -p "$(dirname "$state")"
+echo "$target" > "$state"
+exec playerctl -p "$target" "$action"
