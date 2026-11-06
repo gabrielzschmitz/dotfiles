@@ -217,7 +217,11 @@
               ${pkgs.networkmanagerapplet}/bin/nm-applet &
               ${pkgs.blueman}/bin/blueman-applet &
               ${pkgs.mpd}/bin/mpd &
-              ${pkgs.mpd-mpris}/bin/mpd-mpris &
+              ${pkgs.mpd-mpris}/bin/mpd-mpris \
+                -network unix \
+                -host "$HOME/.config/mpd/socket" \
+                -no-instance \
+                >/dev/null 2>&1 &
               ${pkgs.nextcloud-client}/bin/nextcloud \
                 --background \
                 --logfile "$HOME/.cache/X11/nextcloud.log" \
