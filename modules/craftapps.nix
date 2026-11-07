@@ -8,6 +8,14 @@
       enable = true;
       linkFonts = true;
     };
+
+    xdg.portal = {
+      enable = true;
+      extraPortals = [
+        inputs.nixpkgs.legacyPackages.x86_64-linux.xdg-desktop-portal-gtk
+      ];
+      config.common.default = [ "gtk" ];
+    };
   };
 
   flake.modules.homeManager.craftapps = {
