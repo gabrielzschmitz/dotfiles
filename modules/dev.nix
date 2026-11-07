@@ -16,7 +16,6 @@
         gnumake
         bear
         git
-        git-lfs
         github-cli
         gnupg
         pinentry-gnome3

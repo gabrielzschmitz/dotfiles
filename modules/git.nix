@@ -1,7 +1,12 @@
 { ... }:
 
 {
-  flake.modules.homeManager.git = {
+  flake.modules.homeManager.git = { pkgs, ... }: {
+    # Git LFS
+    home.packages = [
+      pkgs.git-lfs
+    ];
+
     # Git
     programs.git = {
       enable = true;
@@ -17,6 +22,14 @@
         tag.gpgSign = true;
 
         gpg.format = "openpgp";
+
+        # Git LFS filters
+        filter.lfs = {
+          clean = "git-lfs clean -- %f";
+          smudge = "git-lfs smudge -- %f";
+          process = "git-lfs filter-process";
+          required = true;
+        };
       };
     };
   };
