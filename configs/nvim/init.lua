@@ -397,7 +397,9 @@ require("lazy").setup({
 					starter.sections.recent_files(5, true),
 				},
 
-				footer = "Nix Neovim by gabrielzschmitz",
+				footer = ("Neovim Config by gabrielzschmitz (v%s)"):format(
+					vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch
+				),
 
 				content_hooks = {
 					starter.gen_hook.adding_bullet(),
