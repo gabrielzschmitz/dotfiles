@@ -19,7 +19,7 @@
 
     # Position in the top-right corner, offset from the screen edge.
     origin = top-right
-    offset = (25, 55)
+    offset = (25, 74)
 
     # Scale factor; 0 auto-detects from the monitor.
     scale = 0
