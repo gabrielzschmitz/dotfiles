@@ -225,7 +225,7 @@
                 >>"$HOME/.cache/X11/mpd-mpris.log" 2>&1; do
                 sleep 1
               done &
-              $HOME/.loocal/bin/mpdnotifications &
+              $HOME/.local/bin/mpdnotifications &
 
               ${pkgs.nextcloud-client}/bin/nextcloud \
                 --background \
