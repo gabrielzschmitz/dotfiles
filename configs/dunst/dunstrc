@@ -13,13 +13,13 @@
 
     ### Geometry ###
 
-    # Fixed width; height accepts a range (0, 300).
-    width = 300
+    # width accepts a range (400, 500); height accepts a range (0, 300).
+    width = (400, 500)
     height = (0, 300)
 
     # Position in the top-right corner, offset from the screen edge.
     origin = top-right
-    offset = (25, 50)
+    offset = (25, 55)
 
     # Scale factor; 0 auto-detects from the monitor.
     scale = 0
@@ -103,7 +103,7 @@
     icon_theme = Adwaita
 
     icon_position = left
-    min_icon_size = 32
+    min_icon_size = 64
     max_icon_size = 128
 
     ### History ###
