@@ -17,11 +17,16 @@
         dotIcons.enable = false;
       };
 
-      # Set the default Xcursor theme and size.
-      xresources.properties = {
-        "Xcursor.theme" = "Simp1eDark";
-        "Xcursor.size" = 24;
-      };
+      # Set the default Xcursor theme and size
+      # (already on .dotfiles/configs/Xresources).
+      #  xresources = {
+      #  properties = {
+      #  "Xcursor.theme" = "Simp1eDark";
+      #  "Xcursor.size" = 24;
+      #  };
+      #  # Store Xresources under ~/.config/X11/
+      #  path = "${config.xdg.configHome}/X11/Xresources";
+      #  };
 
       gtk = {
         enable = true;
