@@ -42,6 +42,18 @@
   flake.modules.nixos.thunar =
     { pkgs, ... }:
     let
+      gvfsRuntime = pkgs.gnome.gvfs.overrideAttrs (old: {
+        postPatch = (old.postPatch or "") + ''
+          # Always place the FUSE mount and user-visible mounts under XDG_RUNTIME_DIR.
+          substituteInPlace \
+            daemon/main.c \
+            daemon/mount.c \
+            --replace-fail \
+              'if (g_strcmp0 (g_get_user_runtime_dir(), g_get_user_cache_dir ()) == 0)' \
+              'if (0)'
+        '';
+      });
+
       gtkhashThunar = pkgs.gtkhash.overrideAttrs (old: {
         pname = "gtkhash-thunar";
 
@@ -90,7 +102,10 @@
       ];
 
       # File operations, trash, removable drives, and remote locations
-      services.gvfs.enable = true;
+      services.gvfs = {
+        enable = true;
+        package = gvfsRuntime;
+      };
 
       # File thumbnails
       services.tumbler.enable = true;
