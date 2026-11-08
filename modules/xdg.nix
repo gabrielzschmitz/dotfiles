@@ -6,10 +6,32 @@
     {
       xdg.enable = true;
 
+      xdg.desktopEntries.nvim = {
+        name = "Neovim";
+        genericName = "Text Editor";
+        comment = "Edit files in Neovim using st";
+        exec = "st -e nvim %F";
+        terminal = false;
+        type = "Application";
+        categories = [
+          "Utility"
+          "TextEditor"
+        ];
+        mimeType = [
+          "text/plain"
+          "text/markdown"
+          "application/json"
+        ];
+      };
+
       xdg.mimeApps = {
         enable = true;
 
         defaultApplications = {
+          "text/plain" = "nvim.desktop";
+          "text/markdown" = "nvim.desktop";
+          "application/json" = "nvim.desktop";
+
           "application/pdf" = "org.pwmt.zathura.desktop";
           "image/vnd.djvu" = "org.pwmt.zathura.desktop";
           "image/vnd.djvu+multipage" = "org.pwmt.zathura.desktop";
@@ -31,6 +53,15 @@
       };
 
       home.sessionVariables = {
+        XDG_CONFIG_HOME = "$HOME/.config";
+        XDG_CACHE_HOME = "$HOME/.cache";
+        XDG_DATA_HOME = "$HOME/.local/share";
+        XDG_STATE_HOME = "$HOME/.local/state";
+        XDG_RUNTIME_DIR = "/run/user/$(id -u)";
+
+        CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nvidia/ComputeCache";
+        __GL_SHADER_DISK_CACHE_PATH = "${config.xdg.cacheHome}/nvidia/GLCache";
+
         XDG_DOCUMENTS_DIR = "$HOME/doc";
         XDG_DOWNLOAD_DIR = "$HOME/down";
         XDG_MUSIC_DIR = "$HOME/mus";
@@ -54,7 +85,9 @@
       };
 
       home.activation.createXdgDirs = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p "$HOME/doc" "$HOME/down" "$HOME/mus" "$HOME/pic" "$HOME/vid"
+        mkdir -p "$HOME/doc" "$HOME/down" "$HOME/mus" "$HOME/pic" "$HOME/vid"\
+        "${config.xdg.cacheHome}/nvidia/GLCache"\
+        "${config.xdg.cacheHome}/nvidia/ComputeCache"
       '';
 
       home.activation.installScripts = config.lib.dag.entryAfter [ "writeBoundary" ] ''
