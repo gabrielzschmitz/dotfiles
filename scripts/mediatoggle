@@ -1,24 +1,37 @@
 #!/bin/sh
 #
-# Controls playback for the active media source.
+# Controls playback and volume for the active media source.
 #
-# If another player (browser, mpv, etc.) is playing, the action goes to it.
-# If MPD is playing (including from rmpc or mpc), the action goes to MPD.
-# If nothing is playing and the last used non-MPD player is paused,
-# play-pause resumes that player. Otherwise the action goes to MPD.
+# Player selection:
+#   - If another player (browser, mpv, etc.) is playing, control it.
+#   - If MPD is playing (including through rmpc or mpc), control MPD.
+#   - If nothing is playing, default to MPD.
+#   - For play-pause, resume the last used non-MPD player if it is paused.
+#
+# Playback actions:
+#   play-pause, play, pause, next, previous, stop
+#
+# Volume actions:
+#   volume-up    Increase volume by 5%.
+#   volume-down  Decrease volume by 5%.
+#   mute         Toggle mute, restoring the previous volume when unmuted.
 #
 # Usage:
-#   mediatoggle [play-pause|play|pause|next|previous|stop]
+#   mediatoggle [action]
 #   mediatoggle --help
 #
 # Default action:
 #   play-pause
 #
 # State:
-#   $HOME/.cache/mediatoggle-last stores the last player controlled.
+#   $HOME/.cache/mediatoggle-last
+#       Stores the last player controlled.
+#
+#   $HOME/.cache/mediatoggle-mute-<player>
+#       Stores the previous volume when a player is muted.
 
 usage() {
-  printf 'Usage: mediatoggle [play-pause|play|pause|next|previous|stop]\n'
+  printf 'Usage: mediatoggle [play-pause|play|pause|next|previous|stop|volume-up|volume-down|mute]\n'
 }
 
 case "$1" in
@@ -51,10 +64,62 @@ elif [ "$action" = "play-pause" ] && [ "$last" != "mpd" ] \
   && printf '%s\n' "$players" | grep -q "^$last Paused"; then
   target="$last"
   action="play"
+elif [ "$action" = "volume-up" ] || \
+     [ "$action" = "volume-down" ] || \
+     [ "$action" = "mute" ]; then
+  if [ "$last" != "mpd" ] && \
+     printf '%s\n' "$players" | grep -q "^$last "; then
+    target="$last"
+  else
+    target=mpd
+  fi
 else
   target=mpd
 fi
 
 mkdir -p "$(dirname "$state")"
-echo "$target" > "$state"
+printf '%s\n' "$target" > "$state"
+
+case "$action" in
+  volume-up|volume-down|mute)
+    volume=$(playerctl -p "$target" volume 2>/dev/null) || {
+      printf 'Unable to read volume from player: %s\n' "$target" >&2
+      exit 1
+    }
+
+    case "$action" in
+      volume-up)
+        volume=$(awk -v v="$volume" 'BEGIN {
+          v += 0.05
+          if (v > 1) v = 1
+          printf "%.2f\n", v
+        }')
+        exec playerctl -p "$target" volume "$volume"
+        ;;
+
+      volume-down)
+        volume=$(awk -v v="$volume" 'BEGIN {
+          v -= 0.05
+          if (v < 0) v = 0
+          printf "%.2f\n", v
+        }')
+        exec playerctl -p "$target" volume "$volume"
+        ;;
+
+      mute)
+        mute_state="$HOME/.cache/mediatoggle-mute-$target"
+
+        if awk -v v="$volume" 'BEGIN { exit !(v == 0) }'; then
+          restore=$(cat "$mute_state" 2>/dev/null || echo 1)
+          rm -f "$mute_state"
+          exec playerctl -p "$target" volume "$restore"
+        else
+          printf '%s\n' "$volume" > "$mute_state"
+          exec playerctl -p "$target" volume 0
+        fi
+        ;;
+    esac
+    ;;
+esac
+
 exec playerctl -p "$target" "$action"
