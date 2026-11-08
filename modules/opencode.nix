@@ -13,13 +13,18 @@ in
 
         cp -r ${caveman}/src/plugins/opencode/. $out/
 
-        cp \
-          ${caveman}/src/hooks/caveman-config.js \
+        cp ${caveman}/src/hooks/caveman-config.js \
           $out/caveman-config.cjs
 
-        cp \
-          ${caveman}/src/hooks/caveman-parse.js \
+        cp ${caveman}/src/hooks/caveman-parse.js \
           $out/caveman-parse.cjs
+
+        # Fail the build if the OpenCode 2.x plugin layout is incomplete.
+        test -f $out/server.js
+        test -f $out/plugin.js
+        test -f $out/package.json
+        test -f $out/caveman-config.cjs
+        test -f $out/caveman-parse.cjs
       '';
     in
     {
@@ -63,9 +68,6 @@ in
       xdg.configFile = {
         # Custom OneDark theme
         "opencode/themes/onedark.json".source = ../configs/opencode/themes/onedark.json;
-
-        # OpenCode native plugin
-        "opencode/plugins/caveman".source = caveman-opencode;
 
         # Caveman slash commands
         "opencode/commands".source = "${caveman}/src/plugins/opencode/commands";
