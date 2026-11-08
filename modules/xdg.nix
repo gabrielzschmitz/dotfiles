@@ -53,11 +53,11 @@
       };
 
       home.sessionVariables = {
-        XDG_CONFIG_HOME = "$HOME/.config";
-        XDG_CACHE_HOME = "$HOME/.cache";
-        XDG_DATA_HOME = "$HOME/.local/share";
-        XDG_STATE_HOME = "$HOME/.local/state";
-        XDG_RUNTIME_DIR = "/run/user/$(id -u)";
+        #  XDG_CONFIG_HOME = "$HOME/.config";
+        #  XDG_CACHE_HOME = "$HOME/.cache";
+        #  XDG_DATA_HOME = "$HOME/.local/share";
+        #  XDG_STATE_HOME = "$HOME/.local/state";
+        #  XDG_RUNTIME_DIR = "/run/user/$(id -u)";
 
         CUDA_CACHE_PATH = "${config.xdg.cacheHome}/nvidia/ComputeCache";
         __GL_SHADER_DISK_CACHE_PATH = "${config.xdg.cacheHome}/nvidia/GLCache";
