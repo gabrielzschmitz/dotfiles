@@ -1,0 +1,73 @@
+#!/bin/sh
+#
+# Sends Dunst notifications when MPD changes tracks.
+# Includes track title, artist, optional album, and album artwork.
+#
+# Requires: playerctl, netcat-openbsd, libnotify, curl, coreutils
+
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/mpd-notifications"
+mpd_socket="${XDG_CONFIG_HOME:-$HOME/.config}/mpd/socket"
+
+mkdir -p "$cache_dir"
+
+playerctl --player=mpd --follow metadata \
+  --format '{{mpris:trackid}}' |
+while IFS= read -r track_id; do
+  [ -n "$track_id" ] || continue
+
+  # Wait until MPD has switched to the new track.
+  attempt=0
+  while [ "$attempt" -lt 10 ]; do
+    current_id=$(playerctl -p mpd metadata mpris:trackid 2>/dev/null || true)
+    [ "$current_id" = "$track_id" ] && break
+
+    sleep 0.1
+    attempt=$((attempt + 1))
+  done
+
+  [ "$current_id" = "$track_id" ] || continue
+
+  # Read the current track metadata directly from MPD.
+  metadata=$(
+    printf 'currentsong\nclose\n' |
+      nc -U "$mpd_socket" 2>/dev/null
+  )
+
+  title=$(printf '%s\n' "$metadata" |
+    sed -n 's/^Title: //p' | head -n 1)
+
+  artist=$(printf '%s\n' "$metadata" |
+    sed -n 's/^Artist: //p' | head -n 1)
+
+  album=$(printf '%s\n' "$metadata" |
+    sed -n 's/^Album: //p' | head -n 1)
+
+  [ -n "$title" ] || continue
+
+  # Include the album only when it exists.
+  body=$artist
+  [ -n "$album" ] && body="${body:+$body\n}<i>$album</i>"
+
+  cover_id=$(printf '%s' "$track_id" | sha256sum | cut -d ' ' -f 1)
+  cover="$cache_dir/$cover_id"
+
+  art_url=$(playerctl -p mpd metadata mpris:artUrl 2>/dev/null || true)
+
+  if [ -n "$art_url" ] &&
+    curl --fail --silent --location "$art_url" \
+      --output "$cover" 2>/dev/null; then
+    notify-send \
+      --app-name=MPD \
+      --urgency=low \
+      --hint=string:x-canonical-private-synchronous:mpd \
+      --icon="$cover" \
+      "$title" "$body"
+  else
+    rm -f "$cover"
+    notify-send \
+      --app-name=MPD \
+      --urgency=low \
+      --hint=string:x-canonical-private-synchronous:mpd \
+      "$title" "$body"
+  fi
+done

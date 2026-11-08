@@ -11,8 +11,12 @@
         mpd
         mpd-mpris
         playerctl
+        libnotify
+        curl
+        coreutils
       ];
 
+      # .scripts/mpdnotifications is responsible for notifications on track change
       xdg.configFile = {
         "mpd/mpd.conf".source = ../configs/music/mpd.conf;
         "rmpc/config.ron".source = ../configs/music/rmpc.ron;
