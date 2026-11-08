@@ -14,6 +14,7 @@
         libnotify
         curl
         coreutils
+        util-linux
       ];
 
       # .scripts/mpdnotifications is responsible for notifications on track change

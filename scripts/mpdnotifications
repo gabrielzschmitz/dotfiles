@@ -1,17 +1,24 @@
+
 #!/bin/sh
 #
 # Sends Dunst notifications when MPD changes tracks.
 # Includes track title, artist, optional album, and album artwork.
 #
-# Requires: playerctl, netcat-openbsd, libnotify, curl, coreutils
+# Requires: playerctl, netcat-openbsd, libnotify, curl, coreutils,
+#           util-linux (flock)
 
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/mpd-notifications"
 mpd_socket="${XDG_CONFIG_HOME:-$HOME/.config}/mpd/socket"
+lock_file="${XDG_RUNTIME_DIR:-/tmp}/mpdnotifications.lock"
+
+# Prevent multiple notification watchers from running simultaneously.
+exec 9>"$lock_file"
+flock -n 9 || exit 0
 
 mkdir -p "$cache_dir"
 
 playerctl --player=mpd --follow metadata \
-  --format '{{mpris:trackid}}' |
+  --format '{{mpris:trackid}}' 9>&- |
 while IFS= read -r track_id; do
   [ -n "$track_id" ] || continue
 
@@ -27,7 +34,7 @@ while IFS= read -r track_id; do
 
   [ "$current_id" = "$track_id" ] || continue
 
-  # Read the current track metadata directly from MPD.
+  # Read metadata directly from MPD to avoid stale MPRIS tags.
   metadata=$(
     printf 'currentsong\nclose\n' |
       nc -U "$mpd_socket" 2>/dev/null
@@ -44,7 +51,7 @@ while IFS= read -r track_id; do
 
   [ -n "$title" ] || continue
 
-  # Include the album only when it exists.
+  # Build the body, omitting the album when it is unavailable.
   body=$artist
   [ -n "$album" ] && body="${body:+$body\n}<i>$album</i>"
 

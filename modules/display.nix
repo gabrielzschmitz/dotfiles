@@ -225,7 +225,14 @@
                 >>"$HOME/.cache/X11/mpd-mpris.log" 2>&1; do
                 sleep 1
               done &
-              $HOME/.local/bin/mpdnotifications &
+              ${pkgs.coreutils}/bin/nohup ${pkgs.runtimeShell} -c '
+                until ${pkgs.playerctl}/bin/playerctl --list-all 2>/dev/null |
+                  ${pkgs.gnugrep}/bin/grep -qx mpd; do
+                  ${pkgs.coreutils}/bin/sleep 0.5
+                done
+
+                exec "$HOME/.local/bin/mpdnotifications"
+              ' >>"$HOME/.cache/X11/mpdnotifications.log" 2>&1 </dev/null &
 
               ${pkgs.nextcloud-client}/bin/nextcloud \
                 --background \
