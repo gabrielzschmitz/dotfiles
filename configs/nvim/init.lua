@@ -123,8 +123,8 @@ vim.opt.completeopt = {
 
 vim.opt.undofile = true
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+--  vim.g.loaded_netrw = 1
+--  vim.g.loaded_netrwPlugin = 1
 
 -- ============================================================================
 -- DIAGNOSTICS
@@ -555,27 +555,24 @@ require("lazy").setup({
 	{
 		"luukvbaal/nnn.nvim",
 
-		cmd = {
-			"NnnExplorer",
-			"NnnPicker",
-		},
-
-		mappings = {
-			{
-				"e",
-				function(files)
-					vim.cmd("edit " .. vim.fn.fnameescape(files[1]))
-				end,
-			},
-		},
+		-- Must be loaded during startup so replace_netrw can intercept
+		-- the directory buffer opened by Neovim when starting with `nvim .`.
+		lazy = false,
 
 		config = function()
-			local builtin = require("nnn").builtin
+			local function open_file(files)
+				if files and files[1] and vim.fn.isdirectory(files[1]) == 0 then
+					vim.cmd("edit " .. vim.fn.fnameescape(files[1]))
+				end
+			end
 
 			require("nnn").setup({
 				picker = {
 					cmd = "nnn",
 					session = "shared",
+					tabs = false,
+					fullscreen = false,
+
 					style = {
 						width = 0.9,
 						height = 0.8,
@@ -584,30 +581,9 @@ require("lazy").setup({
 				},
 
 				mappings = {
-					{
-						"e",
-						function(files)
-							if files and files[1] and vim.fn.isdirectory(files[1]) == 0 then
-								vim.cmd("edit " .. vim.fn.fnameescape(files[1]))
-							end
-						end,
-					},
-					{
-						"l",
-						function(files)
-							if files and files[1] and vim.fn.isdirectory(files[1]) == 0 then
-								vim.cmd("edit " .. vim.fn.fnameescape(files[1]))
-							end
-						end,
-					},
-					{
-						"<Right>",
-						function(files)
-							if files and files[1] and vim.fn.isdirectory(files[1]) == 0 then
-								vim.cmd("edit " .. vim.fn.fnameescape(files[1]))
-							end
-						end,
-					},
+					{ "e", open_file },
+					{ "l", open_file },
+					{ "<Right>", open_file },
 				},
 
 				offset = true,
