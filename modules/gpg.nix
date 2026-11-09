@@ -1,4 +1,4 @@
-{ ... }:
+{ inputs, ... }:
 
 {
   flake.modules.homeManager.gpg =
@@ -22,7 +22,7 @@
       services.gpg-agent = {
         enable = true;
 
-        pinentry.package = pkgs.pinentry-dmenu;
+        pinentry.package = inputs.pinentry-dmenu.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
         defaultCacheTtl = 3600;
         maxCacheTtl = 7200;

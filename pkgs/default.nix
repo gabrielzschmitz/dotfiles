@@ -1,8 +1,6 @@
 final: prev: {
   sfmono-nerd-font = final.callPackage ./sfmono-nerd-font { };
 
-  pinentry-dmenu = final.callPackage ./pinentry-dmenu { };
-
   advcpmv = final.callPackage ./advcpmv { };
 
   one-dark-gtk = final.callPackage ./one-dark-gtk { };

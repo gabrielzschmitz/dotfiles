@@ -27,6 +27,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    pinentry-dmenu = {
+      url = "github:gabrielzschmitz/pinentry-dmenu";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     tomato-c = {
       url = "github:gabrielzschmitz/Tomato.C";
       inputs.nixpkgs.follows = "nixpkgs";
