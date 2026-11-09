@@ -114,19 +114,54 @@
               return 1
             end
 
-            set -l pkg_file (nix eval --impure --raw --expr "
-              let
-                pkgs = (builtins.getFlake \"github:NixOS/nixpkgs/nixos-unstable\").legacyPackages.x86_64-linux;
-              in
-                pkgs.$argv[1].meta.position
-            " 2>/dev/null | string split ':' -f 1)
+            set -l flake "github:NixOS/nixpkgs/nixos-unstable"
 
-            if test -f "$pkg_file"
-              bat "$pkg_file"
-            else
+            # Resolve package position from the latest upstream revision.
+            set -l pkg_position (nix eval --refresh --impure --raw --expr "
+                (builtins.getFlake \"$flake\").legacyPackages.x86_64-linux.$argv[1].meta.position
+                " 2>/dev/null | string split ':' -f 1)
+
+            if test -z "$pkg_position"
               echo "Package '$argv[1]' not found or has no source position."
               return 1
             end
+
+            # Extract the path relative to the Nixpkgs repository.
+            set -l relative_path (string replace -r '^.*/(pkgs/.*)$' '$1' "$pkg_position")
+
+            if not string match -rq '^pkgs/' "$relative_path"
+              echo "Could not resolve upstream package path: $pkg_position"
+              return 1
+            end
+
+            # Get the exact revision used by the refreshed flake.
+            set -l revision (nix eval --impure --raw --expr "
+              (builtins.getFlake \"$flake\").sourceInfo.rev
+            " 2>/dev/null)
+
+            if test -z "$revision"
+              echo "Could not resolve upstream revision."
+              return 1
+            end
+
+            set -l url "https://raw.githubusercontent.com/NixOS/nixpkgs/$revision/$relative_path"
+            set -l tmp_file (mktemp) || return 1
+
+            # Always fetch directly from GitHub.
+            if not curl -fsSL -H "Cache-Control: no-cache" "$url" -o "$tmp_file"
+              echo "Failed to fetch upstream source."
+              rm -f "$tmp_file"
+              return 1
+            end
+
+            # Display source and preserve bat's exit status.
+            bat --language=nix "$tmp_file"
+            set -l exit_status $status
+
+            # Remove temporary file.
+            rm -f "$tmp_file"
+
+            return $exit_status
           '';
         };
       };
