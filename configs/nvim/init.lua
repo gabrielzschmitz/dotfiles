@@ -846,6 +846,14 @@ require("lazy").setup({
 					end
 				end,
 			})
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = { "bash", "sh" },
+				callback = function(args)
+					vim.bo[args.buf].textwidth = 80
+					vim.bo[args.buf].formatoptions =
+						vim.bo[args.buf].formatoptions .. "cq"
+				end,
+			})
 		end,
 	},
 
@@ -988,14 +996,78 @@ require("lazy").setup({
 				},
 			},
 
+			formatters = {
+				shfmt = {
+					prepend_args = { "-i", "2", "-ci", "-bn", "-sr" },
+				},
+			},
+
 			--------------------------------------------------------------------
 			-- Format on save
 			--------------------------------------------------------------------
 
-			format_on_save = {
-				timeout_ms = 500,
-				lsp_fallback = true,
-			},
+			format_on_save = function(bufnr)
+				local filetype = vim.bo[bufnr].filetype
+
+				if filetype == "bash" or filetype == "sh" then
+					local lines = vim.api.nvim_buf_get_lines(
+						bufnr,
+						0,
+						-1,
+						false
+					)
+
+					for i = #lines, 1, -1 do
+						local prefix, comment = lines[i]:match("^(%s*#%s?)(.*)$")
+
+						if prefix and #lines[i] > 80 then
+							local width = 80 - #prefix
+							local wrapped = {}
+							local current = ""
+
+							for word in comment:gmatch("%S+") do
+								while #word > width do
+									if current ~= "" then
+										wrapped[#wrapped + 1] = prefix .. current
+										current = ""
+									end
+
+									wrapped[#wrapped + 1] = prefix
+										.. word:sub(1, width)
+									word = word:sub(width + 1)
+								end
+
+								if current == "" then
+									current = word
+								elseif #current + #word + 1 <= width then
+									current = current .. " " .. word
+								else
+									wrapped[#wrapped + 1] = prefix
+										.. current
+									current = word
+								end
+							end
+
+							if current ~= "" then
+								wrapped[#wrapped + 1] = prefix .. current
+							end
+
+							vim.api.nvim_buf_set_lines(
+								bufnr,
+								i - 1,
+								i,
+								false,
+								wrapped
+							)
+						end
+					end
+				end
+
+				return {
+					timeout_ms = 500,
+					lsp_fallback = true,
+				}
+			end,
 		},
 	},
 
