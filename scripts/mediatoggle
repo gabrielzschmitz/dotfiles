@@ -37,15 +37,15 @@ usage() {
 
 # Handle help before player discovery, so help works without media tools.
 case "$1" in
-  -h|--help)
-    usage
-    exit 0
-    ;;
-  -*)
-    printf 'Unknown option: %s\n' "$1" >&2
-    usage >&2
-    exit 2
-    ;;
+-h | --help)
+  usage
+  exit 0
+  ;;
+-*)
+  printf 'Unknown option: %s\n' "$1" >&2
+  usage >&2
+  exit 2
+  ;;
 esac
 
 # Use play-pause when caller did not provide an action.
@@ -61,28 +61,28 @@ if [ "$action" = "play-pause" ]; then
   mpd_status=$(playerctl -p mpd status 2>/dev/null)
   if [ "$mpd_status" = "Playing" ]; then
     mkdir -p "$HOME/.cache"
-    printf '%s\n' mpd > "$state"
-    date +%s > "$mpd_resume"
+    printf '%s\n' mpd >"$state"
+    date +%s >"$mpd_resume"
     exec playerctl -p mpd play-pause
   fi
 
   # A recent MPD pause should resume MPD without a full player scan.
   if [ "$mpd_status" = "Paused" ] && [ -r "$mpd_resume" ]; then
-    IFS= read -r resume_time < "$mpd_resume" 2>/dev/null || :
+    IFS= read -r resume_time <"$mpd_resume" 2>/dev/null || :
     case "$resume_time" in
-      ''|*[!0-9]*)
+    '' | *[!0-9]*)
+      rm -f "$mpd_resume"
+      ;;
+    *)
+      now=$(date +%s)
+      if [ "$now" -ge "$resume_time" ] && [ "$((now - resume_time))" -le 10 ]; then
+        mkdir -p "$HOME/.cache"
+        printf '%s\n' mpd >"$state"
         rm -f "$mpd_resume"
-        ;;
-      *)
-        now=$(date +%s)
-        if [ "$now" -ge "$resume_time" ] && [ "$((now - resume_time))" -le 10 ]; then
-          mkdir -p "$HOME/.cache"
-          printf '%s\n' mpd > "$state"
-          rm -f "$mpd_resume"
-          exec playerctl -p mpd play
-        fi
-        rm -f "$mpd_resume"
-        ;;
+        exec playerctl -p mpd play
+      fi
+      rm -f "$mpd_resume"
+      ;;
     esac
   fi
 fi
@@ -100,7 +100,7 @@ mpd_status=${status_summary%%|*}
 playing=${status_summary#*|}
 # If no saved player exists, treat MPD as the previous player.
 if [ -r "$state" ]; then
-  IFS= read -r last < "$state" 2>/dev/null || :
+  IFS= read -r last <"$state" 2>/dev/null || :
 else
   last=mpd
 fi
@@ -108,7 +108,7 @@ fi
 # Read the recent MPD pause timestamp without spawning cat.
 resume_time=
 if [ -r "$mpd_resume" ]; then
-  IFS= read -r resume_time < "$mpd_resume" 2>/dev/null || :
+  IFS= read -r resume_time <"$mpd_resume" 2>/dev/null || :
 fi
 
 # Expire MPD's temporary resume priority after 10 seconds.
@@ -116,27 +116,27 @@ if [ -n "$resume_time" ]; then
   # Read current time only when a timestamp needs validation.
   now=$(date +%s)
   case "$resume_time" in
-    *[!0-9]*)
-      # Discard malformed timestamps before using them in shell arithmetic.
+  *[!0-9]*)
+    # Discard malformed timestamps before using them in shell arithmetic.
+    rm -f "$mpd_resume"
+    resume_time=""
+    ;;
+  *)
+    # Discard expired timestamps and timestamps from a clock-reset future.
+    if [ "$((now - resume_time))" -gt 10 ] || [ "$now" -lt "$resume_time" ]; then
       rm -f "$mpd_resume"
       resume_time=""
-      ;;
-    *)
-      # Discard expired timestamps and timestamps from a clock-reset future.
-      if [ "$((now - resume_time))" -gt 10 ] || [ "$now" -lt "$resume_time" ]; then
-        rm -f "$mpd_resume"
-        resume_time=""
-      fi
-      ;;
+    fi
+    ;;
   esac
 fi
 
 # A recent MPD pause makes play-pause resume MPD once,
 # then clears that priority.
-if [ "$action" = "play-pause" ] && \
-   [ "$mpd_status" = "Paused" ] && \
-   [ -n "$resume_time" ] && \
-   [ "$((now - resume_time))" -le 10 ]; then
+if [ "$action" = "play-pause" ] &&
+  [ "$mpd_status" = "Paused" ] &&
+  [ -n "$resume_time" ] &&
+  [ "$((now - resume_time))" -le 10 ]; then
   target=mpd
   action=play
   rm -f "$mpd_resume"
@@ -147,16 +147,16 @@ elif [ "$mpd_status" = "Playing" ]; then
 elif [ -n "$playing" ]; then
   target="$playing"
 # If toggling and the last non-MPD player is paused, resume that player.
-elif [ "$action" = "play-pause" ] && [ "$last" != "mpd" ] \
-  && printf '%s\n' "$players" | grep -q "^$last Paused"; then
+elif [ "$action" = "play-pause" ] && [ "$last" != "mpd" ] &&
+  printf '%s\n' "$players" | grep -q "^$last Paused"; then
   target="$last"
   action="play"
 # Volume controls use the last available non-MPD player; otherwise use MPD.
-elif [ "$action" = "volume-up" ] || \
-     [ "$action" = "volume-down" ] || \
-     [ "$action" = "mute" ]; then
-  if [ "$last" != "mpd" ] && \
-     printf '%s\n' "$players" | grep -q "^$last "; then
+elif [ "$action" = "volume-up" ] ||
+  [ "$action" = "volume-down" ] ||
+  [ "$action" = "mute" ]; then
+  if [ "$last" != "mpd" ] &&
+    printf '%s\n' "$players" | grep -q "^$last "; then
     target="$last"
   else
     target=mpd
@@ -168,62 +168,62 @@ fi
 
 # Ensure the cache directory exists and save this action's selected player.
 mkdir -p "$HOME/.cache"
-printf '%s\n' "$target" > "$state"
+printf '%s\n' "$target" >"$state"
 
 # Handle volume operations separately because playerctl
 # expects an absolute volume.
 case "$action" in
-  volume-up|volume-down|mute)
-    # Read current volume; stop with an error if the selected player
-    # lacks volume data.
-    volume=$(playerctl -p "$target" volume 2>/dev/null) || {
-      printf 'Unable to read volume from player: %s\n' "$target" >&2
-      exit 1
-    }
+volume-up | volume-down | mute)
+  # Read current volume; stop with an error if the selected player
+  # lacks volume data.
+  volume=$(playerctl -p "$target" volume 2>/dev/null) || {
+    printf 'Unable to read volume from player: %s\n' "$target" >&2
+    exit 1
+  }
 
-    case "$action" in
-      volume-up)
-        # Add 5 percentage points and cap volume at 100%.
-        volume=$(awk -v v="$volume" 'BEGIN {
+  case "$action" in
+  volume-up)
+    # Add 5 percentage points and cap volume at 100%.
+    volume=$(awk -v v="$volume" 'BEGIN {
           v += 0.05
           if (v > 1) v = 1
           printf "%.2f\n", v
         }')
-        exec playerctl -p "$target" volume "$volume"
-        ;;
+    exec playerctl -p "$target" volume "$volume"
+    ;;
 
-      volume-down)
-        # Subtract 5 percentage points and floor volume at 0%.
-        volume=$(awk -v v="$volume" 'BEGIN {
+  volume-down)
+    # Subtract 5 percentage points and floor volume at 0%.
+    volume=$(awk -v v="$volume" 'BEGIN {
           v -= 0.05
           if (v < 0) v = 0
           printf "%.2f\n", v
         }')
-        exec playerctl -p "$target" volume "$volume"
-        ;;
-
-      mute)
-        # Store prior volume per player so each player can restore
-        # its own level.
-        mute_state="$HOME/.cache/mediatoggle-mute-$target"
-
-        # A zero volume means muted; restore saved volume or default to 100%.
-        if awk -v v="$volume" 'BEGIN { exit !(v == 0) }'; then
-          if [ -r "$mute_state" ]; then
-            IFS= read -r restore < "$mute_state" 2>/dev/null || :
-          else
-            restore=1
-          fi
-          rm -f "$mute_state"
-          exec playerctl -p "$target" volume "$restore"
-        else
-          # Save current volume before setting volume to zero.
-          printf '%s\n' "$volume" > "$mute_state"
-          exec playerctl -p "$target" volume 0
-        fi
-        ;;
-    esac
+    exec playerctl -p "$target" volume "$volume"
     ;;
+
+  mute)
+    # Store prior volume per player so each player can restore
+    # its own level.
+    mute_state="$HOME/.cache/mediatoggle-mute-$target"
+
+    # A zero volume means muted; restore saved volume or default to 100%.
+    if awk -v v="$volume" 'BEGIN { exit !(v == 0) }'; then
+      if [ -r "$mute_state" ]; then
+        IFS= read -r restore <"$mute_state" 2>/dev/null || :
+      else
+        restore=1
+      fi
+      rm -f "$mute_state"
+      exec playerctl -p "$target" volume "$restore"
+    else
+      # Save current volume before setting volume to zero.
+      printf '%s\n' "$volume" >"$mute_state"
+      exec playerctl -p "$target" volume 0
+    fi
+    ;;
+  esac
+  ;;
 esac
 
 # Mark an MPD play-pause action so a quick follow-up resumes MPD.
@@ -231,7 +231,7 @@ if [ "$target" = "mpd" ] && [ "$action" = "play-pause" ]; then
   # Save pause time only when MPD is currently playing;
   # otherwise clear stale state.
   if [ "$mpd_status" = "Playing" ]; then
-    date +%s > "$mpd_resume"
+    date +%s >"$mpd_resume"
   else
     rm -f "$mpd_resume"
   fi
