@@ -31,6 +31,14 @@ ICON_HIBERNATE='󰒲'
 ICON_REBOOT='󰜉'
 ICON_POWEROFF='󰐥'
 
+# Build menu labels once for both display and selection dispatch.
+OPTION_LOCK="$ICON_LOCK  Lock"
+OPTION_LOGOUT="$ICON_LOGOUT  Logout"
+OPTION_SUSPEND="$ICON_SUSPEND  Suspend"
+OPTION_HIBERNATE="$ICON_HIBERNATE  Hibernate"
+OPTION_REBOOT="$ICON_REBOOT  Reboot"
+OPTION_POWEROFF="$ICON_POWEROFF  Poweroff"
+
 # Print the supported command-line syntax.
 usage() {
   printf 'Usage: powermenu [--help]\n'
@@ -61,12 +69,12 @@ parse_args() {
 # Print menu entries and return dmenu's selected entry and exit status.
 show_menu() {
   printf '%s\n' \
-    "$ICON_LOCK  Lock" \
-    "$ICON_LOGOUT  Logout" \
-    "$ICON_SUSPEND  Suspend" \
-    "$ICON_HIBERNATE  Hibernate" \
-    "$ICON_REBOOT  Reboot" \
-    "$ICON_POWEROFF  Poweroff" \
+    "$OPTION_LOCK" \
+    "$OPTION_LOGOUT" \
+    "$OPTION_SUSPEND" \
+    "$OPTION_HIBERNATE" \
+    "$OPTION_REBOOT" \
+    "$OPTION_POWEROFF" \
     | "$DMENU" -i -l 7 -p "$ICON_PROMPT "
 }
 
@@ -98,20 +106,20 @@ log_out() {
 # Run the selected suspend, hibernate, reboot, or poweroff operation.
 run_power_action() {
   case "$1" in
-    "$ICON_SUSPEND  Suspend") exec systemctl suspend ;;
-    "$ICON_HIBERNATE  Hibernate") exec systemctl hibernate ;;
-    "$ICON_REBOOT  Reboot") exec systemctl reboot ;;
-    "$ICON_POWEROFF  Poweroff") exec systemctl poweroff ;;
+    "$OPTION_SUSPEND") exec systemctl suspend ;;
+    "$OPTION_HIBERNATE") exec systemctl hibernate ;;
+    "$OPTION_REBOOT") exec systemctl reboot ;;
+    "$OPTION_POWEROFF") exec systemctl poweroff ;;
   esac
 }
 
 # Dispatch a menu selection or reject an unexpected dmenu response.
 handle_selection() {
   case "$1" in
-    "$ICON_LOCK  Lock") lock_screen ;;
-    "$ICON_LOGOUT  Logout") log_out ;;
-    "$ICON_SUSPEND  Suspend" | "$ICON_HIBERNATE  Hibernate" | \
-      "$ICON_REBOOT  Reboot" | "$ICON_POWEROFF  Poweroff")
+    "$OPTION_LOCK") lock_screen ;;
+    "$OPTION_LOGOUT") log_out ;;
+    "$OPTION_SUSPEND" | "$OPTION_HIBERNATE" | "$OPTION_REBOOT" | \
+      "$OPTION_POWEROFF")
       run_power_action "$1"
       ;;
     *)
