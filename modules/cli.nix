@@ -16,6 +16,7 @@
         xdotool
         numlockx
         ffmpeg
+        dragon-drop
         tree
         zip
         unzip
