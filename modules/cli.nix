@@ -15,6 +15,7 @@
         xsetroot
         xdotool
         numlockx
+        ffmpeg
         tree
         zip
         unzip
