@@ -208,11 +208,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794265387,
-        "narHash": "sha256-3RV8I6CZdP1VEKOnLQvUsd7UMir10zzFtCah8loTsg4=",
+        "lastModified": 1794267648,
+        "narHash": "sha256-eZ15thKXgdrwhSnQiZIUgm6N7FuxayIFvIYTxAPV82k=",
         "owner": "gabrielzschmitz",
         "repo": "pinentry-dmenu",
-        "rev": "ce7d433c2aefa6bb735e7f3dc707228f934e03c4",
+        "rev": "71d361d547e83614bce7b6d655063f0397de1ee5",
         "type": "github"
       },
       "original": {
