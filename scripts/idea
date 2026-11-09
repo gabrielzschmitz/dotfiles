@@ -10,34 +10,54 @@
 # Default file:
 #   $HOME/doc/idea.md
 
-file="$HOME/doc/idea.md"
+# Print supported syntax when a required --file value is missing.
+usage() {
+  printf 'Usage: idea [--file FILE]\n' >&2
+}
 
-while [ "$#" -gt 0 ]; do
-  case "$1" in
+# Parse options and positional paths; keep the last supplied path as the target.
+parse_args() {
+  parsed_file="$HOME/doc/idea.md"
+
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
     --file)
       if [ "$#" -lt 2 ] || [ -z "$2" ]; then
-        printf 'Usage: idea [--file FILE]\n' >&2
+        usage
         exit 2
       fi
-      file="$2"
+      parsed_file=$2
       shift 2
       ;;
     --)
       shift
       if [ "$#" -gt 0 ]; then
-        file="$1"
+        parsed_file=$1
       fi
       break
       ;;
     -*)
-      printf 'Unknown option: %s\nUsage: idea [--file FILE]\n' "$1" >&2
+      printf 'Unknown option: %s\n' "$1" >&2
+      usage
       exit 2
       ;;
     *)
-      file="$1"
+      parsed_file=$1
       shift
       ;;
-  esac
-done
+    esac
+  done
+}
 
-exec nvim "$file"
+# Replace this process with Neovim, opening the selected scratchpad file.
+open_idea() {
+  exec nvim "$1"
+}
+
+# Parse arguments and open the chosen file.
+main() {
+  parse_args "$@"
+  open_idea "$parsed_file"
+}
+
+main "$@"
