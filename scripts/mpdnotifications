@@ -5,75 +5,137 @@
 #
 # Requires: playerctl, netcat-openbsd, libnotify, curl, coreutils,
 #           util-linux (flock)
+#
+# State and configuration:
+#   XDG_CACHE_HOME or ~/.cache stores downloaded album artwork.
+#   XDG_CONFIG_HOME or ~/.config selects MPD's Unix socket path.
+#   XDG_RUNTIME_DIR or /tmp stores the single-instance lock file.
 
-cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/mpd-notifications"
-mpd_socket="${XDG_CONFIG_HOME:-$HOME/.config}/mpd/socket"
-lock_file="${XDG_RUNTIME_DIR:-/tmp}/mpdnotifications.lock"
+# Acquire the lock file (argument 2) and create cache directory (argument 1).
+initialize_watcher() {
+  watcher_lock_file=$2
+  exec 9> "$watcher_lock_file"
+  flock -n 9 || exit 0
+  mkdir -p "$1"
+}
 
-# Prevent multiple notification watchers from running simultaneously.
-exec 9>"$lock_file"
-flock -n 9 || exit 0
-
-mkdir -p "$cache_dir"
-
-playerctl --player=mpd --follow metadata \
-  --format '{{mpris:trackid}}' 9>&- |
-while IFS= read -r track_id; do
-  [ -n "$track_id" ] || continue
-
-  # Wait until MPD has switched to the new track.
+# Wait for expected track ID (argument 1); return failure after ten attempts.
+wait_for_track() {
+  expected_track_id=$1
   attempt=0
   while [ "$attempt" -lt 10 ]; do
-    current_id=$(playerctl -p mpd metadata mpris:trackid 2>/dev/null || true)
-    [ "$current_id" = "$track_id" ] && break
-
+    current_track_id=$(
+      playerctl -p mpd metadata mpris:trackid 2> /dev/null || true
+    )
+    [ "$current_track_id" = "$expected_track_id" ] && return 0
     sleep 0.1
     attempt=$((attempt + 1))
   done
+  return 1
+}
 
-  [ "$current_id" = "$track_id" ] || continue
+# Read MPD's current-song response from socket path (argument 1).
+read_mpd_metadata() {
+  printf 'currentsong\nclose\n' | nc -U "$1" 2> /dev/null
+}
 
-  # Read metadata directly from MPD to avoid stale MPRIS tags.
-  metadata=$(
-    printf 'currentsong\nclose\n' |
-      nc -U "$mpd_socket" 2>/dev/null
-  )
+# Return first metadata value in text (argument 1) matching prefix (argument 2).
+extract_metadata_field() {
+  printf '%s\n' "$1" | awk -v prefix="$2" '
+    index($0, prefix) == 1 {
+      print substr($0, length(prefix) + 1)
+      exit
+    }
+  '
+}
 
-  title=$(printf '%s\n' "$metadata" |
-    sed -n 's/^Title: //p' | head -n 1)
+# Download URL (argument 1) to path (argument 2); fail when unavailable.
+download_artwork() {
+  artwork_url=$1
+  artwork_path=$2
+  [ -n "$artwork_url" ] || return 1
+  curl --fail --silent --location "$artwork_url" \
+    --output "$artwork_path" 2> /dev/null
+}
 
-  artist=$(printf '%s\n' "$metadata" |
-    sed -n 's/^Artist: //p' | head -n 1)
+# Notify with title, body, artwork URL, and cache path as arguments 1 through 4.
+send_notification() {
+  notification_title=$1
+  notification_body=$2
+  notification_artwork=$3
+  notification_cover=$4
 
-  album=$(printf '%s\n' "$metadata" |
-    sed -n 's/^Album: //p' | head -n 1)
-
-  [ -n "$title" ] || continue
-
-  # Build the body, omitting the album when it is unavailable.
-  body=$artist
-  [ -n "$album" ] && body="${body:+$body\n}<i>$album</i>"
-
-  cover_id=$(printf '%s' "$track_id" | sha256sum | cut -d ' ' -f 1)
-  cover="$cache_dir/$cover_id"
-
-  art_url=$(playerctl -p mpd metadata mpris:artUrl 2>/dev/null || true)
-
-  if [ -n "$art_url" ] &&
-    curl --fail --silent --location "$art_url" \
-      --output "$cover" 2>/dev/null; then
+  if download_artwork "$notification_artwork" "$notification_cover"; then
     notify-send \
       --app-name=MPD \
       --urgency=low \
       --hint=string:x-canonical-private-synchronous:mpd \
-      --icon="$cover" \
-      "$title" "$body"
+      --icon="$notification_cover" \
+      "$notification_title" "$notification_body"
   else
-    rm -f "$cover"
+    rm -f "$notification_cover"
     notify-send \
       --app-name=MPD \
       --urgency=low \
       --hint=string:x-canonical-private-synchronous:mpd \
-      "$title" "$body"
+      "$notification_title" "$notification_body"
   fi
-done
+}
+
+# Resolve track ID (argument 1), using cache (2) and socket (3), then notify.
+notify_track() {
+  notification_track_id=$1
+  notification_cache_dir=$2
+  notification_socket=$3
+  wait_for_track "$notification_track_id" || return 0
+
+  notification_metadata=$(read_mpd_metadata "$notification_socket")
+  notification_title=$(extract_metadata_field \
+    "$notification_metadata" 'Title: ')
+  notification_artist=$(extract_metadata_field \
+    "$notification_metadata" 'Artist: ')
+  notification_album=$(extract_metadata_field \
+    "$notification_metadata" 'Album: ')
+  [ -n "$notification_title" ] || return 0
+
+  notification_body=$notification_artist
+  if [ -n "$notification_album" ]; then
+    notification_body="${notification_body:+$notification_body\n}"
+    notification_body="${notification_body}<i>$notification_album</i>"
+  fi
+
+  notification_cover_id=$(
+    printf '%s' "$notification_track_id" | sha256sum | cut -d ' ' -f 1
+  )
+  notification_cover="$notification_cache_dir/$notification_cover_id"
+  notification_artwork_url=$(
+    playerctl -p mpd metadata mpris:artUrl 2> /dev/null || true
+  )
+  send_notification \
+    "$notification_title" "$notification_body" \
+    "$notification_artwork_url" "$notification_cover"
+}
+
+# Follow MPD track changes and process events using cache (1) and socket (2).
+watch_tracks() {
+  watcher_cache_dir=$1
+  watcher_socket=$2
+  playerctl --player=mpd --follow metadata \
+    --format '{{mpris:trackid}}' 9>&- \
+    | while IFS= read -r track_id; do
+      [ -n "$track_id" ] || continue
+      notify_track "$track_id" "$watcher_cache_dir" "$watcher_socket"
+    done
+}
+
+# Resolve XDG paths, acquire the lock, and watch MPD until its stream ends.
+main() {
+  cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/mpd-notifications"
+  mpd_socket="${XDG_CONFIG_HOME:-$HOME/.config}/mpd/socket"
+  lock_file="${XDG_RUNTIME_DIR:-/tmp}/mpdnotifications.lock"
+
+  initialize_watcher "$cache_dir" "$lock_file"
+  watch_tracks "$cache_dir" "$mpd_socket"
+}
+
+main "$@"

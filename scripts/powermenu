@@ -15,6 +15,10 @@
 #   Poweroff   Power off the system.
 #   Cancel     Exit without performing an action.
 #
+# Requires: dmenu, systemctl
+# Optional: slock or betterlockscreen for locking; dwm for logout.
+# Configuration: DMENU selects the dmenu executable.
+#
 
 DMENU="${DMENU:-dmenu}"
 
@@ -27,88 +31,101 @@ ICON_HIBERNATE='󰒲'
 ICON_REBOOT='󰜉'
 ICON_POWEROFF='󰐥'
 
+# Print the supported command-line syntax.
 usage() {
   printf 'Usage: powermenu [--help]\n'
 }
 
-# Parse arguments.
-while [ "$#" -gt 0 ]; do
-  case "$1" in
-    -h|--help)
-      usage
-      exit 0
-      ;;
-    -*)
-      printf 'Unknown option: %s\n' "$1" >&2
-      usage >&2
-      exit 2
-      ;;
-    *)
-      printf 'Unexpected argument: %s\n' "$1" >&2
-      usage >&2
-      exit 2
-      ;;
-  esac
-done
+# Accept help only; reject every other option and positional argument.
+parse_args() {
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      -h | --help)
+        usage
+        exit 0
+        ;;
+      -*)
+        printf 'Unknown option: %s\n' "$1" >&2
+        usage >&2
+        exit 2
+        ;;
+      *)
+        printf 'Unexpected argument: %s\n' "$1" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+  done
+}
 
-# Display menu and capture selection.
-choice=$(
+# Print menu entries and return dmenu's selected entry and exit status.
+show_menu() {
   printf '%s\n' \
     "$ICON_LOCK  Lock" \
     "$ICON_LOGOUT  Logout" \
     "$ICON_SUSPEND  Suspend" \
     "$ICON_HIBERNATE  Hibernate" \
     "$ICON_REBOOT  Reboot" \
-    "$ICON_POWEROFF  Poweroff" |
-    "$DMENU" -i -l 7 -p "$ICON_PROMPT "
-  ) || exit 0
+    "$ICON_POWEROFF  Poweroff" \
+    | "$DMENU" -i -l 7 -p "$ICON_PROMPT "
+}
 
-# Execute selected action.
-case "$choice" in
-  "$ICON_LOCK  Lock")
-    if command -v slock >/dev/null 2>&1; then
-      exec slock
-    elif command -v betterlockscreen >/dev/null 2>&1; then
-      exec betterlockscreen -l
-    else
-      printf 'No supported screen locker found.\n' >&2
-      exit 1
-    fi
-    ;;
-
-  "$ICON_LOGOUT  Logout")
-    # Terminate the current window manager session.
-    if [ -n "$DISPLAY" ]; then
-      if command -v dwm >/dev/null 2>&1; then
-        pkill -x dwm
-      else
-        printf 'No supported window manager found.\n' >&2
-        exit 1
-      fi
-    else
-      printf 'No graphical session detected.\n' >&2
-      exit 1
-    fi
-    ;;
-
-  "$ICON_SUSPEND  Suspend")
-    exec systemctl suspend
-    ;;
-
-  "$ICON_HIBERNATE  Hibernate")
-    exec systemctl hibernate
-    ;;
-
-  "$ICON_REBOOT  Reboot")
-    exec systemctl reboot
-    ;;
-
-  "$ICON_POWEROFF  Poweroff")
-    exec systemctl poweroff
-    ;;
-
-  *)
-    printf 'Invalid selection: %s\n' "$choice" >&2
+# Lock the session with slock, falling back to betterlockscreen.
+lock_screen() {
+  if command -v slock > /dev/null 2>&1; then
+    exec slock
+  elif command -v betterlockscreen > /dev/null 2>&1; then
+    exec betterlockscreen -l
+  else
+    printf 'No supported screen locker found.\n' >&2
     exit 1
-    ;;
-esac
+  fi
+}
+
+# End the dwm session when a graphical display is available.
+log_out() {
+  if [ -z "$DISPLAY" ]; then
+    printf 'No graphical session detected.\n' >&2
+    exit 1
+  fi
+  if ! command -v dwm > /dev/null 2>&1; then
+    printf 'No supported window manager found.\n' >&2
+    exit 1
+  fi
+  pkill -x dwm
+}
+
+# Run the selected suspend, hibernate, reboot, or poweroff operation.
+run_power_action() {
+  case "$1" in
+    "$ICON_SUSPEND  Suspend") exec systemctl suspend ;;
+    "$ICON_HIBERNATE  Hibernate") exec systemctl hibernate ;;
+    "$ICON_REBOOT  Reboot") exec systemctl reboot ;;
+    "$ICON_POWEROFF  Poweroff") exec systemctl poweroff ;;
+  esac
+}
+
+# Dispatch a menu selection or reject an unexpected dmenu response.
+handle_selection() {
+  case "$1" in
+    "$ICON_LOCK  Lock") lock_screen ;;
+    "$ICON_LOGOUT  Logout") log_out ;;
+    "$ICON_SUSPEND  Suspend" | "$ICON_HIBERNATE  Hibernate" | \
+      "$ICON_REBOOT  Reboot" | "$ICON_POWEROFF  Poweroff")
+      run_power_action "$1"
+      ;;
+    *)
+      printf 'Invalid selection: %s\n' "$1" >&2
+      exit 1
+      ;;
+  esac
+}
+
+# Validate arguments, show the menu, and execute the chosen operation.
+main() {
+  parse_args "$@"
+  choice=$(show_menu) || exit 0
+  handle_selection "$choice"
+}
+
+main "$@"
