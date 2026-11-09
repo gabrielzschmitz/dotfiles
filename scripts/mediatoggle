@@ -56,24 +56,34 @@ state="$HOME/.cache/mediatoggle-last"
 # rather than another player.
 mpd_resume="$HOME/.cache/mediatoggle-mpd-resume"
 
-# Query all players once; hide MPD because it receives
-# separate priority handling.
-players=$(playerctl -a --format '{{playerName}} {{status}}' status 2>/dev/null \
-  | awk '$1 != "mpd"')
+# Query all players once; reuse this status snapshot for MPD and other players.
+players=$(playerctl -a --format '{{playerName}} {{status}}' status 2>/dev/null)
 
-# Select the first non-MPD player reporting active playback, if any.
-playing=$(printf '%s\n' "$players" | awk '$2 == "Playing" {print $1; exit}')
-# Read MPD separately to give its active playback priority.
-mpd_status=$(playerctl -p mpd status 2>/dev/null)
+# Extract MPD status and the first active non-MPD player in one pass.
+status_summary=$(printf '%s\n' "$players" | awk '
+  $1 == "mpd" { mpd = $2; next }
+  $2 == "Playing" && playing == "" { playing = $1 }
+  END { printf "%s|%s", mpd, playing }
+')
+mpd_status=${status_summary%%|*}
+playing=${status_summary#*|}
 # If no saved player exists, treat MPD as the previous player.
-last=$(cat "$state" 2>/dev/null || echo mpd)
+if [ -r "$state" ]; then
+  IFS= read -r last < "$state" 2>/dev/null || :
+else
+  last=mpd
+fi
 
-# Read current time and the timestamp of a recent MPD pause.
-now=$(date +%s)
-resume_time=$(cat "$mpd_resume" 2>/dev/null)
+# Read the recent MPD pause timestamp without spawning cat.
+resume_time=
+if [ -r "$mpd_resume" ]; then
+  IFS= read -r resume_time < "$mpd_resume" 2>/dev/null || :
+fi
 
 # Expire MPD's temporary resume priority after 10 seconds.
 if [ -n "$resume_time" ]; then
+  # Read current time only when a timestamp needs validation.
+  now=$(date +%s)
   case "$resume_time" in
     *[!0-9]*)
       # Discard malformed timestamps before using them in shell arithmetic.
@@ -126,7 +136,7 @@ else
 fi
 
 # Ensure the cache directory exists and save this action's selected player.
-mkdir -p "$(dirname "$state")"
+mkdir -p "$HOME/.cache"
 printf '%s\n' "$target" > "$state"
 
 # Handle volume operations separately because playerctl
@@ -168,7 +178,11 @@ case "$action" in
 
         # A zero volume means muted; restore saved volume or default to 100%.
         if awk -v v="$volume" 'BEGIN { exit !(v == 0) }'; then
-          restore=$(cat "$mute_state" 2>/dev/null || echo 1)
+          if [ -r "$mute_state" ]; then
+            IFS= read -r restore < "$mute_state" 2>/dev/null || :
+          else
+            restore=1
+          fi
           rm -f "$mute_state"
           exec playerctl -p "$target" volume "$restore"
         else
