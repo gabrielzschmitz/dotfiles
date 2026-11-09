@@ -15,6 +15,7 @@
         ruff
         stylua
         prettier
+        shfmt
       ];
     };
 }

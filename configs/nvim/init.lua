@@ -810,6 +810,19 @@ require("lazy").setup({
 			})
 
 			--------------------------------------------------------------------
+			-- Bash / Shell
+			--------------------------------------------------------------------
+
+			vim.lsp.config("bashls", {
+				capabilities = capabilities,
+
+				filetypes = {
+					"sh",
+					"bash",
+				},
+			})
+
+			--------------------------------------------------------------------
 			-- Enable LSP servers
 			--------------------------------------------------------------------
 
@@ -822,6 +835,7 @@ require("lazy").setup({
 				"gopls",
 				"golangci_lint_ls",
 				"ruff",
+				"bashls",
 			})
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(args)
@@ -867,6 +881,7 @@ require("lazy").setup({
 				"lua-language-server",
 				"html-lsp",
 				"css-lsp",
+				"bash-language-server",
 			},
 
 			auto_update = false,
@@ -891,6 +906,15 @@ require("lazy").setup({
 			--------------------------------------------------------------------
 
 			formatters_by_ft = {
+				-- Bash / Shell
+				bash = {
+					"shfmt",
+				},
+
+				sh = {
+					"shfmt",
+				},
+
 				-- Lua
 				lua = {
 					"stylua",
