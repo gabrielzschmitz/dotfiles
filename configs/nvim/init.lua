@@ -851,7 +851,7 @@ require("lazy").setup({
 				callback = function(args)
 					vim.bo[args.buf].textwidth = 80
 					vim.bo[args.buf].formatoptions =
-						vim.bo[args.buf].formatoptions .. "cq"
+						vim.bo[args.buf].formatoptions .. "ctq"
 				end,
 			})
 		end,
@@ -1026,17 +1026,6 @@ require("lazy").setup({
 							local current = ""
 
 							for word in comment:gmatch("%S+") do
-								while #word > width do
-									if current ~= "" then
-										wrapped[#wrapped + 1] = prefix .. current
-										current = ""
-									end
-
-									wrapped[#wrapped + 1] = prefix
-										.. word:sub(1, width)
-									word = word:sub(width + 1)
-								end
-
 								if current == "" then
 									current = word
 								elseif #current + #word + 1 <= width then
