@@ -56,6 +56,37 @@ state="$HOME/.cache/mediatoggle-last"
 # rather than another player.
 mpd_resume="$HOME/.cache/mediatoggle-mpd-resume"
 
+# Fast-path common MPD toggles before scanning every media player.
+if [ "$action" = "play-pause" ]; then
+  mpd_status=$(playerctl -p mpd status 2>/dev/null)
+  if [ "$mpd_status" = "Playing" ]; then
+    mkdir -p "$HOME/.cache"
+    printf '%s\n' mpd > "$state"
+    date +%s > "$mpd_resume"
+    exec playerctl -p mpd play-pause
+  fi
+
+  # A recent MPD pause should resume MPD without a full player scan.
+  if [ "$mpd_status" = "Paused" ] && [ -r "$mpd_resume" ]; then
+    IFS= read -r resume_time < "$mpd_resume" 2>/dev/null || :
+    case "$resume_time" in
+      ''|*[!0-9]*)
+        rm -f "$mpd_resume"
+        ;;
+      *)
+        now=$(date +%s)
+        if [ "$now" -ge "$resume_time" ] && [ "$((now - resume_time))" -le 10 ]; then
+          mkdir -p "$HOME/.cache"
+          printf '%s\n' mpd > "$state"
+          rm -f "$mpd_resume"
+          exec playerctl -p mpd play
+        fi
+        rm -f "$mpd_resume"
+        ;;
+    esac
+  fi
+fi
+
 # Query all players once; reuse this status snapshot for MPD and other players.
 players=$(playerctl -a --format '{{playerName}} {{status}}' status 2>/dev/null)
 
