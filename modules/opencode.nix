@@ -35,6 +35,11 @@ in
           plugins = [
             "${caveman-opencode}"
           ];
+
+          agents = {
+            build.color = "#7fa4ed";
+            plan.color = "#8677cf";
+          };
         };
 
         cli = {
