@@ -107,6 +107,27 @@
                 echo (prompt_pwd)
             end
           '';
+
+          nixpkgs-unstable = ''
+            if test (count $argv) -ne 1
+              echo "Usage: nixpkgs-unstable <package>"
+              return 1
+            end
+
+            set -l pkg_file (nix eval --impure --raw --expr "
+              let
+                pkgs = (builtins.getFlake \"github:NixOS/nixpkgs/nixos-unstable\").legacyPackages.x86_64-linux;
+              in
+                pkgs.$argv[1].meta.position
+            " 2>/dev/null | string split ':' -f 1)
+
+            if test -f "$pkg_file"
+              bat "$pkg_file"
+            else
+              echo "Package '$argv[1]' not found or has no source position."
+              return 1
+            end
+          '';
         };
       };
     };
