@@ -1,0 +1,35 @@
+{
+	"autoSync": false,
+	"theme": "pack:e018b531-d304-4b2f-a7ce-eb011760fb8c",
+	"currentKeyboardLayout": "qwerty",
+	"defaultKeyboardLayout": "qwerty",
+	"defaultAutoAdvance": true,
+	"defaultLayerPanelOpen": true,
+	"autoLockTime": 10,
+	"language": "builtin:en",
+	"hubEnabled": false,
+	"defaultBasicViewType": "ansi",
+	"defaultSplitKeyMode": "split",
+	"defaultQuickSelect": false,
+	"maxKeymapHistory": 100,
+	"typingHeatmapWindowMin": 5,
+	"typingRecordingConsentAccepted": false,
+	"typingMonitorAppEnabled": true,
+	"zoomFactor": 100,
+	"autoLaunch": false,
+	"trayResident": false,
+	"startInTray": false,
+	"restoreLastSession": true,
+	"packsPulledOnce": false,
+	"lastDevice": {
+		"vendorId": 21972,
+		"productId": 1121,
+		"serialNumber": "vial:f64c2b3c"
+	},
+	"windowState": {
+		"x": 871,
+		"y": 570,
+		"width": 1033,
+		"height": 494
+	}
+}

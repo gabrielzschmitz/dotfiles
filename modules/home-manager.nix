@@ -35,6 +35,7 @@
         docker
         music
         thunar
+        pipette
         services
       ];
     };
