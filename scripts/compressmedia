@@ -2,7 +2,8 @@
 #
 # Selects a video under ~/vid and compresses it with ffmpeg.
 #
-# Requires: fzf, ffmpeg, ffprobe, dragon-drop, find, sort, awk, coreutils
+# Requires: fzf, ffmpeg, ffprobe, ffmpegthumbnailer, dragon-drop
+#           find, sort, awk, coreutils
 #
 # Usage:
 #   compressmedia
@@ -29,7 +30,10 @@ VID_DIR="${VID_DIR:-$HOME/vid}"
 FZF="${FZF:-fzf}"
 FFMPEG="${FFMPEG:-ffmpeg}"
 FFPROBE="${FFPROBE:-ffprobe}"
+FFMPEGTHUMBNAILER="${FFMPEGTHUMBNAILER:-ffmpegthumbnailer}"
 DRAGON_DROP="${DRAGON_DROP:-dragon-drop}"
+COMPRESSMEDIA_SCRIPT=$0
+export FFMPEGTHUMBNAILER COMPRESSMEDIA_SCRIPT
 
 OPTION_DEFAULT='Default (light compression)'
 OPTION_HIGH='Higher quality'
@@ -92,7 +96,10 @@ select_video() {
       \) -printf '%T@ %p\n' \
       | sort -rn \
       | cut -d' ' -f2- \
-      | "$FZF" --no-multi --prompt='Video: '
+      | "$FZF" --no-multi \
+        --preview='"$COMPRESSMEDIA_SCRIPT" --preview {}' \
+        --preview-window=right,50%,border-left \
+        --prompt='Video: '
   )
   selection_status=$?
   if [ "$selection_status" -ne 0 ]; then
@@ -225,6 +232,65 @@ cleanup_work_dir() {
   if [ -n "$work_dir" ] && [ -d "$work_dir" ]; then
     rm -rf -- "$work_dir"
   fi
+}
+
+# Send a generated thumbnail through the terminal's Kitty graphics protocol.
+preview_video() {
+  preview_columns=${FZF_PREVIEW_COLUMNS:-40}
+  preview_lines=${FZF_PREVIEW_LINES:-20}
+  preview_thumbnail=$(mktemp --suffix=.jpg) || return 1
+  preview_encoded=$(mktemp) || {
+    rm -f "$preview_thumbnail"
+    return 1
+  }
+  if ! "$FFMPEGTHUMBNAILER" -i "$1" -o "$preview_thumbnail" \
+    -s 320 -q 5 2> /dev/null || ! base64 -w 4096 "$preview_thumbnail" \
+    > "$preview_encoded"; then
+    rm -f "$preview_thumbnail" "$preview_encoded"
+    return 1
+  fi
+
+  preview_dimensions=$(
+    "$FFPROBE" -v error -select_streams v:0 \
+      -show_entries stream=width,height -of csv=s=x:p=0 "$1" 2> /dev/null
+  )
+  preview_width=${preview_dimensions%%x*}
+  preview_height=${preview_dimensions#*x}
+  case "$preview_width:$preview_height:$preview_columns:$preview_lines" in
+    *[!0-9:]* | *::* | :*)
+      preview_rows=$((preview_lines / 2))
+      ;;
+    *)
+      preview_rows=$((preview_columns * preview_height / preview_width / 2))
+      ;;
+  esac
+  [ "$preview_rows" -gt 0 ] || preview_rows=1
+  [ "$preview_rows" -le "$preview_lines" ] \
+    || preview_rows=$preview_lines
+  preview_top=$((preview_lines - preview_rows))
+
+  preview_total=$(wc -l < "$preview_encoded")
+  preview_chunk=0
+  preview_offset=0
+  while [ "$preview_offset" -lt "$preview_top" ]; do
+    printf '\n'
+    preview_offset=$((preview_offset + 1))
+  done
+  printf '\033_Ga=d,d=A,q=2\033\\'
+  while IFS= read -r preview_data; do
+    preview_chunk=$((preview_chunk + 1))
+    preview_more=1
+    [ "$preview_chunk" -eq "$preview_total" ] && preview_more=0
+    if [ "$preview_chunk" -eq 1 ]; then
+      printf '\033_Ga=T,f=100,t=d,q=2,c=%s,r=%s,m=%s;%s\033\\' \
+        "$preview_columns" "$preview_rows" \
+        "$preview_more" "$preview_data"
+    else
+      printf '\033_Gm=%s;%s\033\\' "$preview_more" "$preview_data"
+    fi
+  done < "$preview_encoded"
+
+  rm -f "$preview_thumbnail" "$preview_encoded"
 }
 
 # Encode a quality preset with codecs matching the source container.
@@ -457,10 +523,16 @@ handle_selection() {
 
 # Validate tools, select a video and preset, then compress the source.
 main() {
+  if [ "${1:-}" = --preview ]; then
+    [ "$#" -eq 2 ] || exit 2
+    preview_video "$2"
+    exit $?
+  fi
   selection_status=0
   parse_args "$@"
   require_commands "$FZF" "$FFMPEG" "$FFPROBE" \
-    "$DRAGON_DROP" find sort cut tr awk mktemp wc ln rm || exit 1
+    "$FFMPEGTHUMBNAILER" "$DRAGON_DROP" \
+    find sort cut tr awk mktemp wc ln rm base64 || exit 1
   select_video
   selection_status=$?
   case "$selection_status" in
