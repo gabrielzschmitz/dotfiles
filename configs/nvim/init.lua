@@ -88,6 +88,15 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function()
+		vim.opt_local.expandtab = true
+		vim.opt_local.shiftwidth = 2
+		vim.opt_local.tabstop = 2
+		vim.opt_local.softtabstop = 2
+	end,
+})
+
 vim.opt.smartindent = true
 vim.opt.wrap = true
 vim.opt.showmode = false
@@ -1551,6 +1560,8 @@ map("n", "<Esc>", "<cmd>nohlsearch<cr>", {
 -- Move selected lines
 map("v", "J", ":m '>+1<CR>gv=gv")
 map("v", "K", ":m '<-2<CR>gv=gv")
+map("v", "H", "<gv")
+map("v", "L", ">gv")
 
 ----------------------------------------------------------------------
 -- COMMENT
