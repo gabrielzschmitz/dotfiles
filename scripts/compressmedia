@@ -35,6 +35,14 @@ DRAGON_DROP="${DRAGON_DROP:-dragon-drop}"
 COMPRESSMEDIA_SCRIPT=$0
 export FFMPEGTHUMBNAILER COMPRESSMEDIA_SCRIPT
 
+# Use NVIDIA's H.264 encoder when this FFmpeg build provides it.
+if "$FFMPEG" -hide_banner -encoders 2> /dev/null \
+  | grep -q 'h264_nvenc'; then
+  NVENC_AVAILABLE=1
+else
+  NVENC_AVAILABLE=0
+fi
+
 OPTION_DEFAULT='Default (light compression)'
 OPTION_HIGH='Higher quality'
 OPTION_SMALL='Smaller file'
@@ -304,8 +312,13 @@ encode_quality() {
         default) quality_value=26 ;;
         small) quality_value=32 ;;
       esac
-      set -- -c:v libx264 -preset medium -crf "$quality_value" \
-        -pix_fmt yuv420p
+      if [ "$NVENC_AVAILABLE" -eq 1 ]; then
+        set -- -c:v h264_nvenc -preset p4 -rc vbr -cq "$quality_value" \
+          -pix_fmt yuv420p
+      else
+        set -- -c:v libx264 -preset medium -crf "$quality_value" \
+          -pix_fmt yuv420p
+      fi
       ;;
     vp9)
       case "$quality_mode" in
@@ -346,9 +359,14 @@ run_discord_pass() {
 
   case "$video_family" in
     h264)
-      set -- -c:v libx264 -preset medium -pix_fmt yuv420p \
-        -b:v "$video_bitrate" -pass "$pass_number" \
-        -passlogfile "$pass_log"
+      if [ "$NVENC_AVAILABLE" -eq 1 ]; then
+        set -- -c:v h264_nvenc -preset p4 -rc vbr -pix_fmt yuv420p \
+          -b:v "$video_bitrate"
+      else
+        set -- -c:v libx264 -preset medium -pix_fmt yuv420p \
+          -b:v "$video_bitrate" -pass "$pass_number" \
+          -passlogfile "$pass_log"
+      fi
       ;;
     vp9)
       set -- -c:v libvpx-vp9 -deadline good -cpu-used 2 \
@@ -435,7 +453,17 @@ encode_discord() {
     if [ "$attempt" -gt 0 ]; then
       rm -f "$temporary_output" "$pass_log"*
     fi
-    if ! run_discord_pass 1 || ! run_discord_pass 2; then
+    if [ "$NVENC_AVAILABLE" -eq 1 ] && [ "$video_family" = h264 ]; then
+      discord_passes='single'
+    else
+      discord_passes='two'
+    fi
+    if [ "$discord_passes" = single ]; then
+      if ! run_discord_pass 2; then
+        printf 'Discord compression failed.\n' >&2
+        return 1
+      fi
+    elif ! run_discord_pass 1 || ! run_discord_pass 2; then
       printf 'Discord compression failed.\n' >&2
       return 1
     fi
