@@ -6,7 +6,7 @@
   };
 
   flake.modules.homeManager.desktop =
-    { pkgs, ... }:
+    { inputs, pkgs, ... }:
     {
       home.packages = with pkgs; [
         # System
@@ -25,6 +25,7 @@
         audacity
 
         # General
+        inputs.fluxer.packages.${pkgs.stdenv.hostPlatform.system}.fluxer
         discord
         signal-desktop
         nextcloud-client

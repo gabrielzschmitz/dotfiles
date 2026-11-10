@@ -7,6 +7,7 @@
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
+      extraSpecialArgs = { inherit inputs; };
       backupFileExtension = "hm-backup";
 
       users.gabrielzschmitz.imports = with self.modules.homeManager; [

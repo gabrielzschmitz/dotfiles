@@ -115,6 +115,24 @@
         "type": "github"
       }
     },
+    "fluxer": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1794270750,
+        "narHash": "sha256-GbGwjWVFwGXZXpCuB5fABQAtEhlPRiC4wULR87oxBuw=",
+        "owner": "Hy4ri",
+        "repo": "fluxer-flake",
+        "rev": "0050d4d1e5fb5625723f7a857aa9ef40003f153d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Hy4ri",
+        "repo": "fluxer-flake",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -201,6 +219,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1794042290,
+        "narHash": "sha256-ziZn2PvCJE5JEEpqTdxXwJpPB+L3YqoCpTAMCzyaP3U=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "f4a03c008967841f2a0b3cb7c436fc6fc31671f6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "pinentry-dmenu": {
       "inputs": {
         "nixpkgs": [
@@ -250,10 +284,11 @@
         "dwm": "dwm",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",
+        "fluxer": "fluxer",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
         "nix-craftapps": "nix-craftapps",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "pinentry-dmenu": "pinentry-dmenu",
         "pipette": "pipette",
         "st": "st",

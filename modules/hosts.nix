@@ -28,6 +28,7 @@ let
   mkHost =
     hostModule: extraModules:
     lib.nixosSystem {
+      specialArgs = { inherit inputs; };
       modules = [ hostModule ] ++ sharedModules ++ extraModules;
     };
 in
