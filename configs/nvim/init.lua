@@ -738,6 +738,7 @@ require("lazy").setup({
 					"--clang-tidy",
 					"--header-insertion=iwyu",
 					"--completion-style=detailed",
+					"--fallback-style=file:" .. vim.fn.stdpath("config") .. "/.clang-format",
 				},
 
 				filetypes = {
@@ -1007,6 +1008,10 @@ require("lazy").setup({
 			formatters = {
 				shfmt = {
 					prepend_args = { "-i", "2", "-ci", "-bn", "-sr" },
+				},
+
+				clang_format = {
+					prepend_args = { "-style=file:" .. vim.fn.stdpath("config") .. "/.clang-format" },
 				},
 			},
 

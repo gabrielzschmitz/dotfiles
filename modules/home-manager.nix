@@ -21,7 +21,6 @@
         cli
         dev
         opencode
-        formatters
         dunst
         fastfetch
         fonts
