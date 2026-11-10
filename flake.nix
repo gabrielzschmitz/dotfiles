@@ -54,11 +54,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    pipette = {
-      url = "github:gabrielzschmitz/pipette-desktop/nixos-build";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     caveman = {
       url = "github:JuliusBrussee/caveman/v4.0.1";
       flake = false;

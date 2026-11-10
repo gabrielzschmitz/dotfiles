@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Pipette
+Comment=Vial-compatible keyboard configurator
+Exec=pipette
+Icon=pipette
+Type=Application
+Categories=Utility;Settings;HardwareSettings;
+Keywords=keyboard;vial;qmk;keymap;

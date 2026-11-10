@@ -63,7 +63,7 @@ in
     {
       imports = [ ../hosts/machine/hardware-configuration.nix ];
 
-      services.udev.extraRules = builtins.readFile ../99-vial.rules;
+      services.udev.packages = with pkgs; [ pipette ];
 
       environment.systemPackages = with pkgs; [ pipette ];
 
