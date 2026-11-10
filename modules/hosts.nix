@@ -75,8 +75,8 @@ in
 
       system.stateVersion = "26.05";
 
-      #  # Track the newest stable upstream kernel
-      #  boot.kernelPackages = pkgs.linuxPackages_latest;
+      # Track the newest stable upstream kernel
+      boot.kernelPackages = pkgs.linuxPackages_latest;
 
       my.display = {
         picom = {
