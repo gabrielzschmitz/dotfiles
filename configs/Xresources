@@ -49,6 +49,9 @@ pinentry-dmenu.backgroundDesc: #181b21
 pinentry-dmenu.foregroundDesc: #abb2bf
 pinentry-dmenu.backgroundError: #be5046
 pinentry-dmenu.foregroundError: #181b21
+pinentry-dmenu.borderpx:       3
+pinentry-dmenu.focusedBorder: #abb2bf
+pinentry-dmenu.unfocusedBorder: #282c34
 
 ! OneDark Colorscheme
 *background: #14171c
