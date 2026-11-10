@@ -16,6 +16,9 @@
         stylua
         prettier
         shfmt
+        vscode-css-languageserver
+        vscode-html-languageserver
+        vscode-json-languageserver
       ];
     };
 }
