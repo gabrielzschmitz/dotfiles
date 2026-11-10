@@ -850,8 +850,7 @@ require("lazy").setup({
 				pattern = { "bash", "sh" },
 				callback = function(args)
 					vim.bo[args.buf].textwidth = 80
-					vim.bo[args.buf].formatoptions =
-						vim.bo[args.buf].formatoptions .. "ctq"
+					vim.bo[args.buf].formatoptions = vim.bo[args.buf].formatoptions .. "ctq"
 				end,
 			})
 		end,
@@ -1010,12 +1009,7 @@ require("lazy").setup({
 				local filetype = vim.bo[bufnr].filetype
 
 				if filetype == "bash" or filetype == "sh" then
-					local lines = vim.api.nvim_buf_get_lines(
-						bufnr,
-						0,
-						-1,
-						false
-					)
+					local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
 
 					for i = #lines, 1, -1 do
 						local prefix, comment = lines[i]:match("^(%s*#%s?)(.*)$")
@@ -1031,8 +1025,7 @@ require("lazy").setup({
 								elseif #current + #word + 1 <= width then
 									current = current .. " " .. word
 								else
-									wrapped[#wrapped + 1] = prefix
-										.. current
+									wrapped[#wrapped + 1] = prefix .. current
 									current = word
 								end
 							end
@@ -1041,13 +1034,7 @@ require("lazy").setup({
 								wrapped[#wrapped + 1] = prefix .. current
 							end
 
-							vim.api.nvim_buf_set_lines(
-								bufnr,
-								i - 1,
-								i,
-								false,
-								wrapped
-							)
+							vim.api.nvim_buf_set_lines(bufnr, i - 1, i, false, wrapped)
 						end
 					end
 				end
@@ -1560,6 +1547,10 @@ map("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<left><left><left>", { 
 map("n", "<Esc>", "<cmd>nohlsearch<cr>", {
 	desc = "Clear search highlight",
 })
+
+-- Move selected lines
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv")
 
 ----------------------------------------------------------------------
 -- COMMENT
