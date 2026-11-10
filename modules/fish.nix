@@ -28,6 +28,30 @@
     {
       home.sessionVariables.NIX_BUILD_SHELL = "${nixShellFish}";
 
+      # Match fzf to the One Dark palette in configs/Xresources.
+      home.sessionVariables.FZF_DEFAULT_OPTS =
+        "--color="
+        + builtins.concatStringsSep "," [
+          "fg:#abb2bf"
+          "bg:#14171c"
+          "hl:#61afef"
+          "fg+:#abb2bf"
+          "bg+:#282c34"
+          "hl+:#61afef"
+          "info:#56b6c2"
+          "prompt:#61afef"
+          "pointer:#61afef"
+          "marker:#98c379"
+          "spinner:#56b6c2"
+          "header:#d19a66"
+          "border:#5c6370"
+          "gutter:#14171c"
+          "query:#abb2bf"
+          "label:#abb2bf"
+          "scrollbar:#5c6370"
+          "separator:#5c6370"
+        ];
+
       # Home Manager exports this guard from the shell that started the
       # graphical session.  Child shells then skip the current generation's
       # session variables and keep stale values after a rebuild.  Clear it
