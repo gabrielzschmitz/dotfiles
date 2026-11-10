@@ -3,6 +3,7 @@
 {
   flake.modules.nixos.nvidia = { lib, pkgs, ... }: {
     hardware.graphics.enable = true;
+    hardware.graphics.extraPackages = [ pkgs.nvidia-vaapi-driver ];
 
     hardware.nvidia = {
       # Open kernel modules are required for Blackwell GPUs (RTX 50 series).
