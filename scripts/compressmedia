@@ -1,0 +1,476 @@
+#!/bin/sh
+#
+# Selects a video under ~/vid and compresses it with ffmpeg.
+#
+# Requires: fzf, dmenu, ffmpeg, ffprobe, dragon-drop, find, sort, awk, coreutils
+#
+# Usage:
+#   compressmedia
+#   compressmedia --help
+#
+# Selection:
+#   Recursively lists MP4, M4V, MOV, MKV, WebM, AVI, MPEG, VOB, 3GP, and TS
+#   videos. VID_DIR selects the search directory and defaults to $HOME/vid.
+#
+# Presets:
+#   Default         Light compression.
+#   Higher quality  Preserve more detail.
+#   Smaller         Reduce file size further.
+#   Discord         Target a maximum size of 19.8 MB using two-pass encoding.
+#
+# Output:
+#   Saves beside the source as compressed_<original name>.<original extension>.
+#   Existing files are never overwritten.
+#
+# Configuration:
+#   VID_DIR, FZF, DMENU, FFMPEG, FFPROBE, and DRAGON_DROP select executables.
+
+VID_DIR="${VID_DIR:-$HOME/vid}"
+FZF="${FZF:-fzf}"
+DMENU="${DMENU:-dmenu}"
+FFMPEG="${FFMPEG:-ffmpeg}"
+FFPROBE="${FFPROBE:-ffprobe}"
+DRAGON_DROP="${DRAGON_DROP:-dragon-drop}"
+
+OPTION_DEFAULT='Default (light compression)'
+OPTION_HIGH='Higher quality'
+OPTION_SMALL='Smaller file'
+OPTION_DISCORD='Discord (max 19.8 MB)'
+OPTION_CANCEL='Cancel'
+
+# Print the supported command-line syntax.
+usage() {
+  printf 'Usage: compressmedia [--help]\n'
+}
+
+# Accept help only; reject all positional arguments and other options.
+parse_args() {
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      -h | --help)
+        usage
+        exit 0
+        ;;
+      -*)
+        printf 'Unknown option: %s\n' "$1" >&2
+        usage >&2
+        exit 2
+        ;;
+      *)
+        printf 'Unexpected argument: %s\n' "$1" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
+  done
+}
+
+# Check command names passed as arguments; report the first missing tool.
+require_commands() {
+  for required_command; do
+    if ! command -v "$required_command" > /dev/null 2>&1; then
+      printf 'Required command not found: %s\n' \
+        "$required_command" >&2
+      return 1
+    fi
+  done
+}
+
+# Let fzf choose a supported video; store its path in selected_video.
+select_video() {
+  if [ ! -d "$VID_DIR" ]; then
+    printf 'Video directory not found: %s\n' "$VID_DIR" >&2
+    return 2
+  fi
+
+  selected_video=$(
+    find "$VID_DIR" -type f \( \
+      -iname '*.mp4' -o -iname '*.m4v' -o -iname '*.mov' \
+      -o -iname '*.mkv' -o -iname '*.webm' -o -iname '*.avi' \
+      -o -iname '*.mpg' -o -iname '*.mpeg' -o -iname '*.vob' \
+      -o -iname '*.3gp' -o -iname '*.ts' -o -iname '*.mts' \
+      -o -iname '*.m2ts' \
+      \) -printf '%T@ %p\n' \
+      | sort -rn \
+      | cut -d' ' -f2- \
+      | "$FZF" --prompt='Video: '
+  )
+  selection_status=$?
+  if [ "$selection_status" -ne 0 ]; then
+    return "$selection_status"
+  fi
+  [ -n "$selected_video" ] || return 1
+}
+
+# Set output path, muxer, codecs, and audio rates from selected file extension.
+prepare_output() {
+  source_path=$1
+  source_name=${source_path##*/}
+  output_dir=${source_path%/*}
+  if [ "$output_dir" = "$source_path" ]; then
+    output_dir=.
+  elif [ -z "$output_dir" ]; then
+    output_dir=/
+  fi
+  output_file="$output_dir/compressed_$source_name"
+
+  if [ -e "$output_file" ]; then
+    printf 'Output already exists: %s\n' "$output_file" >&2
+    return 1
+  fi
+
+  case "$source_name" in
+    *.*) source_extension=${source_name##*.} ;;
+    *)
+      printf 'Unsupported video extension: %s\n' "$source_name" >&2
+      return 1
+      ;;
+  esac
+  source_extension=$(printf '%s' "$source_extension" \
+    | tr '[:upper:]' '[:lower:]')
+
+  case "$source_extension" in
+    mp4 | m4v)
+      video_family=h264
+      output_muxer=mp4
+      ;;
+    mov)
+      video_family=h264
+      output_muxer=mov
+      ;;
+    mkv)
+      video_family=h264
+      output_muxer=matroska
+      ;;
+    webm)
+      video_family=vp9
+      output_muxer=webm
+      ;;
+    avi)
+      video_family=mpeg4
+      output_muxer=avi
+      ;;
+    mpg | mpeg | vob)
+      video_family=mpeg2
+      output_muxer=mpeg
+      ;;
+    3gp)
+      video_family=h264
+      output_muxer=3gp
+      ;;
+    ts | mts | m2ts)
+      video_family=h264
+      output_muxer=mpegts
+      ;;
+    *)
+      printf 'Unsupported video extension: %s\n' "$source_extension" >&2
+      return 1
+      ;;
+  esac
+
+  case "$video_family" in
+    h264)
+      audio_codec=aac
+      default_audio_bitrate=128k
+      discord_audio_bitrate=64k
+      discord_audio_rate=64000
+      ;;
+    vp9)
+      audio_codec=libopus
+      default_audio_bitrate=96k
+      discord_audio_bitrate=48k
+      discord_audio_rate=48000
+      ;;
+    mpeg4)
+      audio_codec=libmp3lame
+      default_audio_bitrate=128k
+      discord_audio_bitrate=64k
+      discord_audio_rate=64000
+      ;;
+    mpeg2)
+      audio_codec=mp2
+      default_audio_bitrate=192k
+      discord_audio_bitrate=96k
+      discord_audio_rate=96000
+      ;;
+  esac
+}
+
+# Print preset labels and return dmenu's selection.
+show_menu() {
+  printf '%s\n' \
+    "$OPTION_DEFAULT" \
+    "$OPTION_HIGH" \
+    "$OPTION_SMALL" \
+    "$OPTION_DISCORD" \
+    "$OPTION_CANCEL" \
+    | "$DMENU" -i -l 5 -p 'Compress: '
+}
+
+# Create a same-directory workspace for safe output and two-pass logs.
+create_work_dir() {
+  work_dir=$(mktemp -d "$output_dir/.compressmedia.XXXXXX") || {
+    printf 'Unable to create temporary directory in: %s\n' \
+      "$output_dir" >&2
+    return 1
+  }
+  temporary_output="$work_dir/output"
+  pass_log="$work_dir/pass"
+  trap cleanup_work_dir 0
+  trap 'exit 1' HUP INT TERM
+}
+
+# Remove only the temporary workspace created by this script.
+cleanup_work_dir() {
+  if [ -n "$work_dir" ] && [ -d "$work_dir" ]; then
+    rm -rf -- "$work_dir"
+  fi
+}
+
+# Encode a quality preset with codecs matching the source container.
+encode_quality() {
+  quality_mode=$1
+
+  case "$video_family" in
+    h264)
+      case "$quality_mode" in
+        high) quality_value=24 ;;
+        default) quality_value=26 ;;
+        small) quality_value=32 ;;
+      esac
+      set -- -c:v libx264 -preset medium -crf "$quality_value" \
+        -pix_fmt yuv420p
+      ;;
+    vp9)
+      case "$quality_mode" in
+        high) quality_value=31 ;;
+        default) quality_value=36 ;;
+        small) quality_value=42 ;;
+      esac
+      set -- -c:v libvpx-vp9 -deadline good -cpu-used 2 \
+        -crf "$quality_value" -b:v 0
+      ;;
+    mpeg4)
+      case "$quality_mode" in
+        high) quality_value=2 ;;
+        default) quality_value=4 ;;
+        small) quality_value=8 ;;
+      esac
+      set -- -c:v mpeg4 -q:v "$quality_value"
+      ;;
+    mpeg2)
+      case "$quality_mode" in
+        high) quality_value=3 ;;
+        default) quality_value=5 ;;
+        small) quality_value=8 ;;
+      esac
+      set -- -c:v mpeg2video -q:v "$quality_value"
+      ;;
+  esac
+
+  "$FFMPEG" -hide_banner -nostdin -n -i "$selected_video" \
+    -map 0:v:0 -map '0:a:0?' "$@" -c:a "$audio_codec" \
+    -b:a "$default_audio_bitrate" -f "$output_muxer" \
+    "$temporary_output"
+}
+
+# Run one pass using the selected container's video encoder and bitrate.
+run_discord_pass() {
+  pass_number=$1
+
+  case "$video_family" in
+    h264)
+      set -- -c:v libx264 -preset medium -pix_fmt yuv420p \
+        -b:v "$video_bitrate" -pass "$pass_number" \
+        -passlogfile "$pass_log"
+      ;;
+    vp9)
+      set -- -c:v libvpx-vp9 -deadline good -cpu-used 2 \
+        -b:v "$video_bitrate" -pass "$pass_number" \
+        -passlogfile "$pass_log"
+      ;;
+    mpeg4)
+      set -- -c:v mpeg4 -b:v "$video_bitrate" \
+        -pass "$pass_number" -passlogfile "$pass_log"
+      ;;
+    mpeg2)
+      set -- -c:v mpeg2video -b:v "$video_bitrate" \
+        -pass "$pass_number" -passlogfile "$pass_log"
+      ;;
+  esac
+
+  if [ "$pass_number" -eq 1 ]; then
+    "$FFMPEG" -hide_banner -nostdin -n -i "$selected_video" \
+      -map 0:v:0 -an "$@" -f null -
+  else
+    "$FFMPEG" -hide_banner -nostdin -n -i "$selected_video" \
+      -map 0:v:0 -map '0:a:0?' "$@" -c:a "$audio_codec" \
+      -b:a "$discord_audio_bitrate" -f "$output_muxer" \
+      "$temporary_output"
+  fi
+}
+
+# Two-pass encode below 19.8 MB, retrying once if muxing exceeds the limit.
+encode_discord() {
+  audio_stream=$(
+    "$FFPROBE" -v error -select_streams a:0 \
+      -show_entries stream=index -of csv=p=0 "$selected_video"
+  ) || {
+    printf 'Unable to inspect audio stream: %s\n' "$selected_video" >&2
+    return 1
+  }
+  if [ -n "$audio_stream" ]; then
+    has_audio=1
+  else
+    has_audio=0
+  fi
+
+  duration=$(
+    "$FFPROBE" -v error -show_entries format=duration \
+      -of default=noprint_wrappers=1:nokey=1 "$selected_video"
+  ) || {
+    printf 'Unable to inspect video duration: %s\n' "$selected_video" >&2
+    return 1
+  }
+  # Leave enough bitrate for video; MPEG audio needs a higher minimum rate.
+  audio_min_rate=8000
+  if [ "$video_family" = mpeg2 ]; then
+    audio_min_rate=32000
+  fi
+  # Reserve six percent for muxing overhead and variable audio size.
+  bitrates=$(awk -v duration="$duration" \
+    -v max_audio_rate="$discord_audio_rate" \
+    -v min_audio_rate="$audio_min_rate" -v has_audio="$has_audio" '
+    BEGIN {
+      if (duration !~ /^[0-9]+([.][0-9]+)?$/ || duration <= 0)
+        exit 1
+      total_rate = 19800000 * 8 * 0.94 / duration
+      audio_rate = 0
+      if (has_audio) {
+        audio_rate = max_audio_rate
+        if (audio_rate > total_rate * 0.25)
+          audio_rate = total_rate * 0.25
+        if (audio_rate < min_audio_rate)
+          audio_rate = min_audio_rate
+      }
+      video_rate = total_rate - audio_rate
+      if (video_rate < 1000) exit 1
+      printf "%.0f|%.0f", video_rate, audio_rate
+    }
+  ') || {
+    printf 'Video is too long for the Discord size target.\n' >&2
+    return 1
+  }
+  video_bitrate=${bitrates%%|*}
+  discord_audio_bitrate=${bitrates#*|}
+
+  attempt=0
+  while [ "$attempt" -lt 2 ]; do
+    if [ "$attempt" -gt 0 ]; then
+      rm -f "$temporary_output" "$pass_log"*
+    fi
+    if ! run_discord_pass 1 || ! run_discord_pass 2; then
+      printf 'Discord compression failed.\n' >&2
+      return 1
+    fi
+
+    output_size=$(wc -c < "$temporary_output" | tr -d '[:space:]')
+    case "$output_size" in
+      '' | *[!0-9]*)
+        printf 'Unable to read compressed file size.\n' >&2
+        return 1
+        ;;
+    esac
+    if [ "$output_size" -le 19800000 ]; then
+      return 0
+    fi
+
+    attempt=$((attempt + 1))
+    if [ "$attempt" -ge 2 ]; then
+      printf 'Compressed video exceeds 19.8 MB; no file saved.\n' >&2
+      return 1
+    fi
+    video_bitrate=$(awk -v bitrate="$video_bitrate" \
+      -v size="$output_size" '
+      BEGIN {
+        rate = bitrate * 19800000 * 0.96 / size
+        if (rate < 1000) exit 1
+        printf "%.0f", rate
+      }
+    ') || {
+      printf 'Unable to reach the Discord size target.\n' >&2
+      return 1
+    }
+  done
+}
+
+# Publish output without overwriting; open it in dragon-drop for sending.
+publish_output() {
+  if ! ln "$temporary_output" "$output_file"; then
+    printf 'Unable to create output file: %s\n' "$output_file" >&2
+    return 1
+  fi
+  printf 'Created: %s\n' "$output_file"
+  if ! "$DRAGON_DROP" "$output_file"; then
+    printf 'Unable to open dragon-drop for: %s\n' "$output_file" >&2
+    return 1
+  fi
+}
+
+# Encode the selected preset and publish it only after successful completion.
+compress_video() {
+  compression_mode=$1
+  quality_mode=${2:-}
+  create_work_dir || return 1
+
+  case "$compression_mode" in
+    quality)
+      if ! encode_quality "$quality_mode"; then
+        printf 'Video compression failed.\n' >&2
+        return 1
+      fi
+      ;;
+    discord)
+      if ! encode_discord; then
+        return 1
+      fi
+      ;;
+  esac
+
+  publish_output
+}
+
+# Dispatch the dmenu choice or exit cleanly when the user cancels.
+handle_selection() {
+  case "$1" in
+    "$OPTION_DEFAULT") compress_video quality default ;;
+    "$OPTION_HIGH") compress_video quality high ;;
+    "$OPTION_SMALL") compress_video quality small ;;
+    "$OPTION_DISCORD") compress_video discord ;;
+    "$OPTION_CANCEL" | '') return 0 ;;
+    *)
+      printf 'Invalid selection: %s\n' "$1" >&2
+      return 1
+      ;;
+  esac
+}
+
+# Validate tools, select a video and preset, then compress the source.
+main() {
+  selection_status=0
+  parse_args "$@"
+  require_commands "$FZF" "$DMENU" "$FFMPEG" "$FFPROBE" \
+    "$DRAGON_DROP" find sort tr awk mktemp wc ln rm || exit 1
+  select_video
+  selection_status=$?
+  case "$selection_status" in
+    0) ;;
+    1 | 130) exit 0 ;;
+    *) exit "$selection_status" ;;
+  esac
+  prepare_output "$selected_video" || exit 1
+  choice=$(show_menu) || exit 0
+  handle_selection "$choice"
+}
+
+main "$@"
