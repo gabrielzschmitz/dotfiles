@@ -44,11 +44,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794174406,
-        "narHash": "sha256-CijajaG2sdKY7ZddulfB6+a2GrnmmJxujAs9URwtvUQ=",
+        "lastModified": 1794334015,
+        "narHash": "sha256-GPZx/hK6xgtgwaVwbC3wnRCJ35/OFdL+X2fGDM3sUGA=",
         "owner": "gabrielzschmitz",
         "repo": "dwm",
-        "rev": "edce68d106d474c5ccb39b1d46c5d09326f6fa6c",
+        "rev": "16800713f00d90c0a556c1b745f8c2de2bdbee66",
         "type": "github"
       },
       "original": {
@@ -65,11 +65,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1794197002,
-        "narHash": "sha256-CdD6KXKeGLfiSEIYOwcHcgRvLy6VvzED5KVb43pybRw=",
+        "lastModified": 1794283390,
+        "narHash": "sha256-pJUYjFDkC4Y6mP1sKkkXaV2/qub3d1U4tuXbGNGkpqs=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "dc6207afc8093b4d167b5a56e661e65ff54894f9",
+        "rev": "a4321fc285488211680c742e100adb954448ca52",
         "type": "gitlab"
       },
       "original": {
@@ -140,11 +140,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794260194,
-        "narHash": "sha256-jmaqtyhtPFNgK52WZo33PRvNPPs8AjOWBeCc07nTAM8=",
+        "lastModified": 1794278858,
+        "narHash": "sha256-rkrJwLgLSHBnXfgoSKIDa+2LLGdTqynsV3GAxOTGhUU=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "a9752a621164e9f84eb2a15858f1d54fd3cedab8",
+        "rev": "82ce401aa350502897c3f2e85f384d61cd3b0b6d",
         "type": "github"
       },
       "original": {
@@ -175,11 +175,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794029007,
-        "narHash": "sha256-vcUThcmjF2/0PxhDX78LlHkh9f7E55ey3b+cRJRdvQA=",
+        "lastModified": 1794288225,
+        "narHash": "sha256-KACYfJ7fwESAvP88ez9ZhqxQYLChATJEeJVOxqAs5IU=",
         "owner": "olafkfreund",
         "repo": "nix-craftapps",
-        "rev": "f7bbf3db75106102f290fc5fec68144fc80b8b3e",
+        "rev": "848f049f1894b4bf1d37aeb5c87c1b79d02fb255",
         "type": "github"
       },
       "original": {
@@ -242,11 +242,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794274429,
+        "lastModified": 1794276046,
         "narHash": "sha256-hAdC4ZH9KjJXOKEmm7mSuZt+q98VFnTaiZo6sAqTKpQ=",
         "owner": "gabrielzschmitz",
         "repo": "pinentry-dmenu",
-        "rev": "0b127502a5a7cc355a31f6fa378f409cb1d6a119",
+        "rev": "ecb7c8937f7245460e265702c1f7db9dd9a1349a",
         "type": "github"
       },
       "original": {
