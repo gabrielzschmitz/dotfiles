@@ -33,30 +33,34 @@ let
     };
 in
 {
-  flake.modules.nixos.vm = {
-    imports = [ ../hosts/vm/hardware-configuration.nix ];
+  flake.modules.nixos.vm =
+    { pkgs, ... }:
+    {
+      imports = [ ../hosts/vm/hardware-configuration.nix ];
 
-    networking.hostName = "vm";
+      networking.hostName = "vm";
 
-    system.stateVersion = "26.05";
+      system.stateVersion = "26.05";
 
-    boot.kernelParams = [ "video=Virtual-1:1920x1080@60" ];
+      boot.kernelPackages = pkgs.linuxPackages_hardened;
 
-    my.display = {
-      picom = {
-        enable = false;
-        backend = "xrender";
+      boot.kernelParams = [ "video=Virtual-1:1920x1080@60" ];
+
+      my.display = {
+        picom = {
+          enable = false;
+          backend = "xrender";
+        };
+
+        outputs = [
+          {
+            name = "Virtual-1";
+            mode = "1920x1080";
+            primary = true;
+          }
+        ];
       };
-
-      outputs = [
-        {
-          name = "Virtual-1";
-          mode = "1920x1080";
-          primary = true;
-        }
-      ];
     };
-  };
 
   flake.modules.nixos.machine =
     { pkgs, ... }:
@@ -70,6 +74,9 @@ in
       networking.hostName = "machine";
 
       system.stateVersion = "26.05";
+
+      #  # Track the newest stable upstream kernel
+      #  boot.kernelPackages = pkgs.linuxPackages_latest;
 
       my.display = {
         picom = {
