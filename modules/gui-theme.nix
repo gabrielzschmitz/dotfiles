@@ -11,7 +11,8 @@
         size = 24;
 
         gtk.enable = true;
-        x11.enable = true;
+        # Already managed by configs/Xresources
+        x11.enable = false;
 
         # Disable legacy ~/.icons generation.
         dotIcons.enable = false;
