@@ -18,7 +18,6 @@
         git
         github-cli
         gnupg
-        pinentry-gnome3
         fd
         fzf
         jq
