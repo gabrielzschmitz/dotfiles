@@ -2,7 +2,7 @@
 #
 # Selects a video under ~/vid and compresses it with ffmpeg.
 #
-# Requires: fzf, dmenu, ffmpeg, ffprobe, dragon-drop, find, sort, awk, coreutils
+# Requires: fzf, ffmpeg, ffprobe, dragon-drop, find, sort, awk, coreutils
 #
 # Usage:
 #   compressmedia
@@ -23,11 +23,10 @@
 #   Existing files are never overwritten.
 #
 # Configuration:
-#   VID_DIR, FZF, DMENU, FFMPEG, FFPROBE, and DRAGON_DROP select executables.
+#   VID_DIR, FZF, FFMPEG, FFPROBE, and DRAGON_DROP select executables.
 
 VID_DIR="${VID_DIR:-$HOME/vid}"
 FZF="${FZF:-fzf}"
-DMENU="${DMENU:-dmenu}"
 FFMPEG="${FFMPEG:-ffmpeg}"
 FFPROBE="${FFPROBE:-ffprobe}"
 DRAGON_DROP="${DRAGON_DROP:-dragon-drop}"
@@ -93,7 +92,7 @@ select_video() {
       \) -printf '%T@ %p\n' \
       | sort -rn \
       | cut -d' ' -f2- \
-      | "$FZF" --prompt='Video: '
+      | "$FZF" --no-multi --prompt='Video: '
   )
   selection_status=$?
   if [ "$selection_status" -ne 0 ]; then
@@ -196,7 +195,7 @@ prepare_output() {
   esac
 }
 
-# Print preset labels and return dmenu's selection.
+# Print preset labels and return fzf's selection.
 show_menu() {
   printf '%s\n' \
     "$OPTION_DEFAULT" \
@@ -204,7 +203,8 @@ show_menu() {
     "$OPTION_SMALL" \
     "$OPTION_DISCORD" \
     "$OPTION_CANCEL" \
-    | "$DMENU" -i -l 5 -p 'Compress: '
+    | "$FZF" --no-multi --height=40% --reverse -i \
+      --prompt='Compress: '
 }
 
 # Create a same-directory workspace for safe output and two-pass logs.
@@ -440,7 +440,7 @@ compress_video() {
   publish_output
 }
 
-# Dispatch the dmenu choice or exit cleanly when the user cancels.
+# Dispatch the selected preset or exit cleanly when the user cancels.
 handle_selection() {
   case "$1" in
     "$OPTION_DEFAULT") compress_video quality default ;;
@@ -459,8 +459,8 @@ handle_selection() {
 main() {
   selection_status=0
   parse_args "$@"
-  require_commands "$FZF" "$DMENU" "$FFMPEG" "$FFPROBE" \
-    "$DRAGON_DROP" find sort tr awk mktemp wc ln rm || exit 1
+  require_commands "$FZF" "$FFMPEG" "$FFPROBE" \
+    "$DRAGON_DROP" find sort cut tr awk mktemp wc ln rm || exit 1
   select_video
   selection_status=$?
   case "$selection_status" in
