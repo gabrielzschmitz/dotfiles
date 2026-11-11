@@ -76,6 +76,7 @@
             rotation = "inverted";
             position = "0x0";
             primary = true;
+            external = true;
           }
           {
             name = "eDP-1";
@@ -84,6 +85,19 @@
             rotation = "normal";
             position = "1920x0";
             scale = "0.675x0.675";
+          }
+        ];
+
+        fallbackFramebuffer = lib.mkForce "1728x1080";
+        fallbackOutputs = lib.mkForce [
+          {
+            name = "eDP-1";
+            mode = "2560x1600";
+            rate = "240";
+            rotation = "normal";
+            position = "0x0";
+            scale = "0.675x0.675";
+            primary = true;
           }
         ];
       };

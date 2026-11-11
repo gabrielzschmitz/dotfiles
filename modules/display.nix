@@ -15,7 +15,63 @@
         printf '\033c\033]P014171C\033]P7ABB2BF' > /dev/tty1
       '';
 
-      xrandrArgs = lib.concatMap (
+      outputType = lib.types.submodule {
+        options = {
+          name = lib.mkOption {
+            type = lib.types.str;
+            description = "X RandR output name, such as HDMI-1-0 or eDP-1.";
+          };
+
+          mode = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            description = "Mode passed to --mode, or null to leave it unchanged.";
+          };
+
+          rate = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            description = "Refresh rate passed to --rate, or null to leave it unchanged.";
+          };
+
+          rotation = lib.mkOption {
+            type = lib.types.enum [
+              "normal"
+              "left"
+              "right"
+              "inverted"
+            ];
+            default = "normal";
+            description = "Rotation passed to --rotate.";
+          };
+
+          position = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            description = "Absolute position passed to --pos, such as 0x0, or null to let X RandR place the output.";
+          };
+
+          scale = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            description = "Scale passed to --scale, such as 1.35x1.35, or null to keep the native scale.";
+          };
+
+          primary = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+            description = "Whether to mark this output as the X RandR primary output.";
+          };
+
+          external = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+            description = "Whether this is an external output. The full layout only applies when it is connected.";
+          };
+        };
+      };
+
+      outputArgs =
         output:
         [
           "--output"
@@ -41,24 +97,48 @@
           "--pos"
           output.position
         ]
-        ++ lib.optionals output.primary [ "--primary" ]
-      ) config.my.display.outputs;
-
-      xrandrCommand =
-        "${pkgs.xrandr}/bin/xrandr ${lib.escapeShellArgs xrandrArgs}"
-        + lib.optionalString (config.my.display.framebuffer != null) (
-          " --fb " + lib.escapeShellArg config.my.display.framebuffer
-        );
+        ++ lib.optionals output.primary [ "--primary" ];
 
       # X applies the output transforms but keeps the previous, larger
       # framebuffer on the first invocation, leaving dead space around the
       # outputs. A second identical invocation shrinks it to the requested --fb
       # size, so only apply the command once when no framebuffer is requested.
-      xrandrPrimary = lib.optionalString (config.my.display.outputs != [ ]) (
-        lib.concatStringsSep "\n" (
-          [ xrandrCommand ] ++ lib.optionals (config.my.display.framebuffer != null) [ xrandrCommand ]
-        )
-      );
+      xrandrCall =
+        outputs: framebuffer:
+        let
+          command =
+            "${pkgs.xrandr}/bin/xrandr ${lib.escapeShellArgs (lib.concatMap outputArgs outputs)}"
+            + lib.optionalString (framebuffer != null) (" --fb " + lib.escapeShellArg framebuffer);
+        in
+        lib.optionalString (outputs != [ ]) (
+          lib.concatStringsSep "\n" ([ command ] ++ lib.optionals (framebuffer != null) [ command ])
+        );
+
+      externalNames = map (output: output.name) (lib.filter (output: output.external) config.my.display.outputs);
+
+      # Apply the full layout only when every external output is connected;
+      # otherwise apply the fallback layout so only the internal panel is used.
+      xrandrPrimary =
+        let
+          externalConnected = lib.concatMapStringsSep " && " (
+            name:
+            "${pkgs.xrandr}/bin/xrandr --query | ${pkgs.gnugrep}/bin/grep -q ${lib.escapeShellArg "^${name} connected"}"
+          ) externalNames;
+          full = xrandrCall config.my.display.outputs config.my.display.framebuffer;
+          fallback = xrandrCall config.my.display.fallbackOutputs config.my.display.fallbackFramebuffer;
+        in
+        if externalNames == [ ] then
+          full
+        else
+          ''
+            if ${externalConnected}; then
+              :
+              ${full}
+            else
+              :
+              ${fallback}
+            fi
+          '';
 
       startPicom = lib.optionalString config.my.display.picom.enable ''
         ${pkgs.picom}/bin/picom -b --config "$HOME/.config/picom/picom.conf" &
@@ -89,59 +169,21 @@
         };
 
         outputs = lib.mkOption {
-          type = lib.types.listOf (
-            lib.types.submodule {
-              options = {
-                name = lib.mkOption {
-                  type = lib.types.str;
-                  description = "X RandR output name, such as HDMI-1-0 or eDP-1.";
-                };
-
-                mode = lib.mkOption {
-                  type = lib.types.nullOr lib.types.str;
-                  default = null;
-                  description = "Mode passed to --mode, or null to leave it unchanged.";
-                };
-
-                rate = lib.mkOption {
-                  type = lib.types.nullOr lib.types.str;
-                  default = null;
-                  description = "Refresh rate passed to --rate, or null to leave it unchanged.";
-                };
-
-                rotation = lib.mkOption {
-                  type = lib.types.enum [
-                    "normal"
-                    "left"
-                    "right"
-                    "inverted"
-                  ];
-                  default = "normal";
-                  description = "Rotation passed to --rotate.";
-                };
-
-                position = lib.mkOption {
-                  type = lib.types.nullOr lib.types.str;
-                  default = null;
-                  description = "Absolute position passed to --pos, such as 0x0, or null to let X RandR place the output.";
-                };
-
-                scale = lib.mkOption {
-                  type = lib.types.nullOr lib.types.str;
-                  default = null;
-                  description = "Scale passed to --scale, such as 1.35x1.35, or null to keep the native scale.";
-                };
-
-                primary = lib.mkOption {
-                  type = lib.types.bool;
-                  default = false;
-                  description = "Whether to mark this output as the X RandR primary output.";
-                };
-              };
-            }
-          );
+          type = lib.types.listOf outputType;
           default = [ ];
           description = "X RandR outputs configured, in order, when the X session starts.";
+        };
+
+        fallbackFramebuffer = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "Explicit X11 framebuffer size used with fallbackOutputs.";
+        };
+
+        fallbackOutputs = lib.mkOption {
+          type = lib.types.listOf outputType;
+          default = [ ];
+          description = "X RandR outputs configured when an external output is not connected.";
         };
       };
 

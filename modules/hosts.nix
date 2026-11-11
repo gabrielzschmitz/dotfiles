@@ -99,6 +99,7 @@ in
             rotation = "inverted";
             position = "0x0";
             primary = true;
+            external = true;
           }
           {
             name = "eDP-1-1";
@@ -107,6 +108,21 @@ in
             rotation = "normal";
             position = "1920x0";
             scale = "0.675x0.675";
+          }
+        ];
+
+        # Used when HDMI-0 is not connected: the internal panel alone, at the
+        # same zoom, filling the 1728x1080 framebuffer.
+        fallbackFramebuffer = "1728x1080";
+        fallbackOutputs = [
+          {
+            name = "eDP-1-1";
+            mode = "2560x1600";
+            rate = "240";
+            rotation = "normal";
+            position = "0x0";
+            scale = "0.675x0.675";
+            primary = true;
           }
         ];
       };
