@@ -26,6 +26,10 @@
       flake = "${flakeDir}#(uname -n)";
     in
     {
+      home.packages = [
+        pkgs.nix-output-monitor
+      ];
+
       home.sessionVariables.NIX_BUILD_SHELL = "${nixShellFish}";
 
       # Match fzf to the One Dark palette in configs/Xresources.
@@ -80,10 +84,22 @@
           ll = "ls -lah";
           ".." = "cd ..";
 
-          rebuild = "sudo nixos-rebuild build --flake ${flake}";
-          reswitch = "sudo nixos-rebuild switch --flake ${flake}";
-          reupdate = "nix flake update --flake ${flakeDir} && sudo nixos-rebuild switch --flake ${flake}";
-          reclean = "sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +1 && sudo nix-collect-garbage -d && sudo nixos-rebuild switch --flake ${flake}";
+          rebuild = "sudo -v; and nix-monitor sudo nixos-rebuild build --flake ${flake}";
+
+          reswitch = "sudo -v; and nix-monitor sudo nixos-rebuild switch --flake ${flake}";
+
+          reupdate = ''
+            nix flake update --flake ${flakeDir}; and
+            sudo -v; and
+            nix-monitor sudo nixos-rebuild switch --flake ${flake}
+          '';
+
+          reclean = ''
+            sudo -v; and
+            nix-monitor sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +1; and
+            nix-monitor sudo nix-collect-garbage -d; and
+            nix-monitor sudo nixos-rebuild switch --flake ${flake}
+          '';
         };
 
         interactiveShellInit = /* bash */ ''
@@ -186,6 +202,29 @@
             rm -f "$tmp_file"
 
             return $exit_status
+          '';
+
+          # Use nom for Nix commands that support structured build monitoring.
+          nix = ''
+            if test (count $argv) -eq 0
+              command nix
+              return $status
+            end
+
+            switch $argv[1]
+              case build shell develop copy flake
+                command nom $argv
+              case '*'
+                command nix $argv
+            end
+          '';
+
+          # Monitor commands that do not have a dedicated nom subcommand,
+          # such as nixos-rebuild, nix-env and nix-collect-garbage.
+          nix-monitor = ''
+            command $argv |& command nom
+            set -l command_status $pipestatus[1]
+            return $command_status
           '';
         };
       };
