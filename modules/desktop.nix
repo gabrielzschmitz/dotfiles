@@ -29,7 +29,6 @@
         discord
         signal-desktop
         nextcloud-client
-        qbittorrent
         tor-browser
         ungoogled-chromium
         qalculate-gtk

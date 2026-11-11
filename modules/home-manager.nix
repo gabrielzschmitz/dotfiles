@@ -36,6 +36,7 @@
         thunar
         pipette
         services
+        aria2
       ];
     };
   };

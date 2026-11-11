@@ -69,6 +69,15 @@
         XDG_VIDEOS_DIR = "$HOME/vid";
       };
 
+      xdg.userDirs = {
+        enable = true;
+        download = "${config.home.homeDirectory}/down";
+        documents = "${config.home.homeDirectory}/doc";
+        music = "${config.home.homeDirectory}/mus";
+        pictures = "${config.home.homeDirectory}/pic";
+        videos = "${config.home.homeDirectory}/vid";
+      };
+
       xdg.configFile."user-dirs.dirs" = {
         force = true;
         text = ''

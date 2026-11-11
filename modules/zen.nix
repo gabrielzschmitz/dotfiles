@@ -4,7 +4,11 @@
   flake.modules.homeManager.zen =
     { pkgs, ... }:
     let
-      addons = inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system};
+      system = pkgs.stdenv.hostPlatform.system;
+      addons = inputs.firefox-addons.packages.${system};
+
+      agentSpooferId = "agent-spoofer@addon";
+      aria2cweb = "baptistecdr@users.noreply.github.com";
     in
     {
       imports = [ inputs.zen-browser.homeModules.beta ];
@@ -18,7 +22,6 @@
           ublock-origin
           theater-mode-for-youtube
           privacy-badger
-          user-agent-string-switcher
         ];
 
         policies = {
@@ -71,6 +74,50 @@
               Status = "locked";
             };
           };
+
+          # Install and enforce the newer Aria2 Integration extension.
+          ExtensionSettings = {
+            "${aria2cweb}" = {
+              installation_mode = "force_installed";
+              install_url = "https://addons.mozilla.org/firefox/downloads/latest/aria2-extension/latest.xpi";
+            };
+
+            "${agentSpooferId}" = {
+              installation_mode = "force_installed";
+              install_url = "https://addons.mozilla.org/firefox/downloads/file/4498171/agent_spoofer-2025.5.21.2.xpi";
+            };
+          };
+
+          # Configure Aria2 Integration through Firefox enterprise policies.
+          "3rdparty" = {
+            Extensions = {
+              "${aria2cweb}" = {
+                servers = [
+                  {
+                    uuid = "0b6a1f9e-3c2d-4e5f-8a9b-1c2d3e4f5a6b";
+                    name = "Local aria2";
+                    host = "127.0.0.1";
+                    port = 6800;
+                    path = "/jsonrpc";
+                    secure = false;
+                  }
+                ];
+
+                captureServer = "0b6a1f9e-3c2d-4e5f-8a9b-1c2d3e4f5a6b";
+                captureDownloads = true;
+
+                excludedProtocols = [
+                  "blob"
+                  "data"
+                  "about"
+                  "file"
+                  "moz-extension"
+                ];
+
+                notifyErrorOccurs = true;
+              };
+            };
+          };
         };
 
         profiles.default = {
@@ -97,6 +144,8 @@
             "uBlock0@raymondhill.net"
             "jid1-MnnxcxisBPnSXQ@jetpack"
             "{a6c4a591-f1b2-4f03-b3ff-767e5bedf4e7}"
+            "${aria2cweb}"
+            "${agentSpooferId}"
           ];
         };
       };

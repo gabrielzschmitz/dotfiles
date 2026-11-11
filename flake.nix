@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    fluxer.url = "github:Hy4ri/fluxer-flake";
+    nur.url = "github:nix-community/NUR";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:denful/import-tree";
@@ -37,6 +37,8 @@
       url = "github:gabrielzschmitz/Tomato.C";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    fluxer.url = "github:Hy4ri/fluxer-flake";
 
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
