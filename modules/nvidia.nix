@@ -11,6 +11,7 @@
 
       modesetting.enable = true;
       nvidiaSettings = true;
+      forceFullCompositionPipeline = true;
 
       # Use the discrete GPU as the only X11 device. The laptop MUX must be
       # set to the discrete GPU (or the panel must be wired to it) for this
