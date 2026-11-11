@@ -81,7 +81,7 @@ in
       my.display = {
         picom = {
           enable = true;
-          backend = "egl";
+          backend = "glx";
         };
 
         # Default discrete-GPU mode: the external monitor is driven directly by
