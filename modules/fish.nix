@@ -84,22 +84,8 @@
           ll = "ls -lah";
           ".." = "cd ..";
 
-          rebuild = "sudo -v; and nix-monitor sudo nixos-rebuild build --flake ${flake}";
-
-          reswitch = "sudo -v; and nix-monitor sudo nixos-rebuild switch --flake ${flake}";
-
-          reupdate = ''
-            nix flake update --flake ${flakeDir}; and
-            sudo -v; and
-            nix-monitor sudo nixos-rebuild switch --flake ${flake}
-          '';
-
-          reclean = ''
-            sudo -v; and
-            nix-monitor sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +1; and
-            nix-monitor sudo nix-collect-garbage -d; and
-            nix-monitor sudo nixos-rebuild switch --flake ${flake}
-          '';
+          rebuild = "nix-monitor sudo nixos-rebuild build --flake ${flake}";
+          reswitch = "nix-monitor sudo nixos-rebuild switch --flake ${flake}";
         };
 
         interactiveShellInit = /* bash */ ''
@@ -225,6 +211,29 @@
             command $argv |& command nom
             set -l command_status $pipestatus[1]
             return $command_status
+          '';
+
+          reupdate = ''
+            nix flake update --flake ${flakeDir}
+            or return $status
+
+            sudo -v
+            or return $status
+
+            nix-monitor sudo nixos-rebuild switch --flake ${flake}
+          '';
+
+          reclean = ''
+            sudo -v
+            or return $status
+
+            nix-monitor sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +1
+            or return $status
+
+            nix-monitor sudo nix-collect-garbage -d
+            or return $status
+
+            nix-monitor sudo nixos-rebuild switch --flake ${flake}
           '';
         };
       };
