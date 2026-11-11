@@ -6,7 +6,7 @@
   };
 
   flake.modules.homeManager.fish =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     let
       nixShellFish = pkgs.writeShellScript "nix-shell-fish" ''
         if [ "''${1-}" = "--rcfile" ] && [ -n "''${2-}" ]; then
@@ -88,13 +88,8 @@
         interactiveShellInit = /* bash */ ''
           set -gx NIX_BUILD_SHELL ${nixShellFish}
 
-          if command -q gpgconf
-            set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-          end
+          set -gx SSH_AUTH_SOCK "${config.xdg.dataHome}/gnupg/S.gpg-agent.ssh"
           set -gx GPG_TTY (tty)
-          if command -q gpg-connect-agent
-            gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
-          end
 
           set -gx TERMINAL st
           set -gx EDITOR nvim
