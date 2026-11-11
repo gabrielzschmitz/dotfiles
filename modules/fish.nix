@@ -83,9 +83,6 @@
         shellAliases = {
           ll = "ls -lah";
           ".." = "cd ..";
-
-          rebuild = "nix-monitor sudo nixos-rebuild build --flake ${flake}";
-          reswitch = "nix-monitor sudo nixos-rebuild switch --flake ${flake}";
         };
 
         interactiveShellInit = /* bash */ ''
@@ -211,6 +208,20 @@
             command $argv |& command nom
             set -l command_status $pipestatus[1]
             return $command_status
+          '';
+
+          rebuild = ''
+            sudo -v; or return
+            sudo nixos-rebuild build --flake ${flake} |& nom
+            set -l result $pipestatus[1]
+            return $result
+          '';
+
+          reswitch = ''
+            sudo -v; or return
+            sudo nixos-rebuild switch --flake ${flake} |& nom
+            set -l result $pipestatus[1]
+            return $result
           '';
 
           reupdate = ''
