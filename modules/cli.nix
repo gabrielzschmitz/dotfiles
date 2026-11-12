@@ -34,6 +34,7 @@
         devour
         gdu
         openvpn
+        yt-dlp
       ];
 
       xdg.configFile."gdu/gdu.yaml".source = ../configs/gdu/gdu.yaml;
