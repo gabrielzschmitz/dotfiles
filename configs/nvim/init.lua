@@ -37,8 +37,6 @@
 --
 -- LSP
 --   neovim/nvim-lspconfig
---   mason-org/mason.nvim
---   WhoIsSethDaniel/mason-tool-installer.nvim
 --
 -- FORMATTING
 --   stevearc/conform.nvim
@@ -864,48 +862,6 @@ require("lazy").setup({
 				end,
 			})
 		end,
-	},
-
-	----------------------------------------------------------------------
-	-- MASON
-	----------------------------------------------------------------------
-
-	{
-		"mason-org/mason.nvim",
-
-		cmd = "Mason",
-
-		opts = {},
-	},
-
-	----------------------------------------------------------------------
-	-- MASON TOOL INSTALLER
-	----------------------------------------------------------------------
-
-	{
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
-
-		dependencies = {
-			"mason-org/mason.nvim",
-		},
-
-		event = "VeryLazy",
-
-		opts = {
-			ensure_installed = {
-				"gopls",
-				"clangd",
-				"lua-language-server",
-				"html-lsp",
-				"css-lsp",
-				"bash-language-server",
-			},
-
-			auto_update = false,
-			run_on_start = true,
-			start_delay = 3000,
-			debounce_hours = 5,
-		},
 	},
 
 	----------------------------------------------------------------------
