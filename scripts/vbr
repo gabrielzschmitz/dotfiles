@@ -1,0 +1,190 @@
+#!/bin/sh
+#
+# Open a list of filenames in NeoVim for interactive mass renaming.
+#
+# Dependencies:
+#   nvim: Edit the list of filenames.
+#   GNU coreutils: Provide ls, mv, rm, and wc.
+#   mktemp: Create a private temporary directory.
+#
+# Usage:
+#   vbr [FOLDER]
+#   vbr --help
+#   vbr -h
+#
+# Arguments:
+#   FOLDER  Directory containing the files (default: current directory).
+#
+# Behavior:
+#   Lists directory entries in sorted order and opens them in NeoVim.
+#   Each edited line corresponds to the original filename at that position.
+#   Changed filenames are renamed; empty lines delete their corresponding
+#   original entries.
+#   The NeoVim mapping dd clears the current line instead of deleting it.
+#   Quitting without saving cancels the operation.
+#
+# Limitations:
+#   Filenames containing newline characters are not supported.
+#   Renames are performed sequentially; filename swaps may fail or overwrite
+#   existing entries.
+
+# Print usage information and explain the editing behavior.
+usage() {
+  cat << EOF
+Usage: vbr [FOLDER]
+       vbr --help
+       vbr -h
+
+Open a list of filenames from FOLDER in NeoVim for mass renaming.
+When FOLDER is omitted, the current directory is used.
+
+Upon saving and exiting NeoVim, files are renamed as needed.
+Leaving a line empty deletes the corresponding original entry.
+Quit without saving to cancel.
+
+WARNING:
+Do not reorder filenames or remove lines. Each line number identifies
+its original file. The dd mapping clears the current line, resulting
+in the corresponding file being deleted.
+EOF
+}
+
+# Parse options and select the target directory.
+parse_args() {
+  directory=.
+
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      -h | --help)
+        usage
+        exit 0
+        ;;
+      --)
+        shift
+        if [ "$#" -gt 1 ]; then
+          usage >&2
+          exit 2
+        fi
+        if [ "$#" -eq 1 ]; then
+          directory=$1
+        fi
+        break
+        ;;
+      -*)
+        printf 'Unknown option: %s\n' "$1" >&2
+        usage
+        exit 2
+        ;;
+      *)
+        if [ "$directory" != "." ]; then
+          printf 'Only one directory argument is supported.\n' >&2
+          usage
+          exit 2
+        fi
+        directory=$1
+        shift
+        ;;
+    esac
+  done
+}
+
+# Change to the selected directory before collecting filenames.
+change_directory() {
+  if ! cd "$directory"; then
+    printf 'Error: Cannot access directory: %s\n' "$directory" >&2
+    return 1
+  fi
+}
+
+# Create private temporary files and register automatic cleanup.
+prepare_workspace() {
+  workspace=$(mktemp -d "${TMPDIR:-/tmp}/vr.XXXXXX") || {
+    printf 'Error: Could not create temporary directory.\n' >&2
+    return 1
+  }
+
+  original_names=$workspace/original
+  edited_names=$workspace/edited
+
+  trap 'rm -rf "$workspace"' 0
+  trap 'exit 1' HUP INT TERM
+}
+
+# Collect directory entries in sorted order without including . or ...
+create_filename_list() {
+  if ! LC_ALL=C ls -1A --quoting-style=literal > "$1"; then
+    printf 'Error: Could not list directory entries.\n' >&2
+    return 1
+  fi
+}
+
+# Open the filename list in NeoVim, mapping dd to clear the current line.
+edit_filename_list() {
+  cp "$1" "$2" || return 1
+
+  nvim -c 'nnoremap dd 0D' "$2"
+}
+
+# Ensure the edited list retains the original line count.
+validate_filename_list() {
+  original_count=$(wc -l < "$1")
+  edited_count=$(wc -l < "$2")
+
+  if [ "$original_count" -ne "$edited_count" ]; then
+    printf '%s\n' \
+      'Number of filenames changed.' \
+      'Leave lines empty to delete files; do not remove lines.' \
+      'Aborting.' >&2
+    return 1
+  fi
+}
+
+# Apply renames and deletions while preserving original line positions.
+apply_changes() {
+  while IFS= read -r original_name <&3; do
+    if ! IFS= read -r edited_name <&4; then
+      printf 'Error: Could not read edited filename list.\n' >&2
+      return 1
+    fi
+
+    if [ -z "$edited_name" ]; then
+      if ! rm -rf -- "./$original_name"; then
+        printf 'Error: Could not delete: %s\n' "$original_name" >&2
+        return 1
+      fi
+    elif [ "$original_name" != "$edited_name" ]; then
+      if ! mv -- "./$original_name" "$edited_name"; then
+        printf 'Error: Could not rename: %s\n' "$original_name" >&2
+        return 1
+      fi
+    fi
+  done 3< "$1" 4< "$2"
+}
+
+# Coordinate argument parsing, editing, validation, and file operations.
+main() {
+  parse_args "$@"
+
+  change_directory || return 1
+  prepare_workspace || return 1
+
+  create_filename_list "$original_names" || return 1
+
+  if ! edit_filename_list "$original_names" "$edited_names"; then
+    printf 'Editing cancelled or NeoVim failed.\n' >&2
+    return 1
+  fi
+
+  if cmp -s "$original_names" "$edited_names"; then
+    printf 'No changes made.\n'
+    return 0
+  fi
+
+  validate_filename_list "$original_names" "$edited_names" || return 1
+
+  apply_changes "$original_names" "$edited_names" || return 1
+
+  printf 'Filename changes applied.\n'
+}
+
+main "$@"
