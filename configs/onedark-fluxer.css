@@ -491,3 +491,8 @@ html[data-theme="light"] {
   border-radius: 50% !important;
   object-fit: cover;
 }
+
+/* Gap between avatars at connected voice status */
+[data-flx="ui.avatars.avatar-stack.container"] {
+  gap: 5px !important;
+}
