@@ -26,6 +26,9 @@
 -- PLUGINS ON THE CONFIG
 -- ============================================================================
 --
+-- MANAGER
+--   vim.pack (native)
+--
 -- THEME
 --   navarasu/onedark.nvim
 --
@@ -151,172 +154,182 @@ vim.diagnostic.config({
 })
 
 -- ============================================================================
--- LAZY.NVIM
+-- VIM.PACK
 -- ============================================================================
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-
-if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable",
-		lazypath,
-	})
+local gh = function(repo)
+	return "https://github.com/" .. repo
 end
 
-vim.opt.rtp:prepend(lazypath)
+-- mini.nvim plugins use semver release tags.
+local mini_version = vim.version.range("*")
+
+-- Build steps run after installation/update, outside the setup calls.
+vim.api.nvim_create_autocmd("PackChanged", {
+	callback = function(ev)
+		local name = ev.data.spec.name
+
+		if name == "markdown-preview.nvim" and (ev.data.kind == "install" or ev.data.kind == "update") then
+			vim.system({ "npx", "--yes", "yarn", "install", "--force" }, {
+				cwd = ev.data.path .. "/app",
+			}):wait()
+		end
+	end,
+})
+
+-- vim.pack has no event/ft/cmd lazy loading, so plugins are loaded during
+-- startup. `load = true` sources each plugin's plugin/ and ftdetect/ files
+-- immediately instead of waiting until after init.lua.
+local add_plugin = function(spec)
+	vim.pack.add({ spec }, {
+		confirm = false,
+		load = true,
+	})
+end
 
 -- ============================================================================
 -- PLUGINS
 -- ============================================================================
 
-require("lazy").setup({
-	----------------------------------------------------------------------
-	-- THEME
-	----------------------------------------------------------------------
+----------------------------------------------------------------------
+-- THEME
+----------------------------------------------------------------------
 
-	{
-		"navarasu/onedark.nvim",
+add_plugin({
+	src = gh("navarasu/onedark.nvim"),
+})
 
-		priority = 1000,
-
-		config = function()
-			require("onedark").setup({
-				style = "dark",
-				transparent = true,
-				lualine = {
-					transparent = true,
-				},
-			})
-
-			require("onedark").load()
-		end,
+require("onedark").setup({
+	style = "dark",
+	transparent = true,
+	lualine = {
+		transparent = true,
 	},
+})
 
-	----------------------------------------------------------------------
-	-- DASHBOARD
-	----------------------------------------------------------------------
+require("onedark").load()
 
-	{
-		"nvim-mini/mini.starter",
+----------------------------------------------------------------------
+-- DASHBOARD
+----------------------------------------------------------------------
 
-		version = "*",
+add_plugin({
+	src = gh("nvim-mini/mini.starter"),
+	version = mini_version,
+})
 
-		config = function()
-			local starter = require("mini.starter")
+do
+	local starter = require("mini.starter")
 
-			----------------------------------------------------------------
-			-- ASCII ART COLORS (16-COLOR TERMINAL PALETTE)
-			----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- ASCII ART COLORS (16-COLOR TERMINAL PALETTE)
+	----------------------------------------------------------------
 
-			local header_ns = vim.api.nvim_create_namespace("MiniStarterHeaderColors")
+	local header_ns = vim.api.nvim_create_namespace("MiniStarterHeaderColors")
 
-			local header_palette = {
-				[0] = "StarterHeaderColor0",
-				[1] = "StarterHeaderColor1",
-				[2] = "StarterHeaderColor2",
-				[3] = "StarterHeaderColor3",
-				[4] = "StarterHeaderColor4",
-				[5] = "StarterHeaderColor5",
-				[6] = "StarterHeaderColor6",
-				[7] = "StarterHeaderColor7",
-				[8] = "StarterHeaderColor8",
-				[9] = "StarterHeaderColor9",
-				[10] = "StarterHeaderColor10",
-				[11] = "StarterHeaderColor11",
-				[12] = "StarterHeaderColor12",
-				[13] = "StarterHeaderColor13",
-				[14] = "StarterHeaderColor14",
-				[15] = "StarterHeaderColor15",
-			}
+	local header_palette = {
+		[0] = "StarterHeaderColor0",
+		[1] = "StarterHeaderColor1",
+		[2] = "StarterHeaderColor2",
+		[3] = "StarterHeaderColor3",
+		[4] = "StarterHeaderColor4",
+		[5] = "StarterHeaderColor5",
+		[6] = "StarterHeaderColor6",
+		[7] = "StarterHeaderColor7",
+		[8] = "StarterHeaderColor8",
+		[9] = "StarterHeaderColor9",
+		[10] = "StarterHeaderColor10",
+		[11] = "StarterHeaderColor11",
+		[12] = "StarterHeaderColor12",
+		[13] = "StarterHeaderColor13",
+		[14] = "StarterHeaderColor14",
+		[15] = "StarterHeaderColor15",
+	}
 
-			local terminal_colors = {
-				"#181b21", -- 0: Black
-				"#be5046", -- 1: Red
-				"#81ae5f", -- 2: Green
-				"#d19a66", -- 3: Yellow
-				"#4889be", -- 4: Blue
-				"#7560d3", -- 5: Magenta
-				"#49919a", -- 6: Cyan
-				"#abb2bf", -- 7: Grey
-				"#5c6370", -- 8: Bright Black
-				"#e06c75", -- 9: Bright Red
-				"#98c379", -- 10: Bright Green
-				"#e5c07b", -- 11: Bright Yellow
-				"#61afef", -- 12: Bright Blue
-				"#8677cf", -- 13: Bright Magenta
-				"#56b6c2", -- 14: Bright Cyan
-				"#b8bfe5", -- 15: Bright White
-			}
+	local terminal_colors = {
+		"#181b21", -- 0: Black
+		"#be5046", -- 1: Red
+		"#81ae5f", -- 2: Green
+		"#d19a66", -- 3: Yellow
+		"#4889be", -- 4: Blue
+		"#7560d3", -- 5: Magenta
+		"#49919a", -- 6: Cyan
+		"#abb2bf", -- 7: Grey
+		"#5c6370", -- 8: Bright Black
+		"#e06c75", -- 9: Bright Red
+		"#98c379", -- 10: Bright Green
+		"#e5c07b", -- 11: Bright Yellow
+		"#61afef", -- 12: Bright Blue
+		"#8677cf", -- 13: Bright Magenta
+		"#56b6c2", -- 14: Bright Cyan
+		"#b8bfe5", -- 15: Bright White
+	}
 
-			for i, color in ipairs(terminal_colors) do
-				vim.api.nvim_set_hl(0, "StarterHeaderColor" .. (i - 1), {
-					fg = color,
-					bold = true,
-				})
-			end
+	for i, color in ipairs(terminal_colors) do
+		vim.api.nvim_set_hl(0, "StarterHeaderColor" .. (i - 1), {
+			fg = color,
+			bold = true,
+		})
+	end
 
-			----------------------------------------------------------------
-			-- INLINE COLOR PARSER
-			----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- INLINE COLOR PARSER
+	----------------------------------------------------------------
 
-			local function parse_header(source)
-				local lines = {}
-				local highlights = {}
+	local function parse_header(source)
+		local lines = {}
+		local highlights = {}
 
-				local current_color = nil
+		local current_color = nil
 
-				for row, line in
-					ipairs(vim.split(source, "\n", {
-						plain = true,
-					}))
-				do
-					local output = {}
-					local byte_col = 0
-					local pos = 1
+		for row, line in
+			ipairs(vim.split(source, "\n", {
+				plain = true,
+			}))
+		do
+			local output = {}
+			local byte_col = 0
+			local pos = 1
 
-					while pos <= #line do
-						-- Recognize color directives: \c1, \c2, etc.
-						local color, next_pos = line:match("^\\c(%d+)()", pos)
+			while pos <= #line do
+				-- Recognize color directives: \c1, \c2, etc.
+				local color, next_pos = line:match("^\\c(%d+)()", pos)
 
-						if color then
-							current_color = tonumber(color)
-							pos = next_pos
-						else
-							local char = vim.fn.strcharpart(line:sub(pos), 0, 1)
+				if color then
+					current_color = tonumber(color)
+					pos = next_pos
+				else
+					local char = vim.fn.strcharpart(line:sub(pos), 0, 1)
 
-							local char_bytes = #char
+					local char_bytes = #char
 
-							if current_color and header_palette[current_color] then
-								table.insert(highlights, {
-									row = row - 1,
-									start_col = byte_col,
-									end_col = byte_col + char_bytes,
-									group = header_palette[current_color],
-								})
-							end
-
-							table.insert(output, char)
-
-							byte_col = byte_col + char_bytes
-							pos = pos + char_bytes
-						end
+					if current_color and header_palette[current_color] then
+						table.insert(highlights, {
+							row = row - 1,
+							start_col = byte_col,
+							end_col = byte_col + char_bytes,
+							group = header_palette[current_color],
+						})
 					end
 
-					table.insert(lines, table.concat(output))
-				end
+					table.insert(output, char)
 
-				return table.concat(lines, "\n"), highlights
+					byte_col = byte_col + char_bytes
+					pos = pos + char_bytes
+				end
 			end
 
-			----------------------------------------------------------------
-			-- HEADER
-			----------------------------------------------------------------
+			table.insert(lines, table.concat(output))
+		end
 
-			local raw_header = [[
+		return table.concat(lines, "\n"), highlights
+	end
+
+	----------------------------------------------------------------
+	-- HEADER
+	----------------------------------------------------------------
+
+	local raw_header = [[
                                 \c11|
                       \c7_.---.  \c11\ _ /
                      \c7(_._ ) )--;\c11_) =-
@@ -332,1172 +345,1092 @@ require("lazy").setup({
                     \c2__.-'\c4      ^
 ]]
 
-			local parsed_header, header_highlights = parse_header(raw_header)
+	local parsed_header, header_highlights = parse_header(raw_header)
 
-			----------------------------------------------------------------
-			-- APPLY HEADER COLORS
-			----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- APPLY HEADER COLORS
+	----------------------------------------------------------------
 
-			local function apply_header_colors()
-				local buf = vim.api.nvim_get_current_buf()
+	local function apply_header_colors()
+		local buf = vim.api.nvim_get_current_buf()
 
-				if not vim.api.nvim_buf_is_valid(buf) or vim.bo[buf].filetype ~= "ministarter" then
-					return
+		if not vim.api.nvim_buf_is_valid(buf) or vim.bo[buf].filetype ~= "ministarter" then
+			return
+		end
+
+		vim.api.nvim_buf_clear_namespace(buf, header_ns, 0, -1)
+
+		local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+
+		-- Locate the first rendered header line.
+		local first_header = nil
+
+		for row, line in ipairs(lines) do
+			if line:find(vim.split(parsed_header, "\n", { plain = true })[1], 1, true) then
+				first_header = row - 1
+				break
+			end
+		end
+
+		if first_header == nil then
+			return
+		end
+
+		-- Calculate horizontal offset from the rendered header.
+		local first_line = vim.split(parsed_header, "\n", { plain = true })[1]
+
+		local rendered_first_line = lines[first_header + 1]
+		local header_offset = rendered_first_line:find(first_line, 1, true)
+
+		if not header_offset then
+			return
+		end
+
+		header_offset = header_offset - 1
+
+		for _, hl in ipairs(header_highlights) do
+			local row = first_header + hl.row
+			local line = lines[row + 1]
+
+			if line then
+				vim.api.nvim_buf_set_extmark(buf, header_ns, row, header_offset + hl.start_col, {
+					end_col = header_offset + hl.end_col,
+					hl_group = hl.group,
+					priority = 200,
+				})
+			end
+		end
+	end
+
+	----------------------------------------------------------------
+	-- STARTER SETUP
+	----------------------------------------------------------------
+
+	starter.setup({
+		autoopen = true,
+		evaluate_single = false,
+
+		header = parsed_header,
+
+		items = {
+			starter.sections.builtin_actions(),
+			starter.sections.recent_files(5, true),
+		},
+
+		footer = ("Neovim Config by gabrielzschmitz (v%s)"):format(
+			vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch
+		),
+
+		content_hooks = {
+			starter.gen_hook.adding_bullet(),
+
+			starter.gen_hook.indexing("all", {
+				"Builtin actions",
+				"Recent files",
+			}),
+
+			-- Vertical centering.
+			starter.gen_hook.aligning("left", "center"),
+
+			-- Horizontal centering and shared menu alignment.
+			function(content, buf_id)
+				local win_id = vim.fn.bufwinid(buf_id)
+
+				if win_id < 0 then
+					return content
 				end
 
-				vim.api.nvim_buf_clear_namespace(buf, header_ns, 0, -1)
+				local width = vim.api.nvim_win_get_width(win_id)
 
-				local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+				local widths = {
+					header = 0,
+					menu = 0,
+					footer = 0,
+				}
 
-				-- Locate the first rendered header line.
-				local first_header = nil
+				-- Calculate maximum width of each block.
+				for _, line in ipairs(content) do
+					local line_type
+					local line_text = ""
 
-				for row, line in ipairs(lines) do
-					if line:find(vim.split(parsed_header, "\n", { plain = true })[1], 1, true) then
-						first_header = row - 1
-						break
+					for _, unit in ipairs(line) do
+						line_text = line_text .. unit.string
+
+						if unit.type == "header" then
+							line_type = "header"
+						elseif unit.type == "item" or unit.type == "section" then
+							line_type = "menu"
+						elseif unit.type == "footer" then
+							line_type = "footer"
+						end
+					end
+
+					if line_type then
+						widths[line_type] = math.max(widths[line_type], vim.fn.strdisplaywidth(line_text))
 					end
 				end
 
-				if first_header == nil then
-					return
+				-- Calculate horizontal offsets.
+				local padding = {}
+
+				for block, block_width in pairs(widths) do
+					padding[block] = math.max(0, math.floor((width - block_width) / 2))
 				end
 
-				-- Calculate horizontal offset from the rendered header.
-				local first_line = vim.split(parsed_header, "\n", { plain = true })[1]
+				-- Apply horizontal offsets.
+				for _, line in ipairs(content) do
+					local line_type
 
-				local rendered_first_line = lines[first_header + 1]
-				local header_offset = rendered_first_line:find(first_line, 1, true)
+					for _, unit in ipairs(line) do
+						if unit.type == "header" then
+							line_type = "header"
+							break
+						elseif unit.type == "item" or unit.type == "section" then
+							line_type = "menu"
+							break
+						elseif unit.type == "footer" then
+							line_type = "footer"
+							break
+						end
+					end
 
-				if not header_offset then
-					return
-				end
-
-				header_offset = header_offset - 1
-
-				for _, hl in ipairs(header_highlights) do
-					local row = first_header + hl.row
-					local line = lines[row + 1]
-
-					if line then
-						vim.api.nvim_buf_set_extmark(buf, header_ns, row, header_offset + hl.start_col, {
-							end_col = header_offset + hl.end_col,
-							hl_group = hl.group,
-							priority = 200,
+					if line_type and padding[line_type] > 0 then
+						table.insert(line, 1, {
+							type = "empty",
+							string = string.rep(" ", padding[line_type]),
 						})
 					end
 				end
-			end
 
-			----------------------------------------------------------------
-			-- STARTER SETUP
-			----------------------------------------------------------------
+				return content
+			end,
+		},
+	})
 
-			starter.setup({
-				autoopen = true,
-				evaluate_single = false,
+	----------------------------------------------------------------
+	-- GENERAL COLORS
+	----------------------------------------------------------------
 
-				header = parsed_header,
+	vim.api.nvim_set_hl(0, "MiniStarterHeader", {
+		fg = "#56b6c2",
+		bold = true,
+	})
 
-				items = {
-					starter.sections.builtin_actions(),
-					starter.sections.recent_files(5, true),
-				},
+	vim.api.nvim_set_hl(0, "MiniStarterFooter", {
+		fg = "#5c6370",
+		italic = true,
+	})
 
-				footer = ("Neovim Config by gabrielzschmitz (v%s)"):format(
-					vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch
-				),
+	vim.api.nvim_set_hl(0, "MiniStarterSection", {
+		fg = "#49919a",
+		bold = true,
+	})
 
-				content_hooks = {
-					starter.gen_hook.adding_bullet(),
+	vim.api.nvim_set_hl(0, "MiniStarterItem", {
+		fg = "#abb2bf",
+	})
 
-					starter.gen_hook.indexing("all", {
-						"Builtin actions",
-						"Recent files",
-					}),
+	vim.api.nvim_set_hl(0, "MiniStarterItemPrefix", {
+		fg = "#61afef",
+		bold = true,
+	})
 
-					-- Vertical centering.
-					starter.gen_hook.aligning("left", "center"),
+	vim.api.nvim_set_hl(0, "MiniStarterCurrent", {
+		fg = "#abb2bf",
+		bold = true,
+	})
 
-					-- Horizontal centering and shared menu alignment.
-					function(content, buf_id)
-						local win_id = vim.fn.bufwinid(buf_id)
+	vim.api.nvim_set_hl(0, "MiniStarterQuery", {
+		fg = "#e5c07b",
+		bold = true,
+	})
 
-						if win_id < 0 then
-							return content
-						end
+	----------------------------------------------------------------
+	-- AUTOCMDS
+	----------------------------------------------------------------
 
-						local width = vim.api.nvim_win_get_width(win_id)
+	local group = vim.api.nvim_create_augroup("MiniStarterHeaderColors", { clear = true })
 
-						local widths = {
-							header = 0,
-							menu = 0,
-							footer = 0,
-						}
-
-						-- Calculate maximum width of each block.
-						for _, line in ipairs(content) do
-							local line_type
-							local line_text = ""
-
-							for _, unit in ipairs(line) do
-								line_text = line_text .. unit.string
-
-								if unit.type == "header" then
-									line_type = "header"
-								elseif unit.type == "item" or unit.type == "section" then
-									line_type = "menu"
-								elseif unit.type == "footer" then
-									line_type = "footer"
-								end
-							end
-
-							if line_type then
-								widths[line_type] = math.max(widths[line_type], vim.fn.strdisplaywidth(line_text))
-							end
-						end
-
-						-- Calculate horizontal offsets.
-						local padding = {}
-
-						for block, block_width in pairs(widths) do
-							padding[block] = math.max(0, math.floor((width - block_width) / 2))
-						end
-
-						-- Apply horizontal offsets.
-						for _, line in ipairs(content) do
-							local line_type
-
-							for _, unit in ipairs(line) do
-								if unit.type == "header" then
-									line_type = "header"
-									break
-								elseif unit.type == "item" or unit.type == "section" then
-									line_type = "menu"
-									break
-								elseif unit.type == "footer" then
-									line_type = "footer"
-									break
-								end
-							end
-
-							if line_type and padding[line_type] > 0 then
-								table.insert(line, 1, {
-									type = "empty",
-									string = string.rep(" ", padding[line_type]),
-								})
-							end
-						end
-
-						return content
-					end,
-				},
-			})
-
-			----------------------------------------------------------------
-			-- GENERAL COLORS
-			----------------------------------------------------------------
-
-			vim.api.nvim_set_hl(0, "MiniStarterHeader", {
-				fg = "#56b6c2",
-				bold = true,
-			})
-
-			vim.api.nvim_set_hl(0, "MiniStarterFooter", {
-				fg = "#5c6370",
-				italic = true,
-			})
-
-			vim.api.nvim_set_hl(0, "MiniStarterSection", {
-				fg = "#49919a",
-				bold = true,
-			})
-
-			vim.api.nvim_set_hl(0, "MiniStarterItem", {
-				fg = "#abb2bf",
-			})
-
-			vim.api.nvim_set_hl(0, "MiniStarterItemPrefix", {
-				fg = "#61afef",
-				bold = true,
-			})
-
-			vim.api.nvim_set_hl(0, "MiniStarterCurrent", {
-				fg = "#abb2bf",
-				bold = true,
-			})
-
-			vim.api.nvim_set_hl(0, "MiniStarterQuery", {
-				fg = "#e5c07b",
-				bold = true,
-			})
-
-			----------------------------------------------------------------
-			-- AUTOCMDS
-			----------------------------------------------------------------
-
-			local group = vim.api.nvim_create_augroup("MiniStarterHeaderColors", { clear = true })
-
-			vim.api.nvim_create_autocmd("User", {
-				group = group,
-				pattern = "MiniStarterOpened",
-				callback = function()
-					vim.schedule(apply_header_colors)
-				end,
-			})
-
-			vim.api.nvim_create_autocmd("VimResized", {
-				group = group,
-				callback = function()
-					vim.schedule(apply_header_colors)
-				end,
-			})
+	vim.api.nvim_create_autocmd("User", {
+		group = group,
+		pattern = "MiniStarterOpened",
+		callback = function()
+			vim.schedule(apply_header_colors)
 		end,
-	},
+	})
 
-	----------------------------------------------------------------------
-	-- FILE EXPLORER
-	----------------------------------------------------------------------
-
-	{
-		"luukvbaal/nnn.nvim",
-
-		-- Must be loaded during startup so replace_netrw can intercept
-		-- the directory buffer opened by Neovim when starting with `nvim .`.
-		lazy = false,
-
-		config = function()
-			local function open_file(files)
-				if files and files[1] and vim.fn.isdirectory(files[1]) == 0 then
-					vim.cmd("edit " .. vim.fn.fnameescape(files[1]))
-				end
-			end
-
-			require("nnn").setup({
-				picker = {
-					cmd = "nnn",
-					session = "shared",
-					tabs = false,
-					fullscreen = false,
-
-					style = {
-						width = 0.9,
-						height = 0.8,
-						border = "double",
-					},
-				},
-
-				mappings = {
-					{ "e", open_file },
-					{ "l", open_file },
-					{ "<Right>", open_file },
-				},
-
-				offset = true,
-				replace_netrw = "picker",
-			})
-
-			-- COLORS
-			vim.api.nvim_set_hl(0, "NnnNormal", {
-				fg = "#abb2bf",
-				bg = "#14171c",
-			})
-
-			vim.api.nvim_set_hl(0, "NnnNormalNC", {
-				fg = "#5c6370",
-				bg = "#1e222a",
-			})
-
-			vim.api.nvim_set_hl(0, "NnnBorder", {
-				fg = "#61afef",
-				bg = "#14171c",
-			})
+	vim.api.nvim_create_autocmd("VimResized", {
+		group = group,
+		callback = function()
+			vim.schedule(apply_header_colors)
 		end,
-	},
-
-	----------------------------------------------------------------------
-	-- LSP
-	----------------------------------------------------------------------
-
-	{
-		"neovim/nvim-lspconfig",
-
-		config = function()
-			local capabilities = require("mini.completion").get_lsp_capabilities()
-
-			--------------------------------------------------------------------
-			-- Lua
-			--------------------------------------------------------------------
-
-			vim.lsp.config("lua_ls", {
-				capabilities = capabilities,
-
-				filetypes = {
-					"lua",
-				},
-
-				settings = {
-					Lua = {
-						diagnostics = {
-							globals = {
-								"vim",
-							},
-						},
-
-						workspace = {
-							checkThirdParty = false,
-						},
-
-						telemetry = {
-							enable = false,
-						},
-					},
-				},
-			})
-
-			--------------------------------------------------------------------
-			-- Nix
-			--------------------------------------------------------------------
-
-			vim.lsp.config("nixd", {
-				capabilities = capabilities,
-
-				cmd = {
-					"nixd",
-				},
-
-				filetypes = {
-					"nix",
-				},
-
-				root_markers = {
-					"flake.nix",
-					".git",
-				},
-
-				settings = {
-					nixd = {
-						nixpkgs = {
-							expr = "import <nixpkgs> { }",
-						},
-
-						options = {
-							nixos = {
-								expr = string.format(
-									"(builtins.getFlake (toString ./.)).nixosConfigurations.%s.options",
-									vim.fn.hostname()
-								),
-							},
-
-							home_manager = {
-								expr = "(builtins.getFlake (toString ./.)).homeConfigurations.gabrielzschmitz.options",
-							},
-						},
-					},
-				},
-			})
-
-			--------------------------------------------------------------------
-			-- HTML
-			--------------------------------------------------------------------
-
-			vim.lsp.config("html", {
-				capabilities = capabilities,
-
-				filetypes = {
-					"html",
-				},
-			})
-
-			--------------------------------------------------------------------
-			-- CSS
-			--------------------------------------------------------------------
-
-			vim.lsp.config("cssls", {
-				capabilities = capabilities,
-
-				filetypes = {
-					"css",
-					"scss",
-					"less",
-				},
-			})
-
-			--------------------------------------------------------------------
-			-- C / C++
-			--------------------------------------------------------------------
-
-			vim.lsp.config("clangd", {
-				capabilities = capabilities,
-
-				cmd = {
-					"clangd",
-					"--background-index",
-					"--clang-tidy",
-					"--header-insertion=iwyu",
-					"--completion-style=detailed",
-					"--fallback-style=file:" .. vim.fn.stdpath("config") .. "/.clang-format",
-				},
-
-				filetypes = {
-					"c",
-					"cpp",
-					"objc",
-					"objcpp",
-				},
-			})
-
-			--------------------------------------------------------------------
-			-- Go
-			--------------------------------------------------------------------
-
-			vim.lsp.config("gopls", {
-				capabilities = capabilities,
-
-				cmd = {
-					"gopls",
-				},
-
-				filetypes = {
-					"go",
-					"gomod",
-					"gowork",
-					"gotmpl",
-				},
-
-				settings = {
-					gopls = {
-						gofumpt = true,
-						staticcheck = true,
-
-						analyses = {
-							unusedparams = true,
-							shadow = true,
-							nilness = true,
-							unusedwrite = true,
-							useany = true,
-						},
-
-						hints = {
-							assignVariableTypes = true,
-							compositeLiteralFields = true,
-							compositeLiteralTypes = true,
-							constantValues = true,
-							functionTypeParameters = true,
-							parameterNames = true,
-							rangeVariableTypes = true,
-						},
-					},
-				},
-			})
-
-			--------------------------------------------------------------------
-			-- Go lint
-			--------------------------------------------------------------------
-
-			vim.lsp.config("golangci_lint_ls", {
-				capabilities = capabilities,
-
-				filetypes = {
-					"go",
-					"gomod",
-					"gowork",
-				},
-			})
-
-			--------------------------------------------------------------------
-			-- Python / Ruff
-			--------------------------------------------------------------------
-
-			vim.lsp.config("ruff", {
-				capabilities = capabilities,
-
-				filetypes = {
-					"python",
-				},
-			})
-
-			--------------------------------------------------------------------
-			-- Bash / Shell
-			--------------------------------------------------------------------
-
-			vim.lsp.config("bashls", {
-				capabilities = capabilities,
-
-				filetypes = {
-					"sh",
-					"bash",
-				},
-			})
-
-			--------------------------------------------------------------------
-			-- Enable LSP servers
-			--------------------------------------------------------------------
-
-			vim.lsp.enable({
-				"nixd",
-				"lua_ls",
-				"html",
-				"cssls",
-				"clangd",
-				"gopls",
-				"golangci_lint_ls",
-				"ruff",
-				"bashls",
-			})
-			vim.api.nvim_create_autocmd("LspAttach", {
-				callback = function(args)
-					local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-					if client and client:supports_method("textDocument/completion") then
-						vim.bo[args.buf].omnifunc = "v:lua.MiniCompletion.completefunc_lsp"
-					end
-				end,
-			})
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = { "bash", "sh" },
-				callback = function(args)
-					vim.bo[args.buf].textwidth = 80
-					vim.bo[args.buf].formatoptions = vim.bo[args.buf].formatoptions .. "ctq"
-				end,
-			})
-		end,
-	},
-
-	----------------------------------------------------------------------
-	-- CONFORM
-	----------------------------------------------------------------------
-
-	{
-		"stevearc/conform.nvim",
-
-		event = "BufWritePre",
-
-		opts = {
-			--------------------------------------------------------------------
-			-- Formatters
-			--------------------------------------------------------------------
-
-			formatters_by_ft = {
-				-- Bash / Shell
-				bash = {
-					"shfmt",
-				},
-
-				sh = {
-					"shfmt",
-				},
-
-				-- Lua
-				lua = {
-					"stylua",
-				},
-
-				-- Nix
-				nix = {
-					"nixfmt",
-				},
-
-				-- C / C++
-				c = {
-					"clang_format",
-				},
-
-				cpp = {
-					"clang_format",
-				},
-
-				-- Go
-				go = {
-					"goimports",
-					"gofumpt",
-				},
-
-				-- Python
-				python = {
-					"ruff_format",
-				},
-
-				-- Web
-				html = {
-					"prettier",
-				},
-
-				css = {
-					"prettier",
-				},
-
-				scss = {
-					"prettier",
-				},
-
-				javascript = {
-					"prettier",
-				},
-
-				javascriptreact = {
-					"prettier",
-				},
-
-				typescript = {
-					"prettier",
-				},
-
-				typescriptreact = {
-					"prettier",
-				},
-
-				-- Data / documentation
-				json = {
-					"prettier",
-				},
-
-				yaml = {
-					"prettier",
-				},
-
-				markdown = {
-					"prettier",
-				},
+	})
+end
+
+----------------------------------------------------------------------
+-- FILE EXPLORER
+----------------------------------------------------------------------
+
+add_plugin({
+	src = gh("luukvbaal/nnn.nvim"),
+})
+
+do
+	local function open_file(files)
+		if files and files[1] and vim.fn.isdirectory(files[1]) == 0 then
+			vim.cmd("edit " .. vim.fn.fnameescape(files[1]))
+		end
+	end
+
+	require("nnn").setup({
+		picker = {
+			cmd = "nnn",
+			session = "shared",
+			tabs = false,
+			fullscreen = false,
+
+			style = {
+				width = 0.9,
+				height = 0.8,
+				border = "double",
+			},
+		},
+
+		mappings = {
+			{ "e", open_file },
+			{ "l", open_file },
+			{ "<Right>", open_file },
+		},
+
+		offset = true,
+		replace_netrw = "picker",
+	})
+
+	-- COLORS
+	vim.api.nvim_set_hl(0, "NnnNormal", {
+		fg = "#abb2bf",
+		bg = "#14171c",
+	})
+
+	vim.api.nvim_set_hl(0, "NnnNormalNC", {
+		fg = "#5c6370",
+		bg = "#1e222a",
+	})
+
+	vim.api.nvim_set_hl(0, "NnnBorder", {
+		fg = "#61afef",
+		bg = "#14171c",
+	})
+end
+
+----------------------------------------------------------------------
+-- ICONS
+----------------------------------------------------------------------
+
+add_plugin({
+	src = gh("nvim-mini/mini.icons"),
+	version = mini_version,
+})
+
+do
+	require("mini.icons").setup()
+
+	MiniIcons.tweak_lsp_kind()
+end
+
+----------------------------------------------------------------------
+-- SNIPPETS
+----------------------------------------------------------------------
+
+add_plugin({
+	src = gh("nvim-mini/mini.snippets"),
+	version = mini_version,
+})
+
+require("mini.snippets").setup()
+
+----------------------------------------------------------------------
+-- COMPLETION
+----------------------------------------------------------------------
+
+add_plugin({
+	src = gh("nvim-mini/mini.completion"),
+	version = mini_version,
+})
+
+do
+	require("mini.completion").setup({
+		delay = {
+			completion = 100,
+			info = 100,
+			signature = 50,
+		},
+
+		window = {
+			info = {
+				height = 25,
+				width = 80,
+				border = "rounded",
 			},
 
-			formatters = {
-				shfmt = {
-					prepend_args = { "-i", "2", "-ci", "-bn", "-sr" },
+			signature = {
+				height = 25,
+				width = 80,
+				border = "rounded",
+			},
+		},
+
+		lsp_completion = {
+			source_func = "omnifunc",
+			auto_setup = false,
+		},
+
+		fallback_action = "<C-n>",
+
+		mappings = {
+			force_twostep = "<C-Space>",
+			force_fallback = "<A-Space>",
+			scroll_down = "<C-f>",
+			scroll_up = "<C-b>",
+		},
+	})
+
+	----------------------------------------------------------------------
+	-- COMPLETION KEYMAPS
+	----------------------------------------------------------------------
+
+	-- Tab: select next completion item.
+	vim.keymap.set("i", "<Tab>", function()
+		if vim.fn.pumvisible() == 1 then
+			return vim.keycode("<C-n>")
+		end
+
+		return vim.keycode("<Tab>")
+	end, {
+		expr = true,
+		silent = true,
+	})
+
+	-- Down: next completion item.
+	vim.keymap.set("i", "<Down>", function()
+		if vim.fn.pumvisible() == 1 then
+			return vim.keycode("<C-n>")
+		end
+
+		return vim.keycode("<Down>")
+	end, {
+		expr = true,
+		silent = true,
+	})
+
+	-- Up: previous completion item.
+	vim.keymap.set("i", "<Up>", function()
+		if vim.fn.pumvisible() == 1 then
+			return vim.keycode("<C-p>")
+		end
+
+		return vim.keycode("<Up>")
+	end, {
+		expr = true,
+		silent = true,
+	})
+
+	-- Ctrl-j: next completion item.
+	vim.keymap.set("i", "<C-j>", function()
+		if vim.fn.pumvisible() == 1 then
+			return vim.keycode("<C-n>")
+		end
+
+		return vim.keycode("<C-j>")
+	end, {
+		expr = true,
+		silent = true,
+	})
+
+	-- Ctrl-k: previous completion item.
+	vim.keymap.set("i", "<C-k>", function()
+		if vim.fn.pumvisible() == 1 then
+			return vim.keycode("<C-p>")
+		end
+
+		return vim.keycode("<C-k>")
+	end, {
+		expr = true,
+		silent = true,
+	})
+end
+
+----------------------------------------------------------------------
+-- LSP
+----------------------------------------------------------------------
+
+add_plugin({
+	src = gh("neovim/nvim-lspconfig"),
+})
+
+do
+	local capabilities = require("mini.completion").get_lsp_capabilities()
+
+	--------------------------------------------------------------------
+	-- Lua
+	--------------------------------------------------------------------
+
+	vim.lsp.config("lua_ls", {
+		capabilities = capabilities,
+
+		filetypes = {
+			"lua",
+		},
+
+		settings = {
+			Lua = {
+				diagnostics = {
+					globals = {
+						"vim",
+					},
 				},
 
-				clang_format = {
-					prepend_args = { "-style=file:" .. vim.fn.stdpath("config") .. "/.clang-format" },
+				workspace = {
+					checkThirdParty = false,
+				},
+
+				telemetry = {
+					enable = false,
 				},
 			},
+		},
+	})
 
-			--------------------------------------------------------------------
-			-- Format on save
-			--------------------------------------------------------------------
+	--------------------------------------------------------------------
+	-- Nix
+	--------------------------------------------------------------------
 
-			format_on_save = function(bufnr)
-				local filetype = vim.bo[bufnr].filetype
+	vim.lsp.config("nixd", {
+		capabilities = capabilities,
 
-				if filetype == "bash" or filetype == "sh" then
-					local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+		cmd = {
+			"nixd",
+		},
 
-					for i = #lines, 1, -1 do
-						local prefix, comment = lines[i]:match("^(%s*#%s?)(.*)$")
+		filetypes = {
+			"nix",
+		},
 
-						if prefix and #lines[i] > 80 then
-							local width = 80 - #prefix
-							local wrapped = {}
-							local current = ""
+		root_markers = {
+			"flake.nix",
+			".git",
+		},
 
-							for word in comment:gmatch("%S+") do
-								if current == "" then
-									current = word
-								elseif #current + #word + 1 <= width then
-									current = current .. " " .. word
-								else
-									wrapped[#wrapped + 1] = prefix .. current
-									current = word
-								end
-							end
+		settings = {
+			nixd = {
+				nixpkgs = {
+					expr = "import <nixpkgs> { }",
+				},
 
-							if current ~= "" then
-								wrapped[#wrapped + 1] = prefix .. current
-							end
+				options = {
+					nixos = {
+						expr = string.format(
+							"(builtins.getFlake (toString ./.)).nixosConfigurations.%s.options",
+							vim.fn.hostname()
+						),
+					},
 
-							vim.api.nvim_buf_set_lines(bufnr, i - 1, i, false, wrapped)
+					home_manager = {
+						expr = "(builtins.getFlake (toString ./.)).homeConfigurations.gabrielzschmitz.options",
+					},
+				},
+			},
+		},
+	})
+
+	--------------------------------------------------------------------
+	-- HTML
+	--------------------------------------------------------------------
+
+	vim.lsp.config("html", {
+		capabilities = capabilities,
+
+		filetypes = {
+			"html",
+		},
+	})
+
+	--------------------------------------------------------------------
+	-- CSS
+	--------------------------------------------------------------------
+
+	vim.lsp.config("cssls", {
+		capabilities = capabilities,
+
+		filetypes = {
+			"css",
+			"scss",
+			"less",
+		},
+	})
+
+	--------------------------------------------------------------------
+	-- C / C++
+	--------------------------------------------------------------------
+
+	vim.lsp.config("clangd", {
+		capabilities = capabilities,
+
+		cmd = {
+			"clangd",
+			"--background-index",
+			"--clang-tidy",
+			"--header-insertion=iwyu",
+			"--completion-style=detailed",
+			"--fallback-style=file:" .. vim.fn.stdpath("config") .. "/.clang-format",
+		},
+
+		filetypes = {
+			"c",
+			"cpp",
+			"objc",
+			"objcpp",
+		},
+	})
+
+	--------------------------------------------------------------------
+	-- Go
+	--------------------------------------------------------------------
+
+	vim.lsp.config("gopls", {
+		capabilities = capabilities,
+
+		cmd = {
+			"gopls",
+		},
+
+		filetypes = {
+			"go",
+			"gomod",
+			"gowork",
+			"gotmpl",
+		},
+
+		settings = {
+			gopls = {
+				gofumpt = true,
+				staticcheck = true,
+
+				analyses = {
+					unusedparams = true,
+					shadow = true,
+					nilness = true,
+					unusedwrite = true,
+					useany = true,
+				},
+
+				hints = {
+					assignVariableTypes = true,
+					compositeLiteralFields = true,
+					compositeLiteralTypes = true,
+					constantValues = true,
+					functionTypeParameters = true,
+					parameterNames = true,
+					rangeVariableTypes = true,
+				},
+			},
+		},
+	})
+
+	--------------------------------------------------------------------
+	-- Go lint
+	--------------------------------------------------------------------
+
+	vim.lsp.config("golangci_lint_ls", {
+		capabilities = capabilities,
+
+		filetypes = {
+			"go",
+			"gomod",
+			"gowork",
+		},
+	})
+
+	--------------------------------------------------------------------
+	-- Python / Ruff
+	--------------------------------------------------------------------
+
+	vim.lsp.config("ruff", {
+		capabilities = capabilities,
+
+		filetypes = {
+			"python",
+		},
+	})
+
+	--------------------------------------------------------------------
+	-- Bash / Shell
+	--------------------------------------------------------------------
+
+	vim.lsp.config("bashls", {
+		capabilities = capabilities,
+
+		filetypes = {
+			"sh",
+			"bash",
+		},
+	})
+
+	--------------------------------------------------------------------
+	-- Enable LSP servers
+	--------------------------------------------------------------------
+
+	vim.lsp.enable({
+		"nixd",
+		"lua_ls",
+		"html",
+		"cssls",
+		"clangd",
+		"gopls",
+		"golangci_lint_ls",
+		"ruff",
+		"bashls",
+	})
+	vim.api.nvim_create_autocmd("LspAttach", {
+		callback = function(args)
+			local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+			if client and client:supports_method("textDocument/completion") then
+				vim.bo[args.buf].omnifunc = "v:lua.MiniCompletion.completefunc_lsp"
+			end
+		end,
+	})
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = { "bash", "sh" },
+		callback = function(args)
+			vim.bo[args.buf].textwidth = 80
+			vim.bo[args.buf].formatoptions = vim.bo[args.buf].formatoptions .. "ctq"
+		end,
+	})
+end
+
+----------------------------------------------------------------------
+-- CONFORM
+----------------------------------------------------------------------
+
+add_plugin({
+	src = gh("stevearc/conform.nvim"),
+})
+
+require("conform").setup({
+	--------------------------------------------------------------------
+	-- Formatters
+	--------------------------------------------------------------------
+
+	formatters_by_ft = {
+		-- Bash / Shell
+		bash = {
+			"shfmt",
+		},
+
+		sh = {
+			"shfmt",
+		},
+
+		-- Lua
+		lua = {
+			"stylua",
+		},
+
+		-- Nix
+		nix = {
+			"nixfmt",
+		},
+
+		-- C / C++
+		c = {
+			"clang_format",
+		},
+
+		cpp = {
+			"clang_format",
+		},
+
+		-- Go
+		go = {
+			"goimports",
+			"gofumpt",
+		},
+
+		-- Python
+		python = {
+			"ruff_format",
+		},
+
+		-- Web
+		html = {
+			"prettier",
+		},
+
+		css = {
+			"prettier",
+		},
+
+		scss = {
+			"prettier",
+		},
+
+		javascript = {
+			"prettier",
+		},
+
+		javascriptreact = {
+			"prettier",
+		},
+
+		typescript = {
+			"prettier",
+		},
+
+		typescriptreact = {
+			"prettier",
+		},
+
+		-- Data / documentation
+		json = {
+			"prettier",
+		},
+
+		yaml = {
+			"prettier",
+		},
+
+		markdown = {
+			"prettier",
+		},
+	},
+
+	formatters = {
+		shfmt = {
+			prepend_args = { "-i", "2", "-ci", "-bn", "-sr" },
+		},
+
+		clang_format = {
+			prepend_args = { "-style=file:" .. vim.fn.stdpath("config") .. "/.clang-format" },
+		},
+	},
+
+	--------------------------------------------------------------------
+	-- Format on save
+	--------------------------------------------------------------------
+
+	format_on_save = function(bufnr)
+		local filetype = vim.bo[bufnr].filetype
+
+		if filetype == "bash" or filetype == "sh" then
+			local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+
+			for i = #lines, 1, -1 do
+				local prefix, comment = lines[i]:match("^(%s*#%s?)(.*)$")
+
+				if prefix and #lines[i] > 80 then
+					local width = 80 - #prefix
+					local wrapped = {}
+					local current = ""
+
+					for word in comment:gmatch("%S+") do
+						if current == "" then
+							current = word
+						elseif #current + #word + 1 <= width then
+							current = current .. " " .. word
+						else
+							wrapped[#wrapped + 1] = prefix .. current
+							current = word
 						end
 					end
+
+					if current ~= "" then
+						wrapped[#wrapped + 1] = prefix .. current
+					end
+
+					vim.api.nvim_buf_set_lines(bufnr, i - 1, i, false, wrapped)
 				end
+			end
+		end
+
+		return {
+			timeout_ms = 500,
+			lsp_fallback = true,
+		}
+	end,
+})
+
+----------------------------------------------------------------------
+-- MARKDOWN PREVIEW
+----------------------------------------------------------------------
+
+vim.g.mkdp_filetypes = { "markdown" }
+vim.g.mkdp_echo_preview_url = 1
+
+vim.g.mkdp_browserfunc = "OpenMarkdownPreview"
+
+vim.cmd([[
+	function! OpenMarkdownPreview(url)
+		call jobstart(["xdg-open", a:url], {"detach": v:true})
+	endfunction
+]])
+
+add_plugin({
+	src = gh("iamcco/markdown-preview.nvim"),
+})
+
+----------------------------------------------------------------------
+-- SMEAR CURSOR
+----------------------------------------------------------------------
+
+add_plugin({
+	src = gh("sphamba/smear-cursor.nvim"),
+})
+
+require("smear_cursor").setup({
+	smear_between_buffers = true,
+	smear_between_neighbor_lines = true,
+	scroll_buffer_space = true,
+	legacy_computing_symbols_support = true,
+	transparent_bg_fallback_color = "#1e222a",
+	smear_insert_mode = true,
+	time_interval = 10,
+})
+
+---
+-- AUTOPAIRS
+---
+
+add_plugin({
+	src = gh("windwp/nvim-autopairs"),
+})
+
+require("nvim-autopairs").setup({})
+
+---
+-- GIT SIGNS
+---
+
+add_plugin({
+	src = gh("lewis6991/gitsigns.nvim"),
+})
+
+require("gitsigns").setup({})
+
+---
+-- TREESITTER
+---
+
+add_plugin({
+	src = gh("nvim-treesitter/nvim-treesitter"),
+	version = "main",
+})
+
+do
+	require("nvim-treesitter").setup({
+		install_dir = vim.fn.stdpath("data") .. "/site",
+	})
+
+	require("nvim-treesitter").install({
+		"bash",
+		"go",
+		"c",
+		"cpp",
+		"elixir",
+		"rust",
+		"lua",
+		"markdown",
+		"markdown_inline",
+		"python",
+		"vim",
+		"vimdoc",
+		"query",
+		"latex",
+		"json",
+		"yaml",
+		"html",
+		"css",
+		"nix",
+	})
+
+	vim.api.nvim_create_autocmd("FileType", {
+		callback = function()
+			local ok = pcall(vim.treesitter.start)
+
+			if not ok then
+				return
+			end
+		end,
+	})
+end
+
+---
+-- COLORIZER
+---
+
+add_plugin({
+	src = gh("catgoose/nvim-colorizer.lua"),
+})
+
+require("colorizer").setup({
+	filetypes = {
+		"*",
+	},
+
+	user_default_options = {
+		RGB = true,
+		RRGGBB = true,
+		names = true,
+		RRGGBBAA = true,
+		AARRGGBB = true,
+		css = true,
+		css_fn = true,
+		tailwind = false,
+		mode = "background",
+	},
+})
+
+----------------------------------------------------------------------
+-- TABLINE
+----------------------------------------------------------------------
+
+add_plugin({
+	src = gh("nvim-mini/mini.tabline"),
+	version = mini_version,
+})
+
+do
+	require("mini.tabline").setup({
+		show_icons = true,
+
+		tabpage_section = "right",
+	})
+
+	-- COLORS
+
+	-- Selected buffer: bold white
+	vim.api.nvim_set_hl(0, "MiniTablineCurrent", {
+		fg = "#b8bfe5",
+		bg = "#5c6370",
+		bold = true,
+	})
+
+	-- Visible inactive buffers: light grey
+	vim.api.nvim_set_hl(0, "MiniTablineVisible", {
+		fg = "#abb2bf",
+		bg = "#393f4a",
+	})
+
+	-- Hidden buffers: dim grey
+	vim.api.nvim_set_hl(0, "MiniTablineHidden", {
+		fg = "#5c6370",
+		bg = "#393f4a",
+	})
+
+	-- Modified buffers: preserve the same color hierarchy
+	vim.api.nvim_set_hl(0, "MiniTablineModifiedCurrent", {
+		fg = "#b8bfe5",
+		bg = "#393f4a",
+		bold = true,
+		underline = true,
+	})
+
+	vim.api.nvim_set_hl(0, "MiniTablineModifiedVisible", {
+		fg = "#abb2bf",
+		bg = "#393f4a",
+		underline = true,
+	})
+
+	vim.api.nvim_set_hl(0, "MiniTablineModifiedHidden", {
+		fg = "#5c6370",
+		bg = "#393f4a",
+		underline = true,
+	})
+end
+
+----------------------------------------------------------------------
+-- CURSOR WORD
+----------------------------------------------------------------------
+
+add_plugin({
+	src = gh("nvim-mini/mini.cursorword"),
+	version = mini_version,
+})
+
+require("mini.cursorword").setup({
+	delay = 100,
+})
+
+----------------------------------------------------------------------
+-- LUALINE
+----------------------------------------------------------------------
+
+add_plugin({
+	src = gh("nvim-lualine/lualine.nvim"),
+})
+
+require("lualine").setup({
+	options = {
+		theme = "onedark",
+		globalstatus = true,
+		component_separators = {
+			left = "│",
+			right = "│",
+		},
+		section_separators = {
+			left = "",
+			right = "",
+		},
+	},
+})
+
+----------------------------------------------------------------------
+-- FUZZY FINDER
+----------------------------------------------------------------------
+
+add_plugin({
+	src = gh("nvim-mini/mini.fuzzy"),
+	version = mini_version,
+})
+
+require("mini.fuzzy").setup()
+
+----------------------------------------------------------------------
+-- PICK
+----------------------------------------------------------------------
+
+add_plugin({
+	src = gh("nvim-mini/mini.pick"),
+	version = mini_version,
+})
+
+do
+	local MiniPick = require("mini.pick")
+
+	MiniPick.setup({
+		options = {
+			use_cache = true,
+		},
+
+		window = {
+			config = function()
+				local height = math.floor(vim.o.lines * 0.35)
+				local width = math.floor(vim.o.columns * 0.70)
 
 				return {
-					timeout_ms = 500,
-					lsp_fallback = true,
+					anchor = "NW",
+					row = math.floor((vim.o.lines - height) / 2),
+					col = math.floor((vim.o.columns - width) / 2),
+					height = height,
+					width = width,
+					border = "rounded",
 				}
 			end,
 		},
-	},
+	})
 
-	----------------------------------------------------------------------
-	-- MARKDOWN PREVIEW
-	----------------------------------------------------------------------
-
-	{
-		"iamcco/markdown-preview.nvim",
-
-		cmd = {
-			"MarkdownPreviewToggle",
-			"MarkdownPreview",
-			"MarkdownPreviewStop",
-		},
-
-		build = "cd app && npx --yes yarn install --force",
-
-		init = function()
-			vim.g.mkdp_filetypes = { "markdown" }
-			vim.g.mkdp_echo_preview_url = 1
-
-			vim.g.mkdp_browserfunc = "OpenMarkdownPreview"
-
-			vim.cmd([[
-        function! OpenMarkdownPreview(url)
-            call jobstart(["xdg-open", a:url], {"detach": v:true})
-        endfunction
-    ]])
-		end,
-
-		ft = {
-			"markdown",
-		},
-	},
-
-	----------------------------------------------------------------------
-	-- SMEAR CURSOR
-	----------------------------------------------------------------------
-
-	{
-		"sphamba/smear-cursor.nvim",
-
-		event = "VeryLazy",
-
-		opts = {
-			smear_between_buffers = true,
-			smear_between_neighbor_lines = true,
-			scroll_buffer_space = true,
-			legacy_computing_symbols_support = true,
-			transparent_bg_fallback_color = "#1e222a",
-			smear_insert_mode = true,
-			time_interval = 10,
-		},
-	},
-
-	---
-	-- AUTOPAIRS
-	---
-
-	{
-		"windwp/nvim-autopairs",
-
-		event = "InsertEnter",
-
-		opts = {},
-	},
-
-	---
-	-- GIT SIGNS
-	---
-
-	{
-		"lewis6991/gitsigns.nvim",
-
-		event = {
-			"BufReadPre",
-			"BufNewFile",
-		},
-
-		opts = {},
-	},
-
-	---
-	-- TREESITTER
-	---
-
-	{
-		"nvim-treesitter/nvim-treesitter",
-
-		branch = "main",
-
-		lazy = false,
-
-		build = ":TSUpdate",
-
-		opts = {},
-
-		config = function()
-			require("nvim-treesitter").setup({
-				install_dir = vim.fn.stdpath("data") .. "/site",
-			})
-
-			require("nvim-treesitter").install({
-				"bash",
-				"go",
-				"c",
-				"cpp",
-				"elixir",
-				"rust",
-				"lua",
-				"markdown",
-				"markdown_inline",
-				"python",
-				"vim",
-				"vimdoc",
-				"query",
-				"latex",
-				"json",
-				"yaml",
-				"html",
-				"css",
-				"nix",
-			})
-
-			vim.api.nvim_create_autocmd("FileType", {
-				callback = function()
-					local ok = pcall(vim.treesitter.start)
-
-					if not ok then
-						return
-					end
-				end,
-			})
-		end,
-	},
-
-	---
-	-- COLORIZER
-	---
-
-	{
-		"catgoose/nvim-colorizer.lua",
-
-		event = {
-			"BufReadPost",
-			"BufNewFile",
-		},
-
-		opts = {
-			filetypes = {
-				"*",
-			},
-
-			user_default_options = {
-				RGB = true,
-				RRGGBB = true,
-				names = true,
-				RRGGBBAA = true,
-				AARRGGBB = true,
-				css = true,
-				css_fn = true,
-				tailwind = false,
-				mode = "background",
-			},
-		},
-	},
-
-	----------------------------------------------------------------------
-	-- TABLINE
-	----------------------------------------------------------------------
-
-	{
-		"nvim-mini/mini.tabline",
-
-		version = "*",
-
-		dependencies = {
-			"nvim-mini/mini.icons",
-		},
-
-		event = "VeryLazy",
-
-		config = function()
-			require("mini.tabline").setup({
-				show_icons = true,
-
-				tabpage_section = "right",
-			})
-
-			-- COLORS
-
-			-- Selected buffer: bold white
-			vim.api.nvim_set_hl(0, "MiniTablineCurrent", {
-				fg = "#b8bfe5",
-				bg = "#5c6370",
-				bold = true,
-			})
-
-			-- Visible inactive buffers: light grey
-			vim.api.nvim_set_hl(0, "MiniTablineVisible", {
-				fg = "#abb2bf",
-				bg = "#393f4a",
-			})
-
-			-- Hidden buffers: dim grey
-			vim.api.nvim_set_hl(0, "MiniTablineHidden", {
-				fg = "#5c6370",
-				bg = "#393f4a",
-			})
-
-			-- Modified buffers: preserve the same color hierarchy
-			vim.api.nvim_set_hl(0, "MiniTablineModifiedCurrent", {
-				fg = "#b8bfe5",
-				bg = "#393f4a",
-				bold = true,
-				underline = true,
-			})
-
-			vim.api.nvim_set_hl(0, "MiniTablineModifiedVisible", {
-				fg = "#abb2bf",
-				bg = "#393f4a",
-				underline = true,
-			})
-
-			vim.api.nvim_set_hl(0, "MiniTablineModifiedHidden", {
-				fg = "#5c6370",
-				bg = "#393f4a",
-				underline = true,
-			})
-		end,
-	},
-
-	----------------------------------------------------------------------
-	-- CURSOR WORD
-	----------------------------------------------------------------------
-
-	{
-		"nvim-mini/mini.cursorword",
-
-		version = "*",
-
-		event = {
-			"BufReadPost",
-			"BufNewFile",
-		},
-
-		opts = {
-			delay = 100,
-		},
-
-		config = function(_, opts)
-			require("mini.cursorword").setup(opts)
-		end,
-	},
-
-	----------------------------------------------------------------------
-	-- LUALINE
-	----------------------------------------------------------------------
-
-	{
-		"nvim-lualine/lualine.nvim",
-
-		dependencies = {
-			"nvim-mini/mini.icons",
-		},
-
-		event = "VeryLazy",
-
-		opts = {
-			options = {
-				theme = "onedark",
-				globalstatus = true,
-				component_separators = {
-					left = "│",
-					right = "│",
-				},
-				section_separators = {
-					left = "",
-					right = "",
-				},
-			},
-		},
-	},
-
-	----------------------------------------------------------------------
-	-- ICONS
-	----------------------------------------------------------------------
-
-	{
-		"nvim-mini/mini.icons",
-
-		version = "*",
-
-		lazy = true,
-
-		config = function()
-			require("mini.icons").setup()
-
-			MiniIcons.tweak_lsp_kind()
-		end,
-	},
-
-	----------------------------------------------------------------------
-	-- SNIPPETS
-	----------------------------------------------------------------------
-
-	{
-		"nvim-mini/mini.snippets",
-
-		version = "*",
-
-		event = "InsertEnter",
-
-		config = function()
-			require("mini.snippets").setup()
-		end,
-	},
-
-	----------------------------------------------------------------------
-	-- COMPLETION
-	----------------------------------------------------------------------
-
-	{
-		"nvim-mini/mini.completion",
-
-		version = "*",
-
-		event = "InsertEnter",
-
-		dependencies = {
-			"nvim-mini/mini.icons",
-			"nvim-mini/mini.snippets",
-		},
-
-		opts = {
-			delay = {
-				completion = 100,
-				info = 100,
-				signature = 50,
-			},
-
-			window = {
-				info = {
-					height = 25,
-					width = 80,
-					border = "rounded",
-				},
-
-				signature = {
-					height = 25,
-					width = 80,
-					border = "rounded",
-				},
-			},
-
-			lsp_completion = {
-				source_func = "omnifunc",
-				auto_setup = false,
-			},
-
-			fallback_action = "<C-n>",
-
-			mappings = {
-				force_twostep = "<C-Space>",
-				force_fallback = "<A-Space>",
-				scroll_down = "<C-f>",
-				scroll_up = "<C-b>",
-			},
-		},
-
-		config = function(_, opts)
-			require("mini.completion").setup(opts)
-
-			----------------------------------------------------------------------
-			-- COMPLETION KEYMAPS
-			----------------------------------------------------------------------
-
-			-- Tab: select next completion item.
-			vim.keymap.set("i", "<Tab>", function()
-				if vim.fn.pumvisible() == 1 then
-					return vim.keycode("<C-n>")
-				end
-
-				return vim.keycode("<Tab>")
-			end, {
-				expr = true,
-				silent = true,
-			})
-
-			-- Down: next completion item.
-			vim.keymap.set("i", "<Down>", function()
-				if vim.fn.pumvisible() == 1 then
-					return vim.keycode("<C-n>")
-				end
-
-				return vim.keycode("<Down>")
-			end, {
-				expr = true,
-				silent = true,
-			})
-
-			-- Up: previous completion item.
-			vim.keymap.set("i", "<Up>", function()
-				if vim.fn.pumvisible() == 1 then
-					return vim.keycode("<C-p>")
-				end
-
-				return vim.keycode("<Up>")
-			end, {
-				expr = true,
-				silent = true,
-			})
-
-			-- Ctrl-j: next completion item.
-			vim.keymap.set("i", "<C-j>", function()
-				if vim.fn.pumvisible() == 1 then
-					return vim.keycode("<C-n>")
-				end
-
-				return vim.keycode("<C-j>")
-			end, {
-				expr = true,
-				silent = true,
-			})
-
-			-- Ctrl-k: previous completion item.
-			vim.keymap.set("i", "<C-k>", function()
-				if vim.fn.pumvisible() == 1 then
-					return vim.keycode("<C-p>")
-				end
-
-				return vim.keycode("<C-k>")
-			end, {
-				expr = true,
-				silent = true,
-			})
-		end,
-	},
-
-	----------------------------------------------------------------------
-	-- FUZZY FINDER
-	----------------------------------------------------------------------
-
-	{
-		"nvim-mini/mini.pick",
-
-		version = "*",
-
-		dependencies = {
-			"nvim-mini/mini.fuzzy",
-		},
-
-		config = function()
-			require("mini.fuzzy").setup()
-
-			local MiniPick = require("mini.pick")
-
-			MiniPick.setup({
-				options = {
-					use_cache = true,
-				},
-
-				window = {
-					config = function()
-						local height = math.floor(vim.o.lines * 0.35)
-						local width = math.floor(vim.o.columns * 0.70)
-
-						return {
-							anchor = "NW",
-							row = math.floor((vim.o.lines - height) / 2),
-							col = math.floor((vim.o.columns - width) / 2),
-							height = height,
-							width = width,
-							border = "rounded",
-						}
-					end,
-				},
-			})
-
-			vim.ui.select = MiniPick.ui_select
-		end,
-	},
-})
+	vim.ui.select = MiniPick.ui_select
+end
 
 -- ============================================================================
 -- KEYMAPS
