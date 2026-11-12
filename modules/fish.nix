@@ -83,6 +83,7 @@
         shellAliases = {
           ll = "ls -lah";
           ".." = "cd ..";
+          nvim-pack-persist = "cp $HOME/.config/nvim/nvim-pack-lock.json ${flakeDir}/configs/nvim/nvim-pack-lock.json";
         };
 
         interactiveShellInit = /* bash */ ''
