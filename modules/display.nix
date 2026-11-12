@@ -284,7 +284,7 @@
               ${startPicom}
 
               ${xrandrPrimary}
-              ${pkgs.xwallpaper}/bin/xwallpaper --zoom "$HOME/pic/wall/icelandiclandscape.jpeg" &
+              ${pkgs.xwallpaper}/bin/xwallpaper --zoom "${config.my.wallpaper}" &
 
               ${dwm}/bin/dwm-bar &
               while ${dwm}/bin/dwm 2>> "$HOME/.cache/X11/xsession-errors"; do
@@ -320,10 +320,6 @@
         xrdb
         picom
       ];
-
-      home.activation.createWallDir = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p "$HOME/pic/wall"
-      '';
 
       home.activation.createStateDirs = config.lib.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p "$HOME/.local/state/xauth" "$HOME/.local/state" "$HOME/.cache/X11"
