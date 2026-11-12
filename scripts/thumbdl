@@ -1,0 +1,70 @@
+#!/bin/sh
+#
+# Download thumbnails from a YouTube video or playlist using yt-dlp.
+#
+# Dependencies:
+#   yt-dlp: Extract video metadata and download thumbnails.
+#   ffmpeg: Convert downloaded thumbnails to JPG.
+#
+# Usage:
+#   youtube-thumbnails.sh <youtube-url> [output-directory]
+#
+# Arguments:
+#   youtube-url       YouTube video or playlist URL.
+#   output-directory  Destination directory (default: thumbnails).
+#
+# Behavior:
+#   Downloads one thumbnail per video without downloading video content.
+#   Playlist thumbnails are prefixed with their playlist index.
+#   Thumbnail filenames include the video title and ID.
+
+# Print the supported invocation syntax.
+usage() {
+  printf 'Usage: %s <youtube-url> [output-directory]\n' "$0" >&2
+}
+
+# Parse arguments and establish the download configuration.
+parse_args() {
+  if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
+    usage
+    exit 2
+  fi
+
+  youtube_url=$1
+  output_directory=${2:-thumbnails}
+}
+
+# Create the destination directory before downloading thumbnails.
+prepare_output_directory() {
+  if ! mkdir -p "$1"; then
+    printf 'Error: Could not create directory: %s\n' "$1" >&2
+    return 1
+  fi
+}
+
+# Download thumbnails for a video or playlist using yt-dlp.
+download_thumbnails() {
+  yt-dlp \
+    --skip-download \
+    --write-thumbnail \
+    --convert-thumbnails jpg \
+    -o "$1/%(playlist_index)03d - %(title).200B [%(id)s].%(ext)s" \
+    "$2"
+}
+
+# Parse arguments, prepare the destination, and download thumbnails.
+main() {
+  parse_args "$@"
+
+  if ! prepare_output_directory "$output_directory"; then
+    return 1
+  fi
+
+  if download_thumbnails "$output_directory" "$youtube_url"; then
+    printf 'Thumbnails saved to: %s\n' "$output_directory"
+  else
+    return $?
+  fi
+}
+
+main "$@"
