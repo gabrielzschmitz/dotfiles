@@ -148,7 +148,7 @@ vim.diagnostic.config({
 	severity_sort = true,
 
 	float = {
-		border = "rounded",
+		border = "single",
 		source = "if_many",
 	},
 })
@@ -711,13 +711,13 @@ do
 			info = {
 				height = 25,
 				width = 80,
-				border = "rounded",
+				border = "single",
 			},
 
 			signature = {
 				height = 25,
 				width = 80,
-				border = "rounded",
+				border = "single",
 			},
 		},
 
@@ -1220,6 +1220,10 @@ require("smear_cursor").setup({
 	transparent_bg_fallback_color = "#1e222a",
 	smear_insert_mode = true,
 	time_interval = 10,
+
+	filetypes_disabled = {
+		"minipick",
+	},
 })
 
 ---
@@ -1407,13 +1411,63 @@ do
 					col = math.floor((vim.o.columns - width) / 2),
 					height = height,
 					width = width,
-					border = "rounded",
+					border = "single",
 				}
 			end,
 		},
 	})
 
 	vim.ui.select = MiniPick.ui_select
+end
+
+do
+	local set = vim.api.nvim_set_hl
+
+	set(0, "MiniPickNormal", {
+		bg = "#14171c",
+		fg = "#abb2bf",
+	})
+
+	set(0, "MiniPickBorder", {
+		fg = "#4889be",
+		bg = "#14171c",
+	})
+
+	set(0, "MiniPickBorderBusy", {
+		fg = "#61afef",
+		bg = "#14171c",
+	})
+
+	set(0, "MiniPickBorderText", {
+		fg = "#61afef",
+		bold = true,
+	})
+
+	set(0, "MiniPickPrompt", {
+		fg = "#61afef",
+		bold = true,
+	})
+
+	set(0, "MiniPickMatchCurrent", {
+		fg = "#14171c",
+		bg = "#4889be",
+		bold = true,
+	})
+
+	set(0, "MiniPickMatchRanges", {
+		fg = "#61afef",
+		bold = true,
+	})
+
+	set(0, "MiniPickMatchMarked", {
+		fg = "#14171c",
+		bg = "#61afef",
+		bold = true,
+	})
+
+	set(0, "MiniPickPreviewLine", {
+		bg = "#181b21",
+	})
 end
 
 -- ============================================================================
