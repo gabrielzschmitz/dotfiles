@@ -1422,14 +1422,6 @@ end
 
 local map = vim.keymap.set
 
-map("n", "<leader>pu", update_plugins, {
-	desc = "Update plugins",
-})
-
-map("n", "<leader>pr", remove_plugin, {
-	desc = "Remove plugin from disk",
-})
-
 -- Save
 map({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr>")
 
@@ -1515,6 +1507,14 @@ local function remove_plugin()
 		vim.notify("Removed " .. choice.name .. " from disk")
 	end)
 end
+
+map("n", "<leader>pu", update_plugins, {
+	desc = "Update plugins",
+})
+
+map("n", "<leader>pr", remove_plugin, {
+	desc = "Remove plugin from disk",
+})
 
 ----------------------------------------------------------------------
 -- COMMENT
