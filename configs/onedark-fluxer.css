@@ -456,3 +456,38 @@ html[data-theme="light"] {
 [data-flx="app.sidebar-nav.fluxer-button.fluxer-button-icon"] {
   background-color: var(--background-secondary-lighter) !important;
 }
+
+/* Make the participant avatar circular */
+[data-flx="voice.voice-participant-tile.voice-participant-tile-inner.cursor-pointer.tile-click"]
+  [class*="BaseAvatar"] {
+  border-radius: 50% !important;
+  overflow: visible !important;
+}
+
+/* Avatar image and SVG clipping */
+[data-flx="voice.voice-participant-tile.voice-participant-tile-inner.cursor-pointer.tile-click"]
+  [class*="BaseAvatar"]
+  image,
+[data-flx="voice.voice-participant-tile.voice-participant-tile-inner.cursor-pointer.tile-click"]
+  [class*="BaseAvatar"]
+  foreignObject,
+[data-flx="voice.voice-participant-tile.voice-participant-tile-inner.cursor-pointer.tile-click"]
+  [class*="BaseAvatar"]
+  > div {
+  border-radius: 50% !important;
+}
+
+/* Preserve circular talking indicator */
+[data-flx="voice.voice-participant-tile.voice-participant-tile-inner.cursor-pointer.tile-click"]
+  [class*="BaseAvatar"]
+  svg {
+  border-radius: 50% !important;
+}
+
+/* Circular avatar image */
+[data-flx="voice.voice-participant-tile.voice-participant-tile-inner.cursor-pointer.tile-click"]
+  [class*="BaseAvatar"]
+  img {
+  border-radius: 50% !important;
+  object-fit: cover;
+}
