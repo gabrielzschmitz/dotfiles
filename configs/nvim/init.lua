@@ -164,6 +164,30 @@ end
 -- mini.nvim plugins use semver release tags.
 local mini_version = vim.version.range("*")
 
+-- The Nix-managed lockfile is a read-only symlink, but vim.pack writes it
+-- during add/update/del. Replace the symlink with a writable copy seeded from
+-- the Nix store before vim.pack touches it.
+local function make_lockfile_writable()
+	local path = vim.fs.joinpath(vim.fn.stdpath("config"), "nvim-pack-lock.json")
+
+	if vim.fn.getftype(path) ~= "link" then
+		return
+	end
+
+	local target = vim.fn.resolve(path)
+
+	if vim.fn.filereadable(target) == 0 then
+		return
+	end
+
+	local lines = vim.fn.readfile(target)
+
+	vim.fn.delete(path)
+	vim.fn.writefile(lines, path)
+end
+
+make_lockfile_writable()
+
 -- Build steps run after installation/update, outside the setup calls.
 vim.api.nvim_create_autocmd("PackChanged", {
 	callback = function(ev)
@@ -1437,6 +1461,81 @@ end
 -- ============================================================================
 
 local map = vim.keymap.set
+
+----------------------------------------------------------------------
+-- PLUGIN MANAGEMENT
+----------------------------------------------------------------------
+
+local function update_plugins()
+	make_lockfile_writable()
+
+	vim.pack.update()
+end
+
+local function remove_plugin()
+	make_lockfile_writable()
+
+	local plugins = vim.pack.get()
+
+	if #plugins == 0 then
+		vim.notify("No vim.pack plugins found", vim.log.levels.WARN)
+		return
+	end
+
+	local choices = {}
+
+	for _, plugin in ipairs(plugins) do
+		table.insert(choices, {
+			name = plugin.spec.name,
+			active = plugin.active,
+			label = plugin.spec.name .. (plugin.active and " [active]" or ""),
+		})
+	end
+
+	vim.ui.select(choices, {
+		prompt = "Remove plugin from disk",
+		format_item = function(item)
+			return item.label
+		end,
+	}, function(choice)
+		if not choice then
+			return
+		end
+
+		if choice.active then
+			local answer = vim.fn.confirm(
+				("'%s' is active and still declared in init.lua. It will reinstall on next start. Remove anyway?"):format(
+					choice.name
+				),
+				"&Yes\n&No",
+				2
+			)
+
+			if answer ~= 1 then
+				return
+			end
+		end
+
+		local ok, err = pcall(vim.pack.del, { choice.name }, {
+			force = choice.active,
+		})
+
+		if not ok then
+			vim.notify("Failed to remove " .. choice.name .. ": " .. tostring(err), vim.log.levels.ERROR)
+			return
+		end
+
+		vim.notify("Removed " .. choice.name .. " from disk")
+	end)
+end
+
+map("n", "<leader>pu", update_plugins, {
+	desc = "Update plugins",
+})
+
+map("n", "<leader>pr", remove_plugin, {
+	desc = "Remove plugin from disk",
+})
 
 -- Save
 map({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr>")
