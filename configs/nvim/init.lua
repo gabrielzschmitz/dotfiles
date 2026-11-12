@@ -204,24 +204,65 @@ vim.api.nvim_create_autocmd("PackChanged", {
 -- vim.pack has no event/ft/cmd lazy loading, so plugins are loaded during
 -- startup. `load = true` sources each plugin's plugin/ and ftdetect/ files
 -- immediately instead of waiting until after init.lua.
-local add_plugin = function(spec)
-	vim.pack.add({ spec }, {
-		confirm = false,
-		load = true,
-	})
-end
+--
+-- All plugins are declared in this table and configured below.
+local plugins = {
+	-- THEME
+	{ src = gh("navarasu/onedark.nvim") },
+
+	-- DASHBOARD
+	{ src = gh("nvim-mini/mini.starter"), version = mini_version },
+
+	-- FILE EXPLORER
+	{ src = gh("luukvbaal/nnn.nvim") },
+
+	-- COMPLETION
+	{ src = gh("nvim-mini/mini.icons"), version = mini_version },
+	{ src = gh("nvim-mini/mini.snippets"), version = mini_version },
+	{ src = gh("nvim-mini/mini.completion"), version = mini_version },
+
+	-- LSP
+	{ src = gh("neovim/nvim-lspconfig") },
+
+	-- FORMATTING
+	{ src = gh("stevearc/conform.nvim") },
+
+	-- MARKDOWN
+	{ src = gh("iamcco/markdown-preview.nvim") },
+
+	-- VISUAL EFFECTS
+	{ src = gh("sphamba/smear-cursor.nvim") },
+
+	-- EDITING
+	{ src = gh("windwp/nvim-autopairs") },
+	{ src = gh("nvim-treesitter/nvim-treesitter"), version = "main" },
+	{ src = gh("catgoose/nvim-colorizer.lua") },
+
+	-- GIT
+	{ src = gh("lewis6991/gitsigns.nvim") },
+
+	-- UI
+	{ src = gh("nvim-mini/mini.tabline"), version = mini_version },
+	{ src = gh("nvim-mini/mini.cursorword"), version = mini_version },
+	{ src = gh("nvim-lualine/lualine.nvim") },
+
+	-- FUZZY FINDER
+	{ src = gh("nvim-mini/mini.fuzzy"), version = mini_version },
+	{ src = gh("nvim-mini/mini.pick"), version = mini_version },
+}
+
+vim.pack.add(plugins, {
+	confirm = false,
+	load = true,
+})
 
 -- ============================================================================
--- PLUGINS
+-- PLUGIN CONFIG
 -- ============================================================================
 
 ----------------------------------------------------------------------
 -- THEME
 ----------------------------------------------------------------------
-
-add_plugin({
-	src = gh("navarasu/onedark.nvim"),
-})
 
 require("onedark").setup({
 	style = "dark",
@@ -236,11 +277,6 @@ require("onedark").load()
 ----------------------------------------------------------------------
 -- DASHBOARD
 ----------------------------------------------------------------------
-
-add_plugin({
-	src = gh("nvim-mini/mini.starter"),
-	version = mini_version,
-})
 
 do
 	local starter = require("mini.starter")
@@ -595,10 +631,6 @@ end
 -- FILE EXPLORER
 ----------------------------------------------------------------------
 
-add_plugin({
-	src = gh("luukvbaal/nnn.nvim"),
-})
-
 do
 	local function open_file(files)
 		if files and files[1] and vim.fn.isdirectory(files[1]) == 0 then
@@ -651,11 +683,6 @@ end
 -- ICONS
 ----------------------------------------------------------------------
 
-add_plugin({
-	src = gh("nvim-mini/mini.icons"),
-	version = mini_version,
-})
-
 do
 	require("mini.icons").setup()
 
@@ -666,21 +693,11 @@ end
 -- SNIPPETS
 ----------------------------------------------------------------------
 
-add_plugin({
-	src = gh("nvim-mini/mini.snippets"),
-	version = mini_version,
-})
-
 require("mini.snippets").setup()
 
 ----------------------------------------------------------------------
 -- COMPLETION
 ----------------------------------------------------------------------
-
-add_plugin({
-	src = gh("nvim-mini/mini.completion"),
-	version = mini_version,
-})
 
 do
 	require("mini.completion").setup({
@@ -787,10 +804,6 @@ end
 ----------------------------------------------------------------------
 -- LSP
 ----------------------------------------------------------------------
-
-add_plugin({
-	src = gh("neovim/nvim-lspconfig"),
-})
 
 do
 	local capabilities = require("mini.completion").get_lsp_capabilities()
@@ -1037,10 +1050,6 @@ end
 -- CONFORM
 ----------------------------------------------------------------------
 
-add_plugin({
-	src = gh("stevearc/conform.nvim"),
-})
-
 require("conform").setup({
 	--------------------------------------------------------------------
 	-- Formatters
@@ -1199,17 +1208,9 @@ vim.cmd([[
 	endfunction
 ]])
 
-add_plugin({
-	src = gh("iamcco/markdown-preview.nvim"),
-})
-
 ----------------------------------------------------------------------
 -- SMEAR CURSOR
 ----------------------------------------------------------------------
-
-add_plugin({
-	src = gh("sphamba/smear-cursor.nvim"),
-})
 
 require("smear_cursor").setup({
 	smear_between_buffers = true,
@@ -1225,30 +1226,17 @@ require("smear_cursor").setup({
 -- AUTOPAIRS
 ---
 
-add_plugin({
-	src = gh("windwp/nvim-autopairs"),
-})
-
 require("nvim-autopairs").setup({})
 
 ---
 -- GIT SIGNS
 ---
 
-add_plugin({
-	src = gh("lewis6991/gitsigns.nvim"),
-})
-
 require("gitsigns").setup({})
 
 ---
 -- TREESITTER
 ---
-
-add_plugin({
-	src = gh("nvim-treesitter/nvim-treesitter"),
-	version = "main",
-})
 
 do
 	require("nvim-treesitter").setup({
@@ -1292,10 +1280,6 @@ end
 -- COLORIZER
 ---
 
-add_plugin({
-	src = gh("catgoose/nvim-colorizer.lua"),
-})
-
 require("colorizer").setup({
 	filetypes = {
 		"*",
@@ -1317,11 +1301,6 @@ require("colorizer").setup({
 ----------------------------------------------------------------------
 -- TABLINE
 ----------------------------------------------------------------------
-
-add_plugin({
-	src = gh("nvim-mini/mini.tabline"),
-	version = mini_version,
-})
 
 do
 	require("mini.tabline").setup({
@@ -1376,11 +1355,6 @@ end
 -- CURSOR WORD
 ----------------------------------------------------------------------
 
-add_plugin({
-	src = gh("nvim-mini/mini.cursorword"),
-	version = mini_version,
-})
-
 require("mini.cursorword").setup({
 	delay = 100,
 })
@@ -1388,10 +1362,6 @@ require("mini.cursorword").setup({
 ----------------------------------------------------------------------
 -- LUALINE
 ----------------------------------------------------------------------
-
-add_plugin({
-	src = gh("nvim-lualine/lualine.nvim"),
-})
 
 require("lualine").setup({
 	options = {
@@ -1412,21 +1382,11 @@ require("lualine").setup({
 -- FUZZY FINDER
 ----------------------------------------------------------------------
 
-add_plugin({
-	src = gh("nvim-mini/mini.fuzzy"),
-	version = mini_version,
-})
-
 require("mini.fuzzy").setup()
 
 ----------------------------------------------------------------------
 -- PICK
 ----------------------------------------------------------------------
-
-add_plugin({
-	src = gh("nvim-mini/mini.pick"),
-	version = mini_version,
-})
 
 do
 	local MiniPick = require("mini.pick")
@@ -1461,6 +1421,33 @@ end
 -- ============================================================================
 
 local map = vim.keymap.set
+
+map("n", "<leader>pu", update_plugins, {
+	desc = "Update plugins",
+})
+
+map("n", "<leader>pr", remove_plugin, {
+	desc = "Remove plugin from disk",
+})
+
+-- Save
+map({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr>")
+
+-- Enter command mode
+map("n", ";", ":", { desc = "CMD enter command mode" })
+
+-- Substitute word under cursor
+map("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<left><left><left>", { desc = "Substitute word under cursor" })
+
+map("n", "<Esc>", "<cmd>nohlsearch<cr>", {
+	desc = "Clear search highlight",
+})
+
+-- Move selected lines
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv")
+map("v", "H", "<gv")
+map("v", "L", ">gv")
 
 ----------------------------------------------------------------------
 -- PLUGIN MANAGEMENT
@@ -1528,33 +1515,6 @@ local function remove_plugin()
 		vim.notify("Removed " .. choice.name .. " from disk")
 	end)
 end
-
-map("n", "<leader>pu", update_plugins, {
-	desc = "Update plugins",
-})
-
-map("n", "<leader>pr", remove_plugin, {
-	desc = "Remove plugin from disk",
-})
-
--- Save
-map({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr>")
-
--- Enter command mode
-map("n", ";", ":", { desc = "CMD enter command mode" })
-
--- Substitute word under cursor
-map("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<left><left><left>", { desc = "Substitute word under cursor" })
-
-map("n", "<Esc>", "<cmd>nohlsearch<cr>", {
-	desc = "Clear search highlight",
-})
-
--- Move selected lines
-map("v", "J", ":m '>+1<CR>gv=gv")
-map("v", "K", ":m '<-2<CR>gv=gv")
-map("v", "H", "<gv")
-map("v", "L", ">gv")
 
 ----------------------------------------------------------------------
 -- COMMENT
@@ -1644,7 +1604,7 @@ map("n", "<leader>h", "<cmd>lua MiniStarter.open()<cr>", {
 })
 
 ----------------------------------------------------------------------
--- GITSIGNS KEYMAPS
+-- GITSIGNS
 ----------------------------------------------------------------------
 
 map("n", "<leader>gb", "<cmd>Gitsigns blame_line<cr>", {
@@ -1668,7 +1628,7 @@ map("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>", {
 })
 
 ----------------------------------------------------------------------
--- NNN KEYMAPS
+-- NNN
 ----------------------------------------------------------------------
 
 map("n", "<leader>e", "<cmd>NnnPicker<cr>", {
