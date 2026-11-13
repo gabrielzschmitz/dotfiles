@@ -1242,6 +1242,41 @@ require("gitsigns").setup({})
 -- TREESITTER
 ---
 
+-- nvim-treesitter links its bundled queries into stdpath("data")/site/queries.
+-- Those links break when the plugin checkout moves
+-- (for example after switching plugin managers).
+-- Languages whose queries are not bundled with Neovim, such as cpp, then lose
+-- highlighting entirely. Re-point stale links at the current checkout.
+local function repair_treesitter_queries()
+	local queries_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "site", "queries")
+
+	if vim.fn.isdirectory(queries_dir) == 0 then
+		return
+	end
+
+	local package = vim.iter(vim.pack.get()):find(function(plugin)
+		return plugin.spec.name == "nvim-treesitter"
+	end)
+
+	if not package then
+		return
+	end
+
+	for name, kind in vim.fs.dir(queries_dir) do
+		local link = vim.fs.joinpath(queries_dir, name)
+		local source = vim.fs.joinpath(package.path, "runtime", "queries", name)
+
+		if kind == "link" and vim.fn.isdirectory(link) == 0 then
+			vim.fn.delete(link)
+
+			if vim.fn.isdirectory(source) == 1 then
+				vim.uv.fs_symlink(source, link)
+			end
+		end
+	end
+end
+repair_treesitter_queries()
+
 do
 	require("nvim-treesitter").setup({
 		install_dir = vim.fn.stdpath("data") .. "/site",
