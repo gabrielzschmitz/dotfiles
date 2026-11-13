@@ -56,6 +56,8 @@
           "separator:#5c6370"
         ];
 
+      home.sessionVariables.MANPAGER = "sh -c 'bat --language=man --style=plain --color=always --paging=always --strip-ansi=always'";
+
       # Home Manager exports this guard from the shell that started the
       # graphical session.  Child shells then skip the current generation's
       # session variables and keep stale values after a rebuild.  Clear it
@@ -111,6 +113,10 @@
         '';
 
         functions = {
+          man = ''
+            command man $argv | bat --language=man --style=plain --paging=always
+          '';
+
           fish_greeting = ''
             fastfetch
           '';
