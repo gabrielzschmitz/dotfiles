@@ -632,12 +632,11 @@ end
 ----------------------------------------------------------------------
 
 do
-	local function open_file(files)
-		if files and files[1] and vim.fn.isdirectory(files[1]) == 0 then
-			vim.cmd("edit " .. vim.fn.fnameescape(files[1]))
-		end
-	end
-
+	-- Do not map plain keys to picker actions. nnn.nvim installs them as
+	-- terminal-mode mappings in nnn's buffer, and they also capture keys for
+	-- any program nnn launches in that terminal. That breaks normal editing in
+	-- nested editors (e.g. `l`/`e`/Right in the batch-rename nvim window).
+	-- Enter already picks the current file; nnn's own keys keep working.
 	require("nnn").setup({
 		picker = {
 			cmd = "nnn",
@@ -650,12 +649,6 @@ do
 				height = 0.8,
 				border = "double",
 			},
-		},
-
-		mappings = {
-			{ "e", open_file },
-			{ "l", open_file },
-			{ "<Right>", open_file },
 		},
 
 		offset = true,
