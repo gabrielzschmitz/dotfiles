@@ -1,0 +1,12 @@
+diff --git a/src/nnn.c b/src/nnn.c
+--- a/src/nnn.c
++++ b/src/nnn.c
+@@ -9177,6 +9177,7 @@ static void browse(char *ipath, const char *session, int pkey)
+ 			case SEL_REDRAW:
+ 				refresh = TRUE;
+ 				break;
+ 			case SEL_RENAMEMUL:
++				setexports(path);
+ 				endselection(TRUE);
+ 				setenv("NNN_INCLUDE_HIDDEN", xitoa(cfg.showhidden), 1);
+ 				setenv("NNN_PREFER_SELECTION", xitoa(cfg.prefersel), 1);

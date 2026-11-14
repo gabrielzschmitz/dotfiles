@@ -16,6 +16,7 @@
           ../pkgs/nnn-fixed-contexts.patch
           ../pkgs/nnn-onedark-icons.patch
           ../pkgs/nnn-onedark-iconlookup.patch
+          ../pkgs/nnn-batch-rename-env.patch
         ];
 
         # .iconlookup emits an invalid SGR parameter (;10m) for regular files
@@ -55,6 +56,35 @@
 
         # Quote arguments so tmux runs the command exactly, including paths
         # with spaces.
+        #
+        # nnn's batch-rename temp file lists every entry in the directory.
+        # Start nvim on the line of the current entry instead of line 1.
+        first="''${1-}"
+        if [ -n "''${nnn-}" ] && [ -n "$first" ] && [ -f "$first" ]; then
+          case "''${first##*/}" in
+            .nnn??????)
+              line=$(${pkgs.gawk}/bin/awk \
+                -v n="$nnn" -v d="$PWD" '
+                  {
+                    if ($0 == n || $0 == "./" n || $0 == d "/" n) {
+                      print NR
+                      exit
+                    }
+                    path = $0
+                    sub(/^[[:space:]]*[0-9]+[[:space:]]+/, "", path)
+                    if (path == n || path == "./" n || path == d "/" n) {
+                      print NR
+                      exit
+                    }
+                  }' \
+                "$first")
+              if [ -n "$line" ]; then
+                set -- "+$line" "$@"
+              fi
+              ;;
+          esac
+        fi
+
         printf -v cmd '%q ' ${pkgs.neovim}/bin/nvim "$@"
         window=$(${pkgs.tmux}/bin/tmux new-window -P -F '#{window_id}' -n editor "$cmd")
 
