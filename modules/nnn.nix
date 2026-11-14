@@ -49,12 +49,23 @@
       nnnEditor = pkgs.writeShellScript "nnn-editor" ''
         set -euo pipefail
 
-        if [ -n "''${TMUX-}" ]; then
-          exec ${pkgs.tmux}/bin/tmux new-window -n editor \
-            ${pkgs.neovim}/bin/nvim "$@"
-        else
+        if [ -z "''${TMUX-}" ]; then
           exec ${pkgs.neovim}/bin/nvim "$@"
         fi
+
+        # Quote arguments so tmux runs the command exactly, including paths
+        # with spaces.
+        printf -v cmd '%q ' ${pkgs.neovim}/bin/nvim "$@"
+        window=$(${pkgs.tmux}/bin/tmux new-window -P -F '#{window_id}' -n editor "$cmd")
+
+        # new-window returns as soon as the window is created. Wait for the
+        # editor to exit before returning, otherwise nnn deletes the
+        # batch-rename temp file while nvim is still opening it, which leaves
+        # nvim with a blank buffer.
+        while ${pkgs.tmux}/bin/tmux list-windows -a -F '#{window_id}' \
+          | ${pkgs.gnugrep}/bin/grep -qx "$window"; do
+          ${pkgs.coreutils}/bin/sleep 0.1
+        done
       '';
 
       # Run nnn inside a private tmux session so preview-tui can use a tmux
