@@ -18,6 +18,10 @@
 #   Higher quality  Preserve more detail.
 #   Smaller         Reduce file size further.
 #   Discord         Target a maximum size of 19.8 MB using two-pass encoding.
+#   144p            Shrink video to 144p and keep audio untouched, so the
+#                   result stays a WhatsApp-friendly MP4.
+#   Audio only      Drop video and save an .mp3, copying MP3 when possible.
+#   WhatsApp audio  Save an .mp3 below WhatsApp's 16 MB audio limit.
 #
 # Output:
 #   Saves beside the source as compressed_<original name>.<original extension>.
@@ -47,6 +51,9 @@ OPTION_DEFAULT='Default (light compression)'
 OPTION_HIGH='Higher quality'
 OPTION_SMALL='Smaller file'
 OPTION_DISCORD='Discord (max 19.8 MB)'
+OPTION_TINY='144p (audio untouched)'
+OPTION_AUDIO='Audio only (.mp3)'
+OPTION_AUDIO_WA='Audio only (WhatsApp, <16 MB)'
 OPTION_CANCEL='Cancel'
 
 # Print the supported command-line syntax.
@@ -210,6 +217,17 @@ prepare_output() {
   esac
 }
 
+# Point the output at an .mp3 beside the source for audio-only presets.
+prepare_audio_output() {
+  audio_base=${source_name%.*}
+  [ "$audio_base" = "$source_name" ] && audio_base=$source_name
+  output_file="$output_dir/compressed_$audio_base$1.mp3"
+  if [ -e "$output_file" ]; then
+    printf 'Output already exists: %s\n' "$output_file" >&2
+    return 1
+  fi
+}
+
 # Print preset labels and return fzf's selection.
 show_menu() {
   printf '%s\n' \
@@ -217,6 +235,9 @@ show_menu() {
     "$OPTION_HIGH" \
     "$OPTION_SMALL" \
     "$OPTION_DISCORD" \
+    "$OPTION_TINY" \
+    "$OPTION_AUDIO" \
+    "$OPTION_AUDIO_WA" \
     "$OPTION_CANCEL" \
     | "$FZF" --no-multi --height=40% --reverse -i \
       --prompt='Compress: '
@@ -351,6 +372,195 @@ encode_quality() {
     -map 0:v:0 -map '0:a:0?' "$@" -c:a "$audio_codec" \
     -b:a "$default_audio_bitrate" -f "$output_muxer" \
     "$temporary_output"
+}
+
+# Scale video to 144p and keep source audio for WhatsApp-friendly output.
+encode_144p() {
+  audio_name=$(
+    "$FFPROBE" -v error -select_streams a:0 \
+      -show_entries stream=codec_name -of csv=p=0 "$selected_video"
+  ) || {
+    printf 'Unable to inspect audio stream: %s\n' "$selected_video" >&2
+    return 1
+  }
+  case "$audio_name" in
+    '' | *[!a-z0-9_]*)
+      audio_name=''
+      ;;
+  esac
+
+  # Copy the source codec when the target container accepts it, so audio
+  # quality stays untouched. Otherwise re-encode at the default rate.
+  copy_audio=0
+  case "$output_muxer" in
+    mp4 | mov | 3gp)
+      case "$audio_name" in aac | mp3 | alac) copy_audio=1 ;; esac
+      ;;
+    matroska | mpegts)
+      copy_audio=1
+      ;;
+    webm)
+      case "$audio_name" in opus | vorbis) copy_audio=1 ;; esac
+      ;;
+    avi)
+      case "$audio_name" in mp3 | mp2 | ac3) copy_audio=1 ;; esac
+      ;;
+    mpeg)
+      case "$audio_name" in mp2 | mp3) copy_audio=1 ;; esac
+      ;;
+  esac
+
+  case "$video_family" in
+    h264)
+      if [ "$NVENC_AVAILABLE" -eq 1 ]; then
+        set -- -c:v h264_nvenc -preset p4 -rc vbr -cq 32 \
+          -pix_fmt yuv420p
+      else
+        set -- -c:v libx264 -preset medium -crf 32 -pix_fmt yuv420p
+      fi
+      ;;
+    vp9)
+      set -- -c:v libvpx-vp9 -deadline good -cpu-used 2 \
+        -crf 42 -b:v 0
+      ;;
+    mpeg4)
+      set -- -c:v mpeg4 -q:v 8 -pix_fmt yuv420p
+      ;;
+    mpeg2)
+      set -- -c:v mpeg2video -q:v 8
+      ;;
+  esac
+
+  if [ "$copy_audio" -eq 1 ]; then
+    set -- "$@" -c:a copy
+  else
+    set -- "$@" -c:a "$audio_codec" -b:a "$default_audio_bitrate"
+  fi
+
+  "$FFMPEG" -hide_banner -nostdin -n -i "$selected_video" \
+    -map 0:v:0 -map '0:a:0?' "$@" \
+    -vf 'scale=-2:144:flags=lanczos,fps=10' \
+    -f "$output_muxer" "$temporary_output"
+}
+
+# Save only the first audio stream as MP3.
+encode_audio_only() {
+  audio_name=$(
+    "$FFPROBE" -v error -select_streams a:0 \
+      -show_entries stream=codec_name -of csv=p=0 "$selected_video"
+  ) || {
+    printf 'Unable to inspect audio stream: %s\n' "$selected_video" >&2
+    return 1
+  }
+  case "$audio_name" in
+    '' | *[!a-z0-9_]*)
+      printf 'No audio stream found: %s\n' "$selected_video" >&2
+      return 1
+      ;;
+  esac
+
+  # Copy MP3 untouched; transcode anything else to stereo MP3.
+  if [ "$audio_name" = mp3 ]; then
+    set -- -c:a copy
+  else
+    set -- -c:a libmp3lame -b:a 192k -ac 2
+  fi
+
+  "$FFMPEG" -hide_banner -nostdin -n -i "$selected_video" \
+    -map 0:a:0 -vn "$@" -f mp3 "$temporary_output"
+}
+
+# Round a bitrate down to the nearest standard MP3 rate.
+round_mp3_bitrate() {
+  awk -v rate="$1" 'BEGIN {
+    n = split("320 256 224 192 160 128 112 96 80 64 56 48 40 32 24 16 8", steps, " ")
+    for (i = 1; i <= n; i++)
+      if (steps[i] * 1000 <= rate) {
+        printf "%d", steps[i] * 1000
+        exit
+      }
+    exit 1
+  }'
+}
+
+# Encode audio-only MP3 below 16 MB, retrying once if it overshoots.
+encode_audio_whatsapp() {
+  duration=$(
+    "$FFPROBE" -v error -show_entries format=duration \
+      -of default=noprint_wrappers=1:nokey=1 "$selected_video"
+  ) || {
+    printf 'Unable to inspect video duration: %s\n' "$selected_video" >&2
+    return 1
+  }
+  raw_rate=$(awk -v duration="$duration" '
+    BEGIN {
+      if (duration !~ /^[0-9]+([.][0-9]+)?$/ || duration <= 0)
+        exit 1
+      rate = 15900000 * 8 * 0.99 / duration
+      if (rate > 192000) rate = 192000
+      if (rate < 8000) exit 1
+      printf "%.0f", rate
+    }
+  ') || {
+    printf 'Audio is too long for the WhatsApp size target.\n' >&2
+    return 1
+  }
+  audio_rate=$(round_mp3_bitrate "$raw_rate") || {
+    printf 'Audio is too long for the WhatsApp size target.\n' >&2
+    return 1
+  }
+
+  attempt=0
+  while [ "$attempt" -lt 2 ]; do
+    if [ "$attempt" -gt 0 ]; then
+      rm -f "$temporary_output"
+    fi
+    if [ "$audio_rate" -lt 16000 ]; then
+      set -- -ac 1 -ar 11025
+    elif [ "$audio_rate" -lt 32000 ]; then
+      set -- -ac 1 -ar 22050
+    elif [ "$audio_rate" -lt 64000 ]; then
+      set -- -ac 1 -ar 44100
+    else
+      set -- -ac 2 -ar 44100
+    fi
+    if ! "$FFMPEG" -hide_banner -nostdin -n -i "$selected_video" \
+      -map 0:a:0 -vn -c:a libmp3lame -b:a "$audio_rate" "$@" \
+      -f mp3 "$temporary_output"; then
+      printf 'WhatsApp audio compression failed.\n' >&2
+      return 1
+    fi
+
+    output_size=$(wc -c < "$temporary_output" | tr -d '[:space:]')
+    case "$output_size" in
+      '' | *[!0-9]*)
+        printf 'Unable to read compressed file size.\n' >&2
+        return 1
+        ;;
+    esac
+    if [ "$output_size" -le 15900000 ]; then
+      return 0
+    fi
+
+    attempt=$((attempt + 1))
+    if [ "$attempt" -ge 2 ]; then
+      printf 'Compressed audio exceeds 16 MB; no file saved.\n' >&2
+      return 1
+    fi
+    raw_rate=$(awk -v bitrate="$audio_rate" -v size="$output_size" '
+      BEGIN {
+        rate = bitrate * 15900000 * 0.98 / size
+        printf "%.0f", rate
+      }
+    ') || {
+      printf 'Unable to reach the WhatsApp size target.\n' >&2
+      return 1
+    }
+    audio_rate=$(round_mp3_bitrate "$raw_rate") || {
+      printf 'Unable to reach the WhatsApp size target.\n' >&2
+      return 1
+    }
+  done
 }
 
 # Run one pass using the selected container's video encoder and bitrate.
@@ -515,6 +725,10 @@ publish_output() {
 compress_video() {
   compression_mode=$1
   quality_mode=${2:-}
+  case "$compression_mode" in
+    audio) prepare_audio_output '' || return 1 ;;
+    whatsapp) prepare_audio_output '_whatsapp' || return 1 ;;
+  esac
   create_work_dir || return 1
 
   case "$compression_mode" in
@@ -526,6 +740,23 @@ compress_video() {
       ;;
     discord)
       if ! encode_discord; then
+        return 1
+      fi
+      ;;
+    tiny)
+      if ! encode_144p; then
+        printf '144p compression failed.\n' >&2
+        return 1
+      fi
+      ;;
+    audio)
+      if ! encode_audio_only; then
+        printf 'Audio compression failed.\n' >&2
+        return 1
+      fi
+      ;;
+    whatsapp)
+      if ! encode_audio_whatsapp; then
         return 1
       fi
       ;;
@@ -541,6 +772,9 @@ handle_selection() {
     "$OPTION_HIGH") compress_video quality high ;;
     "$OPTION_SMALL") compress_video quality small ;;
     "$OPTION_DISCORD") compress_video discord ;;
+    "$OPTION_TINY") compress_video tiny ;;
+    "$OPTION_AUDIO") compress_video audio ;;
+    "$OPTION_AUDIO_WA") compress_video whatsapp ;;
     "$OPTION_CANCEL" | '') return 0 ;;
     *)
       printf 'Invalid selection: %s\n' "$1" >&2
