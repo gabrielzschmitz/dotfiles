@@ -36,6 +36,16 @@ in
             "${caveman-opencode}"
           ];
 
+          # Local Ollama integration (qwen2.5-coder:14b)
+          model = "ollama/qwen2.5-coder:14b";
+          providers = {
+            ollama = {
+              settings = {
+                baseURL = "http://127.0.0.1:11434/v1";
+              };
+            };
+          };
+
           agents = {
             build.color = "#7fa4ed";
             plan.color = "#8677cf";

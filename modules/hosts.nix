@@ -166,5 +166,6 @@ in
     self.modules.nixos.nvidia
     self.modules.nixos.steam
     self.modules.nixos.damx
+    self.modules.nixos.ollama
   ];
 }
