@@ -36,12 +36,29 @@ in
             "${caveman-opencode}"
           ];
 
-          # Local Ollama integration (qwen2.5-coder:14b)
-          model = "ollama/qwen2.5-coder:14b";
+          # Local Ollama: fast (gemma4:12b) + quality (qwen3.5:9b thinking)
+          model = "ollama/gemma4:12b";
           providers = {
             ollama = {
               settings = {
                 baseURL = "http://127.0.0.1:11434/v1";
+              };
+              models = {
+                "gemma4:12b" = {
+                  name = "Gemma 4 12B (fast)";
+                  settings = {
+                    temperature = 0.2;
+                    num_ctx = 8192;
+                  };
+                };
+                "qwen3.5:9b" = {
+                  name = "Qwen 3.5 9B (quality, thinking)";
+                  settings = {
+                    temperature = 0.2;
+                    num_ctx = 8192;
+                    think = true;
+                  };
+                };
               };
             };
           };

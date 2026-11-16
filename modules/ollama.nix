@@ -11,6 +11,10 @@
         environmentVariables = {
           OLLAMA_MODELS = lib.mkForce "/home/gabrielzschmitz/.local/share/ollama/models";
         };
+        loadModels = [
+          "gemma4:12b"
+          "qwen3.5:9b"
+        ];
       };
 
       # Force model path at systemd level (module may override service env).
@@ -22,7 +26,7 @@
       };
       system.activationScripts.ollama-models-perms.text = ''
         chmod a+x /home/gabrielzschmitz /home/gabrielzschmitz/.local /home/gabrielzschmitz/.local/share /home/gabrielzschmitz/.local/share/ollama || true
-        chmod -R a+rX /home/gabrielzschmitz/.local/share/ollama || true
+        chmod -R a+rwX /home/gabrielzschmitz/.local/share/ollama || true
       '';
 
       environment.systemPackages = [ pkgs.ollama-cuda ];
