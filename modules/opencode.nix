@@ -60,7 +60,11 @@ in
                 "gemma4:12b" = {
                   name = "Gemma 4 12B (fast)";
                   capabilities.tools = true;
-                  body.temperature = 0.2;
+                  body = {
+                    temperature = 1.0;
+                    top_p = 0.95;
+                    top_k = 64;
+                  };
                 };
                 "qwen3.5:9b" = {
                   name = "Qwen 3.5 9B (quality, thinking)";
