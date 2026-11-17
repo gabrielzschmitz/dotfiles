@@ -10,6 +10,10 @@
         package = pkgs.ollama-cuda;
         environmentVariables = {
           OLLAMA_MODELS = lib.mkForce "/home/gabrielzschmitz/.local/share/ollama/models";
+          # OpenCode sends a ~8k-token system prompt plus tool schemas. The
+          # default 4096 context truncates it, so the model never sees the tool
+          # definitions and answers in prose instead of calling tools.
+          OLLAMA_CONTEXT_LENGTH = "32768";
         };
         loadModels = [
           "gemma4:12b"
@@ -18,7 +22,8 @@
       };
 
       # Force model path at systemd level (module may override service env).
-      systemd.services.ollama.environment.OLLAMA_MODELS = lib.mkForce "/home/gabrielzschmitz/.local/share/ollama/models";
+      systemd.services.ollama.environment.OLLAMA_MODELS =
+        lib.mkForce "/home/gabrielzschmitz/.local/share/ollama/models";
       # Allow ollama service user to access models stored in user XDG data dir.
       systemd.services.ollama.serviceConfig = {
         ReadWritePaths = [ "/home/gabrielzschmitz/.local/share/ollama" ];
