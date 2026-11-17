@@ -65,7 +65,9 @@ in
                 "qwen3.5:9b" = {
                   name = "Qwen 3.5 9B (quality, thinking)";
                   capabilities.tools = true;
-                  body.temperature = 0.2;
+                  # Tool selection is the weak spot: near-greedy decoding keeps
+                  # argument lists complete instead of dropping items.
+                  body.temperature = 0.1;
                 };
               };
             };

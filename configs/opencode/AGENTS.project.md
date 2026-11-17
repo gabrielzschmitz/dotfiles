@@ -1,3 +1,11 @@
+## Task planning
+
+For any task with three or more steps, or three or more files, call `todowrite` once before other tools.
+
+- One todo per step or per file. Never batch several items into one todo.
+- When the task names a set of files, create one todo for every file in that set. Do not sample or summarize.
+- Mark a todo `in_progress` when starting it and `completed` when done.
+
 ## Repository rules
 
 Before editing, check the repository root for `CONTRIBUTE.md`, `CONTRIBUTING.md`, or `docs/CONTRIBUTING.md`.
