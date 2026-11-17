@@ -71,6 +71,11 @@ in
                   capabilities.tools = true;
                   body.temperature = 0.3;
                 };
+                "mimo-v2.6:9b" = {
+                  name = "MiMo-V2.6-Distill-Qwen-9B";
+                  capabilities.tools = true;
+                  body.temperature = 0.3;
+                };
               };
             };
           };

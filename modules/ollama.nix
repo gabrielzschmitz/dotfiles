@@ -13,10 +13,11 @@
           # OpenCode sends a ~8k-token system prompt plus tool schemas. The
           # default 4096 context truncates it, so the model never sees the tool
           # definitions and answers in prose instead of calling tools.
-          OLLAMA_CONTEXT_LENGTH = "32768";
+          OLLAMA_CONTEXT_LENGTH = "65536";
         };
         loadModels = [
           "gemma4:12b"
+          "mimo-v2.6:9b"
           "qwen3.5:9b"
         ];
       };
