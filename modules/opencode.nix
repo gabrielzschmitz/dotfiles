@@ -47,7 +47,7 @@ in
           experimental.todo = true;
 
           # Local Ollama: fast (gemma4:12b) + quality (qwen3.5:9b thinking)
-          model = "ollama/gemma4:12b";
+          model = "ollama/qwen3.5:9b";
           providers = {
             ollama = {
               settings = {
@@ -67,9 +67,23 @@ in
                   };
                 };
                 "qwen3.5:9b" = {
-                  name = "Qwen 3.5 9B (quality, thinking)";
+                  name = "Qwen 3.5 9B (coding, thinking)";
+
+                  limit = {
+                    context = 65536;
+                    output = 8192;
+                  };
+
                   capabilities.tools = true;
-                  body.temperature = 0.3;
+
+                  body = {
+                    temperature = 0.6;
+                    top_p = 0.95;
+                    top_k = 20;
+                    min_p = 0.0;
+                    presence_penalty = 0.0;
+                    repetition_penalty = 1.0;
+                  };
                 };
                 "mimo-v2.6:9b" = {
                   name = "MiMo-V2.6-Distill-Qwen-9B";

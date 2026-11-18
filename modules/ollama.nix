@@ -14,6 +14,13 @@
           # default 4096 context truncates it, so the model never sees the tool
           # definitions and answers in prose instead of calling tools.
           OLLAMA_CONTEXT_LENGTH = "65536";
+
+          # Avoid multiplying KV-cache memory usage.
+          OLLAMA_NUM_PARALLEL = "1";
+          # Keep only one model loaded at a time.
+          OLLAMA_MAX_LOADED_MODELS = "1";
+          # Quantized KV cache
+          OLLAMA_KV_CACHE_TYPE = "q8_0";
         };
         loadModels = [
           "gemma4:12b"
