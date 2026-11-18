@@ -16,6 +16,8 @@
           pkgs.proton-ge-bin
         ];
 
+        extraArgs = "-cef-force-gpu";
+
         # Steam and its games inherit the PRIME offload variables,
         # so they render on the NVIDIA GPU while the desktop stays on
         # the Intel iGPU in the nvidia-optimus specialisation. In the
