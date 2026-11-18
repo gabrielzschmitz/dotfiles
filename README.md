@@ -445,10 +445,12 @@ Then select Limine manually from the firmware boot menu (F12) if necessary.
 │   ├── services.nix              # User services (SPICE clipboard, vm only)
 │   ├── xdg.nix                   # XDG user directories
 │   ├── zen.nix                   # Zen Browser profile, policies and extensions
-│   └── craftapps.nix             # Craft apps configuration
+│   ├── craftapps.nix             # Craft apps configuration
+│   └── agent-orchestrator.nix    # Agent Orchestrator desktop app
 ├── pkgs/                         # Custom packages, exposed via an overlay
 │   ├── default.nix               # Overlay
 │   ├── sfmono-nerd-font/{default.nix, fonts/*.otf}
+│   ├── agent-orchestrator/       # Upstream AppImage wrapped for NixOS
 │   ├── damx/                     # .NET GUI, Python daemon and vendored source
 │   │   ├── default.nix
 │   │   ├── daemon.nix

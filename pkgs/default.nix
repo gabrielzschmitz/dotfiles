@@ -4,6 +4,8 @@ final: prev: {
 
   advcpmv = final.callPackage ./advcpmv { };
 
+  agent-orchestrator = final.callPackage ./agent-orchestrator { };
+
   one-dark-gtk = final.callPackage ./one-dark-gtk { };
 
   linuwu-sense = final.linuxPackages.callPackage ./linuwu-sense { };

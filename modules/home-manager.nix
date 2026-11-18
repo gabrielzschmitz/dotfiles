@@ -35,6 +35,7 @@
         music
         thunar
         pipette
+        agent-orchestrator
         services
         aria2
       ];
