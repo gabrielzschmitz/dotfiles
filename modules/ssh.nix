@@ -8,6 +8,12 @@
       enableDefaultConfig = false;
 
       settings = {
+        "*" = {
+          ServerAliveInterval = 30;
+          ServerAliveCountMax = 3;
+          TCPKeepAlive = true;
+        };
+
         "github.com" = {
           HostName = "github.com";
           User = "git";
