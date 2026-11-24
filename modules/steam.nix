@@ -16,14 +16,14 @@
           pkgs.proton-ge-bin
         ];
 
-        extraArgs = "-cef-force-gpu";
-
         # Steam and its games inherit the PRIME offload variables,
         # so they render on the NVIDIA GPU while the desktop stays on
         # the Intel iGPU in the nvidia-optimus specialisation. In the
         # default discrete-GPU mode, offload is disabled and Steam uses
         # the primary GPU.
         package = pkgs.steam.override {
+          extraArgs = "-cef-force-gpu";
+
           extraEnv = lib.optionalAttrs config.hardware.nvidia.prime.offload.enable {
             __NV_PRIME_RENDER_OFFLOAD = "1";
             __NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
