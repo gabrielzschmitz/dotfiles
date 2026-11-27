@@ -16,6 +16,8 @@
       damx-daemon = pkgs.callPackage ../pkgs/damx/daemon.nix { };
 
       linuwu-sense = pkgs.linuxPackages.callPackage ../pkgs/linuwu-sense { };
+
+      nudu = pkgs.callPackage ../pkgs/nudu { };
     };
 
     devShells.damx = pkgs.mkShell {

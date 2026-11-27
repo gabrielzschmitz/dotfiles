@@ -33,6 +33,7 @@
         ripgrep
         devour
         gdu
+        nudu
         openvpn
         yt-dlp
       ];

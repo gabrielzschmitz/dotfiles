@@ -14,6 +14,8 @@ final: prev: {
 
   damx-daemon = final.callPackage ./damx/daemon.nix { };
 
+  nudu = final.callPackage ./nudu { };
+
   fluxer = final.callPackage ./fluxer {
     fluxer = inputs.fluxer.packages.${final.stdenv.hostPlatform.system}.fluxer;
   };
